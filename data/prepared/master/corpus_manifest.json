@@ -1,0 +1,93 @@
+{
+  "role": "ai_engineer",
+  "total_questions": 112,
+  "total_evaluation_records": 35,
+  "corpora": {
+    "rag": {
+      "questions": 31,
+      "evaluations": 7
+    },
+    "agentic_ai": {
+      "questions": 29,
+      "evaluations": 7
+    },
+    "llm_fundamentals": {
+      "questions": 13,
+      "evaluations": 3
+    },
+    "ai_evaluation": {
+      "questions": 17,
+      "evaluations": 4
+    },
+    "python_software_engineering": {
+      "questions": 8,
+      "evaluations": 4
+    },
+    "ai_system_design": {
+      "questions": 8,
+      "evaluations": 6
+    },
+    "ai_security": {
+      "questions": 6,
+      "evaluations": 4
+    }
+  },
+  "questions_by_competency": {
+    "agentic_ai": 29,
+    "ai_evaluation": 17,
+    "ai_ml_llm_fundamentals": 13,
+    "ai_security": 6,
+    "ai_system_design": 8,
+    "python_software_engineering": 8,
+    "rag": 31
+  },
+  "questions_by_sub_competency": {
+    "access_control": 1,
+    "agent_design_patterns": 4,
+    "agent_evaluation": 3,
+    "agent_fundamentals": 5,
+    "agent_interoperability": 4,
+    "agent_lifecycle": 4,
+    "agent_reliability": 4,
+    "agent_state_memory": 4,
+    "ai_architecture": 2,
+    "api_integration": 1,
+    "application_design": 2,
+    "async_concurrency": 2,
+    "chunking": 4,
+    "context_engineering": 4,
+    "cost_latency": 5,
+    "data_privacy": 1,
+    "deployment": 1,
+    "embedding": 4,
+    "embeddings": 3,
+    "error_handling": 1,
+    "evaluation_metrics": 5,
+    "guardrails": 2,
+    "human_in_the_loop": 4,
+    "observability": 1,
+    "performance_optimization": 1,
+    "production_rag": 5,
+    "prompt_injection": 1,
+    "rag_evaluation": 9,
+    "rag_fundamentals": 5,
+    "reliability": 2,
+    "retrieval_search": 5,
+    "scalability": 1,
+    "testing": 2,
+    "token": 5,
+    "tool_security": 1,
+    "transformer_architecture": 4
+  },
+  "questions_by_difficulty": {
+    "basic": 48,
+    "intermediate": 49,
+    "advanced": 15
+  },
+  "questions_by_type": {
+    "conceptual": 62,
+    "design": 23,
+    "scenario": 12,
+    "troubleshooting": 15
+  }
+}

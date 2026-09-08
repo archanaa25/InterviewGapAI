@@ -1,0 +1,2985 @@
+[
+  {
+    "question_id": "AGENT-DESIGN-BAS-001",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "agent_design_patterns",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "What is the difference between the Supervisor and Reflection agent design patterns, and when might each be useful?",
+    "expected_concepts": {
+      "must_have": [
+        "supervisor coordinates/delegates to specialists",
+        "reflection uses generation followed by critique/revision"
+      ],
+      "bonus": [
+        "iteration limits",
+        "task decomposition"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-DESIGN"
+    ],
+    "tags": [
+      "agentic_ai",
+      "agent_design_patterns"
+    ]
+  },
+  {
+    "question_id": "AGENT-DESIGN-BAS-002",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "agent_design_patterns",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "What are the core limitations of a \"Single-Agent\" architecture that drive developers to adopt \"Multi-Agent\" pipelines?",
+    "expected_concepts": {
+      "must_have": [
+        "single agents can suffer context/prompt bloat",
+        "errors can contaminate later reasoning",
+        "multi-agent separation can isolate responsibilities/context"
+      ],
+      "bonus": [
+        "specialization"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-DESIGN"
+    ],
+    "tags": [
+      "agentic_ai",
+      "agent_design_patterns"
+    ]
+  },
+  {
+    "question_id": "AGENT-DESIGN-INT-001",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "agent_design_patterns",
+    "difficulty": "intermediate",
+    "question_type": "design",
+    "question": "How do Planner–Executor and Router patterns differ, and when would you choose one over the other?",
+    "expected_concepts": {
+      "must_have": [
+        "planner-executor separates planning from execution",
+        "router dispatches requests to appropriate specialized path"
+      ],
+      "bonus": [
+        "cost-aware model routing",
+        "replanning on failures"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-DESIGN"
+    ],
+    "tags": [
+      "agentic_ai",
+      "agent_design_patterns"
+    ]
+  },
+  {
+    "question_id": "AGENT-DESIGN-INT-002",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "agent_design_patterns",
+    "difficulty": "intermediate",
+    "question_type": "troubleshooting",
+    "question": "What are common failure modes in multi-agent systems, and how would you mitigate them?",
+    "expected_concepts": {
+      "must_have": [
+        "duplicated work",
+        "cascading errors",
+        "runaway inter-agent loops"
+      ],
+      "bonus": [
+        "task ledger",
+        "handoff validation",
+        "global limits"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-DESIGN"
+    ],
+    "tags": [
+      "agentic_ai",
+      "agent_design_patterns"
+    ]
+  },
+  {
+    "question_id": "AGENT-FUND-ADV-001",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "agent_fundamentals",
+    "difficulty": "advanced",
+    "question_type": "design",
+    "question": "As an AI agent is given more autonomy, what additional guardrails, evaluation, monitoring, and recovery mechanisms should be added?",
+    "expected_concepts": {
+      "must_have": [
+        "stronger permissions/guardrails",
+        "more rigorous evaluation",
+        "production observability",
+        "recovery/escalation mechanisms"
+      ],
+      "bonus": [
+        "sandboxing",
+        "spend caps",
+        "trajectory evaluation"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-FUND"
+    ],
+    "tags": [
+      "agentic_ai",
+      "agent_fundamentals"
+    ]
+  },
+  {
+    "question_id": "AGENT-FUND-BAS-001",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "agent_fundamentals",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "How does an AI agent differ conceptually from a traditional chatbot and a deterministic workflow?",
+    "expected_concepts": {
+      "must_have": [
+        "chatbot responds without autonomous execution routing",
+        "deterministic workflow follows developer-defined path",
+        "agent can decide next actions/tools at runtime"
+      ],
+      "bonus": [
+        "think-act-observe loop"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-FUND"
+    ],
+    "tags": [
+      "agentic_ai",
+      "agent_fundamentals"
+    ]
+  },
+  {
+    "question_id": "AGENT-FUND-BAS-002",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "agent_fundamentals",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "What kinds of task characteristics justify using an autonomous agent instead of a simpler deterministic workflow?",
+    "expected_concepts": {
+      "must_have": [
+        "dynamic/unknown execution path",
+        "high-variance inputs or decisions",
+        "long-horizon tasks can justify autonomy"
+      ],
+      "bonus": [
+        "complex retry branches"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-FUND"
+    ],
+    "tags": [
+      "agentic_ai",
+      "agent_fundamentals"
+    ]
+  },
+  {
+    "question_id": "AGENT-FUND-INT-001",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "agent_fundamentals",
+    "difficulty": "intermediate",
+    "question_type": "scenario",
+    "question": "Under what conditions or operational constraints are deterministic workflows preferred over agentic workflows? Give three concrete scenarios.",
+    "expected_concepts": {
+      "must_have": [
+        "deterministic workflows suit predictable fixed processes",
+        "fixed paths improve auditability/compliance",
+        "simpler workflows reduce cost/latency for high-volume low-variance tasks"
+      ],
+      "bonus": [
+        "caching",
+        "batching"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-FUND"
+    ],
+    "tags": [
+      "agentic_ai",
+      "agent_fundamentals"
+    ]
+  },
+  {
+    "question_id": "AGENT-FUND-INT-002",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "agent_fundamentals",
+    "difficulty": "intermediate",
+    "question_type": "conceptual",
+    "question": "Why should agent autonomy be treated as a spectrum rather than an all-or-nothing choice?",
+    "expected_concepts": {
+      "must_have": [
+        "autonomy can be progressively increased",
+        "higher autonomy increases risk and control requirements"
+      ],
+      "bonus": [
+        "human approval levels",
+        "risk-based autonomy"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-FUND"
+    ],
+    "tags": [
+      "agentic_ai",
+      "agent_fundamentals"
+    ]
+  },
+  {
+    "question_id": "AGENT-HITL-BAS-001",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "human_in_the_loop",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "Why is human-in-the-loop important for enterprise AI agents?",
+    "expected_concepts": {
+      "must_have": [
+        "human review reduces risk for consequential actions",
+        "HITL supports compliance/oversight"
+      ],
+      "bonus": [
+        "human corrections can become evaluation data"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-HITL"
+    ],
+    "tags": [
+      "agentic_ai",
+      "human_in_the_loop"
+    ]
+  },
+  {
+    "question_id": "AGENT-HITL-BAS-002",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "human_in_the_loop",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "Where should human approval checkpoints be placed in an agentic workflow?",
+    "expected_concepts": {
+      "must_have": [
+        "approval before risky external actions",
+        "approval before irreversible actions",
+        "review for low-confidence or sensitive outputs"
+      ],
+      "bonus": [
+        "customer-facing review"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-HITL"
+    ],
+    "tags": [
+      "agentic_ai",
+      "human_in_the_loop"
+    ]
+  },
+  {
+    "question_id": "AGENT-HITL-INT-001",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "human_in_the_loop",
+    "difficulty": "intermediate",
+    "question_type": "design",
+    "question": "How would you use risk and confidence to decide whether an agent should proceed automatically, ask for approval, or stop?",
+    "expected_concepts": {
+      "must_have": [
+        "low-risk/high-confidence actions may proceed",
+        "medium-risk/uncertain actions can require confirmation",
+        "high-risk/low-confidence actions should stop/escalate"
+      ],
+      "bonus": [
+        "risk-aware thresholds"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-HITL"
+    ],
+    "tags": [
+      "agentic_ai",
+      "human_in_the_loop"
+    ]
+  },
+  {
+    "question_id": "AGENT-HITL-INT-002",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "human_in_the_loop",
+    "difficulty": "intermediate",
+    "question_type": "troubleshooting",
+    "question": "What human-in-the-loop design choices can cause reviewer fatigue, and how would you avoid them?",
+    "expected_concepts": {
+      "must_have": [
+        "reviewing everything causes fatigue/rubber-stamping",
+        "reviewers need evidence/context",
+        "prioritize/escalate reviews by risk"
+      ],
+      "bonus": [
+        "tiered queues"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-HITL"
+    ],
+    "tags": [
+      "agentic_ai",
+      "human_in_the_loop"
+    ]
+  },
+  {
+    "question_id": "AGENT-INTEROP-BAS-001",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "agent_interoperability",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "What is the Model Context Protocol (MCP), and what problem does it solve for AI applications?",
+    "expected_concepts": {
+      "must_have": [
+        "MCP standardizes connections between AI hosts and external capabilities",
+        "reduces custom integration work"
+      ],
+      "bonus": [
+        "tools",
+        "resources",
+        "prompts"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-INTEROP"
+    ],
+    "tags": [
+      "agentic_ai",
+      "agent_interoperability"
+    ]
+  },
+  {
+    "question_id": "AGENT-INTEROP-BAS-002",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "agent_interoperability",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "What is the main difference between MCP and A2A, and when would each be used?",
+    "expected_concepts": {
+      "must_have": [
+        "MCP connects agents/apps to tools/data",
+        "A2A supports agent-to-agent interoperability"
+      ],
+      "bonus": [
+        "vertical vs horizontal interoperability"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-INTEROP"
+    ],
+    "tags": [
+      "agentic_ai",
+      "agent_interoperability"
+    ]
+  },
+  {
+    "question_id": "AGENT-INTEROP-INT-001",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "agent_interoperability",
+    "difficulty": "intermediate",
+    "question_type": "conceptual",
+    "question": "How does MCP reduce the integration burden between AI applications and external tools or data sources?",
+    "expected_concepts": {
+      "must_have": [
+        "standard client/server interface reduces pairwise custom connectors",
+        "tool providers and clients implement the shared protocol"
+      ],
+      "bonus": [
+        "integration scaling"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-INTEROP"
+    ],
+    "tags": [
+      "agentic_ai",
+      "agent_interoperability"
+    ]
+  },
+  {
+    "question_id": "AGENT-INTEROP-INT-002",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "agent_interoperability",
+    "difficulty": "intermediate",
+    "question_type": "troubleshooting",
+    "question": "What security risks should an engineer consider when connecting agents to external tools through MCP?",
+    "expected_concepts": {
+      "must_have": [
+        "tool poisoning or malicious descriptions",
+        "prompt injection through tool output",
+        "over-scoped credentials",
+        "confirmation for destructive writes"
+      ],
+      "bonus": [
+        "version pinning",
+        "short-lived credentials"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-INTEROP"
+    ],
+    "tags": [
+      "agentic_ai",
+      "agent_interoperability"
+    ]
+  },
+  {
+    "question_id": "AGENT-LIFE-BAS-001",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "agent_lifecycle",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "What are the main stages of an Agent Development Lifecycle, from scoping through production improvement?",
+    "expected_concepts": {
+      "must_have": [
+        "scope",
+        "prototype/build",
+        "evaluate",
+        "deploy",
+        "monitor and improve"
+      ],
+      "bonus": [
+        "staging",
+        "regression tests"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-LIFE"
+    ],
+    "tags": [
+      "agentic_ai",
+      "agent_lifecycle"
+    ]
+  },
+  {
+    "question_id": "AGENT-LIFE-BAS-002",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "agent_lifecycle",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "What is the MINT framework, and how does it guide decisions about adding agentic complexity?",
+    "expected_concepts": {
+      "must_have": [
+        "start with simplest working system",
+        "each complexity layer must justify its overhead",
+        "add autonomy/tools/memory only when needed"
+      ],
+      "bonus": [
+        "cost/latency/security trade-offs"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-LIFE"
+    ],
+    "tags": [
+      "agentic_ai",
+      "agent_lifecycle"
+    ]
+  },
+  {
+    "question_id": "AGENT-LIFE-INT-001",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "agent_lifecycle",
+    "difficulty": "intermediate",
+    "question_type": "scenario",
+    "question": "Give an example of an AI system that is over-engineered with agents. How would MINT simplify it?",
+    "expected_concepts": {
+      "must_have": [
+        "unnecessary agents add nondeterminism/cost/failure modes",
+        "simpler deterministic or RAG workflow may be sufficient"
+      ],
+      "bonus": [
+        "earn each layer"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-LIFE"
+    ],
+    "tags": [
+      "agentic_ai",
+      "agent_lifecycle"
+    ]
+  },
+  {
+    "question_id": "AGENT-LIFE-INT-002",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "agent_lifecycle",
+    "difficulty": "intermediate",
+    "question_type": "troubleshooting",
+    "question": "How can you detect that an agent is no longer making meaningful progress and should stop or replan?",
+    "expected_concepts": {
+      "must_have": [
+        "measure progress after steps",
+        "detect repeated/no-progress behavior",
+        "stop replan or escalate after bounded attempts"
+      ],
+      "bonus": [
+        "progress score"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-LIFE"
+    ],
+    "tags": [
+      "agentic_ai",
+      "agent_lifecycle"
+    ]
+  },
+  {
+    "question_id": "AGENT-MEM-BAS-001",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "agent_state_memory",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "What is the fundamental architectural difference between an agent's \"State\" and an agent's \"Memory\"?",
+    "expected_concepts": {
+      "must_have": [
+        "state is task/session scoped",
+        "memory persists beyond the current task/session"
+      ],
+      "bonus": [
+        "working state",
+        "long-term preferences"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-MEM"
+    ],
+    "tags": [
+      "agentic_ai",
+      "agent_state_memory"
+    ]
+  },
+  {
+    "question_id": "AGENT-MEM-BAS-002",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "agent_state_memory",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "What is the difference between semantic memory and episodic memory in an AI agent?",
+    "expected_concepts": {
+      "must_have": [
+        "semantic memory stores stable facts/preferences",
+        "episodic memory stores time-specific past events"
+      ],
+      "bonus": [
+        "different retention/lifecycle policies"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-MEM"
+    ],
+    "tags": [
+      "agentic_ai",
+      "agent_state_memory"
+    ]
+  },
+  {
+    "question_id": "AGENT-MEM-INT-001",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "agent_state_memory",
+    "difficulty": "intermediate",
+    "question_type": "design",
+    "question": "How would you choose between a conversation summary, vector store, and key-value store for agent memory?",
+    "expected_concepts": {
+      "must_have": [
+        "conversation summaries compress long dialogue",
+        "vector stores support semantic retrieval",
+        "key-value stores support deterministic lookup"
+      ],
+      "bonus": [
+        "user preferences fit key-value storage",
+        "knowledge search fits vector storage"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-MEM"
+    ],
+    "tags": [
+      "agentic_ai",
+      "agent_state_memory"
+    ]
+  },
+  {
+    "question_id": "AGENT-MEM-INT-002",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "agent_state_memory",
+    "difficulty": "intermediate",
+    "question_type": "troubleshooting",
+    "question": "What are common agent-memory design mistakes, and how would you avoid them?",
+    "expected_concepts": {
+      "must_have": [
+        "avoid saving everything",
+        "avoid retrieving everything",
+        "separate chat history from durable memory",
+        "evaluate memory usefulness"
+      ],
+      "bonus": [
+        "confidence thresholds",
+        "reranking"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-MEM"
+    ],
+    "tags": [
+      "agentic_ai",
+      "agent_state_memory"
+    ]
+  },
+  {
+    "question_id": "AGENT-REL-ADV-001",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "agent_reliability",
+    "difficulty": "advanced",
+    "question_type": "design",
+    "question": "How would you design guardrails for an agent that can call tools with real-world side effects?",
+    "expected_concepts": {
+      "must_have": [
+        "tool allowlisting",
+        "schema/input validation",
+        "scoped permissions",
+        "human confirmation for risky writes",
+        "sandboxing"
+      ],
+      "bonus": [
+        "read/write separation"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-REL"
+    ],
+    "tags": [
+      "agentic_ai",
+      "agent_reliability"
+    ]
+  },
+  {
+    "question_id": "AGENT-REL-BAS-001",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "agent_reliability",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "Why do errors compound in long-horizon agent workflows, and what does that mean for system reliability?",
+    "expected_concepts": {
+      "must_have": [
+        "per-step errors compound across multi-step tasks",
+        "longer task chains reduce end-to-end reliability"
+      ],
+      "bonus": [
+        "step-level evaluation",
+        "recovery"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-REL"
+    ],
+    "tags": [
+      "agentic_ai",
+      "agent_reliability"
+    ]
+  },
+  {
+    "question_id": "AGENT-REL-INT-001",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "agent_reliability",
+    "difficulty": "intermediate",
+    "question_type": "conceptual",
+    "question": "What practical techniques can reduce the runtime cost of a long-running AI agent?",
+    "expected_concepts": {
+      "must_have": [
+        "use smaller models for simple steps",
+        "cache repeated work",
+        "limit retries/steps",
+        "reduce unnecessary orchestration"
+      ],
+      "bonus": [
+        "planner-executor",
+        "batching"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-REL"
+    ],
+    "tags": [
+      "agentic_ai",
+      "agent_reliability"
+    ]
+  },
+  {
+    "question_id": "AGENT-REL-INT-002",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "agent_reliability",
+    "difficulty": "intermediate",
+    "question_type": "design",
+    "question": "What techniques can reduce actual or perceived latency in an agentic application?",
+    "expected_concepts": {
+      "must_have": [
+        "parallelize independent tool calls",
+        "stream responses",
+        "prefetch likely-needed data",
+        "simplify routing"
+      ],
+      "bonus": [
+        "perceived latency"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-REL"
+    ],
+    "tags": [
+      "agentic_ai",
+      "agent_reliability"
+    ]
+  },
+  {
+    "question_id": "EVAL-AGENT-ADV-001",
+    "role": "ai_engineer",
+    "competency": "ai_evaluation",
+    "sub_competency": "agent_evaluation",
+    "difficulty": "advanced",
+    "question_type": "troubleshooting",
+    "question": "How would you debug a multi-turn agent that succeeds on simple requests but repeatedly fails at a later conversation turn?",
+    "expected_concepts": {
+      "must_have": [
+        "start with end-to-end task success",
+        "use step-level diagnostics after locating failure",
+        "test the failing request independently",
+        "reintroduce prior conversation context to isolate context-related failure"
+      ],
+      "bonus": [
+        "N-1 testing",
+        "tool choice",
+        "context retention"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-KNOW-AGENT"
+    ],
+    "tags": [
+      "ai_evaluation",
+      "agent_evaluation"
+    ]
+  },
+  {
+    "question_id": "EVAL-AGENT-BAS-001",
+    "role": "ai_engineer",
+    "competency": "ai_evaluation",
+    "sub_competency": "agent_evaluation",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "What is the difference between evaluating an agent's final outcome and evaluating its execution trajectory? Why is the final environment state important?",
+    "expected_concepts": {
+      "must_have": [
+        "trajectory captures steps/tool calls",
+        "outcome captures final task/environment state",
+        "agents can claim success without actually changing the environment correctly"
+      ],
+      "bonus": [
+        "creative valid trajectories"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-KNOW-AGENT"
+    ],
+    "tags": [
+      "ai_evaluation",
+      "agent_evaluation"
+    ]
+  },
+  {
+    "question_id": "EVAL-AGENT-INT-001",
+    "role": "ai_engineer",
+    "competency": "ai_evaluation",
+    "sub_competency": "agent_evaluation",
+    "difficulty": "intermediate",
+    "question_type": "conceptual",
+    "question": "What is the difference between pass@k and pass^k when evaluating agent reliability, and when is consistent success more important than getting at least one successful attempt?",
+    "expected_concepts": {
+      "must_have": [
+        "pass@k focuses on at least one success across attempts",
+        "pass^k focuses on all attempts succeeding",
+        "autonomous/customer-facing systems often require consistency"
+      ],
+      "bonus": [
+        "reliability"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-KNOW-AGENT"
+    ],
+    "tags": [
+      "ai_evaluation",
+      "agent_evaluation"
+    ]
+  },
+  {
+    "question_id": "EVAL-COST-ADV-001",
+    "role": "ai_engineer",
+    "competency": "ai_evaluation",
+    "sub_competency": "cost_latency",
+    "difficulty": "advanced",
+    "question_type": "design",
+    "question": "How would you balance evaluation accuracy, cost, and latency when monitoring an AI agent in production?",
+    "expected_concepts": {
+      "must_have": [
+        "not every trace needs an expensive LLM judge",
+        "use deterministic checks where possible",
+        "sample traces for expensive evaluation",
+        "route ambiguous/high-risk cases to human review"
+      ],
+      "bonus": [
+        "risk-based sampling",
+        "annotation queues"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-KNOW-COST"
+    ],
+    "tags": [
+      "ai_evaluation",
+      "cost_latency"
+    ]
+  },
+  {
+    "question_id": "EVAL-COST-BAS-001",
+    "role": "ai_engineer",
+    "competency": "ai_evaluation",
+    "sub_competency": "cost_latency",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "What is Time to First Token (TTFT), and why does it matter for the perceived responsiveness of a conversational AI system?",
+    "expected_concepts": {
+      "must_have": [
+        "TTFT measures delay before first generated token is shown",
+        "it strongly affects perceived responsiveness"
+      ],
+      "bonus": [
+        "streaming"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-KNOW-COST"
+    ],
+    "tags": [
+      "ai_evaluation",
+      "cost_latency"
+    ]
+  },
+  {
+    "question_id": "EVAL-COST-BAS-002",
+    "role": "ai_engineer",
+    "competency": "ai_evaluation",
+    "sub_competency": "cost_latency",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "Why is cost per successful task more informative than the cost of a single agent run?",
+    "expected_concepts": {
+      "must_have": [
+        "failed attempts and retries also consume resources",
+        "cost per successful task accounts for total run cost relative to successful outcomes"
+      ],
+      "bonus": [
+        "repair loops",
+        "success rate"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-KNOW-COST"
+    ],
+    "tags": [
+      "ai_evaluation",
+      "cost_latency"
+    ]
+  },
+  {
+    "question_id": "EVAL-COST-INT-001",
+    "role": "ai_engineer",
+    "competency": "ai_evaluation",
+    "sub_competency": "cost_latency",
+    "difficulty": "intermediate",
+    "question_type": "troubleshooting",
+    "question": "How would you profile latency in an agentic pipeline containing retrieval, reranking, tool calls, LLM generation, and streaming?",
+    "expected_concepts": {
+      "must_have": [
+        "measure wall-clock latency for each stage",
+        "identify the dominant bottleneck before optimizing",
+        "external tools and model generation should be measured separately"
+      ],
+      "bonus": [
+        "TTFT",
+        "tokens per second"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-KNOW-COST"
+    ],
+    "tags": [
+      "ai_evaluation",
+      "cost_latency"
+    ]
+  },
+  {
+    "question_id": "EVAL-COST-INT-002",
+    "role": "ai_engineer",
+    "competency": "ai_evaluation",
+    "sub_competency": "cost_latency",
+    "difficulty": "intermediate",
+    "question_type": "design",
+    "question": "What controls can you add to an agent scaffold to prevent runaway token and tool costs?",
+    "expected_concepts": {
+      "must_have": [
+        "cap maximum steps",
+        "limit retries",
+        "cache repeated work",
+        "compress or summarize growing context"
+      ],
+      "bonus": [
+        "budget limits"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-KNOW-COST"
+    ],
+    "tags": [
+      "ai_evaluation",
+      "cost_latency"
+    ]
+  },
+  {
+    "question_id": "EVAL-METRIC-ADV-001",
+    "role": "ai_engineer",
+    "competency": "ai_evaluation",
+    "sub_competency": "evaluation_metrics",
+    "difficulty": "advanced",
+    "question_type": "design",
+    "question": "How would you calibrate an LLM-as-a-judge against human expert evaluations before trusting it for production decisions?",
+    "expected_concepts": {
+      "must_have": [
+        "create a human-scored gold set",
+        "run the judge on the same examples",
+        "measure agreement and inspect disagreements",
+        "iterate rubric/prompt based on errors"
+      ],
+      "bonus": [
+        "inter-annotator agreement",
+        "unknown/insufficient-information option"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-KNOW-METRIC"
+    ],
+    "tags": [
+      "ai_evaluation",
+      "evaluation_metrics"
+    ]
+  },
+  {
+    "question_id": "EVAL-METRIC-BAS-001",
+    "role": "ai_engineer",
+    "competency": "ai_evaluation",
+    "sub_competency": "evaluation_metrics",
+    "difficulty": "basic",
+    "question_type": "scenario",
+    "question": "How does the cost of false positives versus false negatives influence whether you optimize for precision or recall?",
+    "expected_concepts": {
+      "must_have": [
+        "high false-positive cost favors precision",
+        "high false-negative cost favors recall"
+      ],
+      "bonus": [
+        "risk-based metric selection"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-KNOW-METRIC"
+    ],
+    "tags": [
+      "ai_evaluation",
+      "evaluation_metrics"
+    ]
+  },
+  {
+    "question_id": "EVAL-METRIC-BAS-002",
+    "role": "ai_engineer",
+    "competency": "ai_evaluation",
+    "sub_competency": "evaluation_metrics",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "Why are exact word-overlap metrics often weak for evaluating open-ended LLM responses, and what can be used instead for subjective qualities such as tone or style?",
+    "expected_concepts": {
+      "must_have": [
+        "valid LLM answers can use different wording",
+        "word overlap may miss semantic quality",
+        "structured rubric-based evaluation can assess subjective criteria"
+      ],
+      "bonus": [
+        "LLM-as-a-judge",
+        "binary checks"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-KNOW-METRIC"
+    ],
+    "tags": [
+      "ai_evaluation",
+      "evaluation_metrics"
+    ]
+  },
+  {
+    "question_id": "EVAL-METRIC-INT-001",
+    "role": "ai_engineer",
+    "competency": "ai_evaluation",
+    "sub_competency": "evaluation_metrics",
+    "difficulty": "intermediate",
+    "question_type": "conceptual",
+    "question": "Why can binary pass/fail checks be easier to calibrate than a 1-to-5 rating scale for AI evaluation?",
+    "expected_concepts": {
+      "must_have": [
+        "binary criteria reduce ambiguity",
+        "Likert ratings can be interpreted inconsistently",
+        "specific binary sub-checks can track component quality"
+      ],
+      "bonus": [
+        "annotator consistency"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-KNOW-METRIC"
+    ],
+    "tags": [
+      "ai_evaluation",
+      "evaluation_metrics"
+    ]
+  },
+  {
+    "question_id": "EVAL-METRIC-INT-002",
+    "role": "ai_engineer",
+    "competency": "ai_evaluation",
+    "sub_competency": "evaluation_metrics",
+    "difficulty": "intermediate",
+    "question_type": "conceptual",
+    "question": "Why is blindly relying on generic off-the-shelf AI evaluation metrics risky, and how can they still be useful during development?",
+    "expected_concepts": {
+      "must_have": [
+        "generic metrics may not align with application-specific goals",
+        "they can create false confidence",
+        "they can be used as screening/exploration signals"
+      ],
+      "bonus": [
+        "human error analysis",
+        "outlier detection"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-KNOW-METRIC"
+    ],
+    "tags": [
+      "ai_evaluation",
+      "evaluation_metrics"
+    ]
+  },
+  {
+    "question_id": "EVAL-RAG-BAS-001",
+    "role": "ai_engineer",
+    "competency": "ai_evaluation",
+    "sub_competency": "rag_evaluation",
+    "difficulty": "basic",
+    "question_type": "scenario",
+    "question": "What is the practical difference between context recall and context precision? If irrelevant chunks are frequently retrieved, which one is suffering and what would you improve?",
+    "expected_concepts": {
+      "must_have": [
+        "context recall measures whether needed evidence is retrieved",
+        "context precision measures whether retrieved context is relevant/useful",
+        "irrelevant chunks indicate low context precision"
+      ],
+      "bonus": [
+        "ranking",
+        "filtering",
+        "reranking"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-KNOW-RAG"
+    ],
+    "tags": [
+      "ai_evaluation",
+      "rag_evaluation"
+    ]
+  },
+  {
+    "question_id": "EVAL-RAG-BAS-002",
+    "role": "ai_engineer",
+    "competency": "ai_evaluation",
+    "sub_competency": "rag_evaluation",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "What is the difference between faithfulness and response relevancy? Can an answer be relevant but unfaithful?",
+    "expected_concepts": {
+      "must_have": [
+        "faithfulness checks whether claims are supported by context",
+        "response relevancy checks whether the answer addresses the question",
+        "an answer can be relevant but unsupported"
+      ],
+      "bonus": [
+        "hallucination",
+        "groundedness"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-KNOW-RAG"
+    ],
+    "tags": [
+      "ai_evaluation",
+      "rag_evaluation"
+    ]
+  },
+  {
+    "question_id": "EVAL-RAG-INT-001",
+    "role": "ai_engineer",
+    "competency": "ai_evaluation",
+    "sub_competency": "rag_evaluation",
+    "difficulty": "intermediate",
+    "question_type": "design",
+    "question": "How would you build an evaluation dataset to test whether a RAG assistant correctly abstains when supporting evidence is missing?",
+    "expected_concepts": {
+      "must_have": [
+        "include both answerable and unanswerable questions",
+        "unanswerable cases should lack supporting evidence",
+        "success requires answering supported questions and abstaining on unsupported ones"
+      ],
+      "bonus": [
+        "balanced dataset",
+        "false premises"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-KNOW-RAG"
+    ],
+    "tags": [
+      "ai_evaluation",
+      "rag_evaluation"
+    ]
+  },
+  {
+    "question_id": "EVAL-RAG-INT-002",
+    "role": "ai_engineer",
+    "competency": "ai_evaluation",
+    "sub_competency": "rag_evaluation",
+    "difficulty": "intermediate",
+    "question_type": "troubleshooting",
+    "question": "Your RAG system has high context recall and precision but low faithfulness. Which stage is most likely failing, and how would you investigate it?",
+    "expected_concepts": {
+      "must_have": [
+        "retrieval appears healthy",
+        "failure is likely in generation/use of context",
+        "investigate grounding instructions or model behavior"
+      ],
+      "bonus": [
+        "prompt changes",
+        "model selection"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-KNOW-RAG"
+    ],
+    "tags": [
+      "ai_evaluation",
+      "rag_evaluation"
+    ]
+  },
+  {
+    "question_id": "LLM-EMB-ADV-001",
+    "role": "ai_engineer",
+    "competency": "ai_ml_llm_fundamentals",
+    "sub_competency": "embedding",
+    "difficulty": "advanced",
+    "question_type": "conceptual",
+    "question": "Why do Transformers need positional information, and at a high level how can positional encoding provide it?",
+    "expected_concepts": {
+      "must_have": [
+        "self-attention alone does not inherently encode sequence order",
+        "positional information is incorporated into token representations"
+      ],
+      "bonus": [
+        "relative position",
+        "RoPE"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-LLM-EMB"
+    ],
+    "tags": [
+      "ai_ml_llm_fundamentals",
+      "embedding"
+    ]
+  },
+  {
+    "question_id": "LLM-EMB-BAS-001",
+    "role": "ai_engineer",
+    "competency": "ai_ml_llm_fundamentals",
+    "sub_competency": "embedding",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "Why are dense embeddings more useful than one-hot vectors for representing semantic similarity?",
+    "expected_concepts": {
+      "must_have": [
+        "one-hot vectors do not encode semantic closeness",
+        "dense embeddings place semantically related items closer in vector space"
+      ],
+      "bonus": [
+        "lower-dimensional representation"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-LLM-EMB"
+    ],
+    "tags": [
+      "ai_ml_llm_fundamentals",
+      "embedding"
+    ]
+  },
+  {
+    "question_id": "LLM-EMB-BAS-002",
+    "role": "ai_engineer",
+    "competency": "ai_ml_llm_fundamentals",
+    "sub_competency": "embedding",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "What is the difference between a static word embedding and a contextual representation produced by a Transformer?",
+    "expected_concepts": {
+      "must_have": [
+        "static embeddings assign one fixed vector per word",
+        "contextual representations change according to surrounding tokens"
+      ],
+      "bonus": [
+        "polysemy",
+        "self-attention"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-LLM-EMB"
+    ],
+    "tags": [
+      "ai_ml_llm_fundamentals",
+      "embedding"
+    ]
+  },
+  {
+    "question_id": "LLM-EMB-INT-001",
+    "role": "ai_engineer",
+    "competency": "ai_ml_llm_fundamentals",
+    "sub_competency": "embedding",
+    "difficulty": "intermediate",
+    "question_type": "conceptual",
+    "question": "How do CBOW and Skip-gram differ in what they learn to predict?",
+    "expected_concepts": {
+      "must_have": [
+        "CBOW predicts a target from surrounding context",
+        "Skip-gram predicts surrounding context from a target word"
+      ],
+      "bonus": [
+        "rare-word representation"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-LLM-EMB"
+    ],
+    "tags": [
+      "ai_ml_llm_fundamentals",
+      "embedding"
+    ]
+  },
+  {
+    "question_id": "LLM-TOKEN-ADV-001",
+    "role": "ai_engineer",
+    "competency": "ai_ml_llm_fundamentals",
+    "sub_competency": "token",
+    "difficulty": "advanced",
+    "question_type": "conceptual",
+    "question": "Why is subword tokenization generally more practical than character-level tokenization for large Transformer workloads?",
+    "expected_concepts": {
+      "must_have": [
+        "character tokenization produces much longer sequences",
+        "longer sequences increase attention compute or memory",
+        "subwords balance vocabulary coverage and sequence length"
+      ],
+      "bonus": [
+        "out-of-vocabulary handling"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-LLM-TOKEN"
+    ],
+    "tags": [
+      "ai_ml_llm_fundamentals",
+      "token"
+    ]
+  },
+  {
+    "question_id": "LLM-TOKEN-BAS-001",
+    "role": "ai_engineer",
+    "competency": "ai_ml_llm_fundamentals",
+    "sub_competency": "token",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "What is the role of tokenization in an NLP/LLM pipeline, and how are tokens represented for model processing?",
+    "expected_concepts": {
+      "must_have": [
+        "tokenization splits text into model-processable units",
+        "tokens are mapped to numerical identifiers or representations"
+      ],
+      "bonus": [
+        "word, subword, or character tokens"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-LLM-TOKEN"
+    ],
+    "tags": [
+      "ai_ml_llm_fundamentals",
+      "token"
+    ]
+  },
+  {
+    "question_id": "LLM-TOKEN-BAS-002",
+    "role": "ai_engineer",
+    "competency": "ai_ml_llm_fundamentals",
+    "sub_competency": "token",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "Why are special sequence-boundary tokens such as beginning-of-sequence and end-of-sequence tokens useful?",
+    "expected_concepts": {
+      "must_have": [
+        "boundary tokens mark sequence start or end",
+        "they help sequence processing or generation recognize boundaries"
+      ],
+      "bonus": [
+        "generation stopping"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-LLM-TOKEN"
+    ],
+    "tags": [
+      "ai_ml_llm_fundamentals",
+      "token"
+    ]
+  },
+  {
+    "question_id": "LLM-TOKEN-INT-001",
+    "role": "ai_engineer",
+    "competency": "ai_ml_llm_fundamentals",
+    "sub_competency": "token",
+    "difficulty": "intermediate",
+    "question_type": "conceptual",
+    "question": "Why are RNN-style sequential models harder to parallelize than Transformers?",
+    "expected_concepts": {
+      "must_have": [
+        "RNNs process sequence states sequentially",
+        "Transformers can process token interactions in parallel during training"
+      ],
+      "bonus": [
+        "training efficiency"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-LLM-TOKEN"
+    ],
+    "tags": [
+      "ai_ml_llm_fundamentals",
+      "token"
+    ]
+  },
+  {
+    "question_id": "LLM-TOKEN-INT-002",
+    "role": "ai_engineer",
+    "competency": "ai_ml_llm_fundamentals",
+    "sub_competency": "token",
+    "difficulty": "intermediate",
+    "question_type": "design",
+    "question": "What trade-offs arise when choosing a very small versus very large tokenizer vocabulary?",
+    "expected_concepts": {
+      "must_have": [
+        "small vocabularies can increase sequence length",
+        "large vocabularies increase model or output-layer parameter cost"
+      ],
+      "bonus": [
+        "subword fragmentation",
+        "memory usage"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-LLM-TOKEN"
+    ],
+    "tags": [
+      "ai_ml_llm_fundamentals",
+      "token"
+    ]
+  },
+  {
+    "question_id": "LLM-TRANS-BAS-001",
+    "role": "ai_engineer",
+    "competency": "ai_ml_llm_fundamentals",
+    "sub_competency": "transformer_architecture",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "Using a simple analogy, what roles do Query, Key, and Value play in self-attention?",
+    "expected_concepts": {
+      "must_have": [
+        "Query represents what a token is looking for",
+        "Key represents what other tokens can match against",
+        "Value carries information that can be aggregated"
+      ],
+      "bonus": [
+        "attention weights"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-LLM-TRANS"
+    ],
+    "tags": [
+      "ai_ml_llm_fundamentals",
+      "transformer_architecture"
+    ]
+  },
+  {
+    "question_id": "LLM-TRANS-BAS-002",
+    "role": "ai_engineer",
+    "competency": "ai_ml_llm_fundamentals",
+    "sub_competency": "transformer_architecture",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "At a high level, how do Transformer encoder and decoder roles differ?",
+    "expected_concepts": {
+      "must_have": [
+        "encoder builds context-aware representations of input",
+        "decoder generates output autoregressively"
+      ],
+      "bonus": [
+        "sequence-to-sequence"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-LLM-TRANS"
+    ],
+    "tags": [
+      "ai_ml_llm_fundamentals",
+      "transformer_architecture"
+    ]
+  },
+  {
+    "question_id": "LLM-TRANS-INT-001",
+    "role": "ai_engineer",
+    "competency": "ai_ml_llm_fundamentals",
+    "sub_competency": "transformer_architecture",
+    "difficulty": "intermediate",
+    "question_type": "conceptual",
+    "question": "Why is causal or masked self-attention necessary when training a generative Transformer decoder?",
+    "expected_concepts": {
+      "must_have": [
+        "future tokens must be hidden from the prediction step",
+        "masking prevents information leakage during next-token training"
+      ],
+      "bonus": [
+        "autoregressive generation"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-LLM-TRANS"
+    ],
+    "tags": [
+      "ai_ml_llm_fundamentals",
+      "transformer_architecture"
+    ]
+  },
+  {
+    "question_id": "LLM-TRANS-INT-002",
+    "role": "ai_engineer",
+    "competency": "ai_ml_llm_fundamentals",
+    "sub_competency": "transformer_architecture",
+    "difficulty": "intermediate",
+    "question_type": "conceptual",
+    "question": "Why does a Transformer use multiple attention heads instead of only one attention calculation?",
+    "expected_concepts": {
+      "must_have": [
+        "multiple heads can capture different relationships in parallel",
+        "head outputs are combined into a richer representation"
+      ],
+      "bonus": [
+        "syntactic and semantic relationships"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-LLM-TRANS"
+    ],
+    "tags": [
+      "ai_ml_llm_fundamentals",
+      "transformer_architecture"
+    ]
+  },
+  {
+    "question_id": "PY-API-BAS-001",
+    "role": "ai_engineer",
+    "competency": "python_software_engineering",
+    "sub_competency": "api_integration",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "What should an AI application validate when accepting input through an API before passing it to an LLM or downstream tool?",
+    "expected_concepts": {
+      "must_have": [
+        "validate request structure and required fields",
+        "handle invalid input before downstream execution"
+      ],
+      "bonus": [
+        "type validation",
+        "authorization"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-PY-API"
+    ],
+    "tags": [
+      "python_software_engineering",
+      "api_integration"
+    ]
+  },
+  {
+    "question_id": "PY-APP-ADV-001",
+    "role": "ai_engineer",
+    "competency": "python_software_engineering",
+    "sub_competency": "application_design",
+    "difficulty": "advanced",
+    "question_type": "design",
+    "question": "How would you structure a Python service containing ingestion, retrieval, LLM calls, evaluation, and API endpoints so that individual components can evolve independently?",
+    "expected_concepts": {
+      "must_have": [
+        "define clear component boundaries",
+        "keep orchestration separate from infrastructure integrations",
+        "make dependencies testable and replaceable"
+      ],
+      "bonus": [
+        "configuration management",
+        "logging"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-PY-DESIGN"
+    ],
+    "tags": [
+      "python_software_engineering",
+      "application_design"
+    ]
+  },
+  {
+    "question_id": "PY-APP-BAS-001",
+    "role": "ai_engineer",
+    "competency": "python_software_engineering",
+    "sub_competency": "application_design",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "Why is it useful to separate retrieval, model calls, business logic, and API handling into different components in an AI application?",
+    "expected_concepts": {
+      "must_have": [
+        "separation of concerns improves maintainability",
+        "components become easier to test and replace"
+      ],
+      "bonus": [
+        "dependency injection",
+        "modularity"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-PY-DESIGN"
+    ],
+    "tags": [
+      "python_software_engineering",
+      "application_design"
+    ]
+  },
+  {
+    "question_id": "PY-ASYNC-INT-001",
+    "role": "ai_engineer",
+    "competency": "python_software_engineering",
+    "sub_competency": "async_concurrency",
+    "difficulty": "intermediate",
+    "question_type": "scenario",
+    "question": "Your application makes several independent network or LLM API calls sequentially and response time is high. When would asynchronous concurrency help?",
+    "expected_concepts": {
+      "must_have": [
+        "independent I/O-bound operations can run concurrently",
+        "async can reduce waiting time when calls do not depend on one another"
+      ],
+      "bonus": [
+        "task groups",
+        "timeouts"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-PY-ASYNC"
+    ],
+    "tags": [
+      "python_software_engineering",
+      "async_concurrency"
+    ]
+  },
+  {
+    "question_id": "PY-ASYNC-INT-002",
+    "role": "ai_engineer",
+    "competency": "python_software_engineering",
+    "sub_competency": "async_concurrency",
+    "difficulty": "intermediate",
+    "question_type": "troubleshooting",
+    "question": "What problems should you consider when one task fails while several asynchronous tasks are running concurrently?",
+    "expected_concepts": {
+      "must_have": [
+        "exceptions must be handled explicitly",
+        "related tasks may need cancellation or cleanup"
+      ],
+      "bonus": [
+        "structured concurrency",
+        "partial results"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-PY-ASYNC"
+    ],
+    "tags": [
+      "python_software_engineering",
+      "async_concurrency"
+    ]
+  },
+  {
+    "question_id": "PY-ERR-INT-001",
+    "role": "ai_engineer",
+    "competency": "python_software_engineering",
+    "sub_competency": "error_handling",
+    "difficulty": "intermediate",
+    "question_type": "scenario",
+    "question": "An external AI service intermittently times out or returns errors. How would you make your application resilient without retrying forever?",
+    "expected_concepts": {
+      "must_have": [
+        "use bounded retries",
+        "apply timeouts",
+        "handle persistent failure safely"
+      ],
+      "bonus": [
+        "backoff",
+        "fallbacks",
+        "observability"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-PY-API"
+    ],
+    "tags": [
+      "python_software_engineering",
+      "error_handling"
+    ]
+  },
+  {
+    "question_id": "PY-TEST-BAS-001",
+    "role": "ai_engineer",
+    "competency": "python_software_engineering",
+    "sub_competency": "testing",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "What parts of an AI API service can be tested deterministically even when the LLM output itself is non-deterministic?",
+    "expected_concepts": {
+      "must_have": [
+        "API status and schema behavior can be tested",
+        "deterministic application logic can be tested independently"
+      ],
+      "bonus": [
+        "mocking external services",
+        "dependency overrides"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-PY-TEST"
+    ],
+    "tags": [
+      "python_software_engineering",
+      "testing"
+    ]
+  },
+  {
+    "question_id": "PY-TEST-INT-001",
+    "role": "ai_engineer",
+    "competency": "python_software_engineering",
+    "sub_competency": "testing",
+    "difficulty": "intermediate",
+    "question_type": "design",
+    "question": "How would you test an AI application without making a real external LLM call in every unit test?",
+    "expected_concepts": {
+      "must_have": [
+        "separate external model dependency from business logic",
+        "replace or mock the external dependency during tests"
+      ],
+      "bonus": [
+        "dependency injection",
+        "fixtures"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-PY-TEST"
+    ],
+    "tags": [
+      "python_software_engineering",
+      "testing"
+    ]
+  },
+  {
+    "question_id": "RAG-CHUNK-BAS-001",
+    "role": "ai_engineer",
+    "competency": "rag",
+    "sub_competency": "chunking",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "What trade-off do you consider when choosing chunk size for a RAG system?",
+    "expected_concepts": {
+      "must_have": [
+        "small chunks can lose surrounding context",
+        "large chunks can mix topics/reduce retrieval precision"
+      ],
+      "bonus": [
+        "context usage",
+        "embedding quality"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-RAG-CHUNK"
+    ],
+    "tags": [
+      "chunking",
+      "rag"
+    ]
+  },
+  {
+    "question_id": "RAG-CHUNK-BAS-002",
+    "role": "ai_engineer",
+    "competency": "rag",
+    "sub_competency": "chunking",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "What is chunk overlap, and why can it be useful in fixed-size chunking?",
+    "expected_concepts": {
+      "must_have": [
+        "overlap repeats content across neighboring chunks",
+        "overlap reduces boundary information loss"
+      ],
+      "bonus": [
+        "split facts",
+        "sentence boundaries"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-RAG-CHUNK"
+    ],
+    "tags": [
+      "chunking",
+      "rag"
+    ]
+  },
+  {
+    "question_id": "RAG-CHUNK-INT-001",
+    "role": "ai_engineer",
+    "competency": "rag",
+    "sub_competency": "chunking",
+    "difficulty": "intermediate",
+    "question_type": "conceptual",
+    "question": "Compare pre-chunking with chunking documents on demand at query time. What are the main trade-offs?",
+    "expected_concepts": {
+      "must_have": [
+        "pre-chunking prepares chunks before queries",
+        "query-time chunking adds flexibility",
+        "query-time processing can add latency"
+      ],
+      "bonus": [
+        "caching",
+        "upfront decisions"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-RAG-CHUNK"
+    ],
+    "tags": [
+      "chunking",
+      "rag"
+    ]
+  },
+  {
+    "question_id": "RAG-CHUNK-INT-002",
+    "role": "ai_engineer",
+    "competency": "rag",
+    "sub_competency": "chunking",
+    "difficulty": "intermediate",
+    "question_type": "conceptual",
+    "question": "How does semantic chunking decide where to split a document, and when might it be preferable to fixed-size chunking?",
+    "expected_concepts": {
+      "must_have": [
+        "semantic similarity identifies boundaries",
+        "related content is kept together"
+      ],
+      "bonus": [
+        "sentence embeddings",
+        "topic breakpoints"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-RAG-CHUNK"
+    ],
+    "tags": [
+      "chunking",
+      "rag"
+    ]
+  },
+  {
+    "question_id": "RAG-CTX-BAS-001",
+    "role": "ai_engineer",
+    "competency": "rag",
+    "sub_competency": "context_engineering",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "How does context engineering differ from prompt engineering in a RAG application?",
+    "expected_concepts": {
+      "must_have": [
+        "prompt engineering focuses on instructions/phrasing",
+        "context engineering controls information entering context"
+      ],
+      "bonus": [
+        "filtering",
+        "compression",
+        "structure"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-RAG-CTX"
+    ],
+    "tags": [
+      "context_engineering",
+      "rag"
+    ]
+  },
+  {
+    "question_id": "RAG-CTX-BAS-002",
+    "role": "ai_engineer",
+    "competency": "rag",
+    "sub_competency": "context_engineering",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "What is the 'lost in the middle' problem in long contexts, and why does it matter for RAG?",
+    "expected_concepts": {
+      "must_have": [
+        "buried information may be used less effectively",
+        "context selection/order affects quality"
+      ],
+      "bonus": [
+        "reranking",
+        "context reduction"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-RAG-CTX"
+    ],
+    "tags": [
+      "context_engineering",
+      "rag"
+    ]
+  },
+  {
+    "question_id": "RAG-CTX-INT-001",
+    "role": "ai_engineer",
+    "competency": "rag",
+    "sub_competency": "context_engineering",
+    "difficulty": "intermediate",
+    "question_type": "troubleshooting",
+    "question": "In a long-running AI interaction, what problems can occur as context keeps growing, and how would you mitigate them?",
+    "expected_concepts": {
+      "must_have": [
+        "growing context can cause repetition/instruction drift",
+        "stale context should be summarized filtered or externalized"
+      ],
+      "bonus": [
+        "context rot",
+        "external state"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-RAG-CTX"
+    ],
+    "tags": [
+      "context_engineering",
+      "rag"
+    ]
+  },
+  {
+    "question_id": "RAG-CTX-INT-002",
+    "role": "ai_engineer",
+    "competency": "rag",
+    "sub_competency": "context_engineering",
+    "difficulty": "intermediate",
+    "question_type": "design",
+    "question": "How would you structure a production prompt stack containing system instructions, retrieved context, conversation history, tool output, and the user query?",
+    "expected_concepts": {
+      "must_have": [
+        "context components should be deliberately structured",
+        "stable and dynamic content have different roles"
+      ],
+      "bonus": [
+        "prompt caching",
+        "delimiters",
+        "prioritization"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-RAG-CTX"
+    ],
+    "tags": [
+      "context_engineering",
+      "rag"
+    ]
+  },
+  {
+    "question_id": "RAG-EMB-BAS-001",
+    "role": "ai_engineer",
+    "competency": "rag",
+    "sub_competency": "embeddings",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "What are text embeddings, and how are they used to retrieve semantically similar content in RAG?",
+    "expected_concepts": {
+      "must_have": [
+        "text represented as numerical vectors",
+        "semantic similarity maps to proximity",
+        "query/document vectors compared"
+      ],
+      "bonus": [
+        "latent space",
+        "vector similarity"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-RAG-EMB"
+    ],
+    "tags": [
+      "embeddings",
+      "rag"
+    ]
+  },
+  {
+    "question_id": "RAG-EMB-BAS-002",
+    "role": "ai_engineer",
+    "competency": "rag",
+    "sub_competency": "embeddings",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "What is the difference between cosine similarity and Euclidean distance when comparing embeddings?",
+    "expected_concepts": {
+      "must_have": [
+        "cosine compares vector direction",
+        "Euclidean compares geometric distance"
+      ],
+      "bonus": [
+        "magnitude",
+        "semantic similarity"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-RAG-EMB"
+    ],
+    "tags": [
+      "embeddings",
+      "rag"
+    ]
+  },
+  {
+    "question_id": "RAG-EMB-INT-001",
+    "role": "ai_engineer",
+    "competency": "rag",
+    "sub_competency": "embeddings",
+    "difficulty": "intermediate",
+    "question_type": "troubleshooting",
+    "question": "What can happen if the embedding model used for queries is changed while the document index was created with another model, and how would you resolve it?",
+    "expected_concepts": {
+      "must_have": [
+        "query/document embeddings may be incompatible",
+        "retrieval can degrade",
+        "re-embed corpus with chosen model"
+      ],
+      "bonus": [
+        "model versioning",
+        "index migration"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-RAG-EMB"
+    ],
+    "tags": [
+      "embeddings",
+      "rag"
+    ]
+  },
+  {
+    "question_id": "RAG-EVAL-ADV-001",
+    "role": "ai_engineer",
+    "competency": "rag",
+    "sub_competency": "rag_evaluation",
+    "difficulty": "advanced",
+    "question_type": "design",
+    "question": "How would you design an LLM-as-a-judge evaluation for faithfulness so that scoring is evidence-based and reasonably consistent?",
+    "expected_concepts": {
+      "must_have": [
+        "provide supporting context",
+        "define explicit scoring criteria",
+        "require evidence-based justification",
+        "use structured output"
+      ],
+      "bonus": [
+        "judge calibration",
+        "regression testing"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-RAG-EVAL"
+    ],
+    "tags": [
+      "rag",
+      "rag_evaluation"
+    ]
+  },
+  {
+    "question_id": "RAG-EVAL-BAS-001",
+    "role": "ai_engineer",
+    "competency": "rag",
+    "sub_competency": "rag_evaluation",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "Why should retrieval and generation be evaluated separately in a RAG system?",
+    "expected_concepts": {
+      "must_have": [
+        "retrieval and generation can fail independently",
+        "separate evaluation enables root-cause diagnosis"
+      ],
+      "bonus": [
+        "retrieval metrics",
+        "generation metrics"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-RAG-EVAL"
+    ],
+    "tags": [
+      "rag",
+      "rag_evaluation"
+    ]
+  },
+  {
+    "question_id": "RAG-EVAL-BAS-002",
+    "role": "ai_engineer",
+    "competency": "rag",
+    "sub_competency": "rag_evaluation",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "What do Recall@k, MRR, and MAP tell you about retrieval quality?",
+    "expected_concepts": {
+      "must_have": [
+        "Recall@k measures relevant items in top-k",
+        "MRR emphasizes first relevant rank",
+        "MAP evaluates ranking with multiple relevant items"
+      ],
+      "bonus": [
+        "ranking quality",
+        "precision"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-RAG-EVAL"
+    ],
+    "tags": [
+      "rag",
+      "rag_evaluation"
+    ]
+  },
+  {
+    "question_id": "RAG-EVAL-INT-001",
+    "role": "ai_engineer",
+    "competency": "rag",
+    "sub_competency": "rag_evaluation",
+    "difficulty": "intermediate",
+    "question_type": "design",
+    "question": "How would you create a grounded evaluation dataset for a RAG system when you do not yet have enough human-written test questions?",
+    "expected_concepts": {
+      "must_have": [
+        "generate QA from trusted context",
+        "validate/critique generated examples",
+        "retain a repeatable golden set"
+      ],
+      "bonus": [
+        "synthetic dataset",
+        "groundedness",
+        "relevance"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-RAG-EVAL"
+    ],
+    "tags": [
+      "rag",
+      "rag_evaluation"
+    ]
+  },
+  {
+    "question_id": "RAG-EVAL-INT-002",
+    "role": "ai_engineer",
+    "competency": "rag",
+    "sub_competency": "rag_evaluation",
+    "difficulty": "intermediate",
+    "question_type": "conceptual",
+    "question": "When generating synthetic RAG evaluation questions, what do groundedness, relevance, and stand-alone quality checks verify?",
+    "expected_concepts": {
+      "must_have": [
+        "groundedness verifies source support",
+        "relevance verifies usefulness",
+        "stand-alone verifies independent understandability"
+      ],
+      "bonus": [
+        "critique filtering",
+        "dataset quality"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-RAG-EVAL"
+    ],
+    "tags": [
+      "rag",
+      "rag_evaluation"
+    ]
+  },
+  {
+    "question_id": "RAG-FUND-ADV-001",
+    "role": "ai_engineer",
+    "competency": "rag",
+    "sub_competency": "rag_fundamentals",
+    "difficulty": "advanced",
+    "question_type": "design",
+    "question": "When would you choose RAG, fine-tuning, or a combination of both for an AI application?",
+    "expected_concepts": {
+      "must_have": [
+        "RAG for external/changing knowledge",
+        "fine-tuning for behavior adaptation",
+        "choice depends on requirements"
+      ],
+      "bonus": [
+        "traceability",
+        "privacy",
+        "cost"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-RAG-FUND"
+    ],
+    "tags": [
+      "rag",
+      "rag_fundamentals"
+    ]
+  },
+  {
+    "question_id": "RAG-FUND-BAS-001",
+    "role": "ai_engineer",
+    "competency": "rag",
+    "sub_competency": "rag_fundamentals",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "How does RAG differ from fine-tuning when the knowledge used by an AI application changes frequently?",
+    "expected_concepts": {
+      "must_have": [
+        "external knowledge retrieval",
+        "update knowledge without retraining",
+        "fine-tuning modifies the model"
+      ],
+      "bonus": [
+        "source traceability",
+        "behavior/style adaptation"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-RAG-FUND"
+    ],
+    "tags": [
+      "rag",
+      "rag_fundamentals"
+    ]
+  },
+  {
+    "question_id": "RAG-FUND-BAS-002",
+    "role": "ai_engineer",
+    "competency": "rag",
+    "sub_competency": "rag_fundamentals",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "Describe the three core steps—Retrieve, Augment, and Generate—in a classic RAG pipeline. What is the purpose of each step?",
+    "expected_concepts": {
+      "must_have": [
+        "retrieve relevant external information",
+        "augment the LLM input with retrieved context",
+        "generate using augmented context"
+      ],
+      "bonus": [
+        "top-k retrieval",
+        "grounding"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-RAG-FUND"
+    ],
+    "tags": [
+      "rag",
+      "rag_fundamentals"
+    ]
+  },
+  {
+    "question_id": "RAG-FUND-INT-001",
+    "role": "ai_engineer",
+    "competency": "rag",
+    "sub_competency": "rag_fundamentals",
+    "difficulty": "intermediate",
+    "question_type": "scenario",
+    "question": "A team proposes sending its entire internal document collection to a long-context LLM with every query instead of using retrieval. What practical problems could this introduce in production?",
+    "expected_concepts": {
+      "must_have": [
+        "increased cost",
+        "increased latency",
+        "irrelevant/excessive context can reduce quality"
+      ],
+      "bonus": [
+        "lost in the middle",
+        "scalability"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-RAG-FUND"
+    ],
+    "tags": [
+      "rag",
+      "rag_fundamentals"
+    ]
+  },
+  {
+    "question_id": "RAG-FUND-INT-002",
+    "role": "ai_engineer",
+    "competency": "rag",
+    "sub_competency": "rag_fundamentals",
+    "difficulty": "intermediate",
+    "question_type": "conceptual",
+    "question": "Why can an LLM hallucinate when answering without a retrieval layer, and how can retrieval help?",
+    "expected_concepts": {
+      "must_have": [
+        "probabilistic generation",
+        "model knowledge is not a verified database",
+        "retrieval supplies external evidence"
+      ],
+      "bonus": [
+        "grounding",
+        "training-data limitations"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-RAG-FUND"
+    ],
+    "tags": [
+      "rag",
+      "rag_fundamentals"
+    ]
+  },
+  {
+    "question_id": "RAG-PROD-ADV-001",
+    "role": "ai_engineer",
+    "competency": "rag",
+    "sub_competency": "production_rag",
+    "difficulty": "advanced",
+    "question_type": "design",
+    "question": "Describe a production RAG architecture with separate ingestion and query pipelines. How would you handle document updates, access control, retrieval, reranking, generation, and observability?",
+    "expected_concepts": {
+      "must_have": [
+        "offline ingestion prepares documents metadata embeddings and indexes",
+        "online query retrieves authorized relevant context before generation",
+        "updates keep indexes synchronized",
+        "observability captures pipeline behavior"
+      ],
+      "bonus": [
+        "hybrid retrieval",
+        "versioning",
+        "tracing"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-RAG-PROD"
+    ],
+    "tags": [
+      "production_rag",
+      "rag"
+    ]
+  },
+  {
+    "question_id": "RAG-PROD-BAS-001",
+    "role": "ai_engineer",
+    "competency": "rag",
+    "sub_competency": "production_rag",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "How does metadata filtering help enforce access control in a multi-tenant RAG system?",
+    "expected_concepts": {
+      "must_have": [
+        "chunks carry authorization metadata",
+        "retrieval filters prevent unauthorized candidates"
+      ],
+      "bonus": [
+        "tenant isolation",
+        "ACL"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-RAG-PROD"
+    ],
+    "tags": [
+      "production_rag",
+      "rag"
+    ]
+  },
+  {
+    "question_id": "RAG-PROD-BAS-002",
+    "role": "ai_engineer",
+    "competency": "rag",
+    "sub_competency": "production_rag",
+    "difficulty": "basic",
+    "question_type": "troubleshooting",
+    "question": "Name common production RAG failure modes and explain how you would address them.",
+    "expected_concepts": {
+      "must_have": [
+        "wrong/off-topic chunks",
+        "relevant chunks ranked too low",
+        "stale index"
+      ],
+      "bonus": [
+        "hybrid retrieval",
+        "reranking",
+        "reindexing"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-RAG-PROD"
+    ],
+    "tags": [
+      "production_rag",
+      "rag"
+    ]
+  },
+  {
+    "question_id": "RAG-PROD-INT-001",
+    "role": "ai_engineer",
+    "competency": "rag",
+    "sub_competency": "production_rag",
+    "difficulty": "intermediate",
+    "question_type": "troubleshooting",
+    "question": "How would you investigate and optimize latency in a production RAG pipeline?",
+    "expected_concepts": {
+      "must_have": [
+        "measure latency by stage",
+        "identify dominant stages first",
+        "consider retrieval reranking context size and generation"
+      ],
+      "bonus": [
+        "caching",
+        "parallel retrieval",
+        "model selection"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-RAG-PROD"
+    ],
+    "tags": [
+      "production_rag",
+      "rag"
+    ]
+  },
+  {
+    "question_id": "RAG-PROD-INT-002",
+    "role": "ai_engineer",
+    "competency": "rag",
+    "sub_competency": "production_rag",
+    "difficulty": "intermediate",
+    "question_type": "conceptual",
+    "question": "What are the major cost contributors in a production RAG pipeline, and how would you control them?",
+    "expected_concepts": {
+      "must_have": [
+        "measure cost across stages",
+        "model usage and token volume influence cost"
+      ],
+      "bonus": [
+        "caching",
+        "prompt size",
+        "output length"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-RAG-PROD"
+    ],
+    "tags": [
+      "production_rag",
+      "rag"
+    ]
+  },
+  {
+    "question_id": "RAG-RET-ADV-001",
+    "role": "ai_engineer",
+    "competency": "rag",
+    "sub_competency": "retrieval_search",
+    "difficulty": "advanced",
+    "question_type": "troubleshooting",
+    "question": "Your hybrid retriever improves Recall@10 but downstream answer quality decreases. How would you diagnose the pipeline?",
+    "expected_concepts": {
+      "must_have": [
+        "evaluate precision as well as recall",
+        "inspect noisy context",
+        "evaluate retrieval and generation separately",
+        "inspect context construction"
+      ],
+      "bonus": [
+        "reranking",
+        "MRR/NDCG",
+        "ablation testing"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-RAG-RET"
+    ],
+    "tags": [
+      "rag",
+      "retrieval_search"
+    ]
+  },
+  {
+    "question_id": "RAG-RET-BAS-001",
+    "role": "ai_engineer",
+    "competency": "rag",
+    "sub_competency": "retrieval_search",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "Compare dense semantic retrieval with sparse keyword retrieval such as BM25. What kinds of queries does each handle well?",
+    "expected_concepts": {
+      "must_have": [
+        "dense captures semantic similarity",
+        "sparse handles exact lexical matches"
+      ],
+      "bonus": [
+        "synonyms",
+        "product IDs",
+        "error codes"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-RAG-RET"
+    ],
+    "tags": [
+      "rag",
+      "retrieval_search"
+    ]
+  },
+  {
+    "question_id": "RAG-RET-BAS-002",
+    "role": "ai_engineer",
+    "competency": "rag",
+    "sub_competency": "retrieval_search",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "What is Reciprocal Rank Fusion (RRF), and why is it useful when combining dense and sparse retrieval results?",
+    "expected_concepts": {
+      "must_have": [
+        "combines ranked result lists",
+        "uses ranks instead of incompatible raw scores"
+      ],
+      "bonus": [
+        "hybrid retrieval",
+        "rank fusion"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-RAG-RET"
+    ],
+    "tags": [
+      "rag",
+      "retrieval_search"
+    ]
+  },
+  {
+    "question_id": "RAG-RET-INT-001",
+    "role": "ai_engineer",
+    "competency": "rag",
+    "sub_competency": "retrieval_search",
+    "difficulty": "intermediate",
+    "question_type": "design",
+    "question": "Why might a RAG pipeline use a fast retriever first and a more expensive reranker afterward?",
+    "expected_concepts": {
+      "must_have": [
+        "first stage efficiently finds candidates",
+        "reranker gives more precise relevance scoring on fewer candidates"
+      ],
+      "bonus": [
+        "bi-encoder",
+        "cross-encoder",
+        "recall/precision"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-RAG-RET"
+    ],
+    "tags": [
+      "rag",
+      "retrieval_search"
+    ]
+  },
+  {
+    "question_id": "RAG-RET-INT-002",
+    "role": "ai_engineer",
+    "competency": "rag",
+    "sub_competency": "retrieval_search",
+    "difficulty": "intermediate",
+    "question_type": "scenario",
+    "question": "Your semantic retriever finds conceptually related documents but often misses exact product codes and identifiers. How would you improve the retrieval pipeline?",
+    "expected_concepts": {
+      "must_have": [
+        "combine semantic and lexical retrieval",
+        "use hybrid retrieval"
+      ],
+      "bonus": [
+        "BM25",
+        "RRF",
+        "reranking"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-RAG-RET"
+    ],
+    "tags": [
+      "rag",
+      "retrieval_search"
+    ]
+  },
+  {
+    "question_id": "SEC-ACL-INT-001",
+    "role": "ai_engineer",
+    "competency": "ai_security",
+    "sub_competency": "access_control",
+    "difficulty": "intermediate",
+    "question_type": "scenario",
+    "question": "A multi-tenant RAG assistant is told in its system prompt to only answer using the current customer's documents. Why is that not sufficient access control?",
+    "expected_concepts": {
+      "must_have": [
+        "prompt instructions are not a security boundary",
+        "authorization must restrict retrieval before context reaches the model"
+      ],
+      "bonus": [
+        "tenant metadata filters",
+        "server-side enforcement"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-SEC-PRIV"
+    ],
+    "tags": [
+      "ai_security",
+      "access_control"
+    ]
+  },
+  {
+    "question_id": "SEC-DEF-ADV-001",
+    "role": "ai_engineer",
+    "competency": "ai_security",
+    "sub_competency": "guardrails",
+    "difficulty": "advanced",
+    "question_type": "design",
+    "question": "How would you design defense in depth for an AI agent that reads untrusted external content and can invoke tools with side effects?",
+    "expected_concepts": {
+      "must_have": [
+        "use multiple independent guardrail layers",
+        "apply authentication/authorization and least privilege",
+        "validate tool inputs and outputs",
+        "require human approval for high-risk actions"
+      ],
+      "bonus": [
+        "prompt-injection detection",
+        "sandboxing",
+        "monitoring"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-SEC-GUARD"
+    ],
+    "tags": [
+      "ai_security",
+      "guardrails"
+    ]
+  },
+  {
+    "question_id": "SEC-OUT-INT-001",
+    "role": "ai_engineer",
+    "competency": "ai_security",
+    "sub_competency": "guardrails",
+    "difficulty": "intermediate",
+    "question_type": "conceptual",
+    "question": "Why should an application validate or safely handle LLM output before using it as input to another system or executable tool?",
+    "expected_concepts": {
+      "must_have": [
+        "LLM output should be treated as untrusted",
+        "downstream execution needs validation and sanitization"
+      ],
+      "bonus": [
+        "structured schemas",
+        "allowlists"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-SEC-GUARD"
+    ],
+    "tags": [
+      "ai_security",
+      "guardrails"
+    ]
+  },
+  {
+    "question_id": "SEC-PI-BAS-001",
+    "role": "ai_engineer",
+    "competency": "ai_security",
+    "sub_competency": "prompt_injection",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "What is prompt injection, and why can it be dangerous in an LLM application that has access to tools or private data?",
+    "expected_concepts": {
+      "must_have": [
+        "untrusted input can alter intended model behavior",
+        "impact increases when the model can access data or take actions"
+      ],
+      "bonus": [
+        "direct and indirect injection"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-SEC-PI"
+    ],
+    "tags": [
+      "ai_security",
+      "prompt_injection"
+    ]
+  },
+  {
+    "question_id": "SEC-PRIV-BAS-001",
+    "role": "ai_engineer",
+    "competency": "ai_security",
+    "sub_competency": "data_privacy",
+    "difficulty": "basic",
+    "question_type": "scenario",
+    "question": "What controls would you use to reduce the risk of an AI application exposing sensitive or private information?",
+    "expected_concepts": {
+      "must_have": [
+        "enforce authorization outside the model",
+        "limit data made available to the model",
+        "avoid unnecessary sensitive data exposure"
+      ],
+      "bonus": [
+        "redaction",
+        "least privilege"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-SEC-PRIV"
+    ],
+    "tags": [
+      "ai_security",
+      "data_privacy"
+    ]
+  },
+  {
+    "question_id": "SEC-TOOL-INT-001",
+    "role": "ai_engineer",
+    "competency": "ai_security",
+    "sub_competency": "tool_security",
+    "difficulty": "intermediate",
+    "question_type": "design",
+    "question": "An AI agent can read customer records and also delete them. How would you reduce the risk of unintended or manipulated destructive actions?",
+    "expected_concepts": {
+      "must_have": [
+        "apply least-privilege tool permissions",
+        "separate read and write capabilities",
+        "require approval for high-risk irreversible actions"
+      ],
+      "bonus": [
+        "allowlists",
+        "schema validation",
+        "sandboxing"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-SEC-TOOL"
+    ],
+    "tags": [
+      "ai_security",
+      "tool_security"
+    ]
+  },
+  {
+    "question_id": "SYS-ARCH-ADV-001",
+    "role": "ai_engineer",
+    "competency": "ai_system_design",
+    "sub_competency": "ai_architecture",
+    "difficulty": "advanced",
+    "question_type": "design",
+    "question": "Design a production AI assistant that uses enterprise knowledge and external tools. What boundaries would you create between retrieval, reasoning, tool execution, guardrails, and observability?",
+    "expected_concepts": {
+      "must_have": [
+        "separate retrieval/context from reasoning",
+        "tool execution should pass through controlled interfaces",
+        "guardrails and authorization protect risky actions",
+        "observability spans the workflow"
+      ],
+      "bonus": [
+        "human approval",
+        "evaluation"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-SYS-ARCH"
+    ],
+    "tags": [
+      "ai_system_design",
+      "ai_architecture"
+    ]
+  },
+  {
+    "question_id": "SYS-ARCH-BAS-001",
+    "role": "ai_engineer",
+    "competency": "ai_system_design",
+    "sub_competency": "ai_architecture",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "What major components would you expect in a production LLM application beyond the model itself?",
+    "expected_concepts": {
+      "must_have": [
+        "application or orchestration layer",
+        "data retrieval or tool integrations",
+        "evaluation or monitoring"
+      ],
+      "bonus": [
+        "guardrails",
+        "caching"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-SYS-ARCH"
+    ],
+    "tags": [
+      "ai_system_design",
+      "ai_architecture"
+    ]
+  },
+  {
+    "question_id": "SYS-DEP-BAS-001",
+    "role": "ai_engineer",
+    "competency": "ai_system_design",
+    "sub_competency": "deployment",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "Why are reproducible runtime environments and environment-based configuration useful when deploying an AI service?",
+    "expected_concepts": {
+      "must_have": [
+        "deployment consistency matters",
+        "configuration and secrets should be separated from application code"
+      ],
+      "bonus": [
+        "containers",
+        "environment isolation"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-SYS-DEP"
+    ],
+    "tags": [
+      "ai_system_design",
+      "deployment"
+    ]
+  },
+  {
+    "question_id": "SYS-OBS-BAS-001",
+    "role": "ai_engineer",
+    "competency": "ai_system_design",
+    "sub_competency": "observability",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "What would you log or trace in a production AI application to diagnose quality and reliability problems?",
+    "expected_concepts": {
+      "must_have": [
+        "model and tool calls/outcomes",
+        "latency and errors",
+        "relevant retrieval or workflow steps"
+      ],
+      "bonus": [
+        "token/cost usage",
+        "trace IDs"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-SYS-OBS"
+    ],
+    "tags": [
+      "ai_system_design",
+      "observability"
+    ]
+  },
+  {
+    "question_id": "SYS-PERF-INT-001",
+    "role": "ai_engineer",
+    "competency": "ai_system_design",
+    "sub_competency": "performance_optimization",
+    "difficulty": "intermediate",
+    "question_type": "troubleshooting",
+    "question": "Your AI application is too slow and expensive in production. How would you determine what to optimize first?",
+    "expected_concepts": {
+      "must_have": [
+        "measure latency and cost by pipeline stage",
+        "identify dominant contributors before changing architecture",
+        "measure quality impact of optimizations"
+      ],
+      "bonus": [
+        "caching",
+        "model routing",
+        "context reduction"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-SYS-PERF"
+    ],
+    "tags": [
+      "ai_system_design",
+      "performance_optimization"
+    ]
+  },
+  {
+    "question_id": "SYS-REL-ADV-001",
+    "role": "ai_engineer",
+    "competency": "ai_system_design",
+    "sub_competency": "reliability",
+    "difficulty": "advanced",
+    "question_type": "design",
+    "question": "How would you roll out a major prompt, model, or orchestration change without risking all production users at once?",
+    "expected_concepts": {
+      "must_have": [
+        "evaluate change before broad rollout",
+        "use staged or limited rollout",
+        "monitor quality and operational metrics",
+        "retain rollback capability"
+      ],
+      "bonus": [
+        "canary release",
+        "feature flags"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-SYS-REL"
+    ],
+    "tags": [
+      "ai_system_design",
+      "reliability"
+    ]
+  },
+  {
+    "question_id": "SYS-REL-INT-001",
+    "role": "ai_engineer",
+    "competency": "ai_system_design",
+    "sub_competency": "reliability",
+    "difficulty": "intermediate",
+    "question_type": "scenario",
+    "question": "How would you design an AI application so that failure of an external model or tool does not automatically fail the entire user request?",
+    "expected_concepts": {
+      "must_have": [
+        "define explicit failure handling",
+        "use bounded retries or fallbacks where appropriate",
+        "degrade or escalate safely"
+      ],
+      "bonus": [
+        "timeouts",
+        "circuit breaking"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-SYS-REL"
+    ],
+    "tags": [
+      "ai_system_design",
+      "reliability"
+    ]
+  },
+  {
+    "question_id": "SYS-SCALE-INT-001",
+    "role": "ai_engineer",
+    "competency": "ai_system_design",
+    "sub_competency": "scalability",
+    "difficulty": "intermediate",
+    "question_type": "scenario",
+    "question": "An AI prototype works well for 10 users but must support thousands. What parts of the architecture would you revisit before scaling it?",
+    "expected_concepts": {
+      "must_have": [
+        "identify throughput and concurrency bottlenecks",
+        "review external service/model limits",
+        "review state storage and caching"
+      ],
+      "bonus": [
+        "queueing",
+        "rate limiting",
+        "horizontal scaling"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-SYS-SCALE"
+    ],
+    "tags": [
+      "ai_system_design",
+      "scalability"
+    ]
+  }
+]

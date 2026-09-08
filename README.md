@@ -2,7 +2,7 @@
 
 AI Engineer interview preparation focused on identifying competency gaps through curated questions and evaluation knowledge.
 
-The repository currently contains the assessment corpus, authoring material, validation script, and an [MVP implementation plan](docs/FIVE_DAY_MVP_IMPLEMENTATION_GUIDE.md). The application runtime is not yet implemented.
+The repository currently contains the assessment corpus, authoring material, validation and build scripts, and an [MVP implementation plan](docs/FIVE_DAY_MVP_IMPLEMENTATION_GUIDE.md). The application runtime is not yet implemented.
 
 ## Directory structure
 
@@ -14,12 +14,13 @@ InterviewGapAI/
 │   ├── raw/notebooklm/     # Source exports and unprocessed question/evaluation material
 │   ├── curated/            # Reviewed JSON question banks and evaluation knowledge by competency
 │   ├── prepared/           # JSONL exports for downstream ingestion
-│   └── eval/               # Reserved for evaluation datasets (currently empty)
+│   │   └── master/        # Combined corpus, manifest, and readable question JSON
+│   └── eval/               # Golden retrieval queries in JSONL and readable JSON
 ├── docs/                   # Architecture, MVP scope, and implementation guidance
 ├── job_description/        # Canonical AI Engineer role and expectations
 ├── prompts/                # NotebookLM question-authoring instructions
 ├── questions/              # Original RAG question material
-├── scripts/                # Corpus validation and JSONL export utility
+├── scripts/                # Corpus validation, master build, and golden dataset checks
 └── README.md
 ```
 
@@ -27,7 +28,7 @@ Empty directories are workspace placeholders and are not tracked by Git.
 
 `data/curated/` contains `rag`, `agentic_ai`, `llm_fundamentals`, `ai_evaluation`, `ai_system_design`, `ai_security`, and `python_software_engineering`. Each folder pairs `<competency>_questions.json` with `<competency>_evaluation_knowledge.json`; questions link to evaluation records through `evaluation_refs`.
 
-Existing RAG exports are directly under `data/prepared/`; other available exports use competency subdirectories. Python/software engineering exports are not yet present. The validator writes all new exports to `data/prepared/<competency>/`.
+All seven corpora have exports in `data/prepared/<competency>/`. Legacy RAG exports remain directly under `data/prepared/`; the master builder uses only the seven named competency subdirectories. `data/prepared/master/` contains the combined questions, evaluation knowledge, and `corpus_manifest.json` statistics. Files ending in `_pretty.json` are readable copies of their corresponding JSONL datasets.
 
 ## Validate and prepare a corpus
 
@@ -38,6 +39,17 @@ python3 scripts/validate_corpus.py rag
 ```
 
 Replace `rag` with a curated folder name above. The script checks required fields, allowed values, duplicate IDs and question text, and evaluation references. On success, it writes `interview_questions.jsonl` and `evaluation_knowledge.jsonl` to the competency's prepared directory. Structural validation does not establish factual accuracy.
+
+To rebuild all prepared corpora, combine them, and validate the golden retrieval dataset:
+
+```bash
+for corpus in rag agentic_ai llm_fundamentals ai_evaluation python_software_engineering ai_system_design ai_security; do
+    python3 scripts/validate_corpus.py "$corpus" || exit 1
+done
+python3 scripts/build_corpus.py && python3 scripts/validate_golden_dataset.py
+```
+
+The master builder checks global IDs and evaluation references. The golden validator checks query fields and target questions against the master corpus; it does not measure retrieval performance. These scripts do not regenerate the `_pretty.json` copies; keep them synchronized when their JSONL sources change.
 
 ## Keeping this README current
 
