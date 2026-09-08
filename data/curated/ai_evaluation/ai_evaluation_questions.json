@@ -1,0 +1,458 @@
+[
+  {
+    "question_id": "EVAL-RAG-BAS-001",
+    "role": "ai_engineer",
+    "competency": "ai_evaluation",
+    "sub_competency": "rag_evaluation",
+    "difficulty": "basic",
+    "question_type": "scenario",
+    "question": "What is the practical difference between context recall and context precision? If irrelevant chunks are frequently retrieved, which one is suffering and what would you improve?",
+    "expected_concepts": {
+      "must_have": [
+        "context recall measures whether needed evidence is retrieved",
+        "context precision measures whether retrieved context is relevant/useful",
+        "irrelevant chunks indicate low context precision"
+      ],
+      "bonus": [
+        "ranking",
+        "filtering",
+        "reranking"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-KNOW-RAG"
+    ],
+    "tags": [
+      "ai_evaluation",
+      "rag_evaluation"
+    ]
+  },
+  {
+    "question_id": "EVAL-RAG-BAS-002",
+    "role": "ai_engineer",
+    "competency": "ai_evaluation",
+    "sub_competency": "rag_evaluation",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "What is the difference between faithfulness and response relevancy? Can an answer be relevant but unfaithful?",
+    "expected_concepts": {
+      "must_have": [
+        "faithfulness checks whether claims are supported by context",
+        "response relevancy checks whether the answer addresses the question",
+        "an answer can be relevant but unsupported"
+      ],
+      "bonus": [
+        "hallucination",
+        "groundedness"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-KNOW-RAG"
+    ],
+    "tags": [
+      "ai_evaluation",
+      "rag_evaluation"
+    ]
+  },
+  {
+    "question_id": "EVAL-RAG-INT-001",
+    "role": "ai_engineer",
+    "competency": "ai_evaluation",
+    "sub_competency": "rag_evaluation",
+    "difficulty": "intermediate",
+    "question_type": "design",
+    "question": "How would you build an evaluation dataset to test whether a RAG assistant correctly abstains when supporting evidence is missing?",
+    "expected_concepts": {
+      "must_have": [
+        "include both answerable and unanswerable questions",
+        "unanswerable cases should lack supporting evidence",
+        "success requires answering supported questions and abstaining on unsupported ones"
+      ],
+      "bonus": [
+        "balanced dataset",
+        "false premises"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-KNOW-RAG"
+    ],
+    "tags": [
+      "ai_evaluation",
+      "rag_evaluation"
+    ]
+  },
+  {
+    "question_id": "EVAL-RAG-INT-002",
+    "role": "ai_engineer",
+    "competency": "ai_evaluation",
+    "sub_competency": "rag_evaluation",
+    "difficulty": "intermediate",
+    "question_type": "troubleshooting",
+    "question": "Your RAG system has high context recall and precision but low faithfulness. Which stage is most likely failing, and how would you investigate it?",
+    "expected_concepts": {
+      "must_have": [
+        "retrieval appears healthy",
+        "failure is likely in generation/use of context",
+        "investigate grounding instructions or model behavior"
+      ],
+      "bonus": [
+        "prompt changes",
+        "model selection"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-KNOW-RAG"
+    ],
+    "tags": [
+      "ai_evaluation",
+      "rag_evaluation"
+    ]
+  },
+  {
+    "question_id": "EVAL-METRIC-BAS-001",
+    "role": "ai_engineer",
+    "competency": "ai_evaluation",
+    "sub_competency": "evaluation_metrics",
+    "difficulty": "basic",
+    "question_type": "scenario",
+    "question": "How does the cost of false positives versus false negatives influence whether you optimize for precision or recall?",
+    "expected_concepts": {
+      "must_have": [
+        "high false-positive cost favors precision",
+        "high false-negative cost favors recall"
+      ],
+      "bonus": [
+        "risk-based metric selection"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-KNOW-METRIC"
+    ],
+    "tags": [
+      "ai_evaluation",
+      "evaluation_metrics"
+    ]
+  },
+  {
+    "question_id": "EVAL-METRIC-BAS-002",
+    "role": "ai_engineer",
+    "competency": "ai_evaluation",
+    "sub_competency": "evaluation_metrics",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "Why are exact word-overlap metrics often weak for evaluating open-ended LLM responses, and what can be used instead for subjective qualities such as tone or style?",
+    "expected_concepts": {
+      "must_have": [
+        "valid LLM answers can use different wording",
+        "word overlap may miss semantic quality",
+        "structured rubric-based evaluation can assess subjective criteria"
+      ],
+      "bonus": [
+        "LLM-as-a-judge",
+        "binary checks"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-KNOW-METRIC"
+    ],
+    "tags": [
+      "ai_evaluation",
+      "evaluation_metrics"
+    ]
+  },
+  {
+    "question_id": "EVAL-METRIC-INT-001",
+    "role": "ai_engineer",
+    "competency": "ai_evaluation",
+    "sub_competency": "evaluation_metrics",
+    "difficulty": "intermediate",
+    "question_type": "conceptual",
+    "question": "Why can binary pass/fail checks be easier to calibrate than a 1-to-5 rating scale for AI evaluation?",
+    "expected_concepts": {
+      "must_have": [
+        "binary criteria reduce ambiguity",
+        "Likert ratings can be interpreted inconsistently",
+        "specific binary sub-checks can track component quality"
+      ],
+      "bonus": [
+        "annotator consistency"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-KNOW-METRIC"
+    ],
+    "tags": [
+      "ai_evaluation",
+      "evaluation_metrics"
+    ]
+  },
+  {
+    "question_id": "EVAL-METRIC-INT-002",
+    "role": "ai_engineer",
+    "competency": "ai_evaluation",
+    "sub_competency": "evaluation_metrics",
+    "difficulty": "intermediate",
+    "question_type": "conceptual",
+    "question": "Why is blindly relying on generic off-the-shelf AI evaluation metrics risky, and how can they still be useful during development?",
+    "expected_concepts": {
+      "must_have": [
+        "generic metrics may not align with application-specific goals",
+        "they can create false confidence",
+        "they can be used as screening/exploration signals"
+      ],
+      "bonus": [
+        "human error analysis",
+        "outlier detection"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-KNOW-METRIC"
+    ],
+    "tags": [
+      "ai_evaluation",
+      "evaluation_metrics"
+    ]
+  },
+  {
+    "question_id": "EVAL-METRIC-ADV-001",
+    "role": "ai_engineer",
+    "competency": "ai_evaluation",
+    "sub_competency": "evaluation_metrics",
+    "difficulty": "advanced",
+    "question_type": "design",
+    "question": "How would you calibrate an LLM-as-a-judge against human expert evaluations before trusting it for production decisions?",
+    "expected_concepts": {
+      "must_have": [
+        "create a human-scored gold set",
+        "run the judge on the same examples",
+        "measure agreement and inspect disagreements",
+        "iterate rubric/prompt based on errors"
+      ],
+      "bonus": [
+        "inter-annotator agreement",
+        "unknown/insufficient-information option"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-KNOW-METRIC"
+    ],
+    "tags": [
+      "ai_evaluation",
+      "evaluation_metrics"
+    ]
+  },
+  {
+    "question_id": "EVAL-AGENT-BAS-001",
+    "role": "ai_engineer",
+    "competency": "ai_evaluation",
+    "sub_competency": "agent_evaluation",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "What is the difference between evaluating an agent's final outcome and evaluating its execution trajectory? Why is the final environment state important?",
+    "expected_concepts": {
+      "must_have": [
+        "trajectory captures steps/tool calls",
+        "outcome captures final task/environment state",
+        "agents can claim success without actually changing the environment correctly"
+      ],
+      "bonus": [
+        "creative valid trajectories"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-KNOW-AGENT"
+    ],
+    "tags": [
+      "ai_evaluation",
+      "agent_evaluation"
+    ]
+  },
+  {
+    "question_id": "EVAL-AGENT-INT-001",
+    "role": "ai_engineer",
+    "competency": "ai_evaluation",
+    "sub_competency": "agent_evaluation",
+    "difficulty": "intermediate",
+    "question_type": "conceptual",
+    "question": "What is the difference between pass@k and pass^k when evaluating agent reliability, and when is consistent success more important than getting at least one successful attempt?",
+    "expected_concepts": {
+      "must_have": [
+        "pass@k focuses on at least one success across attempts",
+        "pass^k focuses on all attempts succeeding",
+        "autonomous/customer-facing systems often require consistency"
+      ],
+      "bonus": [
+        "reliability"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-KNOW-AGENT"
+    ],
+    "tags": [
+      "ai_evaluation",
+      "agent_evaluation"
+    ]
+  },
+  {
+    "question_id": "EVAL-AGENT-ADV-001",
+    "role": "ai_engineer",
+    "competency": "ai_evaluation",
+    "sub_competency": "agent_evaluation",
+    "difficulty": "advanced",
+    "question_type": "troubleshooting",
+    "question": "How would you debug a multi-turn agent that succeeds on simple requests but repeatedly fails at a later conversation turn?",
+    "expected_concepts": {
+      "must_have": [
+        "start with end-to-end task success",
+        "use step-level diagnostics after locating failure",
+        "test the failing request independently",
+        "reintroduce prior conversation context to isolate context-related failure"
+      ],
+      "bonus": [
+        "N-1 testing",
+        "tool choice",
+        "context retention"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-KNOW-AGENT"
+    ],
+    "tags": [
+      "ai_evaluation",
+      "agent_evaluation"
+    ]
+  },
+  {
+    "question_id": "EVAL-COST-BAS-001",
+    "role": "ai_engineer",
+    "competency": "ai_evaluation",
+    "sub_competency": "cost_latency",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "What is Time to First Token (TTFT), and why does it matter for the perceived responsiveness of a conversational AI system?",
+    "expected_concepts": {
+      "must_have": [
+        "TTFT measures delay before first generated token is shown",
+        "it strongly affects perceived responsiveness"
+      ],
+      "bonus": [
+        "streaming"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-KNOW-COST"
+    ],
+    "tags": [
+      "ai_evaluation",
+      "cost_latency"
+    ]
+  },
+  {
+    "question_id": "EVAL-COST-BAS-002",
+    "role": "ai_engineer",
+    "competency": "ai_evaluation",
+    "sub_competency": "cost_latency",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "Why is cost per successful task more informative than the cost of a single agent run?",
+    "expected_concepts": {
+      "must_have": [
+        "failed attempts and retries also consume resources",
+        "cost per successful task accounts for total run cost relative to successful outcomes"
+      ],
+      "bonus": [
+        "repair loops",
+        "success rate"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-KNOW-COST"
+    ],
+    "tags": [
+      "ai_evaluation",
+      "cost_latency"
+    ]
+  },
+  {
+    "question_id": "EVAL-COST-INT-001",
+    "role": "ai_engineer",
+    "competency": "ai_evaluation",
+    "sub_competency": "cost_latency",
+    "difficulty": "intermediate",
+    "question_type": "troubleshooting",
+    "question": "How would you profile latency in an agentic pipeline containing retrieval, reranking, tool calls, LLM generation, and streaming?",
+    "expected_concepts": {
+      "must_have": [
+        "measure wall-clock latency for each stage",
+        "identify the dominant bottleneck before optimizing",
+        "external tools and model generation should be measured separately"
+      ],
+      "bonus": [
+        "TTFT",
+        "tokens per second"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-KNOW-COST"
+    ],
+    "tags": [
+      "ai_evaluation",
+      "cost_latency"
+    ]
+  },
+  {
+    "question_id": "EVAL-COST-INT-002",
+    "role": "ai_engineer",
+    "competency": "ai_evaluation",
+    "sub_competency": "cost_latency",
+    "difficulty": "intermediate",
+    "question_type": "design",
+    "question": "What controls can you add to an agent scaffold to prevent runaway token and tool costs?",
+    "expected_concepts": {
+      "must_have": [
+        "cap maximum steps",
+        "limit retries",
+        "cache repeated work",
+        "compress or summarize growing context"
+      ],
+      "bonus": [
+        "budget limits"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-KNOW-COST"
+    ],
+    "tags": [
+      "ai_evaluation",
+      "cost_latency"
+    ]
+  },
+  {
+    "question_id": "EVAL-COST-ADV-001",
+    "role": "ai_engineer",
+    "competency": "ai_evaluation",
+    "sub_competency": "cost_latency",
+    "difficulty": "advanced",
+    "question_type": "design",
+    "question": "How would you balance evaluation accuracy, cost, and latency when monitoring an AI agent in production?",
+    "expected_concepts": {
+      "must_have": [
+        "not every trace needs an expensive LLM judge",
+        "use deterministic checks where possible",
+        "sample traces for expensive evaluation",
+        "route ambiguous/high-risk cases to human review"
+      ],
+      "bonus": [
+        "risk-based sampling",
+        "annotation queues"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-KNOW-COST"
+    ],
+    "tags": [
+      "ai_evaluation",
+      "cost_latency"
+    ]
+  }
+]

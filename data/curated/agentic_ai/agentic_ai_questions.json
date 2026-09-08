@@ -1,0 +1,771 @@
+[
+  {
+    "question_id": "AGENT-FUND-BAS-001",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "agent_fundamentals",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "How does an AI agent differ conceptually from a traditional chatbot and a deterministic workflow?",
+    "expected_concepts": {
+      "must_have": [
+        "chatbot responds without autonomous execution routing",
+        "deterministic workflow follows developer-defined path",
+        "agent can decide next actions/tools at runtime"
+      ],
+      "bonus": [
+        "think-act-observe loop"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-FUND"
+    ],
+    "tags": [
+      "agentic_ai",
+      "agent_fundamentals"
+    ]
+  },
+  {
+    "question_id": "AGENT-FUND-BAS-002",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "agent_fundamentals",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "What kinds of task characteristics justify using an autonomous agent instead of a simpler deterministic workflow?",
+    "expected_concepts": {
+      "must_have": [
+        "dynamic/unknown execution path",
+        "high-variance inputs or decisions",
+        "long-horizon tasks can justify autonomy"
+      ],
+      "bonus": [
+        "complex retry branches"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-FUND"
+    ],
+    "tags": [
+      "agentic_ai",
+      "agent_fundamentals"
+    ]
+  },
+  {
+    "question_id": "AGENT-FUND-INT-001",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "agent_fundamentals",
+    "difficulty": "intermediate",
+    "question_type": "scenario",
+    "question": "Under what conditions or operational constraints are deterministic workflows preferred over agentic workflows? Give three concrete scenarios.",
+    "expected_concepts": {
+      "must_have": [
+        "deterministic workflows suit predictable fixed processes",
+        "fixed paths improve auditability/compliance",
+        "simpler workflows reduce cost/latency for high-volume low-variance tasks"
+      ],
+      "bonus": [
+        "caching",
+        "batching"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-FUND"
+    ],
+    "tags": [
+      "agentic_ai",
+      "agent_fundamentals"
+    ]
+  },
+  {
+    "question_id": "AGENT-FUND-INT-002",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "agent_fundamentals",
+    "difficulty": "intermediate",
+    "question_type": "conceptual",
+    "question": "Why should agent autonomy be treated as a spectrum rather than an all-or-nothing choice?",
+    "expected_concepts": {
+      "must_have": [
+        "autonomy can be progressively increased",
+        "higher autonomy increases risk and control requirements"
+      ],
+      "bonus": [
+        "human approval levels",
+        "risk-based autonomy"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-FUND"
+    ],
+    "tags": [
+      "agentic_ai",
+      "agent_fundamentals"
+    ]
+  },
+  {
+    "question_id": "AGENT-FUND-ADV-001",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "agent_fundamentals",
+    "difficulty": "advanced",
+    "question_type": "design",
+    "question": "As an AI agent is given more autonomy, what additional guardrails, evaluation, monitoring, and recovery mechanisms should be added?",
+    "expected_concepts": {
+      "must_have": [
+        "stronger permissions/guardrails",
+        "more rigorous evaluation",
+        "production observability",
+        "recovery/escalation mechanisms"
+      ],
+      "bonus": [
+        "sandboxing",
+        "spend caps",
+        "trajectory evaluation"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-FUND"
+    ],
+    "tags": [
+      "agentic_ai",
+      "agent_fundamentals"
+    ]
+  },
+  {
+    "question_id": "AGENT-MEM-BAS-001",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "agent_state_memory",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "What is the fundamental architectural difference between an agent's \"State\" and an agent's \"Memory\"?",
+    "expected_concepts": {
+      "must_have": [
+        "state is task/session scoped",
+        "memory persists beyond the current task/session"
+      ],
+      "bonus": [
+        "working state",
+        "long-term preferences"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-MEM"
+    ],
+    "tags": [
+      "agentic_ai",
+      "agent_state_memory"
+    ]
+  },
+  {
+    "question_id": "AGENT-MEM-BAS-002",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "agent_state_memory",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "What is the difference between semantic memory and episodic memory in an AI agent?",
+    "expected_concepts": {
+      "must_have": [
+        "semantic memory stores stable facts/preferences",
+        "episodic memory stores time-specific past events"
+      ],
+      "bonus": [
+        "different retention/lifecycle policies"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-MEM"
+    ],
+    "tags": [
+      "agentic_ai",
+      "agent_state_memory"
+    ]
+  },
+  {
+    "question_id": "AGENT-MEM-INT-001",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "agent_state_memory",
+    "difficulty": "intermediate",
+    "question_type": "design",
+    "question": "How would you choose between a conversation summary, vector store, and key-value store for agent memory?",
+    "expected_concepts": {
+      "must_have": [
+        "conversation summaries compress long dialogue",
+        "vector stores support semantic retrieval",
+        "key-value stores support deterministic lookup"
+      ],
+      "bonus": [
+        "user preferences fit key-value storage",
+        "knowledge search fits vector storage"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-MEM"
+    ],
+    "tags": [
+      "agentic_ai",
+      "agent_state_memory"
+    ]
+  },
+  {
+    "question_id": "AGENT-MEM-INT-002",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "agent_state_memory",
+    "difficulty": "intermediate",
+    "question_type": "troubleshooting",
+    "question": "What are common agent-memory design mistakes, and how would you avoid them?",
+    "expected_concepts": {
+      "must_have": [
+        "avoid saving everything",
+        "avoid retrieving everything",
+        "separate chat history from durable memory",
+        "evaluate memory usefulness"
+      ],
+      "bonus": [
+        "confidence thresholds",
+        "reranking"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-MEM"
+    ],
+    "tags": [
+      "agentic_ai",
+      "agent_state_memory"
+    ]
+  },
+  {
+    "question_id": "AGENT-DESIGN-BAS-001",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "agent_design_patterns",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "What is the difference between the Supervisor and Reflection agent design patterns, and when might each be useful?",
+    "expected_concepts": {
+      "must_have": [
+        "supervisor coordinates/delegates to specialists",
+        "reflection uses generation followed by critique/revision"
+      ],
+      "bonus": [
+        "iteration limits",
+        "task decomposition"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-DESIGN"
+    ],
+    "tags": [
+      "agentic_ai",
+      "agent_design_patterns"
+    ]
+  },
+  {
+    "question_id": "AGENT-DESIGN-BAS-002",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "agent_design_patterns",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "What are the core limitations of a \"Single-Agent\" architecture that drive developers to adopt \"Multi-Agent\" pipelines?",
+    "expected_concepts": {
+      "must_have": [
+        "single agents can suffer context/prompt bloat",
+        "errors can contaminate later reasoning",
+        "multi-agent separation can isolate responsibilities/context"
+      ],
+      "bonus": [
+        "specialization"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-DESIGN"
+    ],
+    "tags": [
+      "agentic_ai",
+      "agent_design_patterns"
+    ]
+  },
+  {
+    "question_id": "AGENT-DESIGN-INT-001",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "agent_design_patterns",
+    "difficulty": "intermediate",
+    "question_type": "design",
+    "question": "How do Planner–Executor and Router patterns differ, and when would you choose one over the other?",
+    "expected_concepts": {
+      "must_have": [
+        "planner-executor separates planning from execution",
+        "router dispatches requests to appropriate specialized path"
+      ],
+      "bonus": [
+        "cost-aware model routing",
+        "replanning on failures"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-DESIGN"
+    ],
+    "tags": [
+      "agentic_ai",
+      "agent_design_patterns"
+    ]
+  },
+  {
+    "question_id": "AGENT-DESIGN-INT-002",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "agent_design_patterns",
+    "difficulty": "intermediate",
+    "question_type": "troubleshooting",
+    "question": "What are common failure modes in multi-agent systems, and how would you mitigate them?",
+    "expected_concepts": {
+      "must_have": [
+        "duplicated work",
+        "cascading errors",
+        "runaway inter-agent loops"
+      ],
+      "bonus": [
+        "task ledger",
+        "handoff validation",
+        "global limits"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-DESIGN"
+    ],
+    "tags": [
+      "agentic_ai",
+      "agent_design_patterns"
+    ]
+  },
+  {
+    "question_id": "AGENT-HITL-BAS-001",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "human_in_the_loop",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "Why is human-in-the-loop important for enterprise AI agents?",
+    "expected_concepts": {
+      "must_have": [
+        "human review reduces risk for consequential actions",
+        "HITL supports compliance/oversight"
+      ],
+      "bonus": [
+        "human corrections can become evaluation data"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-HITL"
+    ],
+    "tags": [
+      "agentic_ai",
+      "human_in_the_loop"
+    ]
+  },
+  {
+    "question_id": "AGENT-HITL-BAS-002",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "human_in_the_loop",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "Where should human approval checkpoints be placed in an agentic workflow?",
+    "expected_concepts": {
+      "must_have": [
+        "approval before risky external actions",
+        "approval before irreversible actions",
+        "review for low-confidence or sensitive outputs"
+      ],
+      "bonus": [
+        "customer-facing review"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-HITL"
+    ],
+    "tags": [
+      "agentic_ai",
+      "human_in_the_loop"
+    ]
+  },
+  {
+    "question_id": "AGENT-HITL-INT-001",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "human_in_the_loop",
+    "difficulty": "intermediate",
+    "question_type": "design",
+    "question": "How would you use risk and confidence to decide whether an agent should proceed automatically, ask for approval, or stop?",
+    "expected_concepts": {
+      "must_have": [
+        "low-risk/high-confidence actions may proceed",
+        "medium-risk/uncertain actions can require confirmation",
+        "high-risk/low-confidence actions should stop/escalate"
+      ],
+      "bonus": [
+        "risk-aware thresholds"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-HITL"
+    ],
+    "tags": [
+      "agentic_ai",
+      "human_in_the_loop"
+    ]
+  },
+  {
+    "question_id": "AGENT-HITL-INT-002",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "human_in_the_loop",
+    "difficulty": "intermediate",
+    "question_type": "troubleshooting",
+    "question": "What human-in-the-loop design choices can cause reviewer fatigue, and how would you avoid them?",
+    "expected_concepts": {
+      "must_have": [
+        "reviewing everything causes fatigue/rubber-stamping",
+        "reviewers need evidence/context",
+        "prioritize/escalate reviews by risk"
+      ],
+      "bonus": [
+        "tiered queues"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-HITL"
+    ],
+    "tags": [
+      "agentic_ai",
+      "human_in_the_loop"
+    ]
+  },
+  {
+    "question_id": "AGENT-REL-BAS-001",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "agent_reliability",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "Why do errors compound in long-horizon agent workflows, and what does that mean for system reliability?",
+    "expected_concepts": {
+      "must_have": [
+        "per-step errors compound across multi-step tasks",
+        "longer task chains reduce end-to-end reliability"
+      ],
+      "bonus": [
+        "step-level evaluation",
+        "recovery"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-REL"
+    ],
+    "tags": [
+      "agentic_ai",
+      "agent_reliability"
+    ]
+  },
+  {
+    "question_id": "AGENT-REL-INT-001",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "agent_reliability",
+    "difficulty": "intermediate",
+    "question_type": "conceptual",
+    "question": "What practical techniques can reduce the runtime cost of a long-running AI agent?",
+    "expected_concepts": {
+      "must_have": [
+        "use smaller models for simple steps",
+        "cache repeated work",
+        "limit retries/steps",
+        "reduce unnecessary orchestration"
+      ],
+      "bonus": [
+        "planner-executor",
+        "batching"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-REL"
+    ],
+    "tags": [
+      "agentic_ai",
+      "agent_reliability"
+    ]
+  },
+  {
+    "question_id": "AGENT-REL-INT-002",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "agent_reliability",
+    "difficulty": "intermediate",
+    "question_type": "design",
+    "question": "What techniques can reduce actual or perceived latency in an agentic application?",
+    "expected_concepts": {
+      "must_have": [
+        "parallelize independent tool calls",
+        "stream responses",
+        "prefetch likely-needed data",
+        "simplify routing"
+      ],
+      "bonus": [
+        "perceived latency"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-REL"
+    ],
+    "tags": [
+      "agentic_ai",
+      "agent_reliability"
+    ]
+  },
+  {
+    "question_id": "AGENT-REL-ADV-001",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "agent_reliability",
+    "difficulty": "advanced",
+    "question_type": "design",
+    "question": "How would you design guardrails for an agent that can call tools with real-world side effects?",
+    "expected_concepts": {
+      "must_have": [
+        "tool allowlisting",
+        "schema/input validation",
+        "scoped permissions",
+        "human confirmation for risky writes",
+        "sandboxing"
+      ],
+      "bonus": [
+        "read/write separation"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-REL"
+    ],
+    "tags": [
+      "agentic_ai",
+      "agent_reliability"
+    ]
+  },
+  {
+    "question_id": "AGENT-LIFE-BAS-001",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "agent_lifecycle",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "What are the main stages of an Agent Development Lifecycle, from scoping through production improvement?",
+    "expected_concepts": {
+      "must_have": [
+        "scope",
+        "prototype/build",
+        "evaluate",
+        "deploy",
+        "monitor and improve"
+      ],
+      "bonus": [
+        "staging",
+        "regression tests"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-LIFE"
+    ],
+    "tags": [
+      "agentic_ai",
+      "agent_lifecycle"
+    ]
+  },
+  {
+    "question_id": "AGENT-LIFE-BAS-002",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "agent_lifecycle",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "What is the MINT framework, and how does it guide decisions about adding agentic complexity?",
+    "expected_concepts": {
+      "must_have": [
+        "start with simplest working system",
+        "each complexity layer must justify its overhead",
+        "add autonomy/tools/memory only when needed"
+      ],
+      "bonus": [
+        "cost/latency/security trade-offs"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-LIFE"
+    ],
+    "tags": [
+      "agentic_ai",
+      "agent_lifecycle"
+    ]
+  },
+  {
+    "question_id": "AGENT-LIFE-INT-001",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "agent_lifecycle",
+    "difficulty": "intermediate",
+    "question_type": "scenario",
+    "question": "Give an example of an AI system that is over-engineered with agents. How would MINT simplify it?",
+    "expected_concepts": {
+      "must_have": [
+        "unnecessary agents add nondeterminism/cost/failure modes",
+        "simpler deterministic or RAG workflow may be sufficient"
+      ],
+      "bonus": [
+        "earn each layer"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-LIFE"
+    ],
+    "tags": [
+      "agentic_ai",
+      "agent_lifecycle"
+    ]
+  },
+  {
+    "question_id": "AGENT-LIFE-INT-002",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "agent_lifecycle",
+    "difficulty": "intermediate",
+    "question_type": "troubleshooting",
+    "question": "How can you detect that an agent is no longer making meaningful progress and should stop or replan?",
+    "expected_concepts": {
+      "must_have": [
+        "measure progress after steps",
+        "detect repeated/no-progress behavior",
+        "stop replan or escalate after bounded attempts"
+      ],
+      "bonus": [
+        "progress score"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-LIFE"
+    ],
+    "tags": [
+      "agentic_ai",
+      "agent_lifecycle"
+    ]
+  },
+  {
+    "question_id": "AGENT-INTEROP-BAS-001",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "agent_interoperability",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "What is the Model Context Protocol (MCP), and what problem does it solve for AI applications?",
+    "expected_concepts": {
+      "must_have": [
+        "MCP standardizes connections between AI hosts and external capabilities",
+        "reduces custom integration work"
+      ],
+      "bonus": [
+        "tools",
+        "resources",
+        "prompts"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-INTEROP"
+    ],
+    "tags": [
+      "agentic_ai",
+      "agent_interoperability"
+    ]
+  },
+  {
+    "question_id": "AGENT-INTEROP-BAS-002",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "agent_interoperability",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "What is the main difference between MCP and A2A, and when would each be used?",
+    "expected_concepts": {
+      "must_have": [
+        "MCP connects agents/apps to tools/data",
+        "A2A supports agent-to-agent interoperability"
+      ],
+      "bonus": [
+        "vertical vs horizontal interoperability"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-INTEROP"
+    ],
+    "tags": [
+      "agentic_ai",
+      "agent_interoperability"
+    ]
+  },
+  {
+    "question_id": "AGENT-INTEROP-INT-001",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "agent_interoperability",
+    "difficulty": "intermediate",
+    "question_type": "conceptual",
+    "question": "How does MCP reduce the integration burden between AI applications and external tools or data sources?",
+    "expected_concepts": {
+      "must_have": [
+        "standard client/server interface reduces pairwise custom connectors",
+        "tool providers and clients implement the shared protocol"
+      ],
+      "bonus": [
+        "integration scaling"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-INTEROP"
+    ],
+    "tags": [
+      "agentic_ai",
+      "agent_interoperability"
+    ]
+  },
+  {
+    "question_id": "AGENT-INTEROP-INT-002",
+    "role": "ai_engineer",
+    "competency": "agentic_ai",
+    "sub_competency": "agent_interoperability",
+    "difficulty": "intermediate",
+    "question_type": "troubleshooting",
+    "question": "What security risks should an engineer consider when connecting agents to external tools through MCP?",
+    "expected_concepts": {
+      "must_have": [
+        "tool poisoning or malicious descriptions",
+        "prompt injection through tool output",
+        "over-scoped credentials",
+        "confirmation for destructive writes"
+      ],
+      "bonus": [
+        "version pinning",
+        "short-lived credentials"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-AGENT-INTEROP"
+    ],
+    "tags": [
+      "agentic_ai",
+      "agent_interoperability"
+    ]
+  }
+]

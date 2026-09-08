@@ -1,0 +1,99 @@
+[
+  {
+    "evaluation_id": "EVAL-LLM-TOKEN",
+    "role": "ai_engineer",
+    "competency": "ai_ml_llm_fundamentals",
+    "sub_competency": "token",
+    "topic": "Tokenization",
+    "content": "Tokenization converts raw text into smaller units such as words, subwords, or characters that can be mapped to numerical identifiers or representations for model processing. Boundary tokens can mark sequence beginnings and endings. Vocabulary size creates trade-offs: smaller vocabularies can fragment text into more tokens and lengthen sequences, while larger vocabularies increase parameter and memory requirements. Character-level tokenization can create very long sequences, while subword tokenization balances sequence length and vocabulary coverage. Sequential recurrent models process states step by step, whereas Transformer training can process token interactions much more in parallel.",
+    "key_concepts": [
+      "tokenization",
+      "tokens",
+      "numerical representation",
+      "sequence boundaries",
+      "vocabulary size",
+      "subword tokenization",
+      "sequence length",
+      "parallel processing"
+    ],
+    "common_misconceptions": [
+      "Models process raw text directly without tokenization",
+      "A larger vocabulary is always better",
+      "Character tokenization is always more efficient"
+    ],
+    "source": {
+      "source_type": "course_material",
+      "document": "NotebookLM NLP fundamentals corpus",
+      "section": "Token"
+    },
+    "tags": [
+      "ai_ml_llm_fundamentals",
+      "token"
+    ]
+  },
+  {
+    "evaluation_id": "EVAL-LLM-EMB",
+    "role": "ai_engineer",
+    "competency": "ai_ml_llm_fundamentals",
+    "sub_competency": "embedding",
+    "topic": "Embeddings",
+    "content": "One-hot vectors are sparse and do not naturally encode semantic similarity, while dense embeddings learn continuous vector representations where semantically related items can be closer. CBOW predicts a target word from surrounding context, while Skip-gram predicts surrounding context from a target. Static embeddings assign a fixed vector to a word regardless of context; Transformer representations are contextual and change according to surrounding tokens. Because self-attention alone does not inherently encode token order, Transformers incorporate positional information into token representations.",
+    "key_concepts": [
+      "one-hot encoding",
+      "dense embeddings",
+      "semantic similarity",
+      "CBOW",
+      "Skip-gram",
+      "static embeddings",
+      "contextual representations",
+      "positional information"
+    ],
+    "common_misconceptions": [
+      "One-hot vectors capture semantic closeness",
+      "A static embedding changes with sentence context",
+      "Self-attention inherently knows token order without positional information"
+    ],
+    "source": {
+      "source_type": "course_material",
+      "document": "NotebookLM NLP fundamentals corpus",
+      "section": "Embedding"
+    },
+    "tags": [
+      "ai_ml_llm_fundamentals",
+      "embedding"
+    ]
+  },
+  {
+    "evaluation_id": "EVAL-LLM-TRANS",
+    "role": "ai_engineer",
+    "competency": "ai_ml_llm_fundamentals",
+    "sub_competency": "transformer_architecture",
+    "topic": "Transformer Architecture",
+    "content": "Self-attention uses Query, Key, and Value representations: queries express what information a token seeks, keys support matching against other tokens, and values carry information aggregated according to attention weights. Transformer encoders produce context-aware input representations, while decoders generate outputs autoregressively. Causal masking prevents a generative decoder from seeing future tokens during next-token training. Multi-head attention computes several attention projections in parallel so different relationships can be represented and then combined.",
+    "key_concepts": [
+      "query",
+      "key",
+      "value",
+      "self-attention",
+      "encoder",
+      "decoder",
+      "causal masking",
+      "autoregressive generation",
+      "multi-head attention"
+    ],
+    "common_misconceptions": [
+      "A decoder may freely attend to future target tokens during training",
+      "All attention heads necessarily learn the same relationship",
+      "Encoder and decoder have identical primary objectives"
+    ],
+    "source": {
+      "source_type": "course_material",
+      "document": "NotebookLM NLP fundamentals corpus",
+      "section": "Transformer Architecture"
+    },
+    "tags": [
+      "ai_ml_llm_fundamentals",
+      "transformer_architecture"
+    ]
+  }
+]

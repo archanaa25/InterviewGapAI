@@ -1,0 +1,108 @@
+[
+  {
+    "evaluation_id": "EVAL-PY-DESIGN",
+    "role": "ai_engineer",
+    "competency": "python_software_engineering",
+    "sub_competency": "application_design",
+    "topic": "Modular AI Application Design",
+    "content": "Maintainable AI applications benefit from separation of concerns. API transport, orchestration logic, retrieval, model providers, evaluation, and persistence should have clear boundaries so components can be tested, replaced, configured, and evolved independently.",
+    "key_concepts": [
+      "separation of concerns",
+      "modularity",
+      "interfaces",
+      "testability"
+    ],
+    "common_misconceptions": [
+      "All AI logic should live in one API handler"
+    ],
+    "source": {
+      "source_type": "authoritative_public_source",
+      "document": "FastAPI Documentation",
+      "section": "Dependencies and Testing"
+    },
+    "tags": [
+      "python_software_engineering",
+      "application_design"
+    ]
+  },
+  {
+    "evaluation_id": "EVAL-PY-API",
+    "role": "ai_engineer",
+    "competency": "python_software_engineering",
+    "sub_competency": "api_integration",
+    "topic": "API Integration and Failure Handling",
+    "content": "AI services should validate inputs before downstream execution and handle external failures explicitly. Network and model calls need timeouts and bounded failure handling so persistent errors do not create runaway work.",
+    "key_concepts": [
+      "input validation",
+      "timeouts",
+      "bounded retries",
+      "failure handling"
+    ],
+    "common_misconceptions": [
+      "External API calls can be retried indefinitely"
+    ],
+    "source": {
+      "source_type": "authoritative_public_source",
+      "document": "Python/FastAPI Documentation",
+      "section": "Async exceptions and API validation"
+    },
+    "tags": [
+      "python_software_engineering",
+      "api_integration"
+    ]
+  },
+  {
+    "evaluation_id": "EVAL-PY-ASYNC",
+    "role": "ai_engineer",
+    "competency": "python_software_engineering",
+    "sub_competency": "async_concurrency",
+    "topic": "Asynchronous Concurrency",
+    "content": "Python asyncio supports concurrent execution of coroutines and is well suited to I/O-bound network work. Independent calls can overlap waiting time. Concurrent tasks still require explicit exception, cancellation, timeout, and cleanup behavior; structured concurrency provides stronger guarantees for related tasks.",
+    "key_concepts": [
+      "asyncio",
+      "I/O-bound concurrency",
+      "tasks",
+      "exceptions",
+      "cancellation",
+      "timeouts"
+    ],
+    "common_misconceptions": [
+      "Async automatically speeds up CPU-bound work"
+    ],
+    "source": {
+      "source_type": "authoritative_public_source",
+      "document": "Python Documentation",
+      "section": "asyncio Coroutines and Tasks"
+    },
+    "tags": [
+      "python_software_engineering",
+      "async_concurrency"
+    ]
+  },
+  {
+    "evaluation_id": "EVAL-PY-TEST",
+    "role": "ai_engineer",
+    "competency": "python_software_engineering",
+    "sub_competency": "testing",
+    "topic": "Testing AI API Services",
+    "content": "AI services contain deterministic behavior that can be tested independently of model variability, including request validation, schemas, status codes, routing, transformations, and application rules. External dependencies can be isolated or replaced during tests. FastAPI supports synchronous and asynchronous API testing.",
+    "key_concepts": [
+      "API testing",
+      "dependency isolation",
+      "mocking",
+      "async tests"
+    ],
+    "common_misconceptions": [
+      "Every AI test must call a live LLM"
+    ],
+    "source": {
+      "source_type": "authoritative_public_source",
+      "document": "FastAPI Documentation",
+      "section": "Testing and Async Tests"
+    },
+    "tags": [
+      "python_software_engineering",
+      "testing"
+    ]
+  }
+]

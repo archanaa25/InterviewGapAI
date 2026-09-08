@@ -1,0 +1,332 @@
+[
+  {
+    "question_id": "LLM-TOKEN-BAS-001",
+    "role": "ai_engineer",
+    "competency": "ai_ml_llm_fundamentals",
+    "sub_competency": "token",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "What is the role of tokenization in an NLP/LLM pipeline, and how are tokens represented for model processing?",
+    "expected_concepts": {
+      "must_have": [
+        "tokenization splits text into model-processable units",
+        "tokens are mapped to numerical identifiers or representations"
+      ],
+      "bonus": [
+        "word, subword, or character tokens"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-LLM-TOKEN"
+    ],
+    "tags": [
+      "ai_ml_llm_fundamentals",
+      "token"
+    ]
+  },
+  {
+    "question_id": "LLM-TOKEN-BAS-002",
+    "role": "ai_engineer",
+    "competency": "ai_ml_llm_fundamentals",
+    "sub_competency": "token",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "Why are special sequence-boundary tokens such as beginning-of-sequence and end-of-sequence tokens useful?",
+    "expected_concepts": {
+      "must_have": [
+        "boundary tokens mark sequence start or end",
+        "they help sequence processing or generation recognize boundaries"
+      ],
+      "bonus": [
+        "generation stopping"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-LLM-TOKEN"
+    ],
+    "tags": [
+      "ai_ml_llm_fundamentals",
+      "token"
+    ]
+  },
+  {
+    "question_id": "LLM-TOKEN-INT-001",
+    "role": "ai_engineer",
+    "competency": "ai_ml_llm_fundamentals",
+    "sub_competency": "token",
+    "difficulty": "intermediate",
+    "question_type": "conceptual",
+    "question": "Why are RNN-style sequential models harder to parallelize than Transformers?",
+    "expected_concepts": {
+      "must_have": [
+        "RNNs process sequence states sequentially",
+        "Transformers can process token interactions in parallel during training"
+      ],
+      "bonus": [
+        "training efficiency"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-LLM-TOKEN"
+    ],
+    "tags": [
+      "ai_ml_llm_fundamentals",
+      "token"
+    ]
+  },
+  {
+    "question_id": "LLM-TOKEN-INT-002",
+    "role": "ai_engineer",
+    "competency": "ai_ml_llm_fundamentals",
+    "sub_competency": "token",
+    "difficulty": "intermediate",
+    "question_type": "design",
+    "question": "What trade-offs arise when choosing a very small versus very large tokenizer vocabulary?",
+    "expected_concepts": {
+      "must_have": [
+        "small vocabularies can increase sequence length",
+        "large vocabularies increase model or output-layer parameter cost"
+      ],
+      "bonus": [
+        "subword fragmentation",
+        "memory usage"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-LLM-TOKEN"
+    ],
+    "tags": [
+      "ai_ml_llm_fundamentals",
+      "token"
+    ]
+  },
+  {
+    "question_id": "LLM-TOKEN-ADV-001",
+    "role": "ai_engineer",
+    "competency": "ai_ml_llm_fundamentals",
+    "sub_competency": "token",
+    "difficulty": "advanced",
+    "question_type": "conceptual",
+    "question": "Why is subword tokenization generally more practical than character-level tokenization for large Transformer workloads?",
+    "expected_concepts": {
+      "must_have": [
+        "character tokenization produces much longer sequences",
+        "longer sequences increase attention compute or memory",
+        "subwords balance vocabulary coverage and sequence length"
+      ],
+      "bonus": [
+        "out-of-vocabulary handling"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-LLM-TOKEN"
+    ],
+    "tags": [
+      "ai_ml_llm_fundamentals",
+      "token"
+    ]
+  },
+  {
+    "question_id": "LLM-EMB-BAS-001",
+    "role": "ai_engineer",
+    "competency": "ai_ml_llm_fundamentals",
+    "sub_competency": "embedding",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "Why are dense embeddings more useful than one-hot vectors for representing semantic similarity?",
+    "expected_concepts": {
+      "must_have": [
+        "one-hot vectors do not encode semantic closeness",
+        "dense embeddings place semantically related items closer in vector space"
+      ],
+      "bonus": [
+        "lower-dimensional representation"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-LLM-EMB"
+    ],
+    "tags": [
+      "ai_ml_llm_fundamentals",
+      "embedding"
+    ]
+  },
+  {
+    "question_id": "LLM-EMB-INT-001",
+    "role": "ai_engineer",
+    "competency": "ai_ml_llm_fundamentals",
+    "sub_competency": "embedding",
+    "difficulty": "intermediate",
+    "question_type": "conceptual",
+    "question": "How do CBOW and Skip-gram differ in what they learn to predict?",
+    "expected_concepts": {
+      "must_have": [
+        "CBOW predicts a target from surrounding context",
+        "Skip-gram predicts surrounding context from a target word"
+      ],
+      "bonus": [
+        "rare-word representation"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-LLM-EMB"
+    ],
+    "tags": [
+      "ai_ml_llm_fundamentals",
+      "embedding"
+    ]
+  },
+  {
+    "question_id": "LLM-EMB-BAS-002",
+    "role": "ai_engineer",
+    "competency": "ai_ml_llm_fundamentals",
+    "sub_competency": "embedding",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "What is the difference between a static word embedding and a contextual representation produced by a Transformer?",
+    "expected_concepts": {
+      "must_have": [
+        "static embeddings assign one fixed vector per word",
+        "contextual representations change according to surrounding tokens"
+      ],
+      "bonus": [
+        "polysemy",
+        "self-attention"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-LLM-EMB"
+    ],
+    "tags": [
+      "ai_ml_llm_fundamentals",
+      "embedding"
+    ]
+  },
+  {
+    "question_id": "LLM-EMB-ADV-001",
+    "role": "ai_engineer",
+    "competency": "ai_ml_llm_fundamentals",
+    "sub_competency": "embedding",
+    "difficulty": "advanced",
+    "question_type": "conceptual",
+    "question": "Why do Transformers need positional information, and at a high level how can positional encoding provide it?",
+    "expected_concepts": {
+      "must_have": [
+        "self-attention alone does not inherently encode sequence order",
+        "positional information is incorporated into token representations"
+      ],
+      "bonus": [
+        "relative position",
+        "RoPE"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-LLM-EMB"
+    ],
+    "tags": [
+      "ai_ml_llm_fundamentals",
+      "embedding"
+    ]
+  },
+  {
+    "question_id": "LLM-TRANS-BAS-001",
+    "role": "ai_engineer",
+    "competency": "ai_ml_llm_fundamentals",
+    "sub_competency": "transformer_architecture",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "Using a simple analogy, what roles do Query, Key, and Value play in self-attention?",
+    "expected_concepts": {
+      "must_have": [
+        "Query represents what a token is looking for",
+        "Key represents what other tokens can match against",
+        "Value carries information that can be aggregated"
+      ],
+      "bonus": [
+        "attention weights"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-LLM-TRANS"
+    ],
+    "tags": [
+      "ai_ml_llm_fundamentals",
+      "transformer_architecture"
+    ]
+  },
+  {
+    "question_id": "LLM-TRANS-BAS-002",
+    "role": "ai_engineer",
+    "competency": "ai_ml_llm_fundamentals",
+    "sub_competency": "transformer_architecture",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "At a high level, how do Transformer encoder and decoder roles differ?",
+    "expected_concepts": {
+      "must_have": [
+        "encoder builds context-aware representations of input",
+        "decoder generates output autoregressively"
+      ],
+      "bonus": [
+        "sequence-to-sequence"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-LLM-TRANS"
+    ],
+    "tags": [
+      "ai_ml_llm_fundamentals",
+      "transformer_architecture"
+    ]
+  },
+  {
+    "question_id": "LLM-TRANS-INT-001",
+    "role": "ai_engineer",
+    "competency": "ai_ml_llm_fundamentals",
+    "sub_competency": "transformer_architecture",
+    "difficulty": "intermediate",
+    "question_type": "conceptual",
+    "question": "Why is causal or masked self-attention necessary when training a generative Transformer decoder?",
+    "expected_concepts": {
+      "must_have": [
+        "future tokens must be hidden from the prediction step",
+        "masking prevents information leakage during next-token training"
+      ],
+      "bonus": [
+        "autoregressive generation"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-LLM-TRANS"
+    ],
+    "tags": [
+      "ai_ml_llm_fundamentals",
+      "transformer_architecture"
+    ]
+  },
+  {
+    "question_id": "LLM-TRANS-INT-002",
+    "role": "ai_engineer",
+    "competency": "ai_ml_llm_fundamentals",
+    "sub_competency": "transformer_architecture",
+    "difficulty": "intermediate",
+    "question_type": "conceptual",
+    "question": "Why does a Transformer use multiple attention heads instead of only one attention calculation?",
+    "expected_concepts": {
+      "must_have": [
+        "multiple heads can capture different relationships in parallel",
+        "head outputs are combined into a richer representation"
+      ],
+      "bonus": [
+        "syntactic and semantic relationships"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-LLM-TRANS"
+    ],
+    "tags": [
+      "ai_ml_llm_fundamentals",
+      "transformer_architecture"
+    ]
+  }
+]

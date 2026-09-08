@@ -1,0 +1,221 @@
+[
+  {
+    "question_id": "SYS-ARCH-BAS-001",
+    "role": "ai_engineer",
+    "competency": "ai_system_design",
+    "sub_competency": "ai_architecture",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "What major components would you expect in a production LLM application beyond the model itself?",
+    "expected_concepts": {
+      "must_have": [
+        "application or orchestration layer",
+        "data retrieval or tool integrations",
+        "evaluation or monitoring"
+      ],
+      "bonus": [
+        "guardrails",
+        "caching"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-SYS-ARCH"
+    ],
+    "tags": [
+      "ai_system_design",
+      "ai_architecture"
+    ]
+  },
+  {
+    "question_id": "SYS-SCALE-INT-001",
+    "role": "ai_engineer",
+    "competency": "ai_system_design",
+    "sub_competency": "scalability",
+    "difficulty": "intermediate",
+    "question_type": "scenario",
+    "question": "An AI prototype works well for 10 users but must support thousands. What parts of the architecture would you revisit before scaling it?",
+    "expected_concepts": {
+      "must_have": [
+        "identify throughput and concurrency bottlenecks",
+        "review external service/model limits",
+        "review state storage and caching"
+      ],
+      "bonus": [
+        "queueing",
+        "rate limiting",
+        "horizontal scaling"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-SYS-SCALE"
+    ],
+    "tags": [
+      "ai_system_design",
+      "scalability"
+    ]
+  },
+  {
+    "question_id": "SYS-REL-INT-001",
+    "role": "ai_engineer",
+    "competency": "ai_system_design",
+    "sub_competency": "reliability",
+    "difficulty": "intermediate",
+    "question_type": "scenario",
+    "question": "How would you design an AI application so that failure of an external model or tool does not automatically fail the entire user request?",
+    "expected_concepts": {
+      "must_have": [
+        "define explicit failure handling",
+        "use bounded retries or fallbacks where appropriate",
+        "degrade or escalate safely"
+      ],
+      "bonus": [
+        "timeouts",
+        "circuit breaking"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-SYS-REL"
+    ],
+    "tags": [
+      "ai_system_design",
+      "reliability"
+    ]
+  },
+  {
+    "question_id": "SYS-OBS-BAS-001",
+    "role": "ai_engineer",
+    "competency": "ai_system_design",
+    "sub_competency": "observability",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "What would you log or trace in a production AI application to diagnose quality and reliability problems?",
+    "expected_concepts": {
+      "must_have": [
+        "model and tool calls/outcomes",
+        "latency and errors",
+        "relevant retrieval or workflow steps"
+      ],
+      "bonus": [
+        "token/cost usage",
+        "trace IDs"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-SYS-OBS"
+    ],
+    "tags": [
+      "ai_system_design",
+      "observability"
+    ]
+  },
+  {
+    "question_id": "SYS-PERF-INT-001",
+    "role": "ai_engineer",
+    "competency": "ai_system_design",
+    "sub_competency": "performance_optimization",
+    "difficulty": "intermediate",
+    "question_type": "troubleshooting",
+    "question": "Your AI application is too slow and expensive in production. How would you determine what to optimize first?",
+    "expected_concepts": {
+      "must_have": [
+        "measure latency and cost by pipeline stage",
+        "identify dominant contributors before changing architecture",
+        "measure quality impact of optimizations"
+      ],
+      "bonus": [
+        "caching",
+        "model routing",
+        "context reduction"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-SYS-PERF"
+    ],
+    "tags": [
+      "ai_system_design",
+      "performance_optimization"
+    ]
+  },
+  {
+    "question_id": "SYS-DEP-BAS-001",
+    "role": "ai_engineer",
+    "competency": "ai_system_design",
+    "sub_competency": "deployment",
+    "difficulty": "basic",
+    "question_type": "conceptual",
+    "question": "Why are reproducible runtime environments and environment-based configuration useful when deploying an AI service?",
+    "expected_concepts": {
+      "must_have": [
+        "deployment consistency matters",
+        "configuration and secrets should be separated from application code"
+      ],
+      "bonus": [
+        "containers",
+        "environment isolation"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-SYS-DEP"
+    ],
+    "tags": [
+      "ai_system_design",
+      "deployment"
+    ]
+  },
+  {
+    "question_id": "SYS-ARCH-ADV-001",
+    "role": "ai_engineer",
+    "competency": "ai_system_design",
+    "sub_competency": "ai_architecture",
+    "difficulty": "advanced",
+    "question_type": "design",
+    "question": "Design a production AI assistant that uses enterprise knowledge and external tools. What boundaries would you create between retrieval, reasoning, tool execution, guardrails, and observability?",
+    "expected_concepts": {
+      "must_have": [
+        "separate retrieval/context from reasoning",
+        "tool execution should pass through controlled interfaces",
+        "guardrails and authorization protect risky actions",
+        "observability spans the workflow"
+      ],
+      "bonus": [
+        "human approval",
+        "evaluation"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-SYS-ARCH"
+    ],
+    "tags": [
+      "ai_system_design",
+      "ai_architecture"
+    ]
+  },
+  {
+    "question_id": "SYS-REL-ADV-001",
+    "role": "ai_engineer",
+    "competency": "ai_system_design",
+    "sub_competency": "reliability",
+    "difficulty": "advanced",
+    "question_type": "design",
+    "question": "How would you roll out a major prompt, model, or orchestration change without risking all production users at once?",
+    "expected_concepts": {
+      "must_have": [
+        "evaluate change before broad rollout",
+        "use staged or limited rollout",
+        "monitor quality and operational metrics",
+        "retain rollback capability"
+      ],
+      "bonus": [
+        "canary release",
+        "feature flags"
+      ]
+    },
+    "evaluation_refs": [
+      "EVAL-SYS-REL"
+    ],
+    "tags": [
+      "ai_system_design",
+      "reliability"
+    ]
+  }
+]

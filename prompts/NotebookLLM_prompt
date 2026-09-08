@@ -1,0 +1,9 @@
+Using the topic inventory you just created, generate questions suitable for a mid-level AI Engineer, but prioritize clear conceptual understanding and practical reasoning. Do not require formulas, implementation syntax, obscure algorithms, or highly specialized techniques unless generating an explicitly advanced question. For each sub-competency, generate 2 basic, 2 intermediate and 1 advanced question.
+rag
+├── rag_fundamentals
+├── chunking
+├── embeddings
+├── retrieval_search
+├── context_engineering
+├── rag_evaluation
+└── production_rag

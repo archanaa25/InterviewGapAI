@@ -1,0 +1,111 @@
+[
+  {
+    "evaluation_id": "EVAL-SEC-PI",
+    "role": "ai_engineer",
+    "competency": "ai_security",
+    "sub_competency": "prompt_injection",
+    "topic": "Prompt Injection",
+    "content": "Prompt injection occurs when untrusted input changes an LLM application's intended behavior. Direct or indirect injected instructions become more dangerous when the model can access sensitive data or invoke tools. Prompt instructions alone are not a complete security boundary.",
+    "key_concepts": [
+      "prompt injection",
+      "untrusted input",
+      "tools",
+      "sensitive data"
+    ],
+    "common_misconceptions": [
+      "A strong system prompt completely prevents prompt injection"
+    ],
+    "source": {
+      "source_type": "authoritative_public_source",
+      "document": "OWASP GenAI Security Project",
+      "section": "LLM01:2025 Prompt Injection"
+    },
+    "tags": [
+      "ai_security",
+      "prompt_injection"
+    ]
+  },
+  {
+    "evaluation_id": "EVAL-SEC-PRIV",
+    "role": "ai_engineer",
+    "competency": "ai_security",
+    "sub_competency": "data_privacy",
+    "topic": "Data Privacy and Access Control",
+    "content": "Sensitive information should be protected through normal application security controls such as authentication, authorization, least privilege, and data minimization. In RAG, access control should be enforced before unauthorized documents are retrieved into model context; asking the model to respect tenant boundaries is not sufficient.",
+    "key_concepts": [
+      "authentication",
+      "authorization",
+      "least privilege",
+      "data minimization",
+      "retrieval-layer access control"
+    ],
+    "common_misconceptions": [
+      "The model prompt is an authorization mechanism"
+    ],
+    "source": {
+      "source_type": "authoritative_public_source",
+      "document": "OWASP GenAI Security Project",
+      "section": "Sensitive Information Disclosure and Vector/Embedding Weaknesses"
+    },
+    "tags": [
+      "ai_security",
+      "data_privacy"
+    ]
+  },
+  {
+    "evaluation_id": "EVAL-SEC-TOOL",
+    "role": "ai_engineer",
+    "competency": "ai_security",
+    "sub_competency": "tool_security",
+    "topic": "Safe Tool Execution",
+    "content": "Agents with tools can create excessive-agency risk when they have unnecessary functionality, permissions, or autonomy. Safer designs minimize enabled tools and permissions, separate read from write capabilities, validate tool arguments, and require approval for consequential or irreversible actions.",
+    "key_concepts": [
+      "excessive agency",
+      "least privilege",
+      "read/write separation",
+      "argument validation",
+      "human approval"
+    ],
+    "common_misconceptions": [
+      "Agents should receive broad permissions so they can recover autonomously"
+    ],
+    "source": {
+      "source_type": "authoritative_public_source",
+      "document": "OWASP GenAI Security Project",
+      "section": "LLM06:2025 Excessive Agency"
+    },
+    "tags": [
+      "ai_security",
+      "tool_security"
+    ]
+  },
+  {
+    "evaluation_id": "EVAL-SEC-GUARD",
+    "role": "ai_engineer",
+    "competency": "ai_security",
+    "sub_competency": "guardrails",
+    "topic": "Defense in Depth and Output Handling",
+    "content": "LLM input and output should be treated as untrusted at system boundaries. Guardrails should be layered with standard security controls rather than relied on individually. Output passed to downstream tools or systems should be validated and safely handled. High-risk actions benefit from scoped permissions, approval, and monitoring.",
+    "key_concepts": [
+      "defense in depth",
+      "output validation",
+      "guardrails",
+      "authorization",
+      "human approval",
+      "monitoring"
+    ],
+    "common_misconceptions": [
+      "One guardrail is sufficient protection",
+      "LLM output can be executed directly without validation"
+    ],
+    "source": {
+      "source_type": "authoritative_public_source",
+      "document": "OWASP/OpenAI security guidance",
+      "section": "Improper Output Handling, Excessive Agency, layered guardrails"
+    },
+    "tags": [
+      "ai_security",
+      "guardrails"
+    ]
+  }
+]
