@@ -1,0 +1,40 @@
+{
+  "dataset": "InterviewGap AI Question Retrieval Golden Set v2",
+  "total_queries": 50,
+  "positive_or_retrieval_queries": 45,
+  "negative_queries": 5,
+  "recommended_metrics": {
+    "positive_retrieval": [
+      "Hit@1",
+      "Hit@3",
+      "Hit@5",
+      "MRR",
+      "NDCG@5"
+    ],
+    "negative_retrieval": [
+      "Abstention accuracy after score/decision threshold is introduced"
+    ],
+    "breakdowns": [
+      "query_type",
+      "competency",
+      "difficulty_target"
+    ]
+  },
+  "distribution": {
+    "query_type": {
+      "semantic": 15,
+      "keyword": 5,
+      "scenario": 8,
+      "cross_concept": 2,
+      "hard_semantic": 5,
+      "ambiguous": 5,
+      "near_neighbor": 5,
+      "negative": 5
+    },
+    "expected_behavior": {
+      "retrieve": 40,
+      "retrieve_any_relevant": 5,
+      "no_relevant_question": 5
+    }
+  }
+}

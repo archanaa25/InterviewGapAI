@@ -1,0 +1,32 @@
+                INTERVIEWGAP AI EVALUATION
+
+Question Retrieval
+BM25 / Dense / Hybrid
+        │
+        └── Hit@K / MRR / NDCG
+             deterministic
+
+Evaluation Knowledge RAG
+        │
+        ├── retrieval metrics
+        │
+        └── RAGAS context metrics
+
+Evaluator LLM
+        │
+        └── RAGAS
+             faithfulness
+             relevancy
+             groundedness
+
+Interview Scoring
+        │
+        └── Golden answers
+             + rubric
+             + LLM Judge
+
+End-to-End
+        │
+        └── skill-gap correctness
+             + latency
+             + cost

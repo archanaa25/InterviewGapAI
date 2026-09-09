@@ -1,0 +1,3514 @@
+{
+  "experiment_id": "question-retrieval-bm25-v2",
+  "retriever": "bm25",
+  "top_k": 5,
+  "corpus_size": 112,
+  "golden_dataset": "question_retrieval_golden.jsonl",
+  "summary": {
+    "total_queries": 50,
+    "retrieval_queries": 45,
+    "negative_queries": 5,
+    "average_latency_ms": 0.40392474009422585,
+    "recall_at_1": 0.662962962962963,
+    "recall_at_3": 0.7981481481481482,
+    "recall_at_5": 0.825925925925926,
+    "mrr": 0.7711111111111111,
+    "ndcg_at_5": 0.7658435527268209
+  },
+  "query_type_breakdown": {
+    "ambiguous": {
+      "total_queries": 5,
+      "retrieval_queries": 5,
+      "negative_queries": 0,
+      "average_latency_ms": 0.18592200212879106,
+      "recall_at_1": 0.06666666666666667,
+      "recall_at_3": 0.2833333333333333,
+      "recall_at_5": 0.3333333333333333,
+      "mrr": 0.4666666666666667,
+      "ndcg_at_5": 0.3140341223985142
+    },
+    "cross_concept": {
+      "total_queries": 2,
+      "retrieval_queries": 2,
+      "negative_queries": 0,
+      "average_latency_ms": 0.4511264996835962,
+      "recall_at_1": 1.0,
+      "recall_at_3": 1.0,
+      "recall_at_5": 1.0,
+      "mrr": 1.0,
+      "ndcg_at_5": 1.0
+    },
+    "hard_semantic": {
+      "total_queries": 5,
+      "retrieval_queries": 5,
+      "negative_queries": 0,
+      "average_latency_ms": 0.5549937995965593,
+      "recall_at_1": 0.5,
+      "recall_at_3": 0.7,
+      "recall_at_5": 0.7,
+      "mrr": 0.7,
+      "ndcg_at_5": 0.6488153892673831
+    },
+    "keyword": {
+      "total_queries": 5,
+      "retrieval_queries": 5,
+      "negative_queries": 0,
+      "average_latency_ms": 0.3562917991075665,
+      "recall_at_1": 1.0,
+      "recall_at_3": 1.0,
+      "recall_at_5": 1.0,
+      "mrr": 1.0,
+      "ndcg_at_5": 1.0
+    },
+    "near_neighbor": {
+      "total_queries": 5,
+      "retrieval_queries": 5,
+      "negative_queries": 0,
+      "average_latency_ms": 0.6239216003450565,
+      "recall_at_1": 0.0,
+      "recall_at_3": 0.4,
+      "recall_at_5": 0.6,
+      "mrr": 0.20666666666666667,
+      "ndcg_at_5": 0.30355651216119983
+    },
+    "negative": {
+      "total_queries": 5,
+      "retrieval_queries": 0,
+      "negative_queries": 5,
+      "average_latency_ms": 0.31652080069761723,
+      "recall_at_1": null,
+      "recall_at_3": null,
+      "recall_at_5": null,
+      "mrr": null,
+      "ndcg_at_5": null
+    },
+    "scenario": {
+      "total_queries": 8,
+      "retrieval_queries": 8,
+      "negative_queries": 0,
+      "average_latency_ms": 0.42334437421231996,
+      "recall_at_1": 1.0,
+      "recall_at_3": 1.0,
+      "recall_at_5": 1.0,
+      "mrr": 1.0,
+      "ndcg_at_5": 1.0
+    },
+    "semantic": {
+      "total_queries": 15,
+      "retrieval_queries": 15,
+      "negative_queries": 0,
+      "average_latency_ms": 0.3812652668178392,
+      "recall_at_1": 0.8,
+      "recall_at_3": 0.9333333333333333,
+      "recall_at_5": 0.9333333333333333,
+      "mrr": 0.8555555555555555,
+      "ndcg_at_5": 0.8753953169047638
+    }
+  },
+  "query_results": [
+    {
+      "expected_behavior": "retrieve",
+      "query_id": "QG-001",
+      "query": "Ask a foundational question about how RAG differs from fine-tuning for changing knowledge.",
+      "query_type": "semantic",
+      "expected_competency": "rag",
+      "expected_sub_competency": "rag_fundamentals",
+      "relevant_question_ids": [
+        "RAG-FUND-BAS-001"
+      ],
+      "retrieved_question_ids": [
+        "RAG-FUND-ADV-001",
+        "RAG-FUND-BAS-001",
+        "AGENT-HITL-INT-001",
+        "RAG-FUND-INT-002",
+        "RAG-EVAL-INT-001"
+      ],
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "question_id": "RAG-FUND-ADV-001",
+          "score": 16.888060857132224,
+          "competency": "rag",
+          "sub_competency": "rag_fundamentals",
+          "difficulty": "advanced"
+        },
+        {
+          "rank": 2,
+          "question_id": "RAG-FUND-BAS-001",
+          "score": 15.238218704858966,
+          "competency": "rag",
+          "sub_competency": "rag_fundamentals",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 3,
+          "question_id": "AGENT-HITL-INT-001",
+          "score": 6.14242132199997,
+          "competency": "agentic_ai",
+          "sub_competency": "human_in_the_loop",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 4,
+          "question_id": "RAG-FUND-INT-002",
+          "score": 6.104249712392741,
+          "competency": "rag",
+          "sub_competency": "rag_fundamentals",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 5,
+          "question_id": "RAG-EVAL-INT-001",
+          "score": 5.933177258210688,
+          "competency": "rag",
+          "sub_competency": "rag_evaluation",
+          "difficulty": "intermediate"
+        }
+      ],
+      "metrics": {
+        "recall_at_1": 0.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 0.5,
+        "ndcg_at_5": 0.6309297535714575
+      },
+      "latency_ms": 0.5094389998703264
+    },
+    {
+      "expected_behavior": "retrieve",
+      "query_id": "QG-002",
+      "query": "Test whether the candidate understands retrieve, augment and generate.",
+      "query_type": "keyword",
+      "expected_competency": "rag",
+      "expected_sub_competency": "rag_fundamentals",
+      "relevant_question_ids": [
+        "RAG-FUND-BAS-002"
+      ],
+      "retrieved_question_ids": [
+        "RAG-FUND-BAS-002",
+        "EVAL-RAG-INT-001",
+        "RAG-EVAL-INT-001",
+        "EVAL-RAG-BAS-002",
+        "EVAL-RAG-BAS-001"
+      ],
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "question_id": "RAG-FUND-BAS-002",
+          "score": 18.057210852730393,
+          "competency": "rag",
+          "sub_competency": "rag_fundamentals",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 2,
+          "question_id": "EVAL-RAG-INT-001",
+          "score": 6.668579372473883,
+          "competency": "ai_evaluation",
+          "sub_competency": "rag_evaluation",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 3,
+          "question_id": "RAG-EVAL-INT-001",
+          "score": 6.5526149300096135,
+          "competency": "rag",
+          "sub_competency": "rag_evaluation",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 4,
+          "question_id": "EVAL-RAG-BAS-002",
+          "score": 5.365630479859401,
+          "competency": "ai_evaluation",
+          "sub_competency": "rag_evaluation",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 5,
+          "question_id": "EVAL-RAG-BAS-001",
+          "score": 5.245820616437424,
+          "competency": "ai_evaluation",
+          "sub_competency": "rag_evaluation",
+          "difficulty": "basic"
+        }
+      ],
+      "metrics": {
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "latency_ms": 0.38943700201343745
+    },
+    {
+      "expected_behavior": "retrieve",
+      "query_id": "QG-003",
+      "query": "Select a question about the trade-off between small and large document chunks.",
+      "query_type": "semantic",
+      "expected_competency": "rag",
+      "expected_sub_competency": "chunking",
+      "relevant_question_ids": [
+        "RAG-CHUNK-BAS-001"
+      ],
+      "retrieved_question_ids": [
+        "RAG-CHUNK-BAS-001",
+        "LLM-TOKEN-INT-002",
+        "EVAL-RAG-BAS-001",
+        "RAG-PROD-BAS-002",
+        "RAG-EMB-INT-001"
+      ],
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "question_id": "RAG-CHUNK-BAS-001",
+          "score": 18.07641836514161,
+          "competency": "rag",
+          "sub_competency": "chunking",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 2,
+          "question_id": "LLM-TOKEN-INT-002",
+          "score": 12.085268131877168,
+          "competency": "ai_ml_llm_fundamentals",
+          "sub_competency": "token",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 3,
+          "question_id": "EVAL-RAG-BAS-001",
+          "score": 7.491501479343843,
+          "competency": "ai_evaluation",
+          "sub_competency": "rag_evaluation",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 4,
+          "question_id": "RAG-PROD-BAS-002",
+          "score": 6.392175135587072,
+          "competency": "rag",
+          "sub_competency": "production_rag",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 5,
+          "question_id": "RAG-EMB-INT-001",
+          "score": 6.154940951516528,
+          "competency": "rag",
+          "sub_competency": "embeddings",
+          "difficulty": "intermediate"
+        }
+      ],
+      "metrics": {
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "latency_ms": 0.39592100074514747
+    },
+    {
+      "expected_behavior": "retrieve",
+      "query_id": "QG-004",
+      "query": "Semantic search misses SKU codes and exact identifiers. Ask how to improve retrieval.",
+      "query_type": "scenario",
+      "expected_competency": "rag",
+      "expected_sub_competency": "retrieval_search",
+      "relevant_question_ids": [
+        "RAG-RET-INT-002"
+      ],
+      "retrieved_question_ids": [
+        "RAG-RET-INT-002",
+        "RAG-RET-BAS-001",
+        "AGENT-MEM-INT-001",
+        "RAG-RET-BAS-002",
+        "RAG-CHUNK-INT-002"
+      ],
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "question_id": "RAG-RET-INT-002",
+          "score": 29.310725813650578,
+          "competency": "rag",
+          "sub_competency": "retrieval_search",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 2,
+          "question_id": "RAG-RET-BAS-001",
+          "score": 15.76942515715444,
+          "competency": "rag",
+          "sub_competency": "retrieval_search",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 3,
+          "question_id": "AGENT-MEM-INT-001",
+          "score": 7.026415258364712,
+          "competency": "agentic_ai",
+          "sub_competency": "agent_state_memory",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 4,
+          "question_id": "RAG-RET-BAS-002",
+          "score": 6.311762811014152,
+          "competency": "rag",
+          "sub_competency": "retrieval_search",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 5,
+          "question_id": "RAG-CHUNK-INT-002",
+          "score": 6.282169849149442,
+          "competency": "rag",
+          "sub_competency": "chunking",
+          "difficulty": "intermediate"
+        }
+      ],
+      "metrics": {
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "latency_ms": 0.4065609973622486
+    },
+    {
+      "expected_behavior": "retrieve",
+      "query_id": "QG-005",
+      "query": "Test why higher Recall@10 may still reduce downstream RAG answer quality.",
+      "query_type": "cross_concept",
+      "expected_competency": "rag",
+      "expected_sub_competency": "retrieval_search",
+      "relevant_question_ids": [
+        "RAG-RET-ADV-001"
+      ],
+      "retrieved_question_ids": [
+        "RAG-RET-ADV-001",
+        "RAG-EVAL-BAS-002",
+        "EVAL-METRIC-INT-002",
+        "RAG-CTX-BAS-002",
+        "EVAL-RAG-BAS-002"
+      ],
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "question_id": "RAG-RET-ADV-001",
+          "score": 17.19317087323035,
+          "competency": "rag",
+          "sub_competency": "retrieval_search",
+          "difficulty": "advanced"
+        },
+        {
+          "rank": 2,
+          "question_id": "RAG-EVAL-BAS-002",
+          "score": 8.26568189371033,
+          "competency": "rag",
+          "sub_competency": "rag_evaluation",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 3,
+          "question_id": "EVAL-METRIC-INT-002",
+          "score": 7.3467867643095435,
+          "competency": "ai_evaluation",
+          "sub_competency": "evaluation_metrics",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 4,
+          "question_id": "RAG-CTX-BAS-002",
+          "score": 7.211278722371754,
+          "competency": "rag",
+          "sub_competency": "context_engineering",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 5,
+          "question_id": "EVAL-RAG-BAS-002",
+          "score": 6.208707470407328,
+          "competency": "ai_evaluation",
+          "sub_competency": "rag_evaluation",
+          "difficulty": "basic"
+        }
+      ],
+      "metrics": {
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "latency_ms": 0.4643319989554584
+    },
+    {
+      "expected_behavior": "retrieve",
+      "query_id": "QG-006",
+      "query": "Ask why retrieval and generation should be evaluated separately in RAG.",
+      "query_type": "semantic",
+      "expected_competency": "rag",
+      "expected_sub_competency": "rag_evaluation",
+      "relevant_question_ids": [
+        "RAG-EVAL-BAS-001"
+      ],
+      "retrieved_question_ids": [
+        "RAG-EVAL-BAS-001",
+        "EVAL-COST-INT-001",
+        "RAG-RET-ADV-001",
+        "AGENT-HITL-INT-001",
+        "RAG-FUND-INT-002"
+      ],
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "question_id": "RAG-EVAL-BAS-001",
+          "score": 22.705264796214145,
+          "competency": "rag",
+          "sub_competency": "rag_evaluation",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 2,
+          "question_id": "EVAL-COST-INT-001",
+          "score": 12.161609645462203,
+          "competency": "ai_evaluation",
+          "sub_competency": "cost_latency",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 3,
+          "question_id": "RAG-RET-ADV-001",
+          "score": 8.877044277118344,
+          "competency": "rag",
+          "sub_competency": "retrieval_search",
+          "difficulty": "advanced"
+        },
+        {
+          "rank": 4,
+          "question_id": "AGENT-HITL-INT-001",
+          "score": 8.10055950608026,
+          "competency": "agentic_ai",
+          "sub_competency": "human_in_the_loop",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 5,
+          "question_id": "RAG-FUND-INT-002",
+          "score": 7.636403552961479,
+          "competency": "rag",
+          "sub_competency": "rag_fundamentals",
+          "difficulty": "intermediate"
+        }
+      ],
+      "metrics": {
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "latency_ms": 0.3602090000640601
+    },
+    {
+      "expected_behavior": "retrieve",
+      "query_id": "QG-007",
+      "query": "Distinguish an AI agent from a chatbot and deterministic workflow.",
+      "query_type": "semantic",
+      "expected_competency": "agentic_ai",
+      "expected_sub_competency": "agent_fundamentals",
+      "relevant_question_ids": [
+        "AGENT-FUND-BAS-001"
+      ],
+      "retrieved_question_ids": [
+        "AGENT-FUND-BAS-001",
+        "AGENT-FUND-BAS-002",
+        "AGENT-LIFE-INT-001",
+        "SYS-ARCH-ADV-001",
+        "AGENT-LIFE-BAS-001"
+      ],
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "question_id": "AGENT-FUND-BAS-001",
+          "score": 20.8565876550117,
+          "competency": "agentic_ai",
+          "sub_competency": "agent_fundamentals",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 2,
+          "question_id": "AGENT-FUND-BAS-002",
+          "score": 8.973943045548426,
+          "competency": "agentic_ai",
+          "sub_competency": "agent_fundamentals",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 3,
+          "question_id": "AGENT-LIFE-INT-001",
+          "score": 8.56677553956429,
+          "competency": "agentic_ai",
+          "sub_competency": "agent_lifecycle",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 4,
+          "question_id": "SYS-ARCH-ADV-001",
+          "score": 7.502062753974412,
+          "competency": "ai_system_design",
+          "sub_competency": "ai_architecture",
+          "difficulty": "advanced"
+        },
+        {
+          "rank": 5,
+          "question_id": "AGENT-LIFE-BAS-001",
+          "score": 6.260748295570406,
+          "competency": "agentic_ai",
+          "sub_competency": "agent_lifecycle",
+          "difficulty": "basic"
+        }
+      ],
+      "metrics": {
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "latency_ms": 0.3217209959984757
+    },
+    {
+      "expected_behavior": "retrieve",
+      "query_id": "QG-008",
+      "query": "Test when a deterministic workflow is preferable to an autonomous agent.",
+      "query_type": "semantic",
+      "expected_competency": "agentic_ai",
+      "expected_sub_competency": "agent_fundamentals",
+      "relevant_question_ids": [
+        "AGENT-FUND-INT-001"
+      ],
+      "retrieved_question_ids": [
+        "AGENT-FUND-BAS-001",
+        "AGENT-FUND-BAS-002",
+        "RAG-CHUNK-INT-002",
+        "AGENT-LIFE-INT-001",
+        "EVAL-AGENT-INT-001"
+      ],
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "question_id": "AGENT-FUND-BAS-001",
+          "score": 13.849717903488978,
+          "competency": "agentic_ai",
+          "sub_competency": "agent_fundamentals",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 2,
+          "question_id": "AGENT-FUND-BAS-002",
+          "score": 11.562006073132492,
+          "competency": "agentic_ai",
+          "sub_competency": "agent_fundamentals",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 3,
+          "question_id": "RAG-CHUNK-INT-002",
+          "score": 8.606233408714568,
+          "competency": "rag",
+          "sub_competency": "chunking",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 4,
+          "question_id": "AGENT-LIFE-INT-001",
+          "score": 7.787918302204225,
+          "competency": "agentic_ai",
+          "sub_competency": "agent_lifecycle",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 5,
+          "question_id": "EVAL-AGENT-INT-001",
+          "score": 6.35084206146485,
+          "competency": "ai_evaluation",
+          "sub_competency": "agent_evaluation",
+          "difficulty": "intermediate"
+        }
+      ],
+      "metrics": {
+        "recall_at_1": 0.0,
+        "recall_at_3": 0.0,
+        "recall_at_5": 0.0,
+        "reciprocal_rank": 0.0,
+        "ndcg_at_5": 0.0
+      },
+      "latency_ms": 0.39819800440454856
+    },
+    {
+      "expected_behavior": "retrieve",
+      "query_id": "QG-009",
+      "query": "Ask the difference between temporary task state and persistent agent memory.",
+      "query_type": "semantic",
+      "expected_competency": "agentic_ai",
+      "expected_sub_competency": "agent_state_memory",
+      "relevant_question_ids": [
+        "AGENT-MEM-BAS-001"
+      ],
+      "retrieved_question_ids": [
+        "AGENT-MEM-BAS-001",
+        "AGENT-MEM-BAS-002",
+        "EVAL-AGENT-BAS-001",
+        "AGENT-MEM-INT-001",
+        "AGENT-DESIGN-BAS-001"
+      ],
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "question_id": "AGENT-MEM-BAS-001",
+          "score": 19.702734227072796,
+          "competency": "agentic_ai",
+          "sub_competency": "agent_state_memory",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 2,
+          "question_id": "AGENT-MEM-BAS-002",
+          "score": 14.825232810465412,
+          "competency": "agentic_ai",
+          "sub_competency": "agent_state_memory",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 3,
+          "question_id": "EVAL-AGENT-BAS-001",
+          "score": 11.664775550482517,
+          "competency": "ai_evaluation",
+          "sub_competency": "agent_evaluation",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 4,
+          "question_id": "AGENT-MEM-INT-001",
+          "score": 9.935236154847168,
+          "competency": "agentic_ai",
+          "sub_competency": "agent_state_memory",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 5,
+          "question_id": "AGENT-DESIGN-BAS-001",
+          "score": 9.425573189025627,
+          "competency": "agentic_ai",
+          "sub_competency": "agent_design_patterns",
+          "difficulty": "basic"
+        }
+      ],
+      "metrics": {
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "latency_ms": 0.3458819992374629
+    },
+    {
+      "expected_behavior": "retrieve",
+      "query_id": "QG-010",
+      "query": "Compare supervisor and reflection agent design patterns.",
+      "query_type": "keyword",
+      "expected_competency": "agentic_ai",
+      "expected_sub_competency": "agent_design_patterns",
+      "relevant_question_ids": [
+        "AGENT-DESIGN-BAS-001"
+      ],
+      "retrieved_question_ids": [
+        "AGENT-DESIGN-BAS-001",
+        "AGENT-DESIGN-INT-001",
+        "AGENT-DESIGN-INT-002",
+        "AGENT-DESIGN-BAS-002",
+        "RAG-CHUNK-INT-001"
+      ],
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "question_id": "AGENT-DESIGN-BAS-001",
+          "score": 21.74484560719874,
+          "competency": "agentic_ai",
+          "sub_competency": "agent_design_patterns",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 2,
+          "question_id": "AGENT-DESIGN-INT-001",
+          "score": 8.278968130362367,
+          "competency": "agentic_ai",
+          "sub_competency": "agent_design_patterns",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 3,
+          "question_id": "AGENT-DESIGN-INT-002",
+          "score": 7.061973351000692,
+          "competency": "agentic_ai",
+          "sub_competency": "agent_design_patterns",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 4,
+          "question_id": "AGENT-DESIGN-BAS-002",
+          "score": 5.559179724041769,
+          "competency": "agentic_ai",
+          "sub_competency": "agent_design_patterns",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 5,
+          "question_id": "RAG-CHUNK-INT-001",
+          "score": 4.016177577755566,
+          "competency": "rag",
+          "sub_competency": "chunking",
+          "difficulty": "intermediate"
+        }
+      ],
+      "metrics": {
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "latency_ms": 0.23512699408456683
+    },
+    {
+      "expected_behavior": "retrieve",
+      "query_id": "QG-011",
+      "query": "Test how to prevent duplicated work, cascading errors and runaway multi-agent loops.",
+      "query_type": "scenario",
+      "expected_competency": "agentic_ai",
+      "expected_sub_competency": "agent_design_patterns",
+      "relevant_question_ids": [
+        "AGENT-DESIGN-INT-002"
+      ],
+      "retrieved_question_ids": [
+        "AGENT-DESIGN-INT-002",
+        "EVAL-COST-INT-002",
+        "AGENT-DESIGN-BAS-002",
+        "PY-APP-BAS-001",
+        "EVAL-COST-BAS-002"
+      ],
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "question_id": "AGENT-DESIGN-INT-002",
+          "score": 29.405885447219653,
+          "competency": "agentic_ai",
+          "sub_competency": "agent_design_patterns",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 2,
+          "question_id": "EVAL-COST-INT-002",
+          "score": 13.892206315209084,
+          "competency": "ai_evaluation",
+          "sub_competency": "cost_latency",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 3,
+          "question_id": "AGENT-DESIGN-BAS-002",
+          "score": 9.27732014788307,
+          "competency": "agentic_ai",
+          "sub_competency": "agent_design_patterns",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 4,
+          "question_id": "PY-APP-BAS-001",
+          "score": 5.822621143708049,
+          "competency": "python_software_engineering",
+          "sub_competency": "application_design",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 5,
+          "question_id": "EVAL-COST-BAS-002",
+          "score": 5.593068852445036,
+          "competency": "ai_evaluation",
+          "sub_competency": "cost_latency",
+          "difficulty": "basic"
+        }
+      ],
+      "metrics": {
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "latency_ms": 0.3792790012084879
+    },
+    {
+      "expected_behavior": "retrieve",
+      "query_id": "QG-012",
+      "query": "Ask when an agent should proceed, request approval, or stop based on risk and confidence.",
+      "query_type": "cross_concept",
+      "expected_competency": "agentic_ai",
+      "expected_sub_competency": "human_in_the_loop",
+      "relevant_question_ids": [
+        "AGENT-HITL-INT-001"
+      ],
+      "retrieved_question_ids": [
+        "AGENT-HITL-INT-001",
+        "AGENT-LIFE-INT-002",
+        "AGENT-FUND-INT-002",
+        "PY-API-BAS-001",
+        "SEC-TOOL-INT-001"
+      ],
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "question_id": "AGENT-HITL-INT-001",
+          "score": 29.37907058071582,
+          "competency": "agentic_ai",
+          "sub_competency": "human_in_the_loop",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 2,
+          "question_id": "AGENT-LIFE-INT-002",
+          "score": 11.226492449076078,
+          "competency": "agentic_ai",
+          "sub_competency": "agent_lifecycle",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 3,
+          "question_id": "AGENT-FUND-INT-002",
+          "score": 10.584199046236828,
+          "competency": "agentic_ai",
+          "sub_competency": "agent_fundamentals",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 4,
+          "question_id": "PY-API-BAS-001",
+          "score": 9.18572484607653,
+          "competency": "python_software_engineering",
+          "sub_competency": "api_integration",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 5,
+          "question_id": "SEC-TOOL-INT-001",
+          "score": 8.744387491147112,
+          "competency": "ai_security",
+          "sub_competency": "tool_security",
+          "difficulty": "intermediate"
+        }
+      ],
+      "metrics": {
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "latency_ms": 0.437921000411734
+    },
+    {
+      "expected_behavior": "retrieve",
+      "query_id": "QG-013",
+      "query": "Ask the difference between MCP for tools and A2A for agent-to-agent interoperability.",
+      "query_type": "keyword",
+      "expected_competency": "agentic_ai",
+      "expected_sub_competency": "agent_interoperability",
+      "relevant_question_ids": [
+        "AGENT-INTEROP-BAS-002"
+      ],
+      "retrieved_question_ids": [
+        "AGENT-INTEROP-BAS-002",
+        "AGENT-INTEROP-BAS-001",
+        "AGENT-INTEROP-INT-001",
+        "AGENT-INTEROP-INT-002",
+        "AGENT-HITL-INT-001"
+      ],
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "question_id": "AGENT-INTEROP-BAS-002",
+          "score": 29.63109493544946,
+          "competency": "agentic_ai",
+          "sub_competency": "agent_interoperability",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 2,
+          "question_id": "AGENT-INTEROP-BAS-001",
+          "score": 15.853487273028353,
+          "competency": "agentic_ai",
+          "sub_competency": "agent_interoperability",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 3,
+          "question_id": "AGENT-INTEROP-INT-001",
+          "score": 12.37855805807876,
+          "competency": "agentic_ai",
+          "sub_competency": "agent_interoperability",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 4,
+          "question_id": "AGENT-INTEROP-INT-002",
+          "score": 10.522824466467162,
+          "competency": "agentic_ai",
+          "sub_competency": "agent_interoperability",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 5,
+          "question_id": "AGENT-HITL-INT-001",
+          "score": 7.0464422355722505,
+          "competency": "agentic_ai",
+          "sub_competency": "human_in_the_loop",
+          "difficulty": "intermediate"
+        }
+      ],
+      "metrics": {
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "latency_ms": 0.37107199750607833
+    },
+    {
+      "expected_behavior": "retrieve",
+      "query_id": "QG-014",
+      "query": "Ask what tokenization does before text can be processed by an LLM.",
+      "query_type": "semantic",
+      "expected_competency": "ai_ml_llm_fundamentals",
+      "expected_sub_competency": "token",
+      "relevant_question_ids": [
+        "LLM-TOKEN-BAS-001"
+      ],
+      "retrieved_question_ids": [
+        "LLM-TOKEN-BAS-001",
+        "LLM-TOKEN-ADV-001",
+        "EVAL-RAG-BAS-002",
+        "RAG-EMB-BAS-001",
+        "SEC-OUT-INT-001"
+      ],
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "question_id": "LLM-TOKEN-BAS-001",
+          "score": 11.184192342827494,
+          "competency": "ai_ml_llm_fundamentals",
+          "sub_competency": "token",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 2,
+          "question_id": "LLM-TOKEN-ADV-001",
+          "score": 7.3926669395126,
+          "competency": "ai_ml_llm_fundamentals",
+          "sub_competency": "token",
+          "difficulty": "advanced"
+        },
+        {
+          "rank": 3,
+          "question_id": "EVAL-RAG-BAS-002",
+          "score": 6.074255756748819,
+          "competency": "ai_evaluation",
+          "sub_competency": "rag_evaluation",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 4,
+          "question_id": "RAG-EMB-BAS-001",
+          "score": 5.596012289627306,
+          "competency": "rag",
+          "sub_competency": "embeddings",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 5,
+          "question_id": "SEC-OUT-INT-001",
+          "score": 5.546791936366661,
+          "competency": "ai_security",
+          "sub_competency": "guardrails",
+          "difficulty": "intermediate"
+        }
+      ],
+      "metrics": {
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "latency_ms": 0.40066600195132196
+    },
+    {
+      "expected_behavior": "retrieve",
+      "query_id": "QG-015",
+      "query": "Test the trade-off between a small and large tokenizer vocabulary.",
+      "query_type": "semantic",
+      "expected_competency": "ai_ml_llm_fundamentals",
+      "expected_sub_competency": "token",
+      "relevant_question_ids": [
+        "LLM-TOKEN-INT-002"
+      ],
+      "retrieved_question_ids": [
+        "LLM-TOKEN-INT-002",
+        "RAG-CHUNK-BAS-001",
+        "LLM-TOKEN-ADV-001",
+        "PY-TEST-INT-001",
+        "EVAL-RAG-INT-001"
+      ],
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "question_id": "LLM-TOKEN-INT-002",
+          "score": 19.50610132529112,
+          "competency": "ai_ml_llm_fundamentals",
+          "sub_competency": "token",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 2,
+          "question_id": "RAG-CHUNK-BAS-001",
+          "score": 12.864064040873663,
+          "competency": "rag",
+          "sub_competency": "chunking",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 3,
+          "question_id": "LLM-TOKEN-ADV-001",
+          "score": 8.083990760775963,
+          "competency": "ai_ml_llm_fundamentals",
+          "sub_competency": "token",
+          "difficulty": "advanced"
+        },
+        {
+          "rank": 4,
+          "question_id": "PY-TEST-INT-001",
+          "score": 4.955531877562919,
+          "competency": "python_software_engineering",
+          "sub_competency": "testing",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 5,
+          "question_id": "EVAL-RAG-INT-001",
+          "score": 4.39352786314111,
+          "competency": "ai_evaluation",
+          "sub_competency": "rag_evaluation",
+          "difficulty": "intermediate"
+        }
+      ],
+      "metrics": {
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "latency_ms": 0.3075240019825287
+    },
+    {
+      "expected_behavior": "retrieve",
+      "query_id": "QG-016",
+      "query": "Ask why dense embeddings represent semantic relationships better than one-hot vectors.",
+      "query_type": "keyword",
+      "expected_competency": "ai_ml_llm_fundamentals",
+      "expected_sub_competency": "embedding",
+      "relevant_question_ids": [
+        "LLM-EMB-BAS-001"
+      ],
+      "retrieved_question_ids": [
+        "LLM-EMB-BAS-001",
+        "RAG-EMB-BAS-001",
+        "LLM-TRANS-INT-002",
+        "RAG-RET-BAS-001",
+        "RAG-EMB-BAS-002"
+      ],
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "question_id": "LLM-EMB-BAS-001",
+          "score": 27.866491581054017,
+          "competency": "ai_ml_llm_fundamentals",
+          "sub_competency": "embedding",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 2,
+          "question_id": "RAG-EMB-BAS-001",
+          "score": 11.8044964178745,
+          "competency": "rag",
+          "sub_competency": "embeddings",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 3,
+          "question_id": "LLM-TRANS-INT-002",
+          "score": 9.549425871970607,
+          "competency": "ai_ml_llm_fundamentals",
+          "sub_competency": "transformer_architecture",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 4,
+          "question_id": "RAG-RET-BAS-001",
+          "score": 8.395459699280053,
+          "competency": "rag",
+          "sub_competency": "retrieval_search",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 5,
+          "question_id": "RAG-EMB-BAS-002",
+          "score": 6.815975017859111,
+          "competency": "rag",
+          "sub_competency": "embeddings",
+          "difficulty": "basic"
+        }
+      ],
+      "metrics": {
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "latency_ms": 0.337401004799176
+    },
+    {
+      "expected_behavior": "retrieve",
+      "query_id": "QG-017",
+      "query": "Test why a generative Transformer decoder must not see future tokens during training.",
+      "query_type": "semantic",
+      "expected_competency": "ai_ml_llm_fundamentals",
+      "expected_sub_competency": "transformer_architecture",
+      "relevant_question_ids": [
+        "LLM-TRANS-INT-001"
+      ],
+      "retrieved_question_ids": [
+        "LLM-TRANS-INT-001",
+        "LLM-TRANS-BAS-002",
+        "LLM-TOKEN-INT-001",
+        "PY-TEST-INT-001",
+        "SEC-ACL-INT-001"
+      ],
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "question_id": "LLM-TRANS-INT-001",
+          "score": 33.19398178579296,
+          "competency": "ai_ml_llm_fundamentals",
+          "sub_competency": "transformer_architecture",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 2,
+          "question_id": "LLM-TRANS-BAS-002",
+          "score": 10.700321891804585,
+          "competency": "ai_ml_llm_fundamentals",
+          "sub_competency": "transformer_architecture",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 3,
+          "question_id": "LLM-TOKEN-INT-001",
+          "score": 10.491208004745378,
+          "competency": "ai_ml_llm_fundamentals",
+          "sub_competency": "token",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 4,
+          "question_id": "PY-TEST-INT-001",
+          "score": 7.882199074722088,
+          "competency": "python_software_engineering",
+          "sub_competency": "testing",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 5,
+          "question_id": "SEC-ACL-INT-001",
+          "score": 7.480778520737195,
+          "competency": "ai_security",
+          "sub_competency": "access_control",
+          "difficulty": "intermediate"
+        }
+      ],
+      "metrics": {
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "latency_ms": 0.4987150023225695
+    },
+    {
+      "expected_behavior": "retrieve",
+      "query_id": "QG-018",
+      "query": "Ask whether context precision or context recall is suffering when irrelevant chunks distract the model.",
+      "query_type": "keyword",
+      "expected_competency": "ai_evaluation",
+      "expected_sub_competency": "rag_evaluation",
+      "relevant_question_ids": [
+        "EVAL-RAG-BAS-001"
+      ],
+      "retrieved_question_ids": [
+        "EVAL-RAG-BAS-001",
+        "EVAL-METRIC-BAS-001",
+        "RAG-CHUNK-BAS-001",
+        "EVAL-RAG-INT-002",
+        "RAG-RET-ADV-001"
+      ],
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "question_id": "EVAL-RAG-BAS-001",
+          "score": 29.683385518318566,
+          "competency": "ai_evaluation",
+          "sub_competency": "rag_evaluation",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 2,
+          "question_id": "EVAL-METRIC-BAS-001",
+          "score": 12.327059942487773,
+          "competency": "ai_evaluation",
+          "sub_competency": "evaluation_metrics",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 3,
+          "question_id": "RAG-CHUNK-BAS-001",
+          "score": 12.199103025265519,
+          "competency": "rag",
+          "sub_competency": "chunking",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 4,
+          "question_id": "EVAL-RAG-INT-002",
+          "score": 11.873260614416605,
+          "competency": "ai_evaluation",
+          "sub_competency": "rag_evaluation",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 5,
+          "question_id": "RAG-RET-ADV-001",
+          "score": 10.375999398251997,
+          "competency": "rag",
+          "sub_competency": "retrieval_search",
+          "difficulty": "advanced"
+        }
+      ],
+      "metrics": {
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "latency_ms": 0.44842199713457376
+    },
+    {
+      "expected_behavior": "retrieve",
+      "query_id": "QG-019",
+      "query": "Test whether an answer can be relevant but unsupported by retrieved evidence.",
+      "query_type": "semantic",
+      "expected_competency": "ai_evaluation",
+      "expected_sub_competency": "rag_evaluation",
+      "relevant_question_ids": [
+        "EVAL-RAG-BAS-002"
+      ],
+      "retrieved_question_ids": [
+        "EVAL-RAG-BAS-002",
+        "EVAL-RAG-BAS-001",
+        "EVAL-RAG-INT-001",
+        "AGENT-HITL-INT-002",
+        "RAG-RET-ADV-001"
+      ],
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "question_id": "EVAL-RAG-BAS-002",
+          "score": 26.673582907276202,
+          "competency": "ai_evaluation",
+          "sub_competency": "rag_evaluation",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 2,
+          "question_id": "EVAL-RAG-BAS-001",
+          "score": 14.106859709817275,
+          "competency": "ai_evaluation",
+          "sub_competency": "rag_evaluation",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 3,
+          "question_id": "EVAL-RAG-INT-001",
+          "score": 13.64927246379914,
+          "competency": "ai_evaluation",
+          "sub_competency": "rag_evaluation",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 4,
+          "question_id": "AGENT-HITL-INT-002",
+          "score": 6.818511278928078,
+          "competency": "agentic_ai",
+          "sub_competency": "human_in_the_loop",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 5,
+          "question_id": "RAG-RET-ADV-001",
+          "score": 6.104957090783897,
+          "competency": "rag",
+          "sub_competency": "retrieval_search",
+          "difficulty": "advanced"
+        }
+      ],
+      "metrics": {
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "latency_ms": 0.3552690031938255
+    },
+    {
+      "expected_behavior": "retrieve",
+      "query_id": "QG-020",
+      "query": "Ask how false-positive and false-negative costs influence precision versus recall.",
+      "query_type": "semantic",
+      "expected_competency": "ai_evaluation",
+      "expected_sub_competency": "evaluation_metrics",
+      "relevant_question_ids": [
+        "EVAL-METRIC-BAS-001"
+      ],
+      "retrieved_question_ids": [
+        "EVAL-METRIC-BAS-001",
+        "EVAL-RAG-BAS-001",
+        "RAG-EVAL-BAS-002",
+        "RAG-RET-ADV-001",
+        "RAG-RET-INT-001"
+      ],
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "question_id": "EVAL-METRIC-BAS-001",
+          "score": 25.291405521162524,
+          "competency": "ai_evaluation",
+          "sub_competency": "evaluation_metrics",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 2,
+          "question_id": "EVAL-RAG-BAS-001",
+          "score": 8.852089311755345,
+          "competency": "ai_evaluation",
+          "sub_competency": "rag_evaluation",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 3,
+          "question_id": "RAG-EVAL-BAS-002",
+          "score": 7.768546656476913,
+          "competency": "rag",
+          "sub_competency": "rag_evaluation",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 4,
+          "question_id": "RAG-RET-ADV-001",
+          "score": 7.693623865445625,
+          "competency": "rag",
+          "sub_competency": "retrieval_search",
+          "difficulty": "advanced"
+        },
+        {
+          "rank": 5,
+          "question_id": "RAG-RET-INT-001",
+          "score": 6.56915155011482,
+          "competency": "rag",
+          "sub_competency": "retrieval_search",
+          "difficulty": "intermediate"
+        }
+      ],
+      "metrics": {
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "latency_ms": 0.3195329991285689
+    },
+    {
+      "expected_behavior": "retrieve",
+      "query_id": "QG-021",
+      "query": "Select a question about calibrating an LLM judge against expert human scores.",
+      "query_type": "semantic",
+      "expected_competency": "ai_evaluation",
+      "expected_sub_competency": "evaluation_metrics",
+      "relevant_question_ids": [
+        "EVAL-METRIC-ADV-001"
+      ],
+      "retrieved_question_ids": [
+        "EVAL-METRIC-ADV-001",
+        "EVAL-COST-ADV-001",
+        "LLM-TRANS-BAS-001",
+        "RAG-RET-BAS-002",
+        "RAG-EVAL-ADV-001"
+      ],
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "question_id": "EVAL-METRIC-ADV-001",
+          "score": 14.577092235844713,
+          "competency": "ai_evaluation",
+          "sub_competency": "evaluation_metrics",
+          "difficulty": "advanced"
+        },
+        {
+          "rank": 2,
+          "question_id": "EVAL-COST-ADV-001",
+          "score": 7.897054530471419,
+          "competency": "ai_evaluation",
+          "sub_competency": "cost_latency",
+          "difficulty": "advanced"
+        },
+        {
+          "rank": 3,
+          "question_id": "LLM-TRANS-BAS-001",
+          "score": 6.231528659294643,
+          "competency": "ai_ml_llm_fundamentals",
+          "sub_competency": "transformer_architecture",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 4,
+          "question_id": "RAG-RET-BAS-002",
+          "score": 5.461206142155907,
+          "competency": "rag",
+          "sub_competency": "retrieval_search",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 5,
+          "question_id": "RAG-EVAL-ADV-001",
+          "score": 5.154772609103013,
+          "competency": "rag",
+          "sub_competency": "rag_evaluation",
+          "difficulty": "advanced"
+        }
+      ],
+      "metrics": {
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "latency_ms": 0.3602720025810413
+    },
+    {
+      "expected_behavior": "retrieve",
+      "query_id": "QG-022",
+      "query": "Ask about evaluating an agent's final outcome versus its execution trajectory.",
+      "query_type": "semantic",
+      "expected_competency": "ai_evaluation",
+      "expected_sub_competency": "agent_evaluation",
+      "relevant_question_ids": [
+        "EVAL-AGENT-BAS-001"
+      ],
+      "retrieved_question_ids": [
+        "EVAL-AGENT-BAS-001",
+        "AGENT-LIFE-BAS-002",
+        "AGENT-MEM-BAS-001",
+        "SEC-ACL-INT-001",
+        "AGENT-FUND-ADV-001"
+      ],
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "question_id": "EVAL-AGENT-BAS-001",
+          "score": 32.03988957792895,
+          "competency": "ai_evaluation",
+          "sub_competency": "agent_evaluation",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 2,
+          "question_id": "AGENT-LIFE-BAS-002",
+          "score": 7.625478753796729,
+          "competency": "agentic_ai",
+          "sub_competency": "agent_lifecycle",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 3,
+          "question_id": "AGENT-MEM-BAS-001",
+          "score": 7.311866541508342,
+          "competency": "agentic_ai",
+          "sub_competency": "agent_state_memory",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 4,
+          "question_id": "SEC-ACL-INT-001",
+          "score": 5.966283539536299,
+          "competency": "ai_security",
+          "sub_competency": "access_control",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 5,
+          "question_id": "AGENT-FUND-ADV-001",
+          "score": 5.623647956143177,
+          "competency": "agentic_ai",
+          "sub_competency": "agent_fundamentals",
+          "difficulty": "advanced"
+        }
+      ],
+      "metrics": {
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "latency_ms": 0.33519999851705506
+    },
+    {
+      "expected_behavior": "retrieve",
+      "query_id": "QG-023",
+      "query": "Ask how async execution can reduce latency for independent LLM or network calls.",
+      "query_type": "scenario",
+      "expected_competency": "python_software_engineering",
+      "expected_sub_competency": "async_concurrency",
+      "relevant_question_ids": [
+        "PY-ASYNC-INT-001"
+      ],
+      "retrieved_question_ids": [
+        "PY-ASYNC-INT-001",
+        "AGENT-REL-INT-002",
+        "EVAL-COST-INT-001",
+        "AGENT-HITL-INT-001",
+        "SYS-OBS-BAS-001"
+      ],
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "question_id": "PY-ASYNC-INT-001",
+          "score": 21.669356447550825,
+          "competency": "python_software_engineering",
+          "sub_competency": "async_concurrency",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 2,
+          "question_id": "AGENT-REL-INT-002",
+          "score": 13.832097372591097,
+          "competency": "agentic_ai",
+          "sub_competency": "agent_reliability",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 3,
+          "question_id": "EVAL-COST-INT-001",
+          "score": 7.8493376221456055,
+          "competency": "ai_evaluation",
+          "sub_competency": "cost_latency",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 4,
+          "question_id": "AGENT-HITL-INT-001",
+          "score": 6.763815316904949,
+          "competency": "agentic_ai",
+          "sub_competency": "human_in_the_loop",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 5,
+          "question_id": "SYS-OBS-BAS-001",
+          "score": 5.917380983980999,
+          "competency": "ai_system_design",
+          "sub_competency": "observability",
+          "difficulty": "basic"
+        }
+      ],
+      "metrics": {
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "latency_ms": 0.37615199835272506
+    },
+    {
+      "expected_behavior": "retrieve",
+      "query_id": "QG-024",
+      "query": "Test handling an external AI API that intermittently times out without retrying forever.",
+      "query_type": "scenario",
+      "expected_competency": "python_software_engineering",
+      "expected_sub_competency": "error_handling",
+      "relevant_question_ids": [
+        "PY-ERR-INT-001"
+      ],
+      "retrieved_question_ids": [
+        "PY-ERR-INT-001",
+        "PY-TEST-INT-001",
+        "PY-APP-BAS-001",
+        "SYS-REL-INT-001",
+        "PY-TEST-BAS-001"
+      ],
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "question_id": "PY-ERR-INT-001",
+          "score": 30.95806726206931,
+          "competency": "python_software_engineering",
+          "sub_competency": "error_handling",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 2,
+          "question_id": "PY-TEST-INT-001",
+          "score": 11.269675855517107,
+          "competency": "python_software_engineering",
+          "sub_competency": "testing",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 3,
+          "question_id": "PY-APP-BAS-001",
+          "score": 10.570895048554338,
+          "competency": "python_software_engineering",
+          "sub_competency": "application_design",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 4,
+          "question_id": "SYS-REL-INT-001",
+          "score": 8.553605797765654,
+          "competency": "ai_system_design",
+          "sub_competency": "reliability",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 5,
+          "question_id": "PY-TEST-BAS-001",
+          "score": 7.3199566508944,
+          "competency": "python_software_engineering",
+          "sub_competency": "testing",
+          "difficulty": "basic"
+        }
+      ],
+      "metrics": {
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "latency_ms": 0.3644759999588132
+    },
+    {
+      "expected_behavior": "retrieve",
+      "query_id": "QG-025",
+      "query": "Ask how to unit test an AI application without calling the real LLM every time.",
+      "query_type": "semantic",
+      "expected_competency": "python_software_engineering",
+      "expected_sub_competency": "testing",
+      "relevant_question_ids": [
+        "PY-TEST-INT-001"
+      ],
+      "retrieved_question_ids": [
+        "PY-TEST-INT-001",
+        "PY-APP-BAS-001",
+        "EVAL-COST-ADV-001",
+        "AGENT-HITL-INT-001",
+        "PY-ASYNC-INT-001"
+      ],
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "question_id": "PY-TEST-INT-001",
+          "score": 23.669386837431084,
+          "competency": "python_software_engineering",
+          "sub_competency": "testing",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 2,
+          "question_id": "PY-APP-BAS-001",
+          "score": 8.248919773752496,
+          "competency": "python_software_engineering",
+          "sub_competency": "application_design",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 3,
+          "question_id": "EVAL-COST-ADV-001",
+          "score": 7.529270376903501,
+          "competency": "ai_evaluation",
+          "sub_competency": "cost_latency",
+          "difficulty": "advanced"
+        },
+        {
+          "rank": 4,
+          "question_id": "AGENT-HITL-INT-001",
+          "score": 7.099382106067712,
+          "competency": "agentic_ai",
+          "sub_competency": "human_in_the_loop",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 5,
+          "question_id": "PY-ASYNC-INT-001",
+          "score": 7.09576283722452,
+          "competency": "python_software_engineering",
+          "sub_competency": "async_concurrency",
+          "difficulty": "intermediate"
+        }
+      ],
+      "metrics": {
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "latency_ms": 0.41647399484645575
+    },
+    {
+      "expected_behavior": "retrieve",
+      "query_id": "QG-026",
+      "query": "Ask what to revisit when an AI prototype for a few users must scale to thousands.",
+      "query_type": "scenario",
+      "expected_competency": "ai_system_design",
+      "expected_sub_competency": "scalability",
+      "relevant_question_ids": [
+        "SYS-SCALE-INT-001"
+      ],
+      "retrieved_question_ids": [
+        "SYS-SCALE-INT-001",
+        "EVAL-METRIC-INT-001",
+        "AGENT-HITL-INT-001",
+        "SEC-ACL-INT-001",
+        "EVAL-COST-ADV-001"
+      ],
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "question_id": "SYS-SCALE-INT-001",
+          "score": 20.68581878042646,
+          "competency": "ai_system_design",
+          "sub_competency": "scalability",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 2,
+          "question_id": "EVAL-METRIC-INT-001",
+          "score": 9.152664640710672,
+          "competency": "ai_evaluation",
+          "sub_competency": "evaluation_metrics",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 3,
+          "question_id": "AGENT-HITL-INT-001",
+          "score": 8.563260138853165,
+          "competency": "agentic_ai",
+          "sub_competency": "human_in_the_loop",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 4,
+          "question_id": "SEC-ACL-INT-001",
+          "score": 6.110668718032009,
+          "competency": "ai_security",
+          "sub_competency": "access_control",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 5,
+          "question_id": "EVAL-COST-ADV-001",
+          "score": 6.1027718536340405,
+          "competency": "ai_evaluation",
+          "sub_competency": "cost_latency",
+          "difficulty": "advanced"
+        }
+      ],
+      "metrics": {
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "latency_ms": 0.4516199987847358
+    },
+    {
+      "expected_behavior": "retrieve",
+      "query_id": "QG-027",
+      "query": "Select a question about traces and logs needed to debug a production AI application.",
+      "query_type": "semantic",
+      "expected_competency": "ai_system_design",
+      "expected_sub_competency": "observability",
+      "relevant_question_ids": [
+        "SYS-OBS-BAS-001"
+      ],
+      "retrieved_question_ids": [
+        "AGENT-LIFE-BAS-002",
+        "EVAL-COST-ADV-001",
+        "SYS-OBS-BAS-001",
+        "SYS-PERF-INT-001",
+        "SYS-ARCH-BAS-001"
+      ],
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "question_id": "AGENT-LIFE-BAS-002",
+          "score": 10.204850173242024,
+          "competency": "agentic_ai",
+          "sub_competency": "agent_lifecycle",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 2,
+          "question_id": "EVAL-COST-ADV-001",
+          "score": 9.58355017394597,
+          "competency": "ai_evaluation",
+          "sub_competency": "cost_latency",
+          "difficulty": "advanced"
+        },
+        {
+          "rank": 3,
+          "question_id": "SYS-OBS-BAS-001",
+          "score": 9.31264623824382,
+          "competency": "ai_system_design",
+          "sub_competency": "observability",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 4,
+          "question_id": "SYS-PERF-INT-001",
+          "score": 7.663132848303244,
+          "competency": "ai_system_design",
+          "sub_competency": "performance_optimization",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 5,
+          "question_id": "SYS-ARCH-BAS-001",
+          "score": 7.622714752897949,
+          "competency": "ai_system_design",
+          "sub_competency": "ai_architecture",
+          "difficulty": "basic"
+        }
+      ],
+      "metrics": {
+        "recall_at_1": 0.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 0.3333333333333333,
+        "ndcg_at_5": 0.5
+      },
+      "latency_ms": 0.3939559974242002
+    },
+    {
+      "expected_behavior": "retrieve",
+      "query_id": "QG-028",
+      "query": "An AI application is slow and expensive. Ask how to identify which stage to optimize first.",
+      "query_type": "scenario",
+      "expected_competency": "ai_system_design",
+      "expected_sub_competency": "performance_optimization",
+      "relevant_question_ids": [
+        "SYS-PERF-INT-001"
+      ],
+      "retrieved_question_ids": [
+        "SYS-PERF-INT-001",
+        "RAG-PROD-INT-001",
+        "RAG-RET-INT-001",
+        "EVAL-COST-ADV-001",
+        "EVAL-COST-BAS-001"
+      ],
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "question_id": "SYS-PERF-INT-001",
+          "score": 26.058401105006684,
+          "competency": "ai_system_design",
+          "sub_competency": "performance_optimization",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 2,
+          "question_id": "RAG-PROD-INT-001",
+          "score": 14.855054661108857,
+          "competency": "rag",
+          "sub_competency": "production_rag",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 3,
+          "question_id": "RAG-RET-INT-001",
+          "score": 11.90282081236007,
+          "competency": "rag",
+          "sub_competency": "retrieval_search",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 4,
+          "question_id": "EVAL-COST-ADV-001",
+          "score": 9.819955927547754,
+          "competency": "ai_evaluation",
+          "sub_competency": "cost_latency",
+          "difficulty": "advanced"
+        },
+        {
+          "rank": 5,
+          "question_id": "EVAL-COST-BAS-001",
+          "score": 9.543043276032906,
+          "competency": "ai_evaluation",
+          "sub_competency": "cost_latency",
+          "difficulty": "basic"
+        }
+      ],
+      "metrics": {
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "latency_ms": 0.44474400056060404
+    },
+    {
+      "expected_behavior": "retrieve",
+      "query_id": "QG-029",
+      "query": "A multi-tenant RAG system relies on a system prompt to separate customer documents. Test why this is insufficient security.",
+      "query_type": "scenario",
+      "expected_competency": "ai_security",
+      "expected_sub_competency": "access_control",
+      "relevant_question_ids": [
+        "SEC-ACL-INT-001"
+      ],
+      "retrieved_question_ids": [
+        "SEC-ACL-INT-001",
+        "RAG-PROD-BAS-001",
+        "RAG-EVAL-BAS-001",
+        "SEC-TOOL-INT-001",
+        "PY-APP-BAS-001"
+      ],
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "question_id": "SEC-ACL-INT-001",
+          "score": 23.383488209371944,
+          "competency": "ai_security",
+          "sub_competency": "access_control",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 2,
+          "question_id": "RAG-PROD-BAS-001",
+          "score": 9.997823529387983,
+          "competency": "rag",
+          "sub_competency": "production_rag",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 3,
+          "question_id": "RAG-EVAL-BAS-001",
+          "score": 9.632343424762697,
+          "competency": "rag",
+          "sub_competency": "rag_evaluation",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 4,
+          "question_id": "SEC-TOOL-INT-001",
+          "score": 9.367579980452044,
+          "competency": "ai_security",
+          "sub_competency": "tool_security",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 5,
+          "question_id": "PY-APP-BAS-001",
+          "score": 8.650902056396374,
+          "competency": "python_software_engineering",
+          "sub_competency": "application_design",
+          "difficulty": "basic"
+        }
+      ],
+      "metrics": {
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "latency_ms": 0.5369659993448295
+    },
+    {
+      "expected_behavior": "retrieve",
+      "query_id": "QG-030",
+      "query": "Ask how to secure an AI agent that can both read and delete customer records.",
+      "query_type": "scenario",
+      "expected_competency": "ai_security",
+      "expected_sub_competency": "tool_security",
+      "relevant_question_ids": [
+        "SEC-TOOL-INT-001"
+      ],
+      "retrieved_question_ids": [
+        "SEC-TOOL-INT-001",
+        "AGENT-REL-ADV-001",
+        "AGENT-HITL-INT-001",
+        "EVAL-RAG-INT-001",
+        "SEC-ACL-INT-001"
+      ],
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "question_id": "SEC-TOOL-INT-001",
+          "score": 21.76752528187977,
+          "competency": "ai_security",
+          "sub_competency": "tool_security",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 2,
+          "question_id": "AGENT-REL-ADV-001",
+          "score": 9.789035482600013,
+          "competency": "agentic_ai",
+          "sub_competency": "agent_reliability",
+          "difficulty": "advanced"
+        },
+        {
+          "rank": 3,
+          "question_id": "AGENT-HITL-INT-001",
+          "score": 9.252239730562835,
+          "competency": "agentic_ai",
+          "sub_competency": "human_in_the_loop",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 4,
+          "question_id": "EVAL-RAG-INT-001",
+          "score": 7.350780597999485,
+          "competency": "ai_evaluation",
+          "sub_competency": "rag_evaluation",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 5,
+          "question_id": "SEC-ACL-INT-001",
+          "score": 6.971567379201177,
+          "competency": "ai_security",
+          "sub_competency": "access_control",
+          "difficulty": "intermediate"
+        }
+      ],
+      "metrics": {
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "latency_ms": 0.42695699812611565
+    },
+    {
+      "expected_behavior": "retrieve",
+      "query_id": "QG-031",
+      "query": "The steps in my process are known in advance and rarely change. Should the model really be deciding what happens next?",
+      "query_type": "hard_semantic",
+      "expected_competency": "agentic_ai",
+      "expected_sub_competency": "agent_fundamentals",
+      "relevant_question_ids": [
+        "AGENT-FUND-INT-001"
+      ],
+      "retrieved_question_ids": [
+        "LLM-TOKEN-INT-001",
+        "SYS-REL-ADV-001",
+        "SYS-OBS-BAS-001",
+        "EVAL-COST-INT-001",
+        "RAG-PROD-INT-002"
+      ],
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "question_id": "LLM-TOKEN-INT-001",
+          "score": 9.80540949901228,
+          "competency": "ai_ml_llm_fundamentals",
+          "sub_competency": "token",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 2,
+          "question_id": "SYS-REL-ADV-001",
+          "score": 7.44805774357814,
+          "competency": "ai_system_design",
+          "sub_competency": "reliability",
+          "difficulty": "advanced"
+        },
+        {
+          "rank": 3,
+          "question_id": "SYS-OBS-BAS-001",
+          "score": 7.256658193209496,
+          "competency": "ai_system_design",
+          "sub_competency": "observability",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 4,
+          "question_id": "EVAL-COST-INT-001",
+          "score": 7.163146938553448,
+          "competency": "ai_evaluation",
+          "sub_competency": "cost_latency",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 5,
+          "question_id": "RAG-PROD-INT-002",
+          "score": 6.475375532692943,
+          "competency": "rag",
+          "sub_competency": "production_rag",
+          "difficulty": "intermediate"
+        }
+      ],
+      "metrics": {
+        "recall_at_1": 0.0,
+        "recall_at_3": 0.0,
+        "recall_at_5": 0.0,
+        "reciprocal_rank": 0.0,
+        "ndcg_at_5": 0.0
+      },
+      "latency_ms": 0.5685610012733378
+    },
+    {
+      "expected_behavior": "retrieve",
+      "query_id": "QG-032",
+      "query": "The search layer found the right supporting material, but the answer still invents claims that are not in it. What should I evaluate?",
+      "query_type": "hard_semantic",
+      "expected_competency": "ai_evaluation",
+      "expected_sub_competency": "rag_evaluation",
+      "relevant_question_ids": [
+        "EVAL-RAG-INT-002",
+        "EVAL-RAG-BAS-002"
+      ],
+      "retrieved_question_ids": [
+        "EVAL-RAG-BAS-002",
+        "RAG-RET-ADV-001",
+        "SEC-ACL-INT-001",
+        "AGENT-LIFE-INT-001",
+        "EVAL-RAG-INT-001"
+      ],
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "question_id": "EVAL-RAG-BAS-002",
+          "score": 16.150323115148115,
+          "competency": "ai_evaluation",
+          "sub_competency": "rag_evaluation",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 2,
+          "question_id": "RAG-RET-ADV-001",
+          "score": 14.048299571132961,
+          "competency": "rag",
+          "sub_competency": "retrieval_search",
+          "difficulty": "advanced"
+        },
+        {
+          "rank": 3,
+          "question_id": "SEC-ACL-INT-001",
+          "score": 11.018711532400058,
+          "competency": "ai_security",
+          "sub_competency": "access_control",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 4,
+          "question_id": "AGENT-LIFE-INT-001",
+          "score": 6.846605094166996,
+          "competency": "agentic_ai",
+          "sub_competency": "agent_lifecycle",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 5,
+          "question_id": "EVAL-RAG-INT-001",
+          "score": 6.653817375235003,
+          "competency": "ai_evaluation",
+          "sub_competency": "rag_evaluation",
+          "difficulty": "intermediate"
+        }
+      ],
+      "metrics": {
+        "recall_at_1": 0.5,
+        "recall_at_3": 0.5,
+        "recall_at_5": 0.5,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_5": 0.6131471927654584
+      },
+      "latency_ms": 0.6093159972806461
+    },
+    {
+      "expected_behavior": "retrieve",
+      "query_id": "QG-033",
+      "query": "A service spends most of its time waiting for several unrelated remote calls. What engineering approach should the candidate discuss?",
+      "query_type": "hard_semantic",
+      "expected_competency": "python_software_engineering",
+      "expected_sub_competency": "async_concurrency",
+      "relevant_question_ids": [
+        "PY-ASYNC-INT-001"
+      ],
+      "retrieved_question_ids": [
+        "PY-ASYNC-INT-001",
+        "PY-ASYNC-INT-002",
+        "PY-APP-ADV-001",
+        "PY-TEST-BAS-001",
+        "EVAL-COST-BAS-001"
+      ],
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "question_id": "PY-ASYNC-INT-001",
+          "score": 17.499119753306655,
+          "competency": "python_software_engineering",
+          "sub_competency": "async_concurrency",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 2,
+          "question_id": "PY-ASYNC-INT-002",
+          "score": 7.888774343337724,
+          "competency": "python_software_engineering",
+          "sub_competency": "async_concurrency",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 3,
+          "question_id": "PY-APP-ADV-001",
+          "score": 7.697129564949659,
+          "competency": "python_software_engineering",
+          "sub_competency": "application_design",
+          "difficulty": "advanced"
+        },
+        {
+          "rank": 4,
+          "question_id": "PY-TEST-BAS-001",
+          "score": 6.421303144900813,
+          "competency": "python_software_engineering",
+          "sub_competency": "testing",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 5,
+          "question_id": "EVAL-COST-BAS-001",
+          "score": 6.415931016398109,
+          "competency": "ai_evaluation",
+          "sub_competency": "cost_latency",
+          "difficulty": "basic"
+        }
+      ],
+      "metrics": {
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "latency_ms": 0.5389279976952821
+    },
+    {
+      "expected_behavior": "retrieve",
+      "query_id": "QG-034",
+      "query": "The same word should mean different things depending on the sentence around it. Which representation concept should I test?",
+      "query_type": "hard_semantic",
+      "expected_competency": "ai_ml_llm_fundamentals",
+      "expected_sub_competency": "embedding",
+      "relevant_question_ids": [
+        "LLM-EMB-BAS-002"
+      ],
+      "retrieved_question_ids": [
+        "EVAL-METRIC-ADV-001",
+        "LLM-EMB-BAS-002",
+        "EVAL-RAG-INT-001",
+        "PY-APP-BAS-001",
+        "RAG-CTX-INT-002"
+      ],
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "question_id": "EVAL-METRIC-ADV-001",
+          "score": 9.16872424343928,
+          "competency": "ai_evaluation",
+          "sub_competency": "evaluation_metrics",
+          "difficulty": "advanced"
+        },
+        {
+          "rank": 2,
+          "question_id": "LLM-EMB-BAS-002",
+          "score": 8.27952888784763,
+          "competency": "ai_ml_llm_fundamentals",
+          "sub_competency": "embedding",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 3,
+          "question_id": "EVAL-RAG-INT-001",
+          "score": 7.88836519827669,
+          "competency": "ai_evaluation",
+          "sub_competency": "rag_evaluation",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 4,
+          "question_id": "PY-APP-BAS-001",
+          "score": 7.550260864132581,
+          "competency": "python_software_engineering",
+          "sub_competency": "application_design",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 5,
+          "question_id": "RAG-CTX-INT-002",
+          "score": 6.9187993801750896,
+          "competency": "rag",
+          "sub_competency": "context_engineering",
+          "difficulty": "intermediate"
+        }
+      ],
+      "metrics": {
+        "recall_at_1": 0.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 0.5,
+        "ndcg_at_5": 0.6309297535714575
+      },
+      "latency_ms": 0.5195960038690828
+    },
+    {
+      "expected_behavior": "retrieve",
+      "query_id": "QG-035",
+      "query": "A system answers correctly sometimes, but repeated runs are inconsistent. I want to assess whether reliability across attempts is acceptable.",
+      "query_type": "hard_semantic",
+      "expected_competency": "ai_evaluation",
+      "expected_sub_competency": "agent_evaluation",
+      "relevant_question_ids": [
+        "EVAL-AGENT-INT-001"
+      ],
+      "retrieved_question_ids": [
+        "EVAL-AGENT-INT-001",
+        "EVAL-RAG-BAS-002",
+        "AGENT-REL-BAS-001",
+        "EVAL-METRIC-BAS-002",
+        "EVAL-RAG-INT-001"
+      ],
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "question_id": "EVAL-AGENT-INT-001",
+          "score": 11.123522554388739,
+          "competency": "ai_evaluation",
+          "sub_competency": "agent_evaluation",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 2,
+          "question_id": "EVAL-RAG-BAS-002",
+          "score": 9.920932264237063,
+          "competency": "ai_evaluation",
+          "sub_competency": "rag_evaluation",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 3,
+          "question_id": "AGENT-REL-BAS-001",
+          "score": 9.213197578619873,
+          "competency": "agentic_ai",
+          "sub_competency": "agent_reliability",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 4,
+          "question_id": "EVAL-METRIC-BAS-002",
+          "score": 9.011267089106047,
+          "competency": "ai_evaluation",
+          "sub_competency": "evaluation_metrics",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 5,
+          "question_id": "EVAL-RAG-INT-001",
+          "score": 8.084915778315462,
+          "competency": "ai_evaluation",
+          "sub_competency": "rag_evaluation",
+          "difficulty": "intermediate"
+        }
+      ],
+      "metrics": {
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "latency_ms": 0.5385679978644475
+    },
+    {
+      "expected_behavior": "retrieve_any_relevant",
+      "query_id": "QG-036",
+      "query": "Ask me something about memory.",
+      "query_type": "ambiguous",
+      "expected_competency": "agentic_ai",
+      "expected_sub_competency": "agent_state_memory",
+      "relevant_question_ids": [
+        "AGENT-MEM-BAS-001",
+        "AGENT-MEM-BAS-002",
+        "AGENT-MEM-INT-001",
+        "AGENT-MEM-INT-002"
+      ],
+      "retrieved_question_ids": [
+        "AGENT-LIFE-BAS-002",
+        "AGENT-MEM-BAS-002",
+        "AGENT-MEM-INT-002",
+        "AGENT-MEM-BAS-001",
+        "AGENT-HITL-INT-001"
+      ],
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "question_id": "AGENT-LIFE-BAS-002",
+          "score": 6.293823002791117,
+          "competency": "agentic_ai",
+          "sub_competency": "agent_lifecycle",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 2,
+          "question_id": "AGENT-MEM-BAS-002",
+          "score": 5.17743994276566,
+          "competency": "agentic_ai",
+          "sub_competency": "agent_state_memory",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 3,
+          "question_id": "AGENT-MEM-INT-002",
+          "score": 4.52396976792241,
+          "competency": "agentic_ai",
+          "sub_competency": "agent_state_memory",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 4,
+          "question_id": "AGENT-MEM-BAS-001",
+          "score": 4.47378061295165,
+          "competency": "agentic_ai",
+          "sub_competency": "agent_state_memory",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 5,
+          "question_id": "AGENT-HITL-INT-001",
+          "score": 4.097374789959278,
+          "competency": "agentic_ai",
+          "sub_competency": "human_in_the_loop",
+          "difficulty": "intermediate"
+        }
+      ],
+      "metrics": {
+        "recall_at_1": 0.0,
+        "recall_at_3": 0.5,
+        "recall_at_5": 0.75,
+        "reciprocal_rank": 0.5,
+        "ndcg_at_5": 0.6096199500078984
+      },
+      "latency_ms": 0.17024000408127904
+    },
+    {
+      "expected_behavior": "retrieve_any_relevant",
+      "query_id": "QG-037",
+      "query": "Give me an evaluation question.",
+      "query_type": "ambiguous",
+      "expected_competency": "ai_evaluation",
+      "expected_sub_competency": null,
+      "relevant_question_ids": [
+        "EVAL-RAG-BAS-001",
+        "EVAL-RAG-BAS-002",
+        "EVAL-METRIC-BAS-001",
+        "EVAL-AGENT-BAS-001"
+      ],
+      "retrieved_question_ids": [
+        "AGENT-LIFE-INT-001",
+        "AGENT-FUND-INT-001",
+        "EVAL-RAG-BAS-002",
+        "EVAL-COST-ADV-001",
+        "AGENT-FUND-ADV-001"
+      ],
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "question_id": "AGENT-LIFE-INT-001",
+          "score": 5.667007739549779,
+          "competency": "agentic_ai",
+          "sub_competency": "agent_lifecycle",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 2,
+          "question_id": "AGENT-FUND-INT-001",
+          "score": 4.593096744667479,
+          "competency": "agentic_ai",
+          "sub_competency": "agent_fundamentals",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 3,
+          "question_id": "EVAL-RAG-BAS-002",
+          "score": 3.638490578281675,
+          "competency": "ai_evaluation",
+          "sub_competency": "rag_evaluation",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 4,
+          "question_id": "EVAL-COST-ADV-001",
+          "score": 3.428961834934339,
+          "competency": "ai_evaluation",
+          "sub_competency": "cost_latency",
+          "difficulty": "advanced"
+        },
+        {
+          "rank": 5,
+          "question_id": "AGENT-FUND-ADV-001",
+          "score": 3.4025265197619197,
+          "competency": "agentic_ai",
+          "sub_competency": "agent_fundamentals",
+          "difficulty": "advanced"
+        }
+      ],
+      "metrics": {
+        "recall_at_1": 0.0,
+        "recall_at_3": 0.25,
+        "recall_at_5": 0.25,
+        "reciprocal_rank": 0.3333333333333333,
+        "ndcg_at_5": 0.19519002499605084
+      },
+      "latency_ms": 0.17863600078271702
+    },
+    {
+      "expected_behavior": "retrieve_any_relevant",
+      "query_id": "QG-038",
+      "query": "Ask about performance.",
+      "query_type": "ambiguous",
+      "expected_competency": null,
+      "expected_sub_competency": null,
+      "relevant_question_ids": [
+        "SYS-PERF-INT-001",
+        "EVAL-COST-BAS-001",
+        "EVAL-COST-INT-001"
+      ],
+      "retrieved_question_ids": [
+        "AGENT-HITL-INT-001",
+        "SYS-PERF-INT-001",
+        "RAG-EVAL-BAS-002",
+        "AGENT-LIFE-BAS-002",
+        "AGENT-DESIGN-BAS-001"
+      ],
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "question_id": "AGENT-HITL-INT-001",
+          "score": 4.097374789959278,
+          "competency": "agentic_ai",
+          "sub_competency": "human_in_the_loop",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 2,
+          "question_id": "SYS-PERF-INT-001",
+          "score": 4.059410677226801,
+          "competency": "ai_system_design",
+          "sub_competency": "performance_optimization",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 3,
+          "question_id": "RAG-EVAL-BAS-002",
+          "score": 3.894386133846854,
+          "competency": "rag",
+          "sub_competency": "rag_evaluation",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 4,
+          "question_id": "AGENT-LIFE-BAS-002",
+          "score": 3.7070255623008466,
+          "competency": "agentic_ai",
+          "sub_competency": "agent_lifecycle",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 5,
+          "question_id": "AGENT-DESIGN-BAS-001",
+          "score": 0.0,
+          "competency": "agentic_ai",
+          "sub_competency": "agent_design_patterns",
+          "difficulty": "basic"
+        }
+      ],
+      "metrics": {
+        "recall_at_1": 0.0,
+        "recall_at_3": 0.3333333333333333,
+        "recall_at_5": 0.3333333333333333,
+        "reciprocal_rank": 0.5,
+        "ndcg_at_5": 0.2960819109658652
+      },
+      "latency_ms": 0.12633000005735084
+    },
+    {
+      "expected_behavior": "retrieve_any_relevant",
+      "query_id": "QG-039",
+      "query": "I want a question about retrieval quality.",
+      "query_type": "ambiguous",
+      "expected_competency": null,
+      "expected_sub_competency": "rag_evaluation",
+      "relevant_question_ids": [
+        "RAG-EVAL-BAS-001",
+        "RAG-EVAL-BAS-002",
+        "EVAL-RAG-BAS-001"
+      ],
+      "retrieved_question_ids": [
+        "RAG-EVAL-BAS-002",
+        "RAG-CHUNK-BAS-001",
+        "PY-ASYNC-INT-001",
+        "SYS-OBS-BAS-001",
+        "RAG-RET-ADV-001"
+      ],
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "question_id": "RAG-EVAL-BAS-002",
+          "score": 9.260160811321375,
+          "competency": "rag",
+          "sub_competency": "rag_evaluation",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 2,
+          "question_id": "RAG-CHUNK-BAS-001",
+          "score": 5.120389305882169,
+          "competency": "rag",
+          "sub_competency": "chunking",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 3,
+          "question_id": "PY-ASYNC-INT-001",
+          "score": 4.821187850452549,
+          "competency": "python_software_engineering",
+          "sub_competency": "async_concurrency",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 4,
+          "question_id": "SYS-OBS-BAS-001",
+          "score": 4.815989497340611,
+          "competency": "ai_system_design",
+          "sub_competency": "observability",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 5,
+          "question_id": "RAG-RET-ADV-001",
+          "score": 4.724826033911838,
+          "competency": "rag",
+          "sub_competency": "retrieval_search",
+          "difficulty": "advanced"
+        }
+      ],
+      "metrics": {
+        "recall_at_1": 0.3333333333333333,
+        "recall_at_3": 0.3333333333333333,
+        "recall_at_5": 0.3333333333333333,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_5": 0.46927872602275644
+      },
+      "latency_ms": 0.2516739987186156
+    },
+    {
+      "expected_behavior": "retrieve_any_relevant",
+      "query_id": "QG-040",
+      "query": "Ask me about agents and safety.",
+      "query_type": "ambiguous",
+      "expected_competency": null,
+      "expected_sub_competency": null,
+      "relevant_question_ids": [
+        "AGENT-REL-ADV-001",
+        "SEC-TOOL-INT-001",
+        "SEC-DEF-ADV-001",
+        "AGENT-HITL-BAS-001"
+      ],
+      "retrieved_question_ids": [
+        "AGENT-HITL-INT-001",
+        "RAG-EVAL-BAS-002",
+        "AGENT-LIFE-BAS-002",
+        "AGENT-INTEROP-BAS-002",
+        "AGENT-LIFE-INT-001"
+      ],
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "question_id": "AGENT-HITL-INT-001",
+          "score": 5.001541240254508,
+          "competency": "agentic_ai",
+          "sub_competency": "human_in_the_loop",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 2,
+          "question_id": "RAG-EVAL-BAS-002",
+          "score": 4.871670026707501,
+          "competency": "rag",
+          "sub_competency": "rag_evaluation",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 3,
+          "question_id": "AGENT-LIFE-BAS-002",
+          "score": 4.6372919118476235,
+          "competency": "agentic_ai",
+          "sub_competency": "agent_lifecycle",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 4,
+          "question_id": "AGENT-INTEROP-BAS-002",
+          "score": 4.379720789317208,
+          "competency": "agentic_ai",
+          "sub_competency": "agent_interoperability",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 5,
+          "question_id": "AGENT-LIFE-INT-001",
+          "score": 4.016185768667931,
+          "competency": "agentic_ai",
+          "sub_competency": "agent_lifecycle",
+          "difficulty": "intermediate"
+        }
+      ],
+      "metrics": {
+        "recall_at_1": 0.0,
+        "recall_at_3": 0.0,
+        "recall_at_5": 0.0,
+        "reciprocal_rank": 0.0,
+        "ndcg_at_5": 0.0
+      },
+      "latency_ms": 0.2027300070039928
+    },
+    {
+      "expected_behavior": "retrieve",
+      "query_id": "QG-041",
+      "query": "The system retrieves all the evidence it needs, but also brings in many distracting passages. Which evaluation concept should the interview question focus on?",
+      "query_type": "near_neighbor",
+      "expected_competency": "ai_evaluation",
+      "expected_sub_competency": "rag_evaluation",
+      "relevant_question_ids": [
+        "EVAL-RAG-BAS-001"
+      ],
+      "retrieved_question_ids": [
+        "EVAL-RAG-INT-002",
+        "SEC-OUT-INT-001",
+        "EVAL-RAG-INT-001",
+        "EVAL-AGENT-INT-001",
+        "EVAL-RAG-BAS-001"
+      ],
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "question_id": "EVAL-RAG-INT-002",
+          "score": 11.944353714728171,
+          "competency": "ai_evaluation",
+          "sub_competency": "rag_evaluation",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 2,
+          "question_id": "SEC-OUT-INT-001",
+          "score": 10.4432684276168,
+          "competency": "ai_security",
+          "sub_competency": "guardrails",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 3,
+          "question_id": "EVAL-RAG-INT-001",
+          "score": 10.403796189839806,
+          "competency": "ai_evaluation",
+          "sub_competency": "rag_evaluation",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 4,
+          "question_id": "EVAL-AGENT-INT-001",
+          "score": 8.917154933964394,
+          "competency": "ai_evaluation",
+          "sub_competency": "agent_evaluation",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 5,
+          "question_id": "EVAL-RAG-BAS-001",
+          "score": 8.86906311111296,
+          "competency": "ai_evaluation",
+          "sub_competency": "rag_evaluation",
+          "difficulty": "basic"
+        }
+      ],
+      "metrics": {
+        "recall_at_1": 0.0,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 0.2,
+        "ndcg_at_5": 0.38685280723454163
+      },
+      "latency_ms": 0.6921839958522469
+    },
+    {
+      "expected_behavior": "retrieve",
+      "query_id": "QG-042",
+      "query": "The answer directly addresses the user's request but states facts that the supplied documents do not support.",
+      "query_type": "near_neighbor",
+      "expected_competency": "ai_evaluation",
+      "expected_sub_competency": "rag_evaluation",
+      "relevant_question_ids": [
+        "EVAL-RAG-BAS-002"
+      ],
+      "retrieved_question_ids": [
+        "SEC-ACL-INT-001",
+        "EVAL-RAG-BAS-002",
+        "SYS-REL-INT-001",
+        "AGENT-MEM-INT-001",
+        "EVAL-AGENT-ADV-001"
+      ],
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "question_id": "SEC-ACL-INT-001",
+          "score": 14.943352495350327,
+          "competency": "ai_security",
+          "sub_competency": "access_control",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 2,
+          "question_id": "EVAL-RAG-BAS-002",
+          "score": 14.640067101120989,
+          "competency": "ai_evaluation",
+          "sub_competency": "rag_evaluation",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 3,
+          "question_id": "SYS-REL-INT-001",
+          "score": 11.24739674966536,
+          "competency": "ai_system_design",
+          "sub_competency": "reliability",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 4,
+          "question_id": "AGENT-MEM-INT-001",
+          "score": 7.9562755383802255,
+          "competency": "agentic_ai",
+          "sub_competency": "agent_state_memory",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 5,
+          "question_id": "EVAL-AGENT-ADV-001",
+          "score": 7.808976378118959,
+          "competency": "ai_evaluation",
+          "sub_competency": "agent_evaluation",
+          "difficulty": "advanced"
+        }
+      ],
+      "metrics": {
+        "recall_at_1": 0.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 0.5,
+        "ndcg_at_5": 0.6309297535714575
+      },
+      "latency_ms": 0.5098090041428804
+    },
+    {
+      "expected_behavior": "retrieve",
+      "query_id": "QG-043",
+      "query": "Relevant evidence exists in the knowledge base, but the retriever does not bring enough of it into the top results.",
+      "query_type": "near_neighbor",
+      "expected_competency": "ai_evaluation",
+      "expected_sub_competency": "rag_evaluation",
+      "relevant_question_ids": [
+        "EVAL-RAG-BAS-001"
+      ],
+      "retrieved_question_ids": [
+        "LLM-EMB-ADV-001",
+        "RAG-FUND-INT-002",
+        "EVAL-RAG-BAS-002",
+        "RAG-FUND-BAS-001",
+        "RAG-RET-INT-002"
+      ],
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "question_id": "LLM-EMB-ADV-001",
+          "score": 9.012693905089648,
+          "competency": "ai_ml_llm_fundamentals",
+          "sub_competency": "embedding",
+          "difficulty": "advanced"
+        },
+        {
+          "rank": 2,
+          "question_id": "RAG-FUND-INT-002",
+          "score": 8.96317178517883,
+          "competency": "rag",
+          "sub_competency": "rag_fundamentals",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 3,
+          "question_id": "EVAL-RAG-BAS-002",
+          "score": 8.649519784884468,
+          "competency": "ai_evaluation",
+          "sub_competency": "rag_evaluation",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 4,
+          "question_id": "RAG-FUND-BAS-001",
+          "score": 8.04407485570198,
+          "competency": "rag",
+          "sub_competency": "rag_fundamentals",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 5,
+          "question_id": "RAG-RET-INT-002",
+          "score": 7.254889273161661,
+          "competency": "rag",
+          "sub_competency": "retrieval_search",
+          "difficulty": "intermediate"
+        }
+      ],
+      "metrics": {
+        "recall_at_1": 0.0,
+        "recall_at_3": 0.0,
+        "recall_at_5": 0.0,
+        "reciprocal_rank": 0.0,
+        "ndcg_at_5": 0.0
+      },
+      "latency_ms": 0.6248019999475218
+    },
+    {
+      "expected_behavior": "retrieve",
+      "query_id": "QG-044",
+      "query": "An agent says it completed the booking and its tool trace looks plausible, but there is no reservation in the destination system.",
+      "query_type": "near_neighbor",
+      "expected_competency": "ai_evaluation",
+      "expected_sub_competency": "agent_evaluation",
+      "relevant_question_ids": [
+        "EVAL-AGENT-BAS-001"
+      ],
+      "retrieved_question_ids": [
+        "SYS-OBS-BAS-001",
+        "AGENT-LIFE-BAS-002",
+        "EVAL-AGENT-BAS-001",
+        "EVAL-RAG-INT-002",
+        "SYS-SCALE-INT-001"
+      ],
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "question_id": "SYS-OBS-BAS-001",
+          "score": 10.965537789954002,
+          "competency": "ai_system_design",
+          "sub_competency": "observability",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 2,
+          "question_id": "AGENT-LIFE-BAS-002",
+          "score": 9.040465729876606,
+          "competency": "agentic_ai",
+          "sub_competency": "agent_lifecycle",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 3,
+          "question_id": "EVAL-AGENT-BAS-001",
+          "score": 8.450846734214483,
+          "competency": "ai_evaluation",
+          "sub_competency": "agent_evaluation",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 4,
+          "question_id": "EVAL-RAG-INT-002",
+          "score": 8.198275581820932,
+          "competency": "ai_evaluation",
+          "sub_competency": "rag_evaluation",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 5,
+          "question_id": "SYS-SCALE-INT-001",
+          "score": 7.938415933326187,
+          "competency": "ai_system_design",
+          "sub_competency": "scalability",
+          "difficulty": "intermediate"
+        }
+      ],
+      "metrics": {
+        "recall_at_1": 0.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 0.3333333333333333,
+        "ndcg_at_5": 0.5
+      },
+      "latency_ms": 0.6800370028940961
+    },
+    {
+      "expected_behavior": "retrieve",
+      "query_id": "QG-045",
+      "query": "The candidate should explain why letting a model choose every step is unnecessary when the process is predictable, auditable, and high volume.",
+      "query_type": "near_neighbor",
+      "expected_competency": "agentic_ai",
+      "expected_sub_competency": "agent_fundamentals",
+      "relevant_question_ids": [
+        "AGENT-FUND-INT-001"
+      ],
+      "retrieved_question_ids": [
+        "LLM-TRANS-INT-001",
+        "RAG-PROD-INT-002",
+        "AGENT-DESIGN-INT-001",
+        "LLM-TOKEN-INT-001",
+        "EVAL-RAG-INT-002"
+      ],
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "question_id": "LLM-TRANS-INT-001",
+          "score": 8.518403802964075,
+          "competency": "ai_ml_llm_fundamentals",
+          "sub_competency": "transformer_architecture",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 2,
+          "question_id": "RAG-PROD-INT-002",
+          "score": 8.318085845381912,
+          "competency": "rag",
+          "sub_competency": "production_rag",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 3,
+          "question_id": "AGENT-DESIGN-INT-001",
+          "score": 7.90650591538826,
+          "competency": "agentic_ai",
+          "sub_competency": "agent_design_patterns",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 4,
+          "question_id": "LLM-TOKEN-INT-001",
+          "score": 7.799858104063705,
+          "competency": "ai_ml_llm_fundamentals",
+          "sub_competency": "token",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 5,
+          "question_id": "EVAL-RAG-INT-002",
+          "score": 7.42993292929616,
+          "competency": "ai_evaluation",
+          "sub_competency": "rag_evaluation",
+          "difficulty": "intermediate"
+        }
+      ],
+      "metrics": {
+        "recall_at_1": 0.0,
+        "recall_at_3": 0.0,
+        "recall_at_5": 0.0,
+        "reciprocal_rank": 0.0,
+        "ndcg_at_5": 0.0
+      },
+      "latency_ms": 0.6127759988885373
+    },
+    {
+      "expected_behavior": "no_relevant_question",
+      "query_id": "QG-046",
+      "query": "Ask an interview question about Kubernetes pod scheduling and taints.",
+      "query_type": "negative",
+      "expected_competency": null,
+      "expected_sub_competency": null,
+      "relevant_question_ids": [],
+      "retrieved_question_ids": [
+        "AGENT-HITL-INT-001",
+        "RAG-EVAL-BAS-002",
+        "AGENT-LIFE-BAS-002",
+        "SYS-DEP-BAS-001",
+        "EVAL-RAG-BAS-002"
+      ],
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "question_id": "AGENT-HITL-INT-001",
+          "score": 6.49625476445704,
+          "competency": "agentic_ai",
+          "sub_competency": "human_in_the_loop",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 2,
+          "question_id": "RAG-EVAL-BAS-002",
+          "score": 5.848953919568148,
+          "competency": "rag",
+          "sub_competency": "rag_evaluation",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 3,
+          "question_id": "AGENT-LIFE-BAS-002",
+          "score": 5.5675582613944,
+          "competency": "agentic_ai",
+          "sub_competency": "agent_lifecycle",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 4,
+          "question_id": "SYS-DEP-BAS-001",
+          "score": 3.1096041001799657,
+          "competency": "ai_system_design",
+          "sub_competency": "deployment",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 5,
+          "question_id": "EVAL-RAG-BAS-002",
+          "score": 3.046848834938686,
+          "competency": "ai_evaluation",
+          "sub_competency": "rag_evaluation",
+          "difficulty": "basic"
+        }
+      ],
+      "metrics": {
+        "recall_at_1": 0.0,
+        "recall_at_3": 0.0,
+        "recall_at_5": 0.0,
+        "reciprocal_rank": 0.0,
+        "ndcg_at_5": 0.0
+      },
+      "latency_ms": 0.32273900433210656
+    },
+    {
+      "expected_behavior": "no_relevant_question",
+      "query_id": "QG-047",
+      "query": "Test advanced Java JVM garbage collection tuning.",
+      "query_type": "negative",
+      "expected_competency": null,
+      "expected_sub_competency": null,
+      "relevant_question_ids": [],
+      "retrieved_question_ids": [
+        "PY-TEST-INT-001",
+        "RAG-FUND-INT-001",
+        "PY-APP-BAS-001",
+        "RAG-EVAL-INT-001",
+        "EVAL-RAG-INT-001"
+      ],
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "question_id": "PY-TEST-INT-001",
+          "score": 4.239596118367537,
+          "competency": "python_software_engineering",
+          "sub_competency": "testing",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 2,
+          "question_id": "RAG-FUND-INT-001",
+          "score": 4.059410677226801,
+          "competency": "rag",
+          "sub_competency": "rag_fundamentals",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 3,
+          "question_id": "PY-APP-BAS-001",
+          "score": 2.936898270101034,
+          "competency": "python_software_engineering",
+          "sub_competency": "application_design",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 4,
+          "question_id": "RAG-EVAL-INT-001",
+          "score": 2.8809187404507304,
+          "competency": "rag",
+          "sub_competency": "rag_evaluation",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 5,
+          "question_id": "EVAL-RAG-INT-001",
+          "score": 2.7007448164049213,
+          "competency": "ai_evaluation",
+          "sub_competency": "rag_evaluation",
+          "difficulty": "intermediate"
+        }
+      ],
+      "metrics": {
+        "recall_at_1": 0.0,
+        "recall_at_3": 0.0,
+        "recall_at_5": 0.0,
+        "reciprocal_rank": 0.0,
+        "ndcg_at_5": 0.0
+      },
+      "latency_ms": 0.23074400087352842
+    },
+    {
+      "expected_behavior": "no_relevant_question",
+      "query_id": "QG-048",
+      "query": "Ask about BGP route reflectors and OSPF area design.",
+      "query_type": "negative",
+      "expected_competency": null,
+      "expected_sub_competency": null,
+      "relevant_question_ids": [],
+      "retrieved_question_ids": [
+        "AGENT-HITL-INT-001",
+        "RAG-EVAL-BAS-002",
+        "EVAL-COST-ADV-001",
+        "AGENT-LIFE-BAS-002",
+        "AGENT-DESIGN-BAS-001"
+      ],
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "question_id": "AGENT-HITL-INT-001",
+          "score": 5.001541240254508,
+          "competency": "agentic_ai",
+          "sub_competency": "human_in_the_loop",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 2,
+          "question_id": "RAG-EVAL-BAS-002",
+          "score": 4.871670026707501,
+          "competency": "rag",
+          "sub_competency": "rag_evaluation",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 3,
+          "question_id": "EVAL-COST-ADV-001",
+          "score": 4.821187850452549,
+          "competency": "ai_evaluation",
+          "sub_competency": "cost_latency",
+          "difficulty": "advanced"
+        },
+        {
+          "rank": 4,
+          "question_id": "AGENT-LIFE-BAS-002",
+          "score": 4.6372919118476235,
+          "competency": "agentic_ai",
+          "sub_competency": "agent_lifecycle",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 5,
+          "question_id": "AGENT-DESIGN-BAS-001",
+          "score": 3.616875146410863,
+          "competency": "agentic_ai",
+          "sub_competency": "agent_design_patterns",
+          "difficulty": "basic"
+        }
+      ],
+      "metrics": {
+        "recall_at_1": 0.0,
+        "recall_at_3": 0.0,
+        "recall_at_5": 0.0,
+        "reciprocal_rank": 0.0,
+        "ndcg_at_5": 0.0
+      },
+      "latency_ms": 0.2709870022954419
+    },
+    {
+      "expected_behavior": "no_relevant_question",
+      "query_id": "QG-049",
+      "query": "Give me a question on corporate tax accounting and VAT reconciliation.",
+      "query_type": "negative",
+      "expected_competency": null,
+      "expected_sub_competency": null,
+      "relevant_question_ids": [],
+      "retrieved_question_ids": [
+        "EVAL-METRIC-ADV-001",
+        "RAG-RET-INT-001",
+        "EVAL-AGENT-INT-001",
+        "AGENT-LIFE-INT-001",
+        "AGENT-FUND-INT-001"
+      ],
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "question_id": "EVAL-METRIC-ADV-001",
+          "score": 5.133200010092982,
+          "competency": "ai_evaluation",
+          "sub_competency": "evaluation_metrics",
+          "difficulty": "advanced"
+        },
+        {
+          "rank": 2,
+          "question_id": "RAG-RET-INT-001",
+          "score": 4.985906829859122,
+          "competency": "rag",
+          "sub_competency": "retrieval_search",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 3,
+          "question_id": "EVAL-AGENT-INT-001",
+          "score": 4.831427691054601,
+          "competency": "ai_evaluation",
+          "sub_competency": "agent_evaluation",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 4,
+          "question_id": "AGENT-LIFE-INT-001",
+          "score": 4.775132092133928,
+          "competency": "agentic_ai",
+          "sub_competency": "agent_lifecycle",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 5,
+          "question_id": "AGENT-FUND-INT-001",
+          "score": 4.593096744667479,
+          "competency": "agentic_ai",
+          "sub_competency": "agent_fundamentals",
+          "difficulty": "intermediate"
+        }
+      ],
+      "metrics": {
+        "recall_at_1": 0.0,
+        "recall_at_3": 0.0,
+        "recall_at_5": 0.0,
+        "reciprocal_rank": 0.0,
+        "ndcg_at_5": 0.0
+      },
+      "latency_ms": 0.3264069964643568
+    },
+    {
+      "expected_behavior": "no_relevant_question",
+      "query_id": "QG-050",
+      "query": "Ask the candidate to explain convolution kernels for image edge detection in classical computer vision.",
+      "query_type": "negative",
+      "expected_competency": null,
+      "expected_sub_competency": null,
+      "relevant_question_ids": [],
+      "retrieved_question_ids": [
+        "AGENT-HITL-INT-001",
+        "SEC-DEF-ADV-001",
+        "RAG-PROD-BAS-002",
+        "EVAL-METRIC-INT-002",
+        "LLM-TOKEN-BAS-001"
+      ],
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "question_id": "AGENT-HITL-INT-001",
+          "score": 6.937321653689205,
+          "competency": "agentic_ai",
+          "sub_competency": "human_in_the_loop",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 2,
+          "question_id": "SEC-DEF-ADV-001",
+          "score": 5.2567398322296635,
+          "competency": "ai_security",
+          "sub_competency": "guardrails",
+          "difficulty": "advanced"
+        },
+        {
+          "rank": 3,
+          "question_id": "RAG-PROD-BAS-002",
+          "score": 4.765951318068495,
+          "competency": "rag",
+          "sub_competency": "production_rag",
+          "difficulty": "basic"
+        },
+        {
+          "rank": 4,
+          "question_id": "EVAL-METRIC-INT-002",
+          "score": 3.442066696339172,
+          "competency": "ai_evaluation",
+          "sub_competency": "evaluation_metrics",
+          "difficulty": "intermediate"
+        },
+        {
+          "rank": 5,
+          "question_id": "LLM-TOKEN-BAS-001",
+          "score": 2.8940784253444143,
+          "competency": "ai_ml_llm_fundamentals",
+          "sub_competency": "token",
+          "difficulty": "basic"
+        }
+      ],
+      "metrics": {
+        "recall_at_1": 0.0,
+        "recall_at_3": 0.0,
+        "recall_at_5": 0.0,
+        "reciprocal_rank": 0.0,
+        "ndcg_at_5": 0.0
+      },
+      "latency_ms": 0.4317269995226525
+    }
+  ]
+}

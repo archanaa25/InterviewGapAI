@@ -1,0 +1,217 @@
+[
+  {
+    "evaluation_id": "EVAL-RAG-FUND",
+    "role": "ai_engineer",
+    "competency": "rag",
+    "sub_competency": "rag_fundamentals",
+    "topic": "RAG Fundamentals",
+    "content": "RAG retrieves relevant information from external knowledge sources and augments the model input before generation. This separates frequently changing factual knowledge from model weights. Fine-tuning modifies model behavior or parameters and is generally more suitable for behavior/style adaptation than frequent factual updates. Very large long-context prompts can increase cost and latency and introduce irrelevant context or lost-in-the-middle effects. Retrieval helps ground generation in selected external evidence.",
+    "key_concepts": [
+      "retrieval",
+      "augmentation",
+      "generation",
+      "external knowledge",
+      "fine-tuning",
+      "hallucination",
+      "grounding",
+      "long context"
+    ],
+    "common_misconceptions": [
+      "RAG updates model weights",
+      "More context always improves quality",
+      "Fine-tuning is required whenever documents change"
+    ],
+    "source": {
+      "source_type": "course_material",
+      "document": "NotebookLM RAG course corpus",
+      "section": "RAG Fundamentals"
+    },
+    "tags": [
+      "rag",
+      "rag_fundamentals"
+    ]
+  },
+  {
+    "evaluation_id": "EVAL-RAG-CHUNK",
+    "role": "ai_engineer",
+    "competency": "rag",
+    "sub_competency": "chunking",
+    "topic": "Chunking Strategies",
+    "content": "Chunking balances retrieval precision with sufficient generation context. Large chunks may mix topics and reduce retrieval precision; very small chunks may omit necessary surrounding context. Overlap can reduce boundary information loss. Pre-chunking prepares chunks offline for fast retrieval, while query-time chunking provides flexibility at additional runtime cost. Semantic chunking uses semantic similarity or topic boundaries to keep related content together.",
+    "key_concepts": [
+      "chunk size",
+      "overlap",
+      "pre-chunking",
+      "query-time chunking",
+      "semantic chunking",
+      "precision-context trade-off"
+    ],
+    "common_misconceptions": [
+      "Bigger chunks are always better",
+      "More overlap is always better"
+    ],
+    "source": {
+      "source_type": "course_material",
+      "document": "NotebookLM RAG course corpus",
+      "section": "Chunking Strategies"
+    },
+    "tags": [
+      "rag",
+      "chunking"
+    ]
+  },
+  {
+    "evaluation_id": "EVAL-RAG-EMB",
+    "role": "ai_engineer",
+    "competency": "rag",
+    "sub_competency": "embeddings",
+    "topic": "Embeddings and Similarity",
+    "content": "Embeddings represent text as numerical vectors in a learned space where semantically similar text should be closer. Retrieval compares query and document embeddings using similarity or distance measures such as cosine similarity or Euclidean distance. Query and indexed document embeddings must be compatible; changing the embedding model without rebuilding the index can severely degrade retrieval and generally requires re-embedding the corpus.",
+    "key_concepts": [
+      "embeddings",
+      "semantic similarity",
+      "cosine similarity",
+      "Euclidean distance",
+      "model compatibility",
+      "re-embedding"
+    ],
+    "common_misconceptions": [
+      "Embeddings store the original text verbatim",
+      "Any embedding model can query an index produced by another model"
+    ],
+    "source": {
+      "source_type": "course_material",
+      "document": "NotebookLM RAG course corpus",
+      "section": "Embeddings and Similarity"
+    },
+    "tags": [
+      "rag",
+      "embeddings"
+    ]
+  },
+  {
+    "evaluation_id": "EVAL-RAG-RET",
+    "role": "ai_engineer",
+    "competency": "rag",
+    "sub_competency": "retrieval_search",
+    "topic": "Retrieval, Hybrid Search and Reranking",
+    "content": "Dense retrieval captures semantic similarity, while sparse lexical retrieval such as BM25 is effective for exact terms, identifiers, acronyms, and rare names. Hybrid retrieval combines their complementary strengths. Reciprocal Rank Fusion combines ranked lists using rank positions rather than incompatible raw score scales. A two-stage pipeline can use efficient first-pass retrieval followed by a more expensive reranker on a smaller candidate set. Retrieval quality must be assessed together with context quality and downstream generation quality.",
+    "key_concepts": [
+      "dense retrieval",
+      "sparse retrieval",
+      "BM25",
+      "hybrid retrieval",
+      "RRF",
+      "reranking",
+      "recall",
+      "precision"
+    ],
+    "common_misconceptions": [
+      "Vector search is always superior to keyword search",
+      "Higher recall always guarantees better answers"
+    ],
+    "source": {
+      "source_type": "course_material",
+      "document": "NotebookLM RAG course corpus",
+      "section": "Retrieval, Hybrid Search and Reranking"
+    },
+    "tags": [
+      "rag",
+      "retrieval_search"
+    ]
+  },
+  {
+    "evaluation_id": "EVAL-RAG-CTX",
+    "role": "ai_engineer",
+    "competency": "rag",
+    "sub_competency": "context_engineering",
+    "topic": "Context Engineering",
+    "content": "Prompt engineering focuses on instructions and phrasing, while context engineering manages which information enters the limited model context and how it is structured. Long contexts can suffer lost-in-the-middle behavior and, over long interactions, repetition or instruction drift. Systems can mitigate this by filtering, reranking, summarizing, compressing, prioritizing relevant context, and storing state outside the prompt when appropriate.",
+    "key_concepts": [
+      "context engineering",
+      "prompt engineering",
+      "lost in the middle",
+      "context rot",
+      "filtering",
+      "summarization",
+      "context structure"
+    ],
+    "common_misconceptions": [
+      "A larger context window removes the need for context selection",
+      "Prompt wording alone solves context-management problems"
+    ],
+    "source": {
+      "source_type": "course_material",
+      "document": "NotebookLM RAG course corpus",
+      "section": "Context Engineering"
+    },
+    "tags": [
+      "rag",
+      "context_engineering"
+    ]
+  },
+  {
+    "evaluation_id": "EVAL-RAG-EVAL",
+    "role": "ai_engineer",
+    "competency": "rag",
+    "sub_competency": "rag_evaluation",
+    "topic": "RAG Evaluation",
+    "content": "RAG evaluation should separate retrieval quality from generation quality so failures can be localized. Retrieval metrics include Recall@k, MRR, and MAP. Grounded evaluation datasets can be created from trusted source contexts by generating question-answer pairs and filtering them for groundedness, relevance, and stand-alone quality. LLM-as-a-judge evaluation should provide supporting evidence, explicit scoring criteria, and structured evidence-based outputs to improve consistency.",
+    "key_concepts": [
+      "retrieval evaluation",
+      "generation evaluation",
+      "Recall@k",
+      "MRR",
+      "MAP",
+      "golden dataset",
+      "groundedness",
+      "LLM-as-a-judge",
+      "faithfulness"
+    ],
+    "common_misconceptions": [
+      "End-to-end correctness alone identifies the failing component",
+      "An LLM judge needs no rubric or evidence"
+    ],
+    "source": {
+      "source_type": "course_material",
+      "document": "NotebookLM RAG course corpus",
+      "section": "RAG Evaluation"
+    },
+    "tags": [
+      "rag",
+      "rag_evaluation"
+    ]
+  },
+  {
+    "evaluation_id": "EVAL-RAG-PROD",
+    "role": "ai_engineer",
+    "competency": "rag",
+    "sub_competency": "production_rag",
+    "topic": "Production RAG",
+    "content": "Production RAG systems must manage authorization, freshness, latency, cost, and observability. Metadata filtering can restrict retrieval by tenant or ACL before unauthorized content becomes a candidate. Common failures include wrong chunks, poor ranking, and stale indexes; mitigations include hybrid retrieval, reranking, and synchronized reindexing. Performance and cost should be measured stage by stage across embedding, retrieval, fusion, reranking, context construction, and generation. Production architectures typically separate offline ingestion/index maintenance from online query processing.",
+    "key_concepts": [
+      "metadata filtering",
+      "ACL",
+      "stale index",
+      "reranking",
+      "latency",
+      "cost",
+      "ingestion pipeline",
+      "query pipeline",
+      "observability"
+    ],
+    "common_misconceptions": [
+      "Prompt instructions alone are sufficient for access control",
+      "Optimization should begin without measuring pipeline stages"
+    ],
+    "source": {
+      "source_type": "course_material",
+      "document": "NotebookLM RAG course corpus",
+      "section": "Production RAG"
+    },
+    "tags": [
+      "rag",
+      "production_rag"
+    ]
+  }
+]

@@ -2,8 +2,8 @@
 
 import json
 import sys
-from pathlib import Path
 from collections import Counter
+from pathlib import Path
 
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -18,12 +18,36 @@ GOLDEN_FILE = (
     / "data/eval/question_retrieval_golden.jsonl"
 )
 
-
 errors = []
 warnings = []
 
 
+VALID_QUERY_TYPES = {
+    "semantic",
+    "keyword",
+    "scenario",
+    "cross_concept",
+    "hard_semantic",
+    "ambiguous",
+    "near_neighbor",
+    "negative",
+}
+
+VALID_DIFFICULTIES = {
+    "basic",
+    "intermediate",
+    "advanced",
+}
+
+VALID_BEHAVIORS = {
+    "retrieve",
+    "retrieve_any_relevant",
+    "no_relevant_question",
+}
+
+
 def load_jsonl(path):
+
     records = []
 
     if not path.exists():
@@ -43,16 +67,21 @@ def load_jsonl(path):
                 record = json.loads(line)
 
             except json.JSONDecodeError as exc:
+
                 errors.append(
-                    f"{path}:{line_no}: invalid JSON: {exc}"
+                    f"{path}:{line_no}: "
+                    f"invalid JSON: {exc}"
                 )
+
                 continue
 
             if not isinstance(record, dict):
+
                 errors.append(
                     f"{path}:{line_no}: "
                     "record must be a JSON object"
                 )
+
                 continue
 
             records.append(record)
@@ -60,37 +89,22 @@ def load_jsonl(path):
     return records
 
 
-def validate_golden_schema(records):
+def validate_schema(records):
 
     required_fields = [
         "query_id",
         "query",
         "target_corpus",
         "relevant_question_ids",
-        "expected_competency",
-        "expected_sub_competency",
         "query_type",
-        "difficulty_target",
+        "expected_behavior",
     ]
-
-    valid_query_types = {
-        "semantic",
-        "keyword",
-        "scenario",
-        "cross_concept",
-    }
-
-    valid_difficulties = {
-        "basic",
-        "intermediate",
-        "advanced",
-    }
 
     seen_ids = set()
 
     for record in records:
 
-        qid = record.get(
+        query_id = record.get(
             "query_id",
             "UNKNOWN_QUERY",
         )
@@ -98,59 +112,115 @@ def validate_golden_schema(records):
         for field in required_fields:
 
             if field not in record:
+
                 errors.append(
-                    f"{qid}: missing field '{field}'"
+                    f"{query_id}: "
+                    f"missing field '{field}'"
                 )
 
-        if qid in seen_ids:
+        if query_id in seen_ids:
+
             errors.append(
-                f"Duplicate query_id: {qid}"
+                f"Duplicate query_id: {query_id}"
             )
 
-        seen_ids.add(qid)
+        seen_ids.add(query_id)
 
         if not record.get("query", "").strip():
+
             errors.append(
-                f"{qid}: query cannot be empty"
+                f"{query_id}: query cannot be empty"
             )
 
-        relevant = record.get(
-            "relevant_question_ids",
-            [],
+        query_type = record.get("query_type")
+
+        if query_type not in VALID_QUERY_TYPES:
+
+            errors.append(
+                f"{query_id}: invalid query_type "
+                f"'{query_type}'"
+            )
+
+        behavior = record.get(
+            "expected_behavior"
         )
 
-        if not isinstance(relevant, list):
+        if behavior not in VALID_BEHAVIORS:
+
             errors.append(
-                f"{qid}: relevant_question_ids "
+                f"{query_id}: invalid "
+                f"expected_behavior '{behavior}'"
+            )
+
+        relevant_ids = record.get(
+            "relevant_question_ids"
+        )
+
+        if not isinstance(relevant_ids, list):
+
+            errors.append(
+                f"{query_id}: "
+                "relevant_question_ids "
                 "must be a list"
             )
 
-        elif not relevant:
-            errors.append(
-                f"{qid}: relevant_question_ids "
-                "cannot be empty"
-            )
+            continue
+
+        #
+        # Positive / ambiguous cases need
+        # at least one acceptable target.
+        #
+        if behavior in {
+            "retrieve",
+            "retrieve_any_relevant",
+        }:
+
+            if not relevant_ids:
+
+                errors.append(
+                    f"{query_id}: "
+                    f"{behavior} requires at least "
+                    "one relevant_question_id"
+                )
+
+        #
+        # Negative cases MUST have no target.
+        #
+        if behavior == "no_relevant_question":
+
+            if relevant_ids:
+
+                errors.append(
+                    f"{query_id}: negative query "
+                    "must have empty "
+                    "relevant_question_ids"
+                )
+
+        #
+        # Difficulty may be null for ambiguous
+        # and negative queries.
+        #
+        difficulty = record.get(
+            "difficulty_target"
+        )
 
         if (
-            record.get("query_type")
-            not in valid_query_types
+            difficulty is not None
+            and difficulty
+            not in VALID_DIFFICULTIES
         ):
-            errors.append(
-                f"{qid}: invalid query_type "
-                f"'{record.get('query_type')}'"
-            )
 
-        if (
-            record.get("difficulty_target")
-            not in valid_difficulties
-        ):
             errors.append(
-                f"{qid}: invalid difficulty_target "
-                f"'{record.get('difficulty_target')}'"
+                f"{query_id}: invalid "
+                f"difficulty_target "
+                f"'{difficulty}'"
             )
 
 
-def validate_targets(golden, master):
+def validate_targets(
+    golden,
+    master,
+):
 
     master_by_id = {
         q["question_id"]: q
@@ -160,10 +230,18 @@ def validate_targets(golden, master):
 
     for record in golden:
 
-        query_id = record.get(
-            "query_id",
-            "UNKNOWN_QUERY",
-        )
+        query_id = record["query_id"]
+
+        behavior = record[
+            "expected_behavior"
+        ]
+
+        #
+        # Negative queries intentionally
+        # have no target.
+        #
+        if behavior == "no_relevant_question":
+            continue
 
         expected_competency = record.get(
             "expected_competency"
@@ -177,75 +255,89 @@ def validate_targets(golden, master):
             "difficulty_target"
         )
 
-        for target_id in record.get(
-            "relevant_question_ids",
-            []
-        ):
+        for target_id in record[
+            "relevant_question_ids"
+        ]:
 
             if target_id not in master_by_id:
 
                 errors.append(
-                    f"{query_id}: target question "
-                    f"'{target_id}' does not exist "
-                    "in master corpus"
+                    f"{query_id}: target "
+                    f"'{target_id}' does not exist"
                 )
 
                 continue
 
             target = master_by_id[target_id]
 
-            actual_competency = target.get(
-                "competency"
-            )
+            #
+            # Only check metadata when the
+            # golden record specifies it.
+            #
+            if expected_competency is not None:
 
-            actual_sub = target.get(
-                "sub_competency"
-            )
-
-            actual_difficulty = target.get(
-                "difficulty"
-            )
-
-            if (
-                actual_competency
-                != expected_competency
-            ):
-                errors.append(
-                    f"{query_id}: target {target_id} "
-                    "competency mismatch: "
-                    f"expected '{expected_competency}', "
-                    f"found '{actual_competency}'"
+                actual = target.get(
+                    "competency"
                 )
 
-            if actual_sub != expected_sub:
+                if actual != expected_competency:
 
-                errors.append(
-                    f"{query_id}: target {target_id} "
-                    "sub_competency mismatch: "
-                    f"expected '{expected_sub}', "
-                    f"found '{actual_sub}'"
+                    errors.append(
+                        f"{query_id}: {target_id} "
+                        "competency mismatch: "
+                        f"expected "
+                        f"'{expected_competency}', "
+                        f"found '{actual}'"
+                    )
+
+            if expected_sub is not None:
+
+                actual = target.get(
+                    "sub_competency"
                 )
 
-            if (
-                actual_difficulty
-                != expected_difficulty
-            ):
-                warnings.append(
-                    f"{query_id}: target {target_id} "
-                    "difficulty mismatch: "
-                    f"expected '{expected_difficulty}', "
-                    f"found '{actual_difficulty}'"
+                if actual != expected_sub:
+
+                    errors.append(
+                        f"{query_id}: {target_id} "
+                        "sub_competency mismatch: "
+                        f"expected '{expected_sub}', "
+                        f"found '{actual}'"
+                    )
+
+            #
+            # Difficulty is intentionally
+            # optional for ambiguous queries.
+            #
+            if expected_difficulty is not None:
+
+                actual = target.get(
+                    "difficulty"
                 )
 
+                if actual != expected_difficulty:
 
-def print_summary(golden, master):
+                    warnings.append(
+                        f"{query_id}: {target_id} "
+                        "difficulty mismatch: "
+                        f"expected "
+                        f"'{expected_difficulty}', "
+                        f"found '{actual}'"
+                    )
+
+
+def print_summary(
+    golden,
+    master,
+):
 
     print()
-    print("=" * 65)
+    print("=" * 70)
     print(
-        "INTERVIEWGAP AI - GOLDEN DATASET VALIDATION"
+        "INTERVIEWGAP AI - "
+        "GOLDEN DATASET V2 VALIDATION"
     )
-    print("=" * 65)
+    print("=" * 70)
 
     print()
     print(
@@ -257,24 +349,25 @@ def print_summary(golden, master):
     )
 
     print()
-    print("Golden queries by competency")
-    print("----------------------------")
+    print("Expected behavior")
+    print("-----------------")
 
-    competency_counts = Counter(
-        x.get("expected_competency")
+    behavior_counts = Counter(
+        x.get("expected_behavior")
         for x in golden
     )
 
     for name, count in sorted(
-        competency_counts.items()
+        behavior_counts.items()
     ):
+
         print(
-            f"{name:<30}: {count}"
+            f"{name:<25}: {count}"
         )
 
     print()
-    print("Golden queries by query type")
-    print("----------------------------")
+    print("Query types")
+    print("-----------")
 
     type_counts = Counter(
         x.get("query_type")
@@ -284,27 +377,9 @@ def print_summary(golden, master):
     for name, count in sorted(
         type_counts.items()
     ):
+
         print(
             f"{name:<20}: {count}"
-        )
-
-    print()
-    print("Golden queries by difficulty")
-    print("----------------------------")
-
-    difficulty_counts = Counter(
-        x.get("difficulty_target")
-        for x in golden
-    )
-
-    for name in [
-        "basic",
-        "intermediate",
-        "advanced",
-    ]:
-        print(
-            f"{name:<15}: "
-            f"{difficulty_counts.get(name, 0)}"
         )
 
 
@@ -318,7 +393,7 @@ def main():
         GOLDEN_FILE
     )
 
-    validate_golden_schema(
+    validate_schema(
         golden
     )
 
@@ -354,19 +429,14 @@ def main():
                 f"ERROR: {error}"
             )
 
-        print()
-        print(
-            f"{len(errors)} error(s) found."
-        )
-
         sys.exit(1)
 
     print()
     print("VALIDATION PASSED")
     print()
     print(
-        "Golden dataset is ready for "
-        "retrieval benchmarking."
+        "Golden Dataset v2 is ready "
+        "for retrieval benchmarking."
     )
 
 
