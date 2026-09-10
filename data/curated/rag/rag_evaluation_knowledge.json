@@ -5,7 +5,7 @@
     "competency": "rag",
     "sub_competency": "rag_fundamentals",
     "topic": "RAG Fundamentals",
-    "content": "RAG retrieves relevant information from external knowledge sources and augments the model input before generation. This separates frequently changing factual knowledge from model weights. Fine-tuning modifies model behavior or parameters and is generally more suitable for behavior/style adaptation than frequent factual updates. Very large long-context prompts can increase cost and latency and introduce irrelevant context or lost-in-the-middle effects. Retrieval helps ground generation in selected external evidence.",
+    "content": "RAG retrieves relevant information from external knowledge sources and augments the model input before generation. This separates frequently changing factual knowledge from model weights. Fine-tuning modifies model behavior or parameters and is generally more suitable for behavior/style adaptation than frequent factual updates. Very large long-context prompts can increase cost and latency and introduce irrelevant context or lost-in-the-middle effects. Retrieval helps ground generation in selected external evidence. LLM generation is probabilistic: the model predicts likely next tokens rather than retrieving verified facts from a database. As a result, fluent output can contain unsupported or incorrect information. Retrieval can reduce this risk by supplying relevant external evidence that the model can use to ground its response, although retrieval does not eliminate hallucination by itself.",
     "key_concepts": [
       "retrieval",
       "augmentation",
@@ -14,7 +14,11 @@
       "fine-tuning",
       "hallucination",
       "grounding",
-      "long context"
+      "long context",
+      "LLM generation is probabilistic",
+      "probabilistic generation can produce unsupported claims",
+      "retrieval provides external evidence for grounding",
+      "retrieval reduces but does not eliminate hallucination"
     ],
     "common_misconceptions": [
       "RAG updates model weights",
@@ -24,7 +28,16 @@
     "source": {
       "source_type": "course_material",
       "document": "NotebookLM RAG course corpus",
-      "section": "RAG Fundamentals"
+      "section": "RAG Fundamentals",
+      "coverage_enrichment": {
+        "source_type": "user_supplied_clarification_with_course_cross_check",
+        "document": "User-requested semantic coverage additions, 2026-09-10",
+        "course_reference": {
+          "document": "data/raw/notebooklm/rag_questions_raw.md",
+          "section": "RAG Fundamentals: Intermediate Q2; RAG Evaluation: separate retrieval and generation evaluation"
+        },
+        "provenance_note": "The local grading guides support likely next-token prediction, confident incorrect continuations, and generation failures despite available evidence. The retrieval risk-reduction wording is a user-supplied synthesis of these ideas."
+      }
     },
     "tags": [
       "rag",
@@ -66,14 +79,17 @@
     "competency": "rag",
     "sub_competency": "embeddings",
     "topic": "Embeddings and Similarity",
-    "content": "Embeddings represent text as numerical vectors in a learned space where semantically similar text should be closer. Retrieval compares query and document embeddings using similarity or distance measures such as cosine similarity or Euclidean distance. Query and indexed document embeddings must be compatible; changing the embedding model without rebuilding the index can severely degrade retrieval and generally requires re-embedding the corpus.",
+    "content": "Embeddings represent text as numerical vectors in a learned space where semantically similar text should be closer. Retrieval compares query and document embeddings using similarity or distance measures such as cosine similarity or Euclidean distance. Query and indexed document embeddings must be compatible; changing the embedding model without rebuilding the index can severely degrade retrieval and generally requires re-embedding the corpus. Cosine similarity compares the direction or angle between vectors and is less affected by vector magnitude. Euclidean distance measures the straight-line distance between vectors and is sensitive to both direction and magnitude.",
     "key_concepts": [
       "embeddings",
       "semantic similarity",
       "cosine similarity",
       "Euclidean distance",
       "model compatibility",
-      "re-embedding"
+      "re-embedding",
+      "cosine similarity compares vector direction",
+      "Euclidean distance measures straight-line vector distance",
+      "Euclidean distance is affected by vector magnitude"
     ],
     "common_misconceptions": [
       "Embeddings store the original text verbatim",
@@ -82,7 +98,16 @@
     "source": {
       "source_type": "course_material",
       "document": "NotebookLM RAG course corpus",
-      "section": "Embeddings and Similarity"
+      "section": "Embeddings and Similarity",
+      "coverage_enrichment": {
+        "source_type": "user_supplied_clarification_with_course_cross_check",
+        "document": "User-requested semantic coverage additions, 2026-09-10",
+        "course_reference": {
+          "document": "data/raw/notebooklm/rag_questions_raw.md",
+          "section": "Embeddings: comparison of Euclidean distance and cosine similarity"
+        },
+        "provenance_note": "The added direction, distance, and magnitude distinctions are supported by the local grounded answer/grading guide."
+      }
     },
     "tags": [
       "rag",
@@ -156,7 +181,7 @@
     "competency": "rag",
     "sub_competency": "rag_evaluation",
     "topic": "RAG Evaluation",
-    "content": "RAG evaluation should separate retrieval quality from generation quality so failures can be localized. Retrieval metrics include Recall@k, MRR, and MAP. Grounded evaluation datasets can be created from trusted source contexts by generating question-answer pairs and filtering them for groundedness, relevance, and stand-alone quality. LLM-as-a-judge evaluation should provide supporting evidence, explicit scoring criteria, and structured evidence-based outputs to improve consistency.",
+    "content": "RAG evaluation should separate retrieval quality from generation quality so failures can be localized. Retrieval metrics include Recall@k, MRR, and MAP. Grounded evaluation datasets can be created from trusted source contexts by generating question-answer pairs and filtering them for groundedness, relevance, and stand-alone quality. LLM-as-a-judge evaluation should provide supporting evidence, explicit scoring criteria, and structured evidence-based outputs to improve consistency. Recall@k measures how much of the relevant information is retrieved within the top-k results. MRR emphasizes how early the first relevant result appears by using its reciprocal rank. MAP evaluates ranking quality when multiple relevant results may exist by averaging precision at relevant-result positions. For synthetic RAG evaluation data, groundedness checks whether an example is supported by the source context, relevance checks whether it is useful and pertinent to the intended task, and stand-alone quality checks whether the question can be understood without hidden context.",
     "key_concepts": [
       "retrieval evaluation",
       "generation evaluation",
@@ -166,7 +191,13 @@
       "golden dataset",
       "groundedness",
       "LLM-as-a-judge",
-      "faithfulness"
+      "faithfulness",
+      "Recall@k measures relevant items retrieved within top-k",
+      "MRR emphasizes the rank of the first relevant result",
+      "MAP evaluates ranking when multiple relevant items exist",
+      "groundedness verifies source support",
+      "relevance verifies usefulness and pertinence",
+      "stand-alone quality verifies independent understandability"
     ],
     "common_misconceptions": [
       "End-to-end correctness alone identifies the failing component",
@@ -175,7 +206,16 @@
     "source": {
       "source_type": "course_material",
       "document": "NotebookLM RAG course corpus",
-      "section": "RAG Evaluation"
+      "section": "RAG Evaluation",
+      "coverage_enrichment": {
+        "source_type": "user_supplied_clarification_with_course_cross_check",
+        "document": "User-requested semantic coverage additions, 2026-09-10",
+        "course_reference": {
+          "document": "data/raw/notebooklm/rag_questions_raw.md",
+          "section": "RAG Evaluation: Basic Q2 and Intermediate Q2"
+        },
+        "provenance_note": "The local grading guides support the metric roles and all three synthetic-data checks. Explicit reciprocal-rank wording is a user-supplied clarification of the MRR description."
+      }
     },
     "tags": [
       "rag",

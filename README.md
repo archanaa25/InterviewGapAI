@@ -41,6 +41,8 @@ All seven corpora have exports in `data/prepared/<competency>/`. Legacy RAG expo
 
 ## Python environment and execution
 
+For Evaluation Agent integration, see the [Evaluation RAG interface](docs/EVALUATION_RAG_INTERFACE.md).
+
 With uv installed, run from the repository root:
 
 ```bash
