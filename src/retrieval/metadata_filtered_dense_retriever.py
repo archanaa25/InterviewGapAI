@@ -25,6 +25,8 @@ class MetadataFilteredDenseRetriever:
 
         self.k = k
         self.filter_mode = filter_mode
+        # The evaluation runner uses this flag to pass the golden record as
+        # metadata alongside the natural-language retrieval query.
         self.uses_metadata = True
         self.dense = QuestionDenseRetriever(k=k)
 
@@ -34,6 +36,8 @@ class MetadataFilteredDenseRetriever:
 
         filters = {}
 
+        # Translate caller field names into the metadata keys stored in Pinecone.
+        # Omitted values leave that dimension unconstrained.
         competency = metadata.get("expected_competency")
         difficulty = metadata.get("difficulty_target")
         sub_competency = metadata.get("expected_sub_competency")
@@ -42,7 +46,8 @@ class MetadataFilteredDenseRetriever:
         if competency is not None:
             filters["competency"] = competency
 
-        # E4B, E4C
+        # E4B, E4C: difficulty narrows the candidate pool before semantic ranking.
+        # competency_difficulty is the selected MVP mode; callers choose it explicitly.
         if (
             self.filter_mode in {"competency_difficulty", "full"}
             and difficulty is not None
@@ -56,6 +61,8 @@ class MetadataFilteredDenseRetriever:
         ):
             filters["sub_competency"] = sub_competency
 
+        # None preserves the base retriever's unfiltered search behavior when
+        # no usable constraints were supplied.
         return filters or None
 
     def search(self, query, k=None, metadata=None):
@@ -64,6 +71,8 @@ class MetadataFilteredDenseRetriever:
 
         filters = self._build_filters(metadata)
 
+        # The shared dense retriever owns embedding, Pinecone access, and
+        # result formatting; this wrapper only selects metadata constraints.
         return self.dense.search(
             query,
             k=k,

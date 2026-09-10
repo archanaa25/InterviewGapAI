@@ -353,6 +353,7 @@ dependencies = [
     { name = "langchain-core" },
     { name = "openai" },
     { name = "pinecone" },
+    { name = "pydantic" },
     { name = "python-dotenv" },
     { name = "rank-bm25" },
 ]
@@ -362,6 +363,7 @@ requires-dist = [
     { name = "langchain-core", specifier = ">=1.6.2" },
     { name = "openai", specifier = ">=3.8.0" },
     { name = "pinecone", specifier = ">=10.0.0" },
+    { name = "pydantic", specifier = ">=2,<3" },
     { name = "python-dotenv", specifier = ">=1.2.3" },
     { name = "rank-bm25", specifier = ">=0.2.2" },
 ]

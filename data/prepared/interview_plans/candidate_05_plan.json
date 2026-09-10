@@ -1,0 +1,66 @@
+{
+  "candidate_id": "candidate_05",
+  "total_questions": 10,
+  "competency_targets": [
+    {
+      "competency": "rag",
+      "basic": 1,
+      "intermediate": 1,
+      "advanced": 0,
+      "reason": "Allocate two questions because RAG has high probing priority and the request-time example experiment does not establish retrieval, indexing, or grounding experience. A basic probe establishes conceptual understanding, while an intermediate probe assesses applied pipeline reasoning without assuming that absent implementation evidence indicates weakness."
+    },
+    {
+      "competency": "agentic_ai",
+      "basic": 0,
+      "intermediate": 1,
+      "advanced": 0,
+      "reason": "Allocate one intermediate question to probe tool use, orchestration, planning, and control concepts that are not evidenced by the resume. Intermediate difficulty is appropriate for a candidate with four years of relevant professional experience, despite this area being unknown."
+    },
+    {
+      "competency": "ai_ml_llm_fundamentals",
+      "basic": 0,
+      "intermediate": 0,
+      "advanced": 1,
+      "reason": "Allocate one advanced question to validate the demonstrated strength reflected in pretrained-model adaptation, baseline comparison, classification, and sensitivity analysis. The deeper difficulty tests reasoning beyond familiarity while preserving the distinction between applied experimentation and broader production ownership."
+    },
+    {
+      "competency": "ai_evaluation",
+      "basic": 0,
+      "intermediate": 1,
+      "advanced": 1,
+      "reason": "Allocate two questions to validate the resume's strongest body of evidence. One intermediate and one advanced probe cover practical evaluation choices and deeper reasoning about leakage, uncertainty, subgroup behavior, robustness, annotations, held-out analysis, and resource tradeoffs."
+    },
+    {
+      "competency": "python_software_engineering",
+      "basic": 1,
+      "intermediate": 1,
+      "advanced": 0,
+      "reason": "Allocate two questions because Python software engineering has partial evidence and high probing priority. A basic question checks core code-quality practices, while an intermediate question probes testing, modularity, packaging, or maintainability beyond notebooks without presuming production ownership."
+    },
+    {
+      "competency": "ai_system_design",
+      "basic": 0,
+      "intermediate": 1,
+      "advanced": 0,
+      "reason": "Allocate one intermediate question to explore architecture, deployment, serving, monitoring, scalability, and reliability reasoning. Artifact handoff and memory measurement provide relevant context, but do not justify assuming substantial system ownership or requiring an advanced probe."
+    },
+    {
+      "competency": "ai_security",
+      "basic": 1,
+      "intermediate": 0,
+      "advanced": 0,
+      "reason": "Allocate one basic question to establish awareness of AI-specific threats, data and prompt risks, privacy, access controls, and secure deployment principles. The foundational difficulty provides a fair probe where the resume supplies no direct evidence and does not treat that omission as weakness."
+    }
+  ],
+  "difficulty_distribution": {
+    "basic": 3,
+    "intermediate": 5,
+    "advanced": 2
+  },
+  "strategy": {
+    "validate_claimed_strengths": true,
+    "probe_unknown_areas": true,
+    "avoid_resume_based_negative_assumptions": true,
+    "rationale": "The plan uses a 3-basic, 5-intermediate, and 2-advanced distribution suited to a data scientist with four years of professional experience. Advanced questions are concentrated in demonstrated ML/LLM fundamentals and AI evaluation to validate claimed strengths. Intermediate questions dominate because they can assess applied reasoning in both evidenced and unknown areas without mechanically equating missing resume evidence with beginner ability. Basic questions establish coverage in RAG, production-oriented Python practices, and AI security, while additional questions prioritize high-value RAG and Python probes and deeper validation of evaluation expertise."
+  }
+}

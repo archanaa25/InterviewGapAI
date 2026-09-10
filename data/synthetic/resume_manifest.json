@@ -1,0 +1,178 @@
+{
+  "schema_version": "1.0",
+  "synthetic": true,
+  "as_of": "2026-09-09",
+  "purpose": "Controlled resume-analysis fixtures, not measured candidate ability.",
+  "handling": "Pass only the resume text to the analyzer. Keep this manifest out of model input. Missing evidence means unknown / needs probing, never an established weakness.",
+  "candidates": [
+    {
+      "candidate_id": "candidate_01",
+      "resume_path": "resumes/candidate_01.md",
+      "name": "Mira Sen",
+      "profile": "well_rounded",
+      "experience": "6 years",
+      "evidence_expected_for": [
+        "rag",
+        "agentic_ai",
+        "ai_ml_llm_fundamentals",
+        "ai_evaluation",
+        "python_software_engineering",
+        "ai_system_design",
+        "ai_security"
+      ],
+      "expected_probing": [
+        "Validate individual ownership and depth across the claimed breadth."
+      ],
+      "evidence_scope": "see resume for production versus prototype scope"
+    },
+    {
+      "candidate_id": "candidate_02",
+      "resume_path": "resumes/candidate_02.md",
+      "name": "Dev Malik",
+      "profile": "rag_specialist",
+      "experience": "4 years",
+      "evidence_expected_for": [
+        "rag",
+        "python_software_engineering"
+      ],
+      "expected_probing": [
+        "Probe task execution and multi-step automation; no direct evidence supplied.",
+        "Check security decisions beyond document visibility."
+      ],
+      "evidence_scope": "see resume for production versus prototype scope"
+    },
+    {
+      "candidate_id": "candidate_03",
+      "resume_path": "resumes/candidate_03.md",
+      "name": "Leena Rao",
+      "profile": "agentic_specialist",
+      "experience": "4 years",
+      "evidence_expected_for": [
+        "agentic_ai",
+        "python_software_engineering"
+      ],
+      "expected_probing": [
+        "Probe document selection and source-grounded answers.",
+        "Check assessment of factual answers beyond completed actions."
+      ],
+      "evidence_scope": "see resume for production versus prototype scope"
+    },
+    {
+      "candidate_id": "candidate_04",
+      "resume_path": "resumes/candidate_04.md",
+      "name": "Arun Das",
+      "profile": "backend_transition",
+      "experience": "6 years; 8 months with language-model applications",
+      "evidence_expected_for": [
+        "python_software_engineering",
+        "ai_system_design",
+        "ai_security"
+      ],
+      "expected_probing": [
+        "Probe language-model concepts and document-backed answering at introductory depth.",
+        "Distinguish one prototype from production AI experience."
+      ],
+      "evidence_scope": "see resume for production versus prototype scope"
+    },
+    {
+      "candidate_id": "candidate_05",
+      "resume_path": "resumes/candidate_05.md",
+      "name": "Nisha Kapoor",
+      "profile": "data_science_transition",
+      "experience": "4 years",
+      "evidence_expected_for": [
+        "ai_ml_llm_fundamentals",
+        "ai_evaluation",
+        "python_software_engineering"
+      ],
+      "expected_probing": [
+        "Probe document-backed applications and action-taking assistants.",
+        "Clarify responsibility for online serving and security."
+      ],
+      "evidence_scope": "see resume for production versus prototype scope"
+    },
+    {
+      "candidate_id": "candidate_06",
+      "resume_path": "resumes/candidate_06.md",
+      "name": "Omar Haddad",
+      "profile": "evaluation_specialist",
+      "experience": "4 years",
+      "evidence_expected_for": [
+        "ai_evaluation",
+        "ai_ml_llm_fundamentals",
+        "python_software_engineering"
+      ],
+      "expected_probing": [
+        "Probe implementation ownership for source selection and action execution.",
+        "Check end-to-end architecture experience."
+      ],
+      "evidence_scope": "see resume for production versus prototype scope"
+    },
+    {
+      "candidate_id": "candidate_07",
+      "resume_path": "resumes/candidate_07.md",
+      "name": "Sara Qureshi",
+      "profile": "security_specialist",
+      "experience": "5 years",
+      "evidence_expected_for": [
+        "ai_security",
+        "python_software_engineering"
+      ],
+      "expected_probing": [
+        "Probe source-selection quality and action-planning behavior.",
+        "Check broader answer-quality measurement and system design."
+      ],
+      "evidence_scope": "see resume for production versus prototype scope"
+    },
+    {
+      "candidate_id": "candidate_08",
+      "resume_path": "resumes/candidate_08.md",
+      "name": "Kiran Bose",
+      "profile": "platform_specialist",
+      "experience": "6 years",
+      "evidence_expected_for": [
+        "ai_system_design",
+        "python_software_engineering"
+      ],
+      "expected_probing": [
+        "Probe relevance of selected documents and quality of generated answers.",
+        "Clarify experience with assistant decision-making."
+      ],
+      "evidence_scope": "see resume for production versus prototype scope"
+    },
+    {
+      "candidate_id": "candidate_09",
+      "resume_path": "resumes/candidate_09.md",
+      "name": "Anika Roy",
+      "profile": "junior",
+      "experience": "3-month internship",
+      "evidence_expected_for": [
+        "python_software_engineering",
+        "ai_ml_llm_fundamentals",
+        "rag",
+        "agentic_ai"
+      ],
+      "expected_probing": [
+        "Start with basic questions; evidence is coursework and small demonstrations.",
+        "Probe independent contribution and understanding before advanced operational topics."
+      ],
+      "evidence_scope": "coursework and supervised projects"
+    },
+    {
+      "candidate_id": "candidate_10",
+      "resume_path": "resumes/candidate_10.md",
+      "name": "Rohan Mehta",
+      "profile": "sparse_evidence",
+      "experience": "5 years",
+      "evidence_expected_for": [
+        "python_software_engineering"
+      ],
+      "expected_probing": [
+        "Request concrete examples across all AI competencies.",
+        "Do not infer lack of knowledge from brevity or unlisted technologies.",
+        "Clarify personal ownership, operational scale, and project maturity."
+      ],
+      "evidence_scope": "sparse claims"
+    }
+  ]
+}

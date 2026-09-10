@@ -1,0 +1,66 @@
+{
+  "candidate_id": "candidate_06",
+  "total_questions": 10,
+  "competency_targets": [
+    {
+      "competency": "rag",
+      "basic": 0,
+      "intermediate": 1,
+      "advanced": 1,
+      "reason": "Allocate two questions because RAG has high probing priority and the resume provides relevant source-grounding evaluation experience but not evidence of retrieval implementation or operation. The intermediate probe assesses core retrieval and context-assembly tradeoffs, while the advanced probe tests whether the candidate can extend evaluation insights to difficult RAG design and failure-analysis scenarios."
+    },
+    {
+      "competency": "agentic_ai",
+      "basic": 0,
+      "intermediate": 1,
+      "advanced": 0,
+      "reason": "Allocate one intermediate question to directly probe this unknown area. The level is appropriate for an experienced AI quality professional and can assess practical understanding of tool use, orchestration, and multi-step reliability without assuming prior agent ownership or treating missing resume evidence as weakness."
+    },
+    {
+      "competency": "ai_ml_llm_fundamentals",
+      "basic": 1,
+      "intermediate": 0,
+      "advanced": 0,
+      "reason": "Allocate one basic question to establish breadth in underlying AI, ML, and LLM concepts. The resume shows applied exposure to generated-text systems and model-based evaluation, but not enough detail to justify a deeper fundamentals allocation within the ten-question limit."
+    },
+    {
+      "competency": "ai_evaluation",
+      "basic": 0,
+      "intermediate": 1,
+      "advanced": 1,
+      "reason": "Allocate two questions to validate the resume's strongest claimed competency. The intermediate question verifies practical command of datasets, rubrics, human review, and evaluator validation; the advanced question probes deeper reasoning about disagreement, holdouts, regressions, multidimensional metrics, and release decisions."
+    },
+    {
+      "competency": "python_software_engineering",
+      "basic": 0,
+      "intermediate": 1,
+      "advanced": 0,
+      "reason": "Allocate one intermediate question to validate professional evidence of Python checks, pytest usage, and reproducible failure reporting. This level can assess maintainability, test design, debugging, and code-quality judgment without inferring broader production ownership than the resume states."
+    },
+    {
+      "competency": "ai_system_design",
+      "basic": 1,
+      "intermediate": 1,
+      "advanced": 0,
+      "reason": "Allocate two questions because this is a high-priority partial-evidence area. A basic question establishes system-component and boundary understanding, while an intermediate question probes architecture, evaluation integration, observability, reliability, and tradeoffs without assuming prior ownership of a production AI architecture."
+    },
+    {
+      "competency": "ai_security",
+      "basic": 0,
+      "intermediate": 1,
+      "advanced": 0,
+      "reason": "Allocate one intermediate question to directly probe security knowledge beyond the resume's robustness-related examples. It should assess practical threat recognition and controls for issues such as prompt injection, data leakage, access boundaries, or adversarial inputs without interpreting absent security claims as deficient ability."
+    }
+  ],
+  "difficulty_distribution": {
+    "basic": 2,
+    "intermediate": 6,
+    "advanced": 2
+  },
+  "strategy": {
+    "validate_claimed_strengths": true,
+    "probe_unknown_areas": true,
+    "avoid_resume_based_negative_assumptions": true,
+    "rationale": "The plan emphasizes intermediate questions to match the candidate's professional applied-AI background while allowing broad coverage of all seven competencies. Two advanced questions validate depth in demonstrated AI evaluation and test whether source-grounding experience transfers to complex RAG reasoning. Two basic questions establish essential fundamentals and system-design concepts where resume detail is limited. The three additional questions are assigned to RAG and AI system design because of their high-priority partial evidence, and to AI evaluation to validate the strongest documented competency. Unknown agentic AI and AI security areas receive direct intermediate probes rather than automatically being treated as basic or as weaknesses."
+  }
+}

@@ -1,0 +1,127 @@
+{
+  "candidate_id": "candidate_05",
+  "overall_summary": "Nisha Kapoor has four years of data science experience centered on predictive modeling, experiment design, statistical analysis, and text classification. The resume provides strong evidence of model evaluation practices, including temporal splits, baseline comparisons, segment-level performance, robustness investigations, and untouched-sample error analysis. It also provides meaningful evidence of pretrained text-model adaptation and Python-based experimentation. Production software engineering, AI system design, RAG, agentic AI, and AI security require further interview probing because the resume offers limited or no direct implementation evidence in those areas.",
+  "competency_evidence": [
+    {
+      "competency": "rag",
+      "evidence_level": "UNKNOWN_NEEDS_PROBING",
+      "evidence": [
+        {
+          "evidence": "Compared an adapted pretrained text model with examples supplied at request time in an offline experiment.",
+          "source": "Project - Small-model study"
+        }
+      ],
+      "confidence": 0.96,
+      "probe_priority": "HIGH",
+      "reason": "The request-time examples indicate experimentation with contextual examples, but the resume does not establish document retrieval, indexing, grounding, or a retrieval-augmented generation pipeline."
+    },
+    {
+      "competency": "agentic_ai",
+      "evidence_level": "UNKNOWN_NEEDS_PROBING",
+      "evidence": [],
+      "confidence": 0.99,
+      "probe_priority": "HIGH",
+      "reason": "The resume does not describe autonomous workflows, tool use, planning, orchestration, or other agentic AI implementation."
+    },
+    {
+      "competency": "ai_ml_llm_fundamentals",
+      "evidence_level": "DEMONSTRATED",
+      "evidence": [
+        {
+          "evidence": "Compared a pretrained text classifier with a simpler baseline for routing customer messages.",
+          "source": "Work Experience - Meadow Signal Analytics"
+        },
+        {
+          "evidence": "Investigated sensitivity to rare labels, input length, and changes in the wording of incoming requests.",
+          "source": "Work Experience - Meadow Signal Analytics"
+        },
+        {
+          "evidence": "Adapted a pretrained text model on a modest labeled collection and compared it with examples supplied at request time.",
+          "source": "Project - Small-model study"
+        },
+        {
+          "evidence": "Lists PyTorch, scikit-learn, experiment design, and statistical analysis among technical skills.",
+          "source": "Skills"
+        }
+      ],
+      "confidence": 0.93,
+      "probe_priority": "LOW",
+      "reason": "The resume contains specific applied evidence involving pretrained text models, supervised adaptation, baseline comparison, classification, and sensitivity analysis."
+    },
+    {
+      "competency": "ai_evaluation",
+      "evidence_level": "DEMONSTRATED",
+      "evidence": [
+        {
+          "evidence": "Used chronological data splits for demand estimation to avoid learning from future information.",
+          "source": "Work Experience - Meadow Signal Analytics"
+        },
+        {
+          "evidence": "Reported uncertainty and performance by customer segment rather than relying only on an overall average.",
+          "source": "Work Experience - Meadow Signal Analytics"
+        },
+        {
+          "evidence": "Compared a pretrained text classifier with a simpler baseline.",
+          "source": "Work Experience - Meadow Signal Analytics"
+        },
+        {
+          "evidence": "Investigated sensitivity to rare labels, input length, and wording changes.",
+          "source": "Work Experience - Meadow Signal Analytics"
+        },
+        {
+          "evidence": "Checked annotation disagreements and maintained reproducible experiment notebooks.",
+          "source": "Work Experience - Fern Harbour Research"
+        },
+        {
+          "evidence": "Recorded memory needs and examined mistakes on an untouched sample.",
+          "source": "Project - Small-model study"
+        }
+      ],
+      "confidence": 0.99,
+      "probe_priority": "LOW",
+      "reason": "The resume provides broad, concrete evaluation evidence spanning leakage-aware splitting, baseline comparisons, subgroup analysis, uncertainty reporting, robustness testing, annotation review, reproducibility, resource measurement, and held-out error analysis."
+    },
+    {
+      "competency": "python_software_engineering",
+      "evidence_level": "PARTIAL_EVIDENCE",
+      "evidence": [
+        {
+          "evidence": "Lists Python, pandas, NumPy, scikit-learn, and PyTorch among technical skills.",
+          "source": "Skills"
+        },
+        {
+          "evidence": "Maintained reproducible experiment notebooks and shared model artifacts with a separate engineering team.",
+          "source": "Work Experience - Fern Harbour Research"
+        }
+      ],
+      "confidence": 0.94,
+      "probe_priority": "HIGH",
+      "reason": "The resume establishes Python use for data science and reproducible experimentation, but provides limited evidence about production code structure, testing, packaging, APIs, versioning, or operational ownership."
+    },
+    {
+      "competency": "ai_system_design",
+      "evidence_level": "PARTIAL_EVIDENCE",
+      "evidence": [
+        {
+          "evidence": "Shared model artifacts with a separate engineering team responsible for the live service.",
+          "source": "Work Experience - Fern Harbour Research"
+        },
+        {
+          "evidence": "Recorded memory needs for a pretrained text-model experiment.",
+          "source": "Project - Small-model study"
+        }
+      ],
+      "confidence": 0.88,
+      "probe_priority": "HIGH",
+      "reason": "Artifact handoff to a live-service team and memory measurement are relevant to system constraints, but the resume does not establish substantial responsibility for architecture, deployment, serving, monitoring, scalability, or reliability decisions."
+    },
+    {
+      "competency": "ai_security",
+      "evidence_level": "UNKNOWN_NEEDS_PROBING",
+      "evidence": [],
+      "confidence": 0.99,
+      "probe_priority": "HIGH",
+      "reason": "The resume does not provide meaningful evidence about AI threat modeling, adversarial risks, prompt or data security, access controls, privacy safeguards, or secure deployment practices."
+    }
+  ]
+}

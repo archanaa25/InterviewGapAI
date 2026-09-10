@@ -1,0 +1,66 @@
+{
+  "candidate_id": "candidate_10",
+  "total_questions": 10,
+  "competency_targets": [
+    {
+      "competency": "rag",
+      "basic": 1,
+      "intermediate": 1,
+      "advanced": 0,
+      "reason": "Allocate two questions because RAG is a high-priority unknown closely related to the internal AI assistant and employee information helper. A basic question establishes retrieval and grounding concepts, while an intermediate question probes practical pipeline choices such as indexing, chunking, retrieval, and relevance without assuming the candidate implemented them."
+    },
+    {
+      "competency": "agentic_ai",
+      "basic": 0,
+      "intermediate": 1,
+      "advanced": 0,
+      "reason": "Allocate one intermediate question to determine whether the assistant or automation work involved tools, planning, orchestration, memory, or controlled workflows. Intermediate difficulty is appropriate for an experienced software engineer and probes applied reasoning without treating absent implementation details as weakness."
+    },
+    {
+      "competency": "ai_ml_llm_fundamentals",
+      "basic": 1,
+      "intermediate": 0,
+      "advanced": 0,
+      "reason": "Allocate one basic question to verify the core model, prompting, and generation concepts underlying the candidate's practical exposure to an AI assistant. The resume provides partial evidence but insufficient detail to justify a deeper question within the limited allocation."
+    },
+    {
+      "competency": "ai_evaluation",
+      "basic": 0,
+      "intermediate": 1,
+      "advanced": 1,
+      "reason": "Allocate two questions because improving response usefulness and addressing user-reported issues are directly relevant claims that require validation. The intermediate question probes structured evaluation practices, while the advanced question tests deeper reasoning about metrics, experiments, automated judging, and regression risks."
+    },
+    {
+      "competency": "python_software_engineering",
+      "basic": 0,
+      "intermediate": 1,
+      "advanced": 1,
+      "reason": "Allocate two questions to validate the resume's strongest claimed competency, supported by five years of backend delivery, maintenance, automation, and release work. The intermediate question checks sound engineering practice, and the advanced question probes design, reliability, testing, or maintainability trade-offs expected from sustained professional experience."
+    },
+    {
+      "competency": "ai_system_design",
+      "basic": 0,
+      "intermediate": 1,
+      "advanced": 0,
+      "reason": "Allocate one intermediate question because the candidate has delivered backend services and contributed to an AI application, but architectural ownership is not established. This level can probe model integration, scalability, reliability, latency, and observability trade-offs without assuming production AI system ownership."
+    },
+    {
+      "competency": "ai_security",
+      "basic": 0,
+      "intermediate": 1,
+      "advanced": 0,
+      "reason": "Allocate one intermediate question to probe AI-specific security considerations such as prompt injection, data authorization, privacy, and secure tool integration. The lack of resume evidence is treated as unknown rather than weak, while the candidate's professional backend experience supports a practical intermediate probe."
+    }
+  ],
+  "difficulty_distribution": {
+    "basic": 2,
+    "intermediate": 6,
+    "advanced": 2
+  },
+  "strategy": {
+    "validate_claimed_strengths": true,
+    "probe_unknown_areas": true,
+    "avoid_resume_based_negative_assumptions": true,
+    "rationale": "Use a balanced distribution centered on intermediate questions to reflect the candidate's substantial professional software engineering background while recognizing that AI implementation ownership is not fully described. Two basic questions establish essential RAG and LLM foundations, six intermediate questions probe applied judgment across both known and unknown areas, and two advanced questions validate depth in the strongest or most directly evidenced areas: Python engineering and AI evaluation. Extra questions are assigned to Python software engineering, RAG, and AI evaluation to validate the clearest claimed strength and investigate the AI-assistant work most directly connected to retrieval and response usefulness. Resume omissions are treated as areas for neutral exploration, not evidence of skill gaps."
+  }
+}

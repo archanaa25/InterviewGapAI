@@ -1,0 +1,128 @@
+{
+  "candidate_id": "candidate_10",
+  "overall_summary": "The resume provides strong evidence of general Python software engineering through five years of software development, backend feature delivery, service maintenance, automation, and release support. It also provides relevant but limited evidence from work on an internal AI assistant, including efforts to improve response usefulness and address user-reported issues. The implementation details needed to assess RAG, agentic AI, AI architecture, formal evaluation, and AI security should be explored during the interview.",
+  "competency_evidence": [
+    {
+      "competency": "rag",
+      "evidence_level": "UNKNOWN_NEEDS_PROBING",
+      "evidence": [
+        {
+          "evidence": "Worked on an internal AI assistant used by several teams.",
+          "source": "Work Experience - Quiet Birch Solutions"
+        },
+        {
+          "evidence": "Contributed to an employee information application intended to make company information easier to use.",
+          "source": "Project - Employee information helper"
+        }
+      ],
+      "confidence": 0.91,
+      "probe_priority": "HIGH",
+      "reason": "The applications could involve information retrieval, but the resume does not describe retrieval pipelines, indexing, embeddings, vector search, grounding, chunking, or related RAG implementation details."
+    },
+    {
+      "competency": "agentic_ai",
+      "evidence_level": "UNKNOWN_NEEDS_PROBING",
+      "evidence": [
+        {
+          "evidence": "Worked on an internal AI assistant used by several teams.",
+          "source": "Work Experience - Quiet Birch Solutions"
+        },
+        {
+          "evidence": "Contributed to internal automation.",
+          "source": "Work Experience - Golden Reed Services"
+        }
+      ],
+      "confidence": 0.94,
+      "probe_priority": "HIGH",
+      "reason": "The assistant and automation work do not establish experience with autonomous workflows, tool use, planning, orchestration, memory, or multi-agent systems."
+    },
+    {
+      "competency": "ai_ml_llm_fundamentals",
+      "evidence_level": "PARTIAL_EVIDENCE",
+      "evidence": [
+        {
+          "evidence": "Worked on an internal AI assistant used by several teams.",
+          "source": "Work Experience - Quiet Birch Solutions"
+        },
+        {
+          "evidence": "Helped improve the assistant's response usefulness and supported releases.",
+          "source": "Work Experience - Quiet Birch Solutions"
+        }
+      ],
+      "confidence": 0.87,
+      "probe_priority": "HIGH",
+      "reason": "The resume indicates practical exposure to an AI application and its outputs, but it does not specify models, prompting approaches, model behavior, ML concepts, or the candidate's technical responsibilities."
+    },
+    {
+      "competency": "ai_evaluation",
+      "evidence_level": "PARTIAL_EVIDENCE",
+      "evidence": [
+        {
+          "evidence": "Helped improve response usefulness for an internal AI assistant.",
+          "source": "Work Experience - Quiet Birch Solutions"
+        },
+        {
+          "evidence": "Collaborated with product and operations colleagues on issues reported by users.",
+          "source": "Work Experience - Quiet Birch Solutions"
+        }
+      ],
+      "confidence": 0.9,
+      "probe_priority": "HIGH",
+      "reason": "Improving usefulness and responding to user feedback are relevant to AI quality assessment, but the resume does not describe evaluation datasets, metrics, rubrics, experiments, automated evaluation, or regression testing."
+    },
+    {
+      "competency": "python_software_engineering",
+      "evidence_level": "DEMONSTRATED",
+      "evidence": [
+        {
+          "evidence": "Lists Python, SQL, and Git among technical skills.",
+          "source": "Skills"
+        },
+        {
+          "evidence": "Built backend features and maintained existing services.",
+          "source": "Work Experience - Golden Reed Services"
+        },
+        {
+          "evidence": "Contributed to internal automation and technical documentation.",
+          "source": "Work Experience - Golden Reed Services"
+        },
+        {
+          "evidence": "Supported releases for an internal AI assistant.",
+          "source": "Work Experience - Quiet Birch Solutions"
+        }
+      ],
+      "confidence": 0.94,
+      "probe_priority": "LOW",
+      "reason": "The resume provides specific evidence of sustained software engineering work involving backend development, service maintenance, automation, documentation, releases, and Python."
+    },
+    {
+      "competency": "ai_system_design",
+      "evidence_level": "PARTIAL_EVIDENCE",
+      "evidence": [
+        {
+          "evidence": "Worked on an internal AI assistant used by several teams and supported its releases.",
+          "source": "Work Experience - Quiet Birch Solutions"
+        },
+        {
+          "evidence": "Built backend features and maintained existing services.",
+          "source": "Work Experience - Golden Reed Services"
+        },
+        {
+          "evidence": "Worked with colleagues on the employee information helper from initial delivery through subsequent updates.",
+          "source": "Project - Employee information helper"
+        }
+      ],
+      "confidence": 0.82,
+      "probe_priority": "HIGH",
+      "reason": "The resume shows experience delivering and maintaining software that includes an AI application, but it does not identify AI architecture, model integration, scalability, reliability, observability, latency, or design trade-offs."
+    },
+    {
+      "competency": "ai_security",
+      "evidence_level": "UNKNOWN_NEEDS_PROBING",
+      "evidence": [],
+      "confidence": 0.97,
+      "probe_priority": "HIGH",
+      "reason": "The resume does not provide meaningful evidence about AI security practices such as prompt-injection defenses, data access controls, privacy protections, output filtering, threat modeling, or secure model and tool integration."
+    }
+  ]
+}

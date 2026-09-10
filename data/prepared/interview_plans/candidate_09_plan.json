@@ -1,0 +1,66 @@
+{
+  "candidate_id": "candidate_09",
+  "total_questions": 10,
+  "competency_targets": [
+    {
+      "competency": "rag",
+      "basic": 0,
+      "intermediate": 0,
+      "advanced": 1,
+      "reason": "Allocate one advanced question to validate the demonstrated classroom-scale implementation of passage retrieval, context delivery, and source-page attribution. The difficulty should probe deeper reasoning about retrieval methods, chunking, grounding, and failure modes without assuming production ownership."
+    },
+    {
+      "competency": "agentic_ai",
+      "basic": 1,
+      "intermediate": 1,
+      "advanced": 0,
+      "reason": "Allocate two questions because this is a high-priority area with relevant but limited evidence from a tutorial-influenced, two-tool local assistant. A basic question checks core concepts such as tools, state, and autonomy boundaries, while an intermediate question probes orchestration, confirmation gates, and failure handling beyond the prototype."
+    },
+    {
+      "competency": "ai_ml_llm_fundamentals",
+      "basic": 1,
+      "intermediate": 0,
+      "advanced": 0,
+      "reason": "Allocate one basic question to establish the candidate's grounding in model behavior, embeddings, training versus inference, or probabilistic concepts. The resume reflects introductory coursework and model usage but does not support assuming greater theoretical depth."
+    },
+    {
+      "competency": "ai_evaluation",
+      "basic": 1,
+      "intermediate": 1,
+      "advanced": 0,
+      "reason": "Allocate two questions because evaluation has high probing priority and direct but narrow evidence from testing twenty classmate-written questions. A basic question establishes evaluation concepts and criteria; an intermediate question probes dataset construction, metrics, error taxonomy, and how findings should guide improvements."
+    },
+    {
+      "competency": "python_software_engineering",
+      "basic": 0,
+      "intermediate": 0,
+      "advanced": 1,
+      "reason": "Allocate one advanced question to validate the strongest applied software-engineering evidence across supervised internship work and project implementation. It should assess maintainability, testing, code organization, debugging, and collaboration while preserving the distinction between reviewed internship contributions and independent production ownership."
+    },
+    {
+      "competency": "ai_system_design",
+      "basic": 0,
+      "intermediate": 2,
+      "advanced": 0,
+      "reason": "Allocate two intermediate questions because small-scale component integration is evident and production architecture remains an important high-priority probe. The questions should examine architecture trade-offs, reliability, observability, latency, scaling, and deployment reasoning without presuming prior production-system ownership."
+    },
+    {
+      "competency": "ai_security",
+      "basic": 0,
+      "intermediate": 1,
+      "advanced": 0,
+      "reason": "Allocate one intermediate question to build on evidence of confirmation before side effects and defensive input validation. The probe should assess broader reasoning about prompt injection, authorization, data protection, and tool safety without interpreting the absence of formal security experience as weakness."
+    }
+  ],
+  "difficulty_distribution": {
+    "basic": 3,
+    "intermediate": 5,
+    "advanced": 2
+  },
+  "strategy": {
+    "validate_claimed_strengths": true,
+    "probe_unknown_areas": true,
+    "avoid_resume_based_negative_assumptions": true,
+    "rationale": "Use a balanced distribution suited to a recent graduate with supervised professional experience and two small AI projects. Three basic questions establish foundations where evidence is introductory or narrow, five intermediate questions probe implementation and design reasoning in high-priority areas, and two advanced questions validate the strongest demonstrated RAG and Python claims. Extra coverage is assigned to agentic AI, AI evaluation, and AI system design because each has high probing priority and would benefit from distinguishing prototype experience from deeper conceptual understanding. Resume evidence is treated as unverified and scoped to coursework, prototypes, team contributions, and supervised work; omissions are not treated as deficiencies."
+  }
+}

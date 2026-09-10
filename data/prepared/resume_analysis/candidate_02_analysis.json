@@ -1,0 +1,161 @@
+{
+  "candidate_id": "candidate_02",
+  "overall_summary": "The resume provides strong, specific evidence in document retrieval, source-grounded answering, retrieval evaluation, Python services, and document-system lifecycle design. Dev has worked with changing document collections, context-preserving preparation, lexical and semantic retrieval approaches, cited source sections, incremental updates, and structured failure analysis. The resume provides limited evidence about broader AI/ML or LLM fundamentals and does not establish agentic AI or AI security experience, so those areas should be explored in the interview.",
+  "competency_evidence": [
+    {
+      "competency": "rag",
+      "evidence_level": "DEMONSTRATED",
+      "evidence": [
+        {
+          "evidence": "Built a handbook assistant that quotes the relevant source section beside each answer.",
+          "source": "Work Experience - Paper Lantern Works"
+        },
+        {
+          "evidence": "Kept headings and tables attached to surrounding explanations while preparing lengthy manuals for search.",
+          "source": "Work Experience - Paper Lantern Works"
+        },
+        {
+          "evidence": "Compared literal phrase matching with numerical representations of meaning using questions written by support staff.",
+          "source": "Work Experience - Paper Lantern Works"
+        },
+        {
+          "evidence": "Updated changed pages without rebuilding the entire collection and removed withdrawn content from subsequent searches.",
+          "source": "Work Experience - Paper Lantern Works"
+        },
+        {
+          "evidence": "Checked whether the first five returned passages contained the needed instruction using a held-out set of technician requests.",
+          "source": "Project - Maintenance manual finder"
+        }
+      ],
+      "confidence": 0.98,
+      "probe_priority": "LOW",
+      "reason": "The resume gives clear evidence across document preparation, retrieval approaches, source attribution, retrieval testing, and index freshness. Interview probing can focus on implementation choices and trade-offs rather than establishing whether relevant experience exists."
+    },
+    {
+      "competency": "agentic_ai",
+      "evidence_level": "UNKNOWN_NEEDS_PROBING",
+      "evidence": [
+        {
+          "evidence": "Built a handbook assistant that quotes the relevant source section beside each answer.",
+          "source": "Work Experience - Paper Lantern Works"
+        }
+      ],
+      "confidence": 0.98,
+      "probe_priority": "HIGH",
+      "reason": "An assistant is described, but the resume does not establish autonomous planning, tool use, multi-step execution, agent orchestration, memory, or control mechanisms. Agentic AI experience therefore needs direct probing."
+    },
+    {
+      "competency": "ai_ml_llm_fundamentals",
+      "evidence_level": "PARTIAL_EVIDENCE",
+      "evidence": [
+        {
+          "evidence": "Compared literal phrase matching with numerical representations of meaning on questions written by support staff.",
+          "source": "Work Experience - Paper Lantern Works"
+        },
+        {
+          "evidence": "Lists text similarity and document indexing among technical skills.",
+          "source": "Skills"
+        },
+        {
+          "evidence": "Reviewed retrieval failures separately for abbreviations and similar equipment names.",
+          "source": "Project - Maintenance manual finder"
+        }
+      ],
+      "confidence": 0.9,
+      "probe_priority": "MEDIUM",
+      "reason": "The resume shows applied understanding of lexical versus semantic retrieval and text-similarity behavior. It does not provide enough detail about representation models, model behavior, training or inference concepts, or LLM-specific fundamentals to establish broader depth."
+    },
+    {
+      "competency": "ai_evaluation",
+      "evidence_level": "DEMONSTRATED",
+      "evidence": [
+        {
+          "evidence": "Assembled a held-out set of technician requests and checked whether the first five returned passages contained the needed instruction.",
+          "source": "Project - Maintenance manual finder"
+        },
+        {
+          "evidence": "Reviewed failures separately for abbreviations and similar equipment names.",
+          "source": "Project - Maintenance manual finder"
+        },
+        {
+          "evidence": "Compared literal phrase matching with numerical representations of meaning on questions written by support staff.",
+          "source": "Work Experience - Paper Lantern Works"
+        },
+        {
+          "evidence": "Traced incorrect answers to outdated pages, ambiguous product names, and missing source material and added checks for each case.",
+          "source": "Work Experience - Paper Lantern Works"
+        }
+      ],
+      "confidence": 0.99,
+      "probe_priority": "LOW",
+      "reason": "The resume documents a held-out evaluation set, a top-five retrieval criterion, comparative evaluation, error categorization, and checks derived from observed failures. These are clear examples of applied AI-system evaluation."
+    },
+    {
+      "competency": "python_software_engineering",
+      "evidence_level": "DEMONSTRATED",
+      "evidence": [
+        {
+          "evidence": "Wrote import scripts and a Python service for organizing customer support attachments.",
+          "source": "Work Experience - Brindle Desk"
+        },
+        {
+          "evidence": "Added repeatable checks for malformed files and duplicate uploads.",
+          "source": "Work Experience - Brindle Desk"
+        },
+        {
+          "evidence": "Updated changed pages without rebuilding the entire collection and removed withdrawn content from subsequent searches.",
+          "source": "Work Experience - Paper Lantern Works"
+        },
+        {
+          "evidence": "Lists Python, SQL, and PostgreSQL among technical skills.",
+          "source": "Skills"
+        }
+      ],
+      "confidence": 0.95,
+      "probe_priority": "LOW",
+      "reason": "The resume provides concrete evidence of Python service and script development, repeatable validation checks, data handling, and incremental collection maintenance. Interview questions can verify engineering practices such as testing, observability, packaging, and deployment."
+    },
+    {
+      "competency": "ai_system_design",
+      "evidence_level": "DEMONSTRATED",
+      "evidence": [
+        {
+          "evidence": "Built a handbook assistant that quotes the relevant source section beside each answer.",
+          "source": "Work Experience - Paper Lantern Works"
+        },
+        {
+          "evidence": "Kept headings and tables attached to their surrounding explanations when preparing lengthy manuals for search.",
+          "source": "Work Experience - Paper Lantern Works"
+        },
+        {
+          "evidence": "Traced incorrect answers to outdated pages, ambiguous product names, and missing source material and added checks for each case.",
+          "source": "Work Experience - Paper Lantern Works"
+        },
+        {
+          "evidence": "Updated changed pages without rebuilding the entire collection and removed withdrawn content from subsequent searches.",
+          "source": "Work Experience - Paper Lantern Works"
+        }
+      ],
+      "confidence": 0.91,
+      "probe_priority": "MEDIUM",
+      "reason": "The resume shows system-level decisions around ingestion, context preservation, retrieval, grounding, validation, incremental refresh, and content withdrawal. A medium-priority probe would clarify architecture, scale, reliability, interfaces, and production trade-offs."
+    },
+    {
+      "competency": "ai_security",
+      "evidence_level": "UNKNOWN_NEEDS_PROBING",
+      "evidence": [
+        {
+          "evidence": "Added repeatable checks for malformed files and duplicate uploads.",
+          "source": "Work Experience - Brindle Desk"
+        },
+        {
+          "evidence": "Removed withdrawn content from subsequent searches.",
+          "source": "Work Experience - Paper Lantern Works"
+        }
+      ],
+      "confidence": 0.96,
+      "probe_priority": "HIGH",
+      "reason": "The described validation and content-removal controls are relevant operational safeguards, but they do not establish AI security practices such as authorization-aware retrieval, sensitive-data handling, prompt-injection defenses, tenant isolation, threat modeling, or secure tool use. This competency requires direct probing."
+    }
+  ]
+}

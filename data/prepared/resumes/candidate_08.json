@@ -1,0 +1,58 @@
+{
+  "candidate_id": "candidate_08",
+  "name": "Kiran Bose",
+  "email": "kiran.bose@example.com",
+  "phone": null,
+  "location": null,
+  "target_role": "Machine Learning Platform Engineer",
+  "summary": "Platform engineer with six years making data and model services dependable under changing demand. Supports teams that own the models and application behavior.",
+  "skills": [
+    "Python",
+    "Linux",
+    "Docker",
+    "Kubernetes",
+    "PostgreSQL",
+    "queues",
+    "cloud infrastructure",
+    "operational dashboards"
+  ],
+  "work_experience": [
+    {
+      "employer": "Hazel Dock Cloud",
+      "title": "Machine Learning Platform Engineer",
+      "dates": "Sep 2022–Present",
+      "responsibilities_and_achievements": [
+        "Built shared hosting for model-backed services with traffic limits, health checks, and controlled release rollouts.",
+        "Measured time spent waiting, computing, and calling external providers to explain slow user requests.",
+        "Added spending limits and usage attribution for teams sharing hosted language services.",
+        "Designed recovery procedures for provider outages and exercised switching traffic to a backup service.",
+        "Worked with product owners to prevent reuse of saved responses across customers with different data permissions."
+      ]
+    },
+    {
+      "employer": "Red Fern Networks",
+      "title": "Infrastructure Developer",
+      "dates": "Sep 2020–Aug 2022",
+      "responsibilities_and_achievements": [
+        "Automated service setup and maintained incident runbooks for customer-facing systems.",
+        "Tuned queue workers and database connection limits during high-volume periods."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Hosted model gateway",
+      "description": "Built request accounting, cancellation handling, and operational alerts. Load exercises covered slow providers and sudden traffic surges. Application teams retained responsibility for judging response correctness.",
+      "technologies": []
+    }
+  ],
+  "education": [
+    {
+      "qualification": "BEng, Computer Systems",
+      "institution": "Fictional Westridge College",
+      "dates": "2020",
+      "details": []
+    }
+  ],
+  "certifications": []
+}

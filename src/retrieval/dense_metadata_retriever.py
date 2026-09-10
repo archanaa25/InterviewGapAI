@@ -38,6 +38,8 @@ class QuestionDenseMetadataRetriever:
         if k is None:
             k = self.k
 
+        # This wrapper applies all supplied dimensions. The configurable
+        # MetadataFilteredDenseRetriever supports the individual experiments.
         filters = {}
 
         if metadata:

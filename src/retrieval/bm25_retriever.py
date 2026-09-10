@@ -88,6 +88,8 @@ class QuestionBM25Retriever:
         if k is None:
             k = self.k
 
+        # Reuse the corpus tokenizer so case and punctuation are handled
+        # consistently on both sides of lexical matching.
         query_tokens = bm25_preprocess(
             query
         )

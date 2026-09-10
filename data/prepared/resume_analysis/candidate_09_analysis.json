@@ -1,0 +1,141 @@
+{
+  "candidate_id": "candidate_09",
+  "overall_summary": "Anika Roy is a recent computing graduate with applied experience from a supervised software engineering internship and two small text-model projects. The resume provides specific evidence of passage retrieval with source attribution, limited model-directed tool use, basic answer checking, and practical Python development. The projects were classroom-scale or local, so interviews should probe implementation depth, design decisions, evaluation methodology, and security considerations.",
+  "competency_evidence": [
+    {
+      "competency": "rag",
+      "evidence_level": "DEMONSTRATED",
+      "evidence": [
+        {
+          "evidence": "Built a Python component that finds related passages in uploaded lecture notes and sends those passages with a student's question to a hosted text service.",
+          "source": "Project - Course notes helper"
+        },
+        {
+          "evidence": "Linked generated responses to their source pages.",
+          "source": "Project - Course notes helper"
+        }
+      ],
+      "confidence": 0.95,
+      "probe_priority": "MEDIUM",
+      "reason": "The project clearly implements the central retrieval-and-context pattern of RAG and provides source attribution. Interview probing can establish retrieval methods, chunking choices, and how grounding quality was handled."
+    },
+    {
+      "competency": "agentic_ai",
+      "evidence_level": "PARTIAL_EVIDENCE",
+      "evidence": [
+        {
+          "evidence": "Built a study assistant in which a text model could request one of two local functions for reading or adding study tasks.",
+          "source": "Project - Study schedule assistant"
+        },
+        {
+          "evidence": "Added user confirmation before saving a task and validation for missing dates.",
+          "source": "Project - Study schedule assistant"
+        }
+      ],
+      "confidence": 0.92,
+      "probe_priority": "HIGH",
+      "reason": "Model-directed function use and controlled side effects are relevant agentic-AI evidence, but the workflow was small, initially tutorial-based, and limited to two local functions. Probing should determine the candidate's understanding of tool orchestration, state, failure handling, and autonomy boundaries."
+    },
+    {
+      "competency": "ai_ml_llm_fundamentals",
+      "evidence_level": "PARTIAL_EVIDENCE",
+      "evidence": [
+        {
+          "evidence": "Lists basic PyTorch and classroom statistical methods among skills.",
+          "source": "Skills"
+        },
+        {
+          "evidence": "Completed coursework in probability and introductory neural networks.",
+          "source": "Education - BSc, Computing"
+        },
+        {
+          "evidence": "Used a hosted text service in a course-notes question-answering project and a text model in a study-schedule project.",
+          "source": "Projects - Course notes helper and Study schedule assistant"
+        }
+      ],
+      "confidence": 0.93,
+      "probe_priority": "HIGH",
+      "reason": "The resume shows introductory academic exposure and practical use of text models, but it does not establish the depth of understanding of model behavior, training, inference, embeddings, or probabilistic foundations."
+    },
+    {
+      "competency": "ai_evaluation",
+      "evidence_level": "PARTIAL_EVIDENCE",
+      "evidence": [
+        {
+          "evidence": "Tried twenty questions written by classmates against the course-notes helper and recorded incorrect answers.",
+          "source": "Project - Course notes helper"
+        }
+      ],
+      "confidence": 0.96,
+      "probe_priority": "HIGH",
+      "reason": "This is direct but limited evidence of empirical answer evaluation. The resume does not provide enough detail about evaluation criteria, metrics, dataset construction, error taxonomy, or use of findings to improve the system."
+    },
+    {
+      "competency": "python_software_engineering",
+      "evidence_level": "DEMONSTRATED",
+      "evidence": [
+        {
+          "evidence": "Wrote Python scripts to clean spreadsheet records under a senior engineer's review.",
+          "source": "Work Experience - Little Maple Studio"
+        },
+        {
+          "evidence": "Added checks for missing fields and documented how to run the scripts.",
+          "source": "Work Experience - Little Maple Studio"
+        },
+        {
+          "evidence": "Helped reproduce defects in an internal web form.",
+          "source": "Work Experience - Little Maple Studio"
+        },
+        {
+          "evidence": "Built the Python retrieval component of a final-year team project.",
+          "source": "Project - Course notes helper"
+        },
+        {
+          "evidence": "Lists Python, SQL, Git, and pandas among skills.",
+          "source": "Skills"
+        }
+      ],
+      "confidence": 0.96,
+      "probe_priority": "MEDIUM",
+      "reason": "The resume contains specific applied Python work across an internship and projects, including data cleaning, validation, documentation, debugging support, and application integration. Probing can clarify testing practices, code organization, collaboration, and maintainability."
+    },
+    {
+      "competency": "ai_system_design",
+      "evidence_level": "PARTIAL_EVIDENCE",
+      "evidence": [
+        {
+          "evidence": "Integrated passage retrieval, a hosted text service, and source-page linking in a locally run classroom application.",
+          "source": "Project - Course notes helper"
+        },
+        {
+          "evidence": "Connected a text model to two local task-management functions and added confirmation before a write operation.",
+          "source": "Project - Study schedule assistant"
+        }
+      ],
+      "confidence": 0.9,
+      "probe_priority": "HIGH",
+      "reason": "The projects show small-scale integration of AI and software components, but the resume does not establish experience with production architecture, scalability, reliability, observability, latency, or deployment trade-offs."
+    },
+    {
+      "competency": "ai_security",
+      "evidence_level": "PARTIAL_EVIDENCE",
+      "evidence": [
+        {
+          "evidence": "Required user confirmation before the study assistant saved a new task.",
+          "source": "Project - Study schedule assistant"
+        },
+        {
+          "evidence": "Added validation for missing dates in the study assistant.",
+          "source": "Project - Study schedule assistant"
+        },
+        {
+          "evidence": "Added checks for missing fields to spreadsheet-cleaning scripts.",
+          "source": "Work Experience - Little Maple Studio"
+        }
+      ],
+      "confidence": 0.86,
+      "probe_priority": "HIGH",
+      "reason": "User confirmation before a model-triggered side effect is relevant evidence of a basic safety boundary, while validation shows defensive input handling. The resume does not provide enough detail to establish broader AI-security experience such as prompt-injection defenses, tool authorization, data protection, or threat modeling."
+    }
+  ]
+}

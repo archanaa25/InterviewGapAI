@@ -1,0 +1,57 @@
+{
+  "candidate_id": "candidate_05",
+  "name": "Nisha Kapoor",
+  "email": "nisha.kapoor@example.com",
+  "phone": null,
+  "location": null,
+  "target_role": "Data Scientist",
+  "summary": "Data scientist with four years designing experiments and predictive models. Recent work explores pretrained text models for classifying customer messages.",
+  "skills": [
+    "Python",
+    "pandas",
+    "NumPy",
+    "scikit-learn",
+    "PyTorch",
+    "SQL",
+    "experiment design",
+    "statistical analysis"
+  ],
+  "work_experience": [
+    {
+      "employer": "Meadow Signal Analytics",
+      "title": "Data Scientist",
+      "dates": "Sep 2023–Present",
+      "responsibilities_and_achievements": [
+        "Built demand estimates using chronological data splits to avoid learning from future information.",
+        "Reported uncertainty and performance by customer segment rather than relying only on an overall average.",
+        "Compared a pretrained text classifier with a simpler baseline for routing customer messages.",
+        "Investigated sensitivity to rare labels, input length, and changes in the wording of incoming requests."
+      ]
+    },
+    {
+      "employer": "Fern Harbour Research",
+      "title": "Junior Data Scientist",
+      "dates": "Sep 2022–Aug 2023",
+      "responsibilities_and_achievements": [
+        "Prepared training data, checked annotation disagreements, and maintained reproducible experiment notebooks.",
+        "Shared model artifacts with a separate engineering team responsible for the live service."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Small-model study",
+      "description": "Adapted a pretrained text model on a modest labeled collection and compared it with examples supplied at request time. Recorded memory needs and examined mistakes on an untouched sample. Work ran as an offline experiment.",
+      "technologies": []
+    }
+  ],
+  "education": [
+    {
+      "qualification": "MSc, Applied Statistics",
+      "institution": "Fictional Bellwater University",
+      "dates": "2022",
+      "details": []
+    }
+  ],
+  "certifications": []
+}

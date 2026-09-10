@@ -1,0 +1,165 @@
+{
+  "candidate_id": "candidate_01",
+  "overall_summary": "The resume provides specific evidence of production-oriented AI application work, including document-backed answering with source attribution, permission-aware retrieval, approval-gated business actions, resumable workflows, pre-release model evaluation, and privacy controls. It also documents six years of Python service experience spanning deployment into operational use, failure recovery, database changes, performance investigation, and on-call support.",
+  "competency_evidence": [
+    {
+      "competency": "rag",
+      "evidence_level": "DEMONSTRATED",
+      "evidence": [
+        {
+          "evidence": "Built an employee help service that locates supporting passages in internal manuals and includes source links in its answers.",
+          "source": "Work Experience - Alder Quay Software"
+        },
+        {
+          "evidence": "Compared how passage length and different numerical text representations affected source selection.",
+          "source": "Project - Technical note assistant"
+        },
+        {
+          "evidence": "Investigated why long inputs lost useful details and documented cases where the service should decline to answer.",
+          "source": "Project - Technical note assistant"
+        }
+      ],
+      "confidence": 0.98,
+      "probe_priority": "LOW",
+      "reason": "The resume gives direct evidence of document retrieval, passage selection, source attribution, retrieval experimentation, and answer-abstention analysis. An interview can validate implementation depth and retrieval-quality tradeoffs."
+    },
+    {
+      "competency": "agentic_ai",
+      "evidence_level": "DEMONSTRATED",
+      "evidence": [
+        {
+          "evidence": "Built a purchasing assistant that requests approval before placing an order.",
+          "source": "Work Experience - Alder Quay Software"
+        },
+        {
+          "evidence": "The purchasing assistant can resume unfinished work without repeating a purchase.",
+          "source": "Work Experience - Alder Quay Software"
+        },
+        {
+          "evidence": "The candidate summarizes experience delivering software that carries out approved business tasks.",
+          "source": "Professional Summary"
+        }
+      ],
+      "confidence": 0.95,
+      "probe_priority": "MEDIUM",
+      "reason": "Approval-gated action execution, resumable state, and duplicate-action prevention are clear evidence of an agentic business workflow. Probing can clarify orchestration, tool interfaces, state management, and failure handling."
+    },
+    {
+      "competency": "ai_ml_llm_fundamentals",
+      "evidence_level": "DEMONSTRATED",
+      "evidence": [
+        {
+          "evidence": "Compared alternative models on held-out staff requests before release.",
+          "source": "Work Experience - Alder Quay Software"
+        },
+        {
+          "evidence": "Compared how passage length and different numerical text representations affected source selection.",
+          "source": "Project - Technical note assistant"
+        },
+        {
+          "evidence": "Investigated why long inputs lost useful details.",
+          "source": "Project - Technical note assistant"
+        }
+      ],
+      "confidence": 0.9,
+      "probe_priority": "MEDIUM",
+      "reason": "The resume shows applied understanding of model selection, held-out data, text representations, passage granularity, and long-input behavior. Probing can establish the candidate's underlying conceptual depth and experimental reasoning."
+    },
+    {
+      "competency": "ai_evaluation",
+      "evidence_level": "DEMONSTRATED",
+      "evidence": [
+        {
+          "evidence": "Compared alternative models on held-out staff requests before release.",
+          "source": "Work Experience - Alder Quay Software"
+        },
+        {
+          "evidence": "Evaluation checks included factual support, task completion, response time, and spending per request.",
+          "source": "Work Experience - Alder Quay Software"
+        },
+        {
+          "evidence": "Documented cases where the technical note assistant should decline to answer.",
+          "source": "Project - Technical note assistant"
+        }
+      ],
+      "confidence": 0.98,
+      "probe_priority": "LOW",
+      "reason": "The resume directly describes pre-release evaluation on held-out requests using quality, task-success, latency, and cost criteria, along with analysis of abstention cases."
+    },
+    {
+      "competency": "python_software_engineering",
+      "evidence_level": "DEMONSTRATED",
+      "evidence": [
+        {
+          "evidence": "Has six years of experience taking Python services from early experiments into everyday use by operations teams.",
+          "source": "Professional Summary"
+        },
+        {
+          "evidence": "Owned Python services for a scheduling product, including failure recovery, database changes, and on-call support.",
+          "source": "Work Experience - Copper Finch Systems"
+        },
+        {
+          "evidence": "Investigated traffic spikes and reduced repeated database work during busy periods.",
+          "source": "Work Experience - Copper Finch Systems"
+        },
+        {
+          "evidence": "Lists Python, SQL, PostgreSQL, Docker, cloud hosting, and automated checks among technical skills.",
+          "source": "Skills"
+        }
+      ],
+      "confidence": 0.99,
+      "probe_priority": "LOW",
+      "reason": "The resume provides substantial evidence of production Python service ownership, operational support, reliability work, database evolution, and performance optimization."
+    },
+    {
+      "competency": "ai_system_design",
+      "evidence_level": "DEMONSTRATED",
+      "evidence": [
+        {
+          "evidence": "Built an employee help service that retrieves supporting passages, provides source links, and applies each employee's existing document permissions.",
+          "source": "Work Experience - Alder Quay Software"
+        },
+        {
+          "evidence": "Built a purchasing assistant with approval before order placement and the ability to resume unfinished work without repeating a purchase.",
+          "source": "Work Experience - Alder Quay Software"
+        },
+        {
+          "evidence": "Compared models using factual support, task completion, response time, and spending per request before release.",
+          "source": "Work Experience - Alder Quay Software"
+        },
+        {
+          "evidence": "Took Python services from early experiments into everyday use by operations teams.",
+          "source": "Professional Summary"
+        }
+      ],
+      "confidence": 0.95,
+      "probe_priority": "MEDIUM",
+      "reason": "The resume describes multiple production design concerns, including retrieval, authorization, human approval, durable workflow state, duplicate-action prevention, latency, cost, and operational adoption. Probing can clarify architecture, scale, observability, and design ownership."
+    },
+    {
+      "competency": "ai_security",
+      "evidence_level": "DEMONSTRATED",
+      "evidence": [
+        {
+          "evidence": "Made document visibility follow each employee's existing permissions.",
+          "source": "Work Experience - Alder Quay Software"
+        },
+        {
+          "evidence": "Removed personal identifiers from recorded conversations.",
+          "source": "Work Experience - Alder Quay Software"
+        },
+        {
+          "evidence": "Required approval before the purchasing assistant could place an order.",
+          "source": "Work Experience - Alder Quay Software"
+        },
+        {
+          "evidence": "Designed the purchasing assistant to resume unfinished work without repeating a purchase.",
+          "source": "Work Experience - Alder Quay Software"
+        }
+      ],
+      "confidence": 0.94,
+      "probe_priority": "MEDIUM",
+      "reason": "The resume gives direct evidence of authorization enforcement, privacy protection, human approval for consequential actions, and safeguards against duplicate execution. Probing can determine threat-modeling depth and handling of AI-specific attack paths."
+    }
+  ]
+}

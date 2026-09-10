@@ -109,6 +109,8 @@ def build_question_document(question):
     #
     # Text that BM25 / embeddings will search.
     #
+    # Concepts enrich matching beyond the question wording. This text is an
+    # internal retrieval representation, not the question shown to a candidate.
     search_text = "\n".join(
         [
             f"Question: {question.get('question', '')}",

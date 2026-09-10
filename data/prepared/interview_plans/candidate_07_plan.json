@@ -1,0 +1,66 @@
+{
+  "candidate_id": "candidate_07",
+  "total_questions": 10,
+  "competency_targets": [
+    {
+      "competency": "rag",
+      "basic": 0,
+      "intermediate": 1,
+      "advanced": 1,
+      "reason": "Allocate two questions because RAG has partial evidence and high probing priority. The intermediate question should assess practical understanding of retrieval, indexing, ranking, and grounding beyond security testing. The advanced question should validate depth in reasoning about retrieval quality, access boundaries, and pipeline tradeoffs without assuming ownership of the passage-ranking implementation."
+    },
+    {
+      "competency": "agentic_ai",
+      "basic": 0,
+      "intermediate": 2,
+      "advanced": 0,
+      "reason": "Allocate two intermediate questions because the candidate has meaningful security-focused exposure to model-requested actions but no stated ownership of agent loops or orchestration. The questions should probe tool selection, state, authorization, failure handling, and service interactions at a professionally relevant level without treating absent implementation details as weakness."
+    },
+    {
+      "competency": "ai_ml_llm_fundamentals",
+      "basic": 1,
+      "intermediate": 1,
+      "advanced": 0,
+      "reason": "Allocate two questions due to high probing priority and evidence that is practical but narrow. A basic question should establish breadth across core LLM concepts, while an intermediate question should test application of those concepts to prompting, embeddings, inference behavior, or document-assisted systems."
+    },
+    {
+      "competency": "ai_evaluation",
+      "basic": 0,
+      "intermediate": 0,
+      "advanced": 1,
+      "reason": "Allocate one advanced question to validate the demonstrated experience creating repeatable abuse cases and verifying remediations. The probe should examine evaluation methodology, coverage, metrics, automation, and interpretation of results beyond individual security test cases."
+    },
+    {
+      "competency": "python_software_engineering",
+      "basic": 0,
+      "intermediate": 1,
+      "advanced": 0,
+      "reason": "Allocate one intermediate question because the resume provides concrete Python utility experience but limited evidence about larger codebases or production ownership. This level can probe testing, maintainability, error handling, interfaces, and engineering practices without overstating the scope of the documented work."
+    },
+    {
+      "competency": "ai_system_design",
+      "basic": 0,
+      "intermediate": 1,
+      "advanced": 0,
+      "reason": "Allocate one intermediate question to explore broader architecture beyond the candidate's documented contributions to authorization and outbound controls. It should assess end-to-end component boundaries, reliability, observability, scaling, and trust boundaries while preserving the distinction between security review contributions and architecture ownership."
+    },
+    {
+      "competency": "ai_security",
+      "basic": 0,
+      "intermediate": 0,
+      "advanced": 1,
+      "reason": "Allocate one advanced question because the resume contains strong, specific evidence across indirect prompt injection, data isolation, service-side authorization, exfiltration controls, remediation, and regression verification. The advanced level validates decision rationale, defense-in-depth, residual risk, and control tradeoffs rather than merely confirming exposure."
+    }
+  ],
+  "difficulty_distribution": {
+    "basic": 1,
+    "intermediate": 6,
+    "advanced": 3
+  },
+  "strategy": {
+    "validate_claimed_strengths": true,
+    "probe_unknown_areas": true,
+    "avoid_resume_based_negative_assumptions": true,
+    "rationale": "Use a predominantly intermediate interview suited to the candidate's professional security experience while probing implementation breadth that the resume does not establish. Two extra questions target high-priority RAG, agentic AI, and LLM-fundamentals areas. Advanced questions validate demonstrated evaluation and AI-security strengths and test deeper RAG reasoning; they do not presume production ownership. The basic fundamentals question provides a shared baseline. Resume omissions are treated as unknown areas to explore, not evidence of weakness."
+  }
+}

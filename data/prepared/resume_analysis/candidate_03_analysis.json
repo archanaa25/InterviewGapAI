@@ -1,0 +1,152 @@
+{
+  "candidate_id": "candidate_03",
+  "overall_summary": "Leena Rao’s resume provides strong evidence of Python-based workflow and integration engineering, including constrained assistant actions, human approval gates, argument validation, recoverable execution, idempotency, bounded action attempts, and failure-path testing. It also contains concrete evidence of agentic workflow design, system reliability, and applied safety controls. The resume provides limited detail about underlying AI/ML/LLM concepts and no meaningful evidence of retrieval-augmented generation, making those useful areas to probe during the interview.",
+  "competency_evidence": [
+    {
+      "competency": "rag",
+      "evidence_level": "UNKNOWN_NEEDS_PROBING",
+      "evidence": [],
+      "confidence": 0.99,
+      "probe_priority": "HIGH",
+      "reason": "The resume does not describe document retrieval, embeddings, vector search, indexing, grounding, reranking, or retrieval-quality assessment. RAG experience therefore cannot be determined from the supplied evidence."
+    },
+    {
+      "competency": "agentic_ai",
+      "evidence_level": "DEMONSTRATED",
+      "evidence": [
+        {
+          "evidence": "Built a service desk assistant that selects from a limited set of actions, gathers missing details, and prepares account-change requests.",
+          "source": "Work Experience - Juniper Relay"
+        },
+        {
+          "evidence": "Saved progress after every completed action so interrupted requests could resume safely.",
+          "source": "Work Experience - Juniper Relay"
+        },
+        {
+          "evidence": "Added a maximum action count and a handoff path when the assistant repeatedly failed to make progress.",
+          "source": "Work Experience - Juniper Relay"
+        },
+        {
+          "evidence": "Built a meeting follow-through assistant that proposes tasks, requests owner approval, and records resulting task identifiers.",
+          "source": "Project - Meeting follow-through assistant"
+        }
+      ],
+      "confidence": 0.98,
+      "probe_priority": "LOW",
+      "reason": "The resume gives specific evidence of assistants coordinating bounded actions, collecting information, maintaining execution state, handling stalled workflows, and incorporating human approval."
+    },
+    {
+      "competency": "ai_ml_llm_fundamentals",
+      "evidence_level": "PARTIAL_EVIDENCE",
+      "evidence": [
+        {
+          "evidence": "Built assistants that choose approved actions, collect missing details, and turn meeting notes into proposed tasks.",
+          "source": "Work Experience - Juniper Relay; Project - Meeting follow-through assistant"
+        }
+      ],
+      "confidence": 0.89,
+      "probe_priority": "HIGH",
+      "reason": "The assistant implementations are relevant, but the resume does not explain model selection, prompting, inference behavior, probabilistic outputs, token constraints, or other underlying AI/ML/LLM concepts. Interview probing is needed to establish the candidate’s fundamentals."
+    },
+    {
+      "competency": "ai_evaluation",
+      "evidence_level": "DEMONSTRATED",
+      "evidence": [
+        {
+          "evidence": "Checked completed outcomes using simulated service responses, including unavailable systems and rejected requests.",
+          "source": "Work Experience - Juniper Relay"
+        },
+        {
+          "evidence": "Tested interruption immediately before and after task creation to detect repeated actions.",
+          "source": "Project - Meeting follow-through assistant"
+        },
+        {
+          "evidence": "Added a maximum action count and a handoff when the assistant repeatedly failed to make progress.",
+          "source": "Work Experience - Juniper Relay"
+        }
+      ],
+      "confidence": 0.87,
+      "probe_priority": "MEDIUM",
+      "reason": "The resume provides concrete evidence of outcome checks, simulated failure cases, interruption testing, and detection of non-progress in assistant workflows. Probing would clarify evaluation methodology, coverage, metrics, and whether model behavior was assessed separately from service behavior."
+    },
+    {
+      "competency": "python_software_engineering",
+      "evidence_level": "DEMONSTRATED",
+      "evidence": [
+        {
+          "evidence": "Summary identifies four years of Python engineering experience with service integrations and recoverable task execution.",
+          "source": "Professional Summary"
+        },
+        {
+          "evidence": "Skills include Python, JSON, REST services, PostgreSQL, queues, Docker, and service contracts.",
+          "source": "Skills"
+        },
+        {
+          "evidence": "Connected billing and ticketing services and prevented repeated delivery from creating duplicate records.",
+          "source": "Work Experience - Willow Circuit"
+        },
+        {
+          "evidence": "Diagnosed failed requests using event histories shared with the support team.",
+          "source": "Work Experience - Willow Circuit"
+        }
+      ],
+      "confidence": 0.98,
+      "probe_priority": "LOW",
+      "reason": "The resume contains substantial, specific evidence of Python service development, integrations, persistence, idempotency, observability, and container-related tooling."
+    },
+    {
+      "competency": "ai_system_design",
+      "evidence_level": "DEMONSTRATED",
+      "evidence": [
+        {
+          "evidence": "Designed an assistant around a limited set of actions with staff approval before external changes.",
+          "source": "Work Experience - Juniper Relay"
+        },
+        {
+          "evidence": "Validated proposed action arguments against the receiving service’s accepted fields.",
+          "source": "Work Experience - Juniper Relay"
+        },
+        {
+          "evidence": "Persisted progress after completed actions to support safe recovery from interruptions.",
+          "source": "Work Experience - Juniper Relay"
+        },
+        {
+          "evidence": "Connected billing and ticketing services while preventing repeated delivery from creating duplicate records.",
+          "source": "Work Experience - Willow Circuit"
+        },
+        {
+          "evidence": "Used action-count limits and explicit handoff behavior when the assistant failed to progress.",
+          "source": "Work Experience - Juniper Relay"
+        }
+      ],
+      "confidence": 0.97,
+      "probe_priority": "LOW",
+      "reason": "The resume demonstrates design of bounded, stateful, recoverable assistant workflows integrated with external services, including validation, idempotency, failure handling, and human escalation."
+    },
+    {
+      "competency": "ai_security",
+      "evidence_level": "DEMONSTRATED",
+      "evidence": [
+        {
+          "evidence": "Restricted the service desk assistant to a limited set of actions.",
+          "source": "Work Experience - Juniper Relay"
+        },
+        {
+          "evidence": "Required staff approval before an external account change.",
+          "source": "Work Experience - Juniper Relay"
+        },
+        {
+          "evidence": "Checked proposed action arguments against the receiving service’s accepted fields.",
+          "source": "Work Experience - Juniper Relay"
+        },
+        {
+          "evidence": "Added a maximum action count and a clear handoff for repeated failure to progress.",
+          "source": "Work Experience - Juniper Relay"
+        }
+      ],
+      "confidence": 0.9,
+      "probe_priority": "MEDIUM",
+      "reason": "The resume gives concrete evidence of security-relevant controls for an action-taking assistant: constrained capabilities, human authorization for external changes, input validation against service contracts, and bounded execution. Probing can clarify threat modeling, authorization enforcement, auditability, and defenses against AI-specific attacks."
+    }
+  ]
+}

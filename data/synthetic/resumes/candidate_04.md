@@ -1,0 +1,27 @@
+# Arun Das
+
+**Backend Engineer**  
+arun.das@example.com
+
+## Professional Summary
+Backend engineer with six years supporting business services. Recently built a small internal assistant alongside established work on transaction processing and service operations.
+
+## Technical Skills
+Python, FastAPI, PostgreSQL, Redis, Docker, Linux, SQL, automated service checks.
+
+## Work Experience
+**Backend Engineer — Slate Orchard Payments | Sep 2022–Present**
+- Owned transaction-processing services, database migrations, and recovery procedures for interrupted jobs.
+- Added bounded retries and request identifiers to prevent duplicate processing during partner outages.
+- Enforced customer-specific data permissions and excluded sensitive account fields from operational records.
+- Over the last eight months, built a pilot that drafts support replies from text pasted by staff; replies are reviewed before sending.
+
+**Software Developer — Amber Bridge Commerce | Sep 2020–Aug 2022**
+- Built Python endpoints for order updates and improved slow SQL queries during seasonal demand.
+- Maintained automated checks for service contracts and participated in incident response.
+
+## Selected Project
+**Support reply pilot:** Connected a hosted language service to a simple form. Handled unavailable responses and unexpected output fields. Demonstrated the pilot to six colleagues; no unattended customer use or document-search component.
+
+## Education
+BTech, Information Technology — Fictional Northmere Institute, 2020.

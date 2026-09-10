@@ -1,0 +1,57 @@
+{
+  "candidate_id": "candidate_02",
+  "name": "Dev Malik",
+  "email": "dev.malik@example.com",
+  "phone": null,
+  "location": null,
+  "target_role": "Document Intelligence Engineer",
+  "summary": "Engineer focused on helping support teams find dependable answers in large, frequently changing document collections. Four years working with manuals, scanned records, and internal help content.",
+  "skills": [
+    "Python",
+    "SQL",
+    "OCR libraries",
+    "PDF processing",
+    "PostgreSQL",
+    "document indexing",
+    "text similarity"
+  ],
+  "work_experience": [
+    {
+      "employer": "Paper Lantern Works",
+      "title": "Document Intelligence Engineer",
+      "dates": "Sep 2023–Present",
+      "responsibilities_and_achievements": [
+        "Built a handbook assistant that quotes the relevant source section beside each answer.",
+        "Kept headings and tables attached to their surrounding explanations when preparing lengthy manuals for search.",
+        "Compared literal phrase matching with numerical representations of meaning on questions written by support staff.",
+        "Traced incorrect answers to outdated pages, ambiguous product names, and missing source material; added checks for each case.",
+        "Updated changed pages without rebuilding the entire collection and removed withdrawn content from subsequent searches."
+      ]
+    },
+    {
+      "employer": "Brindle Desk",
+      "title": "Software Developer",
+      "dates": "Sep 2022–Aug 2023",
+      "responsibilities_and_achievements": [
+        "Wrote import scripts and a Python service for organizing customer support attachments.",
+        "Added repeatable checks for malformed files and duplicate uploads."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Maintenance manual finder",
+      "description": "Assembled a held-out set of technician requests and checked whether the first five returned passages contained the needed instruction. Reviewed failures separately for abbreviations and similar equipment names.",
+      "technologies": []
+    }
+  ],
+  "education": [
+    {
+      "qualification": "BSc, Computing",
+      "institution": "Fictional Ashmere College",
+      "dates": "2022",
+      "details": []
+    }
+  ],
+  "certifications": []
+}

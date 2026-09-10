@@ -1,0 +1,55 @@
+{
+  "candidate_id": "candidate_09",
+  "name": "Anika Roy",
+  "email": "anika.roy@example.com",
+  "phone": null,
+  "location": null,
+  "target_role": "Graduate Software Engineer",
+  "summary": "Recent computing graduate seeking an entry-level engineering role. Built small text-based applications during coursework and a supervised summer internship.",
+  "skills": [
+    "Python",
+    "SQL",
+    "Git",
+    "pandas",
+    "basic PyTorch",
+    "HTML",
+    "classroom statistical methods"
+  ],
+  "work_experience": [
+    {
+      "employer": "Little Maple Studio",
+      "title": "Software Engineering Intern",
+      "dates": "Jun 2026–Aug 2026",
+      "responsibilities_and_achievements": [
+        "Wrote Python scripts to clean spreadsheet records under a senior engineer's review.",
+        "Added checks for missing fields and documented how to run the scripts.",
+        "Helped reproduce defects in an internal web form."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Course notes helper | Final-year team project",
+      "description": "Built the Python component that finds related passages in uploaded lecture notes and sends them with a student's question to a hosted text service. Linked the response to its source page. Tried twenty questions written by classmates and recorded incorrect answers. Ran locally for a classroom demonstration.",
+      "technologies": [
+        "Python"
+      ]
+    },
+    {
+      "name": "Study schedule assistant | Personal project",
+      "description": "Allowed a text model to request one of two local functions for reading or adding study tasks. Asked the user to confirm before saving a new task. Followed a tutorial initially, then added validation for missing dates.",
+      "technologies": []
+    }
+  ],
+  "education": [
+    {
+      "qualification": "BSc, Computing",
+      "institution": "Fictional Brookhaven College",
+      "dates": "2026",
+      "details": [
+        "Coursework included probability, databases, software construction, and introductory neural networks."
+      ]
+    }
+  ],
+  "certifications": []
+}

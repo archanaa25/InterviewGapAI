@@ -1,0 +1,143 @@
+{
+  "candidate_id": "candidate_08",
+  "overall_summary": "The resume provides strong evidence of designing and operating shared infrastructure for model-backed and hosted language services, including traffic controls, observability, controlled rollouts, cost controls, outage recovery, load exercises, and cross-customer data-permission safeguards. It provides related but less detailed evidence for Python software engineering, AI/ML/LLM fundamentals, and AI evaluation. Retrieval-augmented generation and agentic AI are not meaningfully described and should be explored during the interview.",
+  "competency_evidence": [
+    {
+      "competency": "rag",
+      "evidence_level": "UNKNOWN_NEEDS_PROBING",
+      "evidence": [],
+      "confidence": 0.98,
+      "probe_priority": "HIGH",
+      "reason": "The resume does not describe retrieval pipelines, embeddings, vector search, document ingestion, grounding, reranking, or retrieval-quality evaluation. RAG experience therefore cannot be determined from the resume."
+    },
+    {
+      "competency": "agentic_ai",
+      "evidence_level": "UNKNOWN_NEEDS_PROBING",
+      "evidence": [],
+      "confidence": 0.98,
+      "probe_priority": "HIGH",
+      "reason": "The resume does not describe agents, tool use, planning, workflow orchestration, state or memory management, or controls for autonomous actions. Agentic AI experience should be established through interview questions."
+    },
+    {
+      "competency": "ai_ml_llm_fundamentals",
+      "evidence_level": "PARTIAL_EVIDENCE",
+      "evidence": [
+        {
+          "evidence": "Built shared hosting for model-backed services with traffic limits, health checks, and controlled release rollouts.",
+          "source": "Work Experience - Hazel Dock Cloud"
+        },
+        {
+          "evidence": "Measured time spent waiting, computing, and calling external providers to explain slow user requests.",
+          "source": "Work Experience - Hazel Dock Cloud"
+        },
+        {
+          "evidence": "Added spending limits and usage attribution for teams sharing hosted language services.",
+          "source": "Work Experience - Hazel Dock Cloud"
+        },
+        {
+          "evidence": "Built request accounting and cancellation handling for a hosted model gateway.",
+          "source": "Project - Hosted model gateway"
+        }
+      ],
+      "confidence": 0.9,
+      "probe_priority": "HIGH",
+      "reason": "The candidate has operational experience with model-backed and hosted language services, but the resume gives limited evidence about model behavior, inference concepts, token handling, training, adaptation, or other underlying AI/ML/LLM principles."
+    },
+    {
+      "competency": "ai_evaluation",
+      "evidence_level": "PARTIAL_EVIDENCE",
+      "evidence": [
+        {
+          "evidence": "Measured time spent waiting, computing, and calling external providers to explain slow user requests.",
+          "source": "Work Experience - Hazel Dock Cloud"
+        },
+        {
+          "evidence": "Load exercises covered slow providers and sudden traffic surges.",
+          "source": "Project - Hosted model gateway"
+        },
+        {
+          "evidence": "Application teams retained responsibility for judging response correctness.",
+          "source": "Project - Hosted model gateway"
+        }
+      ],
+      "confidence": 0.94,
+      "probe_priority": "HIGH",
+      "reason": "The resume demonstrates performance and resilience testing of model-serving infrastructure, but it does not establish hands-on evaluation of model response quality, correctness, safety, or task-specific behavior."
+    },
+    {
+      "competency": "python_software_engineering",
+      "evidence_level": "PARTIAL_EVIDENCE",
+      "evidence": [
+        {
+          "evidence": "Lists Python among technical skills.",
+          "source": "Skills"
+        },
+        {
+          "evidence": "Built shared hosting for model-backed services with traffic limits, health checks, and controlled release rollouts.",
+          "source": "Work Experience - Hazel Dock Cloud"
+        },
+        {
+          "evidence": "Automated service setup and maintained incident runbooks for customer-facing systems.",
+          "source": "Work Experience - Red Fern Networks"
+        },
+        {
+          "evidence": "Built request accounting, cancellation handling, and operational alerts for a hosted model gateway.",
+          "source": "Project - Hosted model gateway"
+        }
+      ],
+      "confidence": 0.83,
+      "probe_priority": "MEDIUM",
+      "reason": "The resume combines a Python skill listing with substantial infrastructure implementation, but it does not explicitly attribute the described systems to Python or provide details about code structure, testing, packaging, typing, or maintainability practices."
+    },
+    {
+      "competency": "ai_system_design",
+      "evidence_level": "DEMONSTRATED",
+      "evidence": [
+        {
+          "evidence": "Built shared hosting for model-backed services with traffic limits, health checks, and controlled release rollouts.",
+          "source": "Work Experience - Hazel Dock Cloud"
+        },
+        {
+          "evidence": "Added spending limits and usage attribution for teams sharing hosted language services.",
+          "source": "Work Experience - Hazel Dock Cloud"
+        },
+        {
+          "evidence": "Designed recovery procedures for provider outages and exercised switching traffic to a backup service.",
+          "source": "Work Experience - Hazel Dock Cloud"
+        },
+        {
+          "evidence": "Built request accounting, cancellation handling, and operational alerts for a hosted model gateway.",
+          "source": "Project - Hosted model gateway"
+        },
+        {
+          "evidence": "Load exercises covered slow providers and sudden traffic surges.",
+          "source": "Project - Hosted model gateway"
+        }
+      ],
+      "confidence": 0.98,
+      "probe_priority": "LOW",
+      "reason": "The resume gives clear, specific evidence of designing and operating dependable shared AI-serving infrastructure, including observability, resource governance, release controls, failure recovery, cancellation, alerting, and load behavior."
+    },
+    {
+      "competency": "ai_security",
+      "evidence_level": "PARTIAL_EVIDENCE",
+      "evidence": [
+        {
+          "evidence": "Worked with product owners to prevent reuse of saved responses across customers with different data permissions.",
+          "source": "Work Experience - Hazel Dock Cloud"
+        },
+        {
+          "evidence": "Built shared hosting for model-backed services with traffic limits.",
+          "source": "Work Experience - Hazel Dock Cloud"
+        },
+        {
+          "evidence": "Added spending limits and usage attribution for teams sharing hosted language services.",
+          "source": "Work Experience - Hazel Dock Cloud"
+        }
+      ],
+      "confidence": 0.91,
+      "probe_priority": "MEDIUM",
+      "reason": "The cross-customer response-reuse control is concrete evidence of addressing authorization and data-isolation risk in an AI-serving environment. However, the resume does not provide broader detail about AI threat modeling, prompt injection, data leakage defenses, model access controls, secrets, or adversarial testing."
+    }
+  ]
+}

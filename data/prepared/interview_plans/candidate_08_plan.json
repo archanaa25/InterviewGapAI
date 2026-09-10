@@ -1,0 +1,66 @@
+{
+  "candidate_id": "candidate_08",
+  "total_questions": 10,
+  "competency_targets": [
+    {
+      "competency": "rag",
+      "basic": 1,
+      "intermediate": 1,
+      "advanced": 0,
+      "reason": "RAG is not described in the resume, so two questions establish breadth without treating the omission as weakness. A basic question checks core retrieval and grounding concepts, while an intermediate question probes practical pipeline design and trade-offs appropriate to the candidate's substantial infrastructure background."
+    },
+    {
+      "competency": "agentic_ai",
+      "basic": 1,
+      "intermediate": 1,
+      "advanced": 0,
+      "reason": "Agentic AI experience is unknown and has high probing priority. A basic question establishes understanding of agents, tools, and control loops; an intermediate question explores orchestration, state, failure handling, and safe tool use without assuming prior production ownership."
+    },
+    {
+      "competency": "ai_ml_llm_fundamentals",
+      "basic": 0,
+      "intermediate": 1,
+      "advanced": 1,
+      "reason": "Two questions validate the principles underlying the candidate's operational work with hosted language services. The intermediate allocation covers applied inference and model-behavior concepts, while the advanced allocation tests deeper reasoning about model-serving trade-offs, token or context behavior, and performance-quality interactions rather than assuming infrastructure experience proves model expertise."
+    },
+    {
+      "competency": "ai_evaluation",
+      "basic": 0,
+      "intermediate": 1,
+      "advanced": 0,
+      "reason": "The resume demonstrates performance and resilience measurement but not direct ownership of response-quality evaluation. One intermediate question probes the ability to design a practical quality, correctness, and safety evaluation approach while preserving the distinction between infrastructure testing and model evaluation."
+    },
+    {
+      "competency": "python_software_engineering",
+      "basic": 0,
+      "intermediate": 1,
+      "advanced": 0,
+      "reason": "Python is listed and the candidate has substantial implementation experience, but the resume does not attribute those systems specifically to Python or detail engineering practices. One intermediate question validates code organization, testing, reliability, typing, or maintainability without assuming either mastery or weakness."
+    },
+    {
+      "competency": "ai_system_design",
+      "basic": 0,
+      "intermediate": 0,
+      "advanced": 1,
+      "reason": "The strongest evidence concerns shared AI-serving infrastructure, including governance, observability, rollout controls, outage recovery, cancellation, and load behavior. One advanced question is appropriate to validate the claimed strength through complex design trade-offs and production-failure reasoning."
+    },
+    {
+      "competency": "ai_security",
+      "basic": 0,
+      "intermediate": 1,
+      "advanced": 0,
+      "reason": "Concrete cross-customer data-isolation work supports an applied probe, while broader AI security experience remains only partially evidenced. One intermediate question examines threat modeling and mitigations such as authorization boundaries, prompt injection, leakage, access control, or adversarial testing without overgeneralizing from a single safeguard."
+    }
+  ],
+  "difficulty_distribution": {
+    "basic": 2,
+    "intermediate": 6,
+    "advanced": 2
+  },
+  "strategy": {
+    "validate_claimed_strengths": true,
+    "probe_unknown_areas": true,
+    "avoid_resume_based_negative_assumptions": true,
+    "rationale": "The plan uses two basic questions only to establish foundations in the two un evidenced areas, then emphasizes intermediate questions because the candidate has substantial professional infrastructure experience even where AI-specific evidence is incomplete. Two advanced questions validate the strongest system-design claims and test deeper LLM reasoning connected to the candidate's model-serving work. The three additional questions are assigned to RAG, agentic AI, and AI/ML/LLM fundamentals because each has high probing priority: the first two establish unknown experience, while the third validates whether operational exposure is supported by underlying technical understanding. Resume omissions are treated as unknowns, and evidence from infrastructure operations, projects, and listed skills is not inflated into unverified production ownership of RAG, agents, evaluation, or Python systems."
+  }
+}

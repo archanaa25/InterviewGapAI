@@ -238,6 +238,9 @@ def evaluate_query(
     start = time.perf_counter()
 
 
+    # Metadata-aware experiments use gold constraints from the dataset.
+    # Their scores therefore assume correct upstream competency/difficulty
+    # selection; they do not measure resume-analysis or planner accuracy.
     if getattr(retriever, "uses_metadata", False):
 
         results = retriever.search(

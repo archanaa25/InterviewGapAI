@@ -1,0 +1,148 @@
+{
+  "candidate_id": "candidate_06",
+  "overall_summary": "Omar Haddad’s resume provides strong evidence of AI evaluation work involving versioned test collections, multidimensional scorecards, human-review processes, model-based rating validation, difficult-case design, regression checks, and release decisions. It also documents applied Python quality automation. The resume contains related but insufficient evidence for RAG, AI/ML/LLM fundamentals, and AI system design, while agentic AI and AI security require direct interview probing.",
+  "competency_evidence": [
+    {
+      "competency": "rag",
+      "evidence_level": "PARTIAL_EVIDENCE",
+      "evidence": [
+        {
+          "evidence": "Separated factual support, completeness, and writing quality in reviewer scorecards.",
+          "source": "Work Experience - Silver Kite Products"
+        },
+        {
+          "evidence": "Added difficult cases involving misleading source passages and questions for which no answer was available.",
+          "source": "Work Experience - Silver Kite Products"
+        },
+        {
+          "evidence": "Documented cases where automatic ratings were too forgiving of convincing but unsupported statements.",
+          "source": "Project - Answer review workbench"
+        }
+      ],
+      "confidence": 0.9,
+      "probe_priority": "HIGH",
+      "reason": "The resume shows evaluation of source-grounded answers, unsupported claims, and unanswerable questions, which is relevant to RAG quality. It does not establish experience implementing or operating retrieval, indexing, chunking, ranking, or context-assembly components."
+    },
+    {
+      "competency": "agentic_ai",
+      "evidence_level": "UNKNOWN_NEEDS_PROBING",
+      "evidence": [],
+      "confidence": 0.98,
+      "probe_priority": "HIGH",
+      "reason": "The resume does not describe agents, tool use, planning, orchestration, multi-step execution, or agent evaluation. Interview probing is needed to determine whether the candidate has worked with agentic systems."
+    },
+    {
+      "competency": "ai_ml_llm_fundamentals",
+      "evidence_level": "PARTIAL_EVIDENCE",
+      "evidence": [
+        {
+          "evidence": "Worked on software that generates customer-facing text.",
+          "source": "Professional Summary"
+        },
+        {
+          "evidence": "Compared automated model-based ratings with human decisions and investigated systematic disagreement.",
+          "source": "Work Experience - Silver Kite Products"
+        },
+        {
+          "evidence": "Worked with developers to isolate whether failures came from source data, generated text, or surrounding software.",
+          "source": "Work Experience - Cedar Vale Digital"
+        }
+      ],
+      "confidence": 0.87,
+      "probe_priority": "MEDIUM",
+      "reason": "The resume demonstrates practical exposure to generated-text systems, model-based ratings, and AI failure analysis. It does not provide enough detail about model behavior, training, inference, prompting, embeddings, or other underlying AI/ML/LLM concepts to establish broad fundamentals."
+    },
+    {
+      "competency": "ai_evaluation",
+      "evidence_level": "DEMONSTRATED",
+      "evidence": [
+        {
+          "evidence": "Built a versioned collection of customer requests with reviewer-written descriptions of acceptable responses.",
+          "source": "Work Experience - Silver Kite Products"
+        },
+        {
+          "evidence": "Separated factual support, completeness, and writing quality in reviewer scorecards.",
+          "source": "Work Experience - Silver Kite Products"
+        },
+        {
+          "evidence": "Compared automated model-based ratings with human decisions and investigated systematic disagreement.",
+          "source": "Work Experience - Silver Kite Products"
+        },
+        {
+          "evidence": "Added difficult cases involving misleading source passages and questions for which no answer was available.",
+          "source": "Work Experience - Silver Kite Products"
+        },
+        {
+          "evidence": "Blocked releases when previously passing customer scenarios regressed, even when the overall average improved.",
+          "source": "Work Experience - Silver Kite Products"
+        },
+        {
+          "evidence": "Collected independent reviewer judgments, measured agreement, and retained an untouched sample for final comparison.",
+          "source": "Project - Answer review workbench"
+        }
+      ],
+      "confidence": 0.99,
+      "probe_priority": "LOW",
+      "reason": "The resume contains clear and specific evidence across dataset curation, rubric design, human evaluation, evaluator validation, agreement measurement, holdout sampling, adversarial case design, regression testing, and release gating."
+    },
+    {
+      "competency": "python_software_engineering",
+      "evidence_level": "DEMONSTRATED",
+      "evidence": [
+        {
+          "evidence": "Lists Python, SQL, and pytest among technical skills.",
+          "source": "Skills"
+        },
+        {
+          "evidence": "Maintained Python checks for business services and assembled reproducible failure reports.",
+          "source": "Work Experience - Cedar Vale Digital"
+        },
+        {
+          "evidence": "Worked with developers to isolate failures across source data, generated text, and surrounding software.",
+          "source": "Work Experience - Cedar Vale Digital"
+        }
+      ],
+      "confidence": 0.91,
+      "probe_priority": "MEDIUM",
+      "reason": "The resume provides direct evidence of maintaining Python-based automated checks and producing reproducible failure reports in a professional environment. An interview can clarify code structure, testing practices, maintainability, and engineering depth."
+    },
+    {
+      "competency": "ai_system_design",
+      "evidence_level": "PARTIAL_EVIDENCE",
+      "evidence": [
+        {
+          "evidence": "Built a versioned collection of customer requests with reviewer-written descriptions of acceptable responses.",
+          "source": "Work Experience - Silver Kite Products"
+        },
+        {
+          "evidence": "Blocked releases when previously passing customer scenarios regressed.",
+          "source": "Work Experience - Silver Kite Products"
+        },
+        {
+          "evidence": "Worked with developers to isolate whether failures came from source data, generated text, or surrounding software.",
+          "source": "Work Experience - Cedar Vale Digital"
+        }
+      ],
+      "confidence": 0.84,
+      "probe_priority": "HIGH",
+      "reason": "The resume shows awareness of evaluation assets, release controls, and failure boundaries across an AI-enabled product. It does not describe ownership of an AI system architecture, production serving design, observability, scaling, reliability, or component tradeoffs."
+    },
+    {
+      "competency": "ai_security",
+      "evidence_level": "UNKNOWN_NEEDS_PROBING",
+      "evidence": [
+        {
+          "evidence": "Added difficult cases involving misleading source passages.",
+          "source": "Work Experience - Silver Kite Products"
+        },
+        {
+          "evidence": "Documented where automatic ratings were too forgiving of convincing but unsupported statements.",
+          "source": "Project - Answer review workbench"
+        }
+      ],
+      "confidence": 0.91,
+      "probe_priority": "HIGH",
+      "reason": "Testing misleading evidence and unsupported statements is relevant to robustness, but the resume does not establish work on AI security threats or controls such as prompt injection, data leakage, access control, adversarial tool use, model abuse, or security monitoring."
+    }
+  ]
+}

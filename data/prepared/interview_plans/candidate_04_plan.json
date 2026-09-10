@@ -1,0 +1,66 @@
+{
+  "candidate_id": "candidate_04",
+  "total_questions": 10,
+  "competency_targets": [
+    {
+      "competency": "rag",
+      "basic": 0,
+      "intermediate": 1,
+      "advanced": 0,
+      "reason": "Allocate one intermediate probe because RAG evidence is unknown and the resume describes no retrieval component. The intermediate level tests practical understanding of retrieval, indexing, grounding, and relevant tradeoffs without treating the absence of resume evidence as weakness."
+    },
+    {
+      "competency": "agentic_ai",
+      "basic": 1,
+      "intermediate": 0,
+      "advanced": 0,
+      "reason": "Allocate one basic question to establish the candidate's understanding of agentic concepts such as tool use, state, planning, and execution boundaries. The support-reply pilot was human-reviewed rather than demonstrably agentic, so this is a neutral foundational probe rather than an assumption of limited ability."
+    },
+    {
+      "competency": "ai_ml_llm_fundamentals",
+      "basic": 1,
+      "intermediate": 1,
+      "advanced": 0,
+      "reason": "Allocate two questions because hosted-language-service integration provides partial evidence and this competency has high probing priority. A basic question checks core model and inference concepts, while an intermediate question validates practical understanding of prompting, token constraints, model behavior, and service tradeoffs."
+    },
+    {
+      "competency": "ai_evaluation",
+      "basic": 0,
+      "intermediate": 1,
+      "advanced": 1,
+      "reason": "Allocate two questions because human review and colleague demonstrations provide partial but nonsystematic evaluation evidence. The intermediate allocation probes quality criteria, test-set construction, and metrics; the advanced allocation tests whether the candidate can design rigorous error analysis and evaluation for a production-oriented AI workflow."
+    },
+    {
+      "competency": "python_software_engineering",
+      "basic": 0,
+      "intermediate": 1,
+      "advanced": 1,
+      "reason": "Allocate two questions to validate the strongest claimed area rather than accepting resume evidence as verified ability. The intermediate question covers sound Python engineering practices, while the advanced question probes production reliability, concurrency or failure handling, API behavior, testing, and data-system tradeoffs consistent with the candidate's substantial backend ownership."
+    },
+    {
+      "competency": "ai_system_design",
+      "basic": 0,
+      "intermediate": 0,
+      "advanced": 1,
+      "reason": "Allocate one advanced question to test synthesis of the candidate's strong backend experience with the partially evidenced AI application work. The probe should assess AI-specific architecture, reliability, observability, latency, cost, model-service failure handling, and human oversight; the level reflects professional system experience, not an assumption that AI system design is already demonstrated."
+    },
+    {
+      "competency": "ai_security",
+      "basic": 0,
+      "intermediate": 1,
+      "advanced": 0,
+      "reason": "Allocate one intermediate question because access controls, sensitive-data handling, and human approval provide relevant partial evidence. The question should probe how those practices extend to AI-specific threats such as prompt injection, data leakage, unsafe outputs, trust boundaries, and abuse prevention."
+    }
+  ],
+  "difficulty_distribution": {
+    "basic": 2,
+    "intermediate": 5,
+    "advanced": 3
+  },
+  "strategy": {
+    "validate_claimed_strengths": true,
+    "probe_unknown_areas": true,
+    "avoid_resume_based_negative_assumptions": true,
+    "rationale": "Use a balanced progression of two basic, five intermediate, and three advanced questions. Foundational questions establish concepts in areas not demonstrated by the resume, while intermediate probes dominate because the candidate has substantial professional engineering experience but only partial AI evidence. Advanced questions validate demonstrated Python strength and test deeper evaluation and AI-system-design synthesis. Unknown RAG and agentic evidence is treated as a need for direct, neutral probing—not as evidence of weakness—and distinctions among the pilot, human-reviewed workflow, and production backend ownership are preserved."
+  }
+}

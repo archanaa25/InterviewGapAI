@@ -138,6 +138,9 @@ class QuestionHybridRetriever:
         # Stage 2:
         # Accumulate RRF scores by question ID.
         #
+        # A shared question ID merges hits from both retrievers into one result.
+        # Rank contributions can be combined even though raw BM25 and dense
+        # scores have different scales.
         fused = {}
 
         for result in bm25_results:
@@ -290,6 +293,8 @@ class QuestionHybridRetriever:
         # Stage 3:
         # Sort by combined RRF score.
         #
+        # Truncate only after fusion so candidates from either list can enter
+        # the final result set based on their combined ranking evidence.
         ranked = sorted(
             fused.values(),
             key=lambda item:

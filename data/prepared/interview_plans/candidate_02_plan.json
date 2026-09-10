@@ -1,0 +1,66 @@
+{
+  "candidate_id": "candidate_02",
+  "total_questions": 10,
+  "competency_targets": [
+    {
+      "competency": "rag",
+      "basic": 0,
+      "intermediate": 1,
+      "advanced": 1,
+      "reason": "Allocate two questions to validate the candidate’s strongest documented area. The intermediate allocation checks implementation choices across context-preserving preparation, lexical and semantic retrieval, citations, and incremental updates; the advanced allocation probes deeper trade-offs involving retrieval quality, freshness, grounding, and failure handling."
+    },
+    {
+      "competency": "agentic_ai",
+      "basic": 1,
+      "intermediate": 1,
+      "advanced": 0,
+      "reason": "Allocate two questions because agentic AI is a high-priority unknown rather than an established weakness. A basic question establishes understanding of agents, tools, planning, and control loops, while an intermediate question probes how the candidate would design and constrain multi-step execution in light of their broader assistant-building experience."
+    },
+    {
+      "competency": "ai_ml_llm_fundamentals",
+      "basic": 0,
+      "intermediate": 1,
+      "advanced": 0,
+      "reason": "Allocate one intermediate question to explore broader AI, ML, and LLM understanding beyond the documented applied comparison of lexical and semantic retrieval. This level is appropriate for testing representation, inference, and model-behavior concepts without treating partial resume evidence as either mastery or deficiency."
+    },
+    {
+      "competency": "ai_evaluation",
+      "basic": 0,
+      "intermediate": 0,
+      "advanced": 1,
+      "reason": "Allocate one advanced question to validate the demonstrated use of held-out requests, top-k retrieval criteria, comparative testing, failure categorization, and corrective checks. The difficulty should test whether the candidate can extend these practices to rigorous end-to-end evaluation and reason about metric limitations."
+    },
+    {
+      "competency": "python_software_engineering",
+      "basic": 0,
+      "intermediate": 1,
+      "advanced": 0,
+      "reason": "Allocate one intermediate question to verify the engineering practices behind the documented Python scripts and service work, including testing, validation, maintainability, observability, and reliable data processing. A single focused question is proportionate to the strong but bounded evidence."
+    },
+    {
+      "competency": "ai_system_design",
+      "basic": 0,
+      "intermediate": 0,
+      "advanced": 1,
+      "reason": "Allocate one advanced question because the resume contains meaningful system-lifecycle evidence spanning ingestion, retrieval, grounding, refresh, withdrawal, and failure controls. The question should validate architecture and production trade-off reasoning without assuming sole ownership, scale, or deployment responsibilities not stated in the resume."
+    },
+    {
+      "competency": "ai_security",
+      "basic": 1,
+      "intermediate": 1,
+      "advanced": 0,
+      "reason": "Allocate two questions because AI security is a high-priority unknown and is especially relevant to document assistants. A basic question establishes threat-modeling and core risk awareness; an intermediate question probes practical controls such as authorization-aware retrieval, sensitive-data handling, prompt-injection defenses, tenant isolation, and secure tool or content processing."
+    }
+  ],
+  "difficulty_distribution": {
+    "basic": 2,
+    "intermediate": 5,
+    "advanced": 3
+  },
+  "strategy": {
+    "validate_claimed_strengths": true,
+    "probe_unknown_areas": true,
+    "avoid_resume_based_negative_assumptions": true,
+    "rationale": "Use a balanced progression with two basic, five intermediate, and three advanced questions. The advanced questions validate strongly evidenced RAG, evaluation, and system-design capabilities through deeper trade-off reasoning. Intermediate questions dominate because the candidate has substantial applied professional evidence while several areas still require scope clarification. Basic questions are used only to establish foundations in the two high-priority unknown areas, agentic AI and AI security, and each is paired with an intermediate probe so resume omissions are not interpreted as weakness. The three additional questions beyond universal competency coverage are assigned to RAG to validate a claimed strength and to agentic AI and AI security to investigate important unknowns."
+  }
+}

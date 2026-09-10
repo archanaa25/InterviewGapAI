@@ -1,0 +1,57 @@
+{
+  "candidate_id": "candidate_06",
+  "name": "Omar Haddad",
+  "email": "omar.haddad@example.com",
+  "phone": null,
+  "location": null,
+  "target_role": "AI Quality Engineer",
+  "summary": "Quality engineer working on software that generates customer-facing text. Four years developing repeatable assessments and helping product teams understand failure patterns.",
+  "skills": [
+    "Python",
+    "SQL",
+    "pytest",
+    "dataset curation",
+    "annotation guidelines",
+    "statistical sampling",
+    "release checks"
+  ],
+  "work_experience": [
+    {
+      "employer": "Silver Kite Products",
+      "title": "AI Quality Engineer",
+      "dates": "Sep 2023–Present",
+      "responsibilities_and_achievements": [
+        "Built a versioned collection of customer requests with reviewer-written descriptions of acceptable responses.",
+        "Separated factual support, completeness, and writing quality in reviewer scorecards.",
+        "Compared automated model-based ratings with human decisions and investigated systematic disagreement.",
+        "Added difficult cases involving misleading source passages and questions for which no answer was available.",
+        "Blocked releases when previously passing customer scenarios regressed, even when the overall average improved."
+      ]
+    },
+    {
+      "employer": "Cedar Vale Digital",
+      "title": "Quality Automation Engineer",
+      "dates": "Sep 2022–Aug 2023",
+      "responsibilities_and_achievements": [
+        "Maintained Python checks for business services and assembled reproducible failure reports.",
+        "Worked with developers to isolate whether failures came from source data, generated text, or surrounding software."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Answer review workbench",
+      "description": "Collected independent reviewer judgments, measured agreement, and retained an untouched sample for final comparison. Documented where automatic ratings were too forgiving of convincing but unsupported statements.",
+      "technologies": []
+    }
+  ],
+  "education": [
+    {
+      "qualification": "BSc, Computer Science",
+      "institution": "Fictional Moorfield College",
+      "dates": "2022",
+      "details": []
+    }
+  ],
+  "certifications": []
+}

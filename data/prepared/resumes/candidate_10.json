@@ -1,0 +1,52 @@
+{
+  "candidate_id": "candidate_10",
+  "name": "Rohan Mehta",
+  "email": "rohan.mehta@example.com",
+  "phone": null,
+  "location": null,
+  "target_role": "Software Engineer",
+  "summary": "Software engineer with five years delivering internal products and customer service improvements. Interested in practical applications of AI.",
+  "skills": [
+    "Python",
+    "SQL",
+    "Git",
+    "business applications"
+  ],
+  "work_experience": [
+    {
+      "employer": "Quiet Birch Solutions",
+      "title": "Software Engineer",
+      "dates": "Sep 2023–Present",
+      "responsibilities_and_achievements": [
+        "Worked on an internal AI assistant used by several teams.",
+        "Helped improve response usefulness and supported releases.",
+        "Collaborated with product and operations colleagues on issues reported by users."
+      ]
+    },
+    {
+      "employer": "Golden Reed Services",
+      "title": "Software Developer",
+      "dates": "Sep 2021–Aug 2023",
+      "responsibilities_and_achievements": [
+        "Built backend features and maintained existing services.",
+        "Contributed to internal automation and technical documentation."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Employee information helper",
+      "description": "Contributed to an application intended to make company information easier to use. Worked with colleagues from initial delivery through subsequent updates.",
+      "technologies": []
+    }
+  ],
+  "education": [
+    {
+      "qualification": "BSc, Information Technology",
+      "institution": "Fictional Lakeshore College",
+      "dates": "2021",
+      "details": []
+    }
+  ],
+  "certifications": []
+}

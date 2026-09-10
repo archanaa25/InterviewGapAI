@@ -1,0 +1,153 @@
+{
+  "candidate_id": "candidate_04",
+  "overall_summary": "Arun Das has substantial resume evidence in Python backend engineering, including transaction processing, database migrations, recovery procedures, API development, reliability controls, data permissions, and incident response. His AI-related evidence centers on an eight-month support-reply pilot that integrates a hosted language service, handles service and output failures, and keeps humans in the approval workflow. This provides partial evidence for LLM fundamentals, AI evaluation, AI system design, and AI security, while RAG and agentic AI require direct interview probing.",
+  "competency_evidence": [
+    {
+      "competency": "rag",
+      "evidence_level": "UNKNOWN_NEEDS_PROBING",
+      "evidence": [
+        {
+          "evidence": "Built a pilot that drafts support replies from text pasted by staff.",
+          "source": "Work Experience - Slate Orchard Payments"
+        },
+        {
+          "evidence": "Connected a hosted language service to a simple form.",
+          "source": "Project - Support reply pilot"
+        }
+      ],
+      "confidence": 0.98,
+      "probe_priority": "HIGH",
+      "reason": "The pilot uses staff-provided text, and the resume explicitly identifies no document-search component. It does not establish retrieval, indexing, embeddings, vector search, grounding, or related RAG work."
+    },
+    {
+      "competency": "agentic_ai",
+      "evidence_level": "UNKNOWN_NEEDS_PROBING",
+      "evidence": [
+        {
+          "evidence": "Built a pilot that drafts support replies, with replies reviewed before sending.",
+          "source": "Work Experience - Slate Orchard Payments"
+        },
+        {
+          "evidence": "Connected a hosted language service to a simple form and handled unavailable responses and unexpected output fields.",
+          "source": "Project - Support reply pilot"
+        }
+      ],
+      "confidence": 0.96,
+      "probe_priority": "HIGH",
+      "reason": "The described workflow is a human-reviewed drafting application. The resume does not establish autonomous planning, tool use, multi-step execution, state management, or other agentic behavior."
+    },
+    {
+      "competency": "ai_ml_llm_fundamentals",
+      "evidence_level": "PARTIAL_EVIDENCE",
+      "evidence": [
+        {
+          "evidence": "Built a support-reply pilot over an eight-month period using a hosted language service.",
+          "source": "Work Experience - Slate Orchard Payments"
+        },
+        {
+          "evidence": "Handled unavailable responses and unexpected output fields from the hosted language service.",
+          "source": "Project - Support reply pilot"
+        }
+      ],
+      "confidence": 0.9,
+      "probe_priority": "HIGH",
+      "reason": "The resume demonstrates practical integration with a hosted language model service and defensive handling of its responses, but it does not provide enough detail about model behavior, prompting, token constraints, inference tradeoffs, or broader ML and LLM concepts."
+    },
+    {
+      "competency": "ai_evaluation",
+      "evidence_level": "PARTIAL_EVIDENCE",
+      "evidence": [
+        {
+          "evidence": "Support replies are reviewed by staff before sending.",
+          "source": "Work Experience - Slate Orchard Payments"
+        },
+        {
+          "evidence": "Demonstrated the support-reply pilot to six colleagues.",
+          "source": "Project - Support reply pilot"
+        },
+        {
+          "evidence": "Maintained automated checks for service contracts.",
+          "source": "Work Experience - Amber Bridge Commerce"
+        }
+      ],
+      "confidence": 0.88,
+      "probe_priority": "HIGH",
+      "reason": "Human review and colleague demonstrations provide relevant evaluation signals, while automated service checks show general testing experience. The resume does not describe AI-specific test sets, quality criteria, metrics, error analysis, or systematic evaluation."
+    },
+    {
+      "competency": "python_software_engineering",
+      "evidence_level": "DEMONSTRATED",
+      "evidence": [
+        {
+          "evidence": "Lists Python, FastAPI, PostgreSQL, Redis, Docker, Linux, SQL, and automated service checks among technical skills.",
+          "source": "Skills"
+        },
+        {
+          "evidence": "Owned transaction-processing services, database migrations, and recovery procedures for interrupted jobs.",
+          "source": "Work Experience - Slate Orchard Payments"
+        },
+        {
+          "evidence": "Added bounded retries and request identifiers to prevent duplicate processing during partner outages.",
+          "source": "Work Experience - Slate Orchard Payments"
+        },
+        {
+          "evidence": "Built Python endpoints for order updates and improved slow SQL queries during seasonal demand.",
+          "source": "Work Experience - Amber Bridge Commerce"
+        },
+        {
+          "evidence": "Maintained automated checks for service contracts and participated in incident response.",
+          "source": "Work Experience - Amber Bridge Commerce"
+        }
+      ],
+      "confidence": 0.99,
+      "probe_priority": "LOW",
+      "reason": "The resume contains clear, specific evidence of applied Python backend development, API work, database operations, testing, reliability engineering, and production support."
+    },
+    {
+      "competency": "ai_system_design",
+      "evidence_level": "PARTIAL_EVIDENCE",
+      "evidence": [
+        {
+          "evidence": "Connected a hosted language service to a simple form and handled unavailable responses and unexpected output fields.",
+          "source": "Project - Support reply pilot"
+        },
+        {
+          "evidence": "Kept support replies under human review before sending.",
+          "source": "Work Experience - Slate Orchard Payments"
+        },
+        {
+          "evidence": "Owned transaction-processing services, database migrations, and recovery procedures for interrupted jobs.",
+          "source": "Work Experience - Slate Orchard Payments"
+        },
+        {
+          "evidence": "Added bounded retries and request identifiers to prevent duplicate processing during partner outages.",
+          "source": "Work Experience - Slate Orchard Payments"
+        }
+      ],
+      "confidence": 0.9,
+      "probe_priority": "MEDIUM",
+      "reason": "The resume shows strong general backend design experience and some AI-application design choices involving failure handling and human oversight. It does not provide enough detail about AI-specific architecture, scalability, model routing, observability, cost, latency, or deployment tradeoffs to establish substantial AI system design experience."
+    },
+    {
+      "competency": "ai_security",
+      "evidence_level": "PARTIAL_EVIDENCE",
+      "evidence": [
+        {
+          "evidence": "Enforced customer-specific data permissions.",
+          "source": "Work Experience - Slate Orchard Payments"
+        },
+        {
+          "evidence": "Excluded sensitive account fields from operational records.",
+          "source": "Work Experience - Slate Orchard Payments"
+        },
+        {
+          "evidence": "Required staff review of drafted support replies before sending.",
+          "source": "Work Experience - Slate Orchard Payments"
+        }
+      ],
+      "confidence": 0.88,
+      "probe_priority": "HIGH",
+      "reason": "The resume demonstrates access control, sensitive-data handling, and human oversight that are relevant to secure AI applications. It does not describe AI-specific threat controls such as prompt-injection defenses, input and output filtering, model data boundaries, abuse prevention, or AI security testing."
+    }
+  ]
+}

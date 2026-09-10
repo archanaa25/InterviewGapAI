@@ -1,0 +1,66 @@
+{
+  "candidate_id": "candidate_03",
+  "total_questions": 10,
+  "competency_targets": [
+    {
+      "competency": "rag",
+      "basic": 1,
+      "intermediate": 1,
+      "advanced": 0,
+      "reason": "Allocate two questions because RAG has no meaningful resume evidence and a high probing priority. A basic question establishes core retrieval, grounding, and indexing concepts, while an intermediate question probes practical design and retrieval-quality tradeoffs. No advanced question is assigned solely because the area is absent from the resume."
+    },
+    {
+      "competency": "agentic_ai",
+      "basic": 0,
+      "intermediate": 0,
+      "advanced": 1,
+      "reason": "Allocate one advanced question to validate the demonstrated work on bounded actions, state persistence, recovery, human approval, and stalled-workflow handoff. The advanced level tests whether the candidate can reason beyond implementation details about robust agent control and failure handling."
+    },
+    {
+      "competency": "ai_ml_llm_fundamentals",
+      "basic": 1,
+      "intermediate": 1,
+      "advanced": 0,
+      "reason": "Allocate two questions because the resume shows applied assistant development but gives limited evidence of underlying model behavior, prompting, inference, token constraints, or model selection. A basic question checks foundational understanding, and an intermediate question probes the ability to apply those concepts to engineering decisions without assuming the partial evidence indicates weakness."
+    },
+    {
+      "competency": "ai_evaluation",
+      "basic": 0,
+      "intermediate": 1,
+      "advanced": 1,
+      "reason": "Allocate two questions to distinguish the demonstrated service and failure-path testing from broader evaluation of AI behavior. The intermediate question probes evaluation design, coverage, and metrics; the advanced question validates whether the candidate can analyze model-versus-system failures and build rigorous evaluation methodology."
+    },
+    {
+      "competency": "python_software_engineering",
+      "basic": 0,
+      "intermediate": 0,
+      "advanced": 1,
+      "reason": "Allocate one advanced question to validate the strong professional evidence of Python integrations, persistence, idempotency, event histories, queues, service contracts, and recoverable execution. The level reflects four years of relevant engineering experience and seeks depth rather than repeating basic syntax knowledge."
+    },
+    {
+      "competency": "ai_system_design",
+      "basic": 0,
+      "intermediate": 1,
+      "advanced": 0,
+      "reason": "Allocate one intermediate question to validate the demonstrated design of bounded, stateful, recoverable assistants integrated with external services. The probe should assess architectural tradeoffs across validation, persistence, idempotency, escalation, and reliability while remaining proportionate to the resume's evidence of applied design work."
+    },
+    {
+      "competency": "ai_security",
+      "basic": 0,
+      "intermediate": 1,
+      "advanced": 0,
+      "reason": "Allocate one intermediate question to extend the demonstrated safety controls—limited actions, approval gates, argument validation, and bounded execution—into threat modeling, authorization, auditability, and AI-specific attack defenses. This validates the controls without assuming they establish comprehensive security ownership."
+    }
+  ],
+  "difficulty_distribution": {
+    "basic": 2,
+    "intermediate": 5,
+    "advanced": 3
+  },
+  "strategy": {
+    "validate_claimed_strengths": true,
+    "probe_unknown_areas": true,
+    "avoid_resume_based_negative_assumptions": true,
+    "rationale": "Use a balanced progression of 2 basic, 5 intermediate, and 3 advanced questions. The additional questions prioritize RAG and AI/ML/LLM fundamentals because those areas need clarification, plus AI evaluation because the resume's concrete failure-path testing warrants deeper validation of evaluation methodology. Advanced probes validate strong professional claims in agentic AI, Python engineering, and evaluation; intermediate probes assess practical reasoning in both evidenced and unknown areas. Resume omissions are treated as uncertainty rather than weakness, and the plan preserves the distinction between implemented assistant workflows, broader conceptual knowledge, and comprehensive production ownership."
+  }
+}

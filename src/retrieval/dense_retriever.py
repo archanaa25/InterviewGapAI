@@ -150,6 +150,9 @@ class QuestionDenseRetriever:
         # Step 2:
         # Dense vector similarity search
         #
+        # Apply constraints in Pinecone before selecting top-k neighbors.
+        # Filtering a global top-k list afterward could discard valid matches
+        # that were outside that initial list.
         query_options = {"filter": filters} if filters else {}
         response = self.index.query(
             namespace=self.namespace,

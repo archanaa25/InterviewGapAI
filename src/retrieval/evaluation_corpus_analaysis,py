@@ -1,0 +1,70 @@
+==========================================================================================
+EVALUATION CORPUS COVERAGE ANALYSIS
+==========================================================================================
+
+Interview questions : 112
+Evaluation records  : 35
+
+------------------------------------------------------------------------------------------
+OVERALL COVERAGE (explicit evaluation_refs)
+------------------------------------------------------------------------------------------
+Covered   : 112
+Uncovered : 0
+Coverage  : 100.00%
+
+------------------------------------------------------------------------------------------
+COVERAGE BY COMPETENCY
+------------------------------------------------------------------------------------------
+agentic_ai                          29/29  100.00%
+ai_evaluation                       17/17  100.00%
+ai_ml_llm_fundamentals              13/13  100.00%
+ai_security                          6/6   100.00%
+ai_system_design                     8/8   100.00%
+python_software_engineering          8/8   100.00%
+rag                                 31/31  100.00%
+
+------------------------------------------------------------------------------------------
+EVALUATION RECORD UTILIZATION
+------------------------------------------------------------------------------------------
+EVAL-AGENT-DESIGN                    4 questions
+EVAL-AGENT-FUND                      5 questions
+EVAL-AGENT-HITL                      4 questions
+EVAL-AGENT-INTEROP                   4 questions
+EVAL-AGENT-LIFE                      4 questions
+EVAL-AGENT-MEM                       4 questions
+EVAL-AGENT-REL                       4 questions
+EVAL-KNOW-AGENT                      3 questions
+EVAL-KNOW-COST                       5 questions
+EVAL-KNOW-METRIC                     5 questions
+EVAL-KNOW-RAG                        4 questions
+EVAL-LLM-EMB                         4 questions
+EVAL-LLM-TOKEN                       5 questions
+EVAL-LLM-TRANS                       4 questions
+EVAL-PY-API                          2 questions
+EVAL-PY-ASYNC                        2 questions
+EVAL-PY-DESIGN                       2 questions
+EVAL-PY-TEST                         2 questions
+EVAL-RAG-CHUNK                       4 questions
+EVAL-RAG-CTX                         4 questions
+EVAL-RAG-EMB                         3 questions
+EVAL-RAG-EVAL                        5 questions
+EVAL-RAG-FUND                        5 questions
+EVAL-RAG-PROD                        5 questions
+EVAL-RAG-RET                         5 questions
+EVAL-SEC-GUARD                       2 questions
+EVAL-SEC-PI                          1 questions
+EVAL-SEC-PRIV                        2 questions
+EVAL-SEC-TOOL                        1 questions
+EVAL-SYS-ARCH                        2 questions
+EVAL-SYS-DEP                         1 questions
+EVAL-SYS-OBS                         1 questions
+EVAL-SYS-PERF                        1 questions
+EVAL-SYS-REL                         2 questions
+EVAL-SYS-SCALE                       1 questions
+
+------------------------------------------------------------------------------------------
+UNUSED EVALUATION RECORDS
+------------------------------------------------------------------------------------------
+None
+
+==========================================================================================

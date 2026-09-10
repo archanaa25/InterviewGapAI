@@ -1,0 +1,66 @@
+{
+  "candidate_id": "candidate_01",
+  "total_questions": 10,
+  "competency_targets": [
+    {
+      "competency": "rag",
+      "basic": 0,
+      "intermediate": 1,
+      "advanced": 0,
+      "reason": "Allocate one intermediate question to validate the demonstrated document retrieval, passage selection, source attribution, and abstention work. Intermediate difficulty is sufficient to probe implementation choices and retrieval-quality tradeoffs without over-weighting a low-priority area."
+    },
+    {
+      "competency": "agentic_ai",
+      "basic": 0,
+      "intermediate": 1,
+      "advanced": 1,
+      "reason": "Allocate two questions because approval-gated actions, resumable workflows, and duplicate-action prevention are significant claimed strengths with medium probing priority. The intermediate question validates orchestration and state-management fundamentals, while the advanced question probes failure recovery, idempotency, and safe execution in consequential workflows."
+    },
+    {
+      "competency": "ai_ml_llm_fundamentals",
+      "basic": 1,
+      "intermediate": 0,
+      "advanced": 0,
+      "reason": "Allocate one basic question to verify the conceptual foundations underlying the candidate's applied work with model comparison, text representations, passage granularity, and long-context behavior. This complements the more demanding applied questions elsewhere and does not discount the demonstrated resume evidence."
+    },
+    {
+      "competency": "ai_evaluation",
+      "basic": 0,
+      "intermediate": 1,
+      "advanced": 0,
+      "reason": "Allocate one intermediate question to validate the demonstrated use of held-out requests and multiple evaluation dimensions, including factual support, task completion, latency, cost, and abstention. The difficulty emphasizes practical evaluation design rather than merely recalling metric definitions."
+    },
+    {
+      "competency": "python_software_engineering",
+      "basic": 0,
+      "intermediate": 0,
+      "advanced": 1,
+      "reason": "Allocate one advanced question to validate the substantial claim of six years of production Python service ownership, including database evolution, failure recovery, performance investigation, and on-call support. Advanced difficulty is appropriate for examining engineering tradeoffs expected from this professional background."
+    },
+    {
+      "competency": "ai_system_design",
+      "basic": 0,
+      "intermediate": 1,
+      "advanced": 1,
+      "reason": "Allocate two questions because the resume presents broad production-oriented design evidence and this area has medium probing priority. The intermediate question assesses coherent component and operational design, while the advanced question validates deeper reasoning about scale, reliability, observability, authorization, latency, cost, and ownership boundaries."
+    },
+    {
+      "competency": "ai_security",
+      "basic": 1,
+      "intermediate": 1,
+      "advanced": 0,
+      "reason": "Allocate two questions because authorization, identifier removal, human approval, and duplicate-action safeguards are important demonstrated claims with medium probing priority. The basic question establishes security and privacy foundations, while the intermediate question probes practical threat modeling and AI-specific attack paths without assuming advanced security specialization."
+    }
+  ],
+  "difficulty_distribution": {
+    "basic": 2,
+    "intermediate": 5,
+    "advanced": 3
+  },
+  "strategy": {
+    "validate_claimed_strengths": true,
+    "probe_unknown_areas": true,
+    "avoid_resume_based_negative_assumptions": true,
+    "rationale": "Use a balanced progression suited to a candidate with substantial production Python experience and meaningful applied AI evidence. Two basic questions verify foundational understanding, five intermediate questions test practical implementation and tradeoff reasoning, and three advanced questions validate depth in the strongest production-oriented claims. The three additional questions are assigned to agentic AI, AI system design, and AI security because they have medium probing priority and involve consequential workflow, architecture, and safety concerns. All competencies receive coverage, demonstrated resume evidence is treated as unverified until discussed, and any areas not fully described by the resume are explored without interpreting omission as weakness."
+  }
+}

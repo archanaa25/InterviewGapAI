@@ -1,0 +1,57 @@
+{
+  "candidate_id": "candidate_03",
+  "name": "Leena Rao",
+  "email": "leena.rao@example.com",
+  "phone": null,
+  "location": null,
+  "target_role": "Intelligent Workflow Engineer",
+  "summary": "Python engineer building assistants that coordinate approved actions across business systems. Four years of experience with service integrations and recoverable task execution.",
+  "skills": [
+    "Python",
+    "JSON",
+    "REST services",
+    "PostgreSQL",
+    "queues",
+    "Docker",
+    "service contracts"
+  ],
+  "work_experience": [
+    {
+      "employer": "Juniper Relay",
+      "title": "Intelligent Workflow Engineer",
+      "dates": "Sep 2023–Present",
+      "responsibilities_and_achievements": [
+        "Built a service desk assistant that chooses from a limited set of actions, collects missing details, and prepares account-change requests.",
+        "Required staff approval before an external change and checked proposed action arguments against the receiving service's accepted fields.",
+        "Saved progress after each completed action so interrupted requests could continue safely.",
+        "Added a maximum action count and a clear handoff when the assistant repeatedly failed to make progress.",
+        "Checked completed outcomes using simulated service responses, including unavailable systems and rejected requests."
+      ]
+    },
+    {
+      "employer": "Willow Circuit",
+      "title": "Integration Developer",
+      "dates": "Sep 2022–Aug 2023",
+      "responsibilities_and_achievements": [
+        "Connected billing and ticketing services and prevented repeated delivery from creating duplicate records.",
+        "Diagnosed failed requests using event histories shared with the support team."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Meeting follow-through assistant",
+      "description": "Turns meeting notes into proposed tasks, asks the owner to approve them, and records the resulting task identifiers. Tested interruption immediately before and after creation to catch repeated actions.",
+      "technologies": []
+    }
+  ],
+  "education": [
+    {
+      "qualification": "BSc, Software Engineering",
+      "institution": "Fictional Fairbrook University",
+      "dates": "2022",
+      "details": []
+    }
+  ],
+  "certifications": []
+}

@@ -1,0 +1,169 @@
+{
+  "candidate_id": "candidate_07",
+  "overall_summary": "The resume provides strong, specific evidence of application-security work on document-grounded assistants and systems that request actions from internal services. It documents testing for hostile instructions, unauthorized record access, confidential-data exfiltration, service-side authorization, and remediation verification. There is also relevant but narrower evidence for RAG, agentic systems, AI/LLM fundamentals, Python engineering, and AI system design; interviews should probe implementation depth because the described work is primarily security-focused.",
+  "competency_evidence": [
+    {
+      "competency": "rag",
+      "evidence_level": "PARTIAL_EVIDENCE",
+      "evidence": [
+        {
+          "evidence": "Tested whether instructions hidden in uploaded documents could redirect an assistant away from the user's request.",
+          "source": "Work Experience - Stoneleaf Assurance"
+        },
+        {
+          "evidence": "Verified that employees could not obtain another department's restricted records through generated answers.",
+          "source": "Work Experience - Stoneleaf Assurance"
+        },
+        {
+          "evidence": "Constructed fake pages containing hostile instructions and verified that restricted files remained inaccessible.",
+          "source": "Project - Document assistant abuse lab"
+        },
+        {
+          "evidence": "Produced remediation notes for an application whose passage-ranking implementation was owned by another team.",
+          "source": "Project - Document assistant abuse lab"
+        }
+      ],
+      "confidence": 0.95,
+      "probe_priority": "HIGH",
+      "reason": "The candidate worked directly with the security behavior of a document-grounded assistant and was exposed to passage ranking, but the resume does not establish ownership or substantial implementation of retrieval, indexing, ranking, or grounding pipelines."
+    },
+    {
+      "competency": "agentic_ai",
+      "evidence_level": "PARTIAL_EVIDENCE",
+      "evidence": [
+        {
+          "evidence": "Recent assignments covered assistants that request actions from internal services.",
+          "source": "Professional Summary"
+        },
+        {
+          "evidence": "Required action permissions to be checked by the receiving service rather than trusting text produced by a model.",
+          "source": "Work Experience - Stoneleaf Assurance"
+        },
+        {
+          "evidence": "Reviewed outbound requests for attempts to send confidential content to unapproved destinations.",
+          "source": "Work Experience - Stoneleaf Assurance"
+        }
+      ],
+      "confidence": 0.92,
+      "probe_priority": "HIGH",
+      "reason": "The resume shows meaningful security work around model-initiated actions and service interactions, but it does not describe designing or implementing agent loops, tool orchestration, planning, state management, or failure handling."
+    },
+    {
+      "competency": "ai_ml_llm_fundamentals",
+      "evidence_level": "PARTIAL_EVIDENCE",
+      "evidence": [
+        {
+          "evidence": "Tested whether instructions embedded in documents could redirect an assistant from the user's request.",
+          "source": "Work Experience - Stoneleaf Assurance"
+        },
+        {
+          "evidence": "Evaluated access to restricted records through model-generated answers.",
+          "source": "Work Experience - Stoneleaf Assurance"
+        },
+        {
+          "evidence": "Distinguished permissions enforced by a receiving service from text produced by a model.",
+          "source": "Work Experience - Stoneleaf Assurance"
+        }
+      ],
+      "confidence": 0.88,
+      "probe_priority": "HIGH",
+      "reason": "The work demonstrates practical familiarity with model instructions, generated output, and document-assisted behavior. The resume does not provide enough detail about model behavior, training or inference concepts, prompting, embeddings, tokenization, or other core AI/ML/LLM fundamentals to establish substantial breadth."
+    },
+    {
+      "competency": "ai_evaluation",
+      "evidence_level": "DEMONSTRATED",
+      "evidence": [
+        {
+          "evidence": "Created repeatable abuse cases and checked fixes before the product was reopened to staff.",
+          "source": "Work Experience - Stoneleaf Assurance"
+        },
+        {
+          "evidence": "Tested assistant behavior against instructions hidden in uploaded documents.",
+          "source": "Work Experience - Stoneleaf Assurance"
+        },
+        {
+          "evidence": "Verified that restricted records could not be obtained through generated answers.",
+          "source": "Work Experience - Stoneleaf Assurance"
+        },
+        {
+          "evidence": "Constructed hostile test pages, verified access-control outcomes, and produced remediation notes.",
+          "source": "Project - Document assistant abuse lab"
+        }
+      ],
+      "confidence": 0.94,
+      "probe_priority": "MEDIUM",
+      "reason": "The resume clearly documents repeatable, outcome-oriented security evaluation of AI-assisted applications and regression verification after fixes. An interview can clarify test coverage, metrics, automation, and evaluation methodology beyond abuse cases."
+    },
+    {
+      "competency": "python_software_engineering",
+      "evidence_level": "PARTIAL_EVIDENCE",
+      "evidence": [
+        {
+          "evidence": "Lists Python as a skill.",
+          "source": "Skills"
+        },
+        {
+          "evidence": "Wrote Python utilities for repeatable permission checks.",
+          "source": "Work Experience - Blue Acorn Services"
+        }
+      ],
+      "confidence": 0.9,
+      "probe_priority": "MEDIUM",
+      "reason": "The resume provides concrete evidence of Python utility development, but it does not describe codebase scale, testing practices, packaging, maintainability, APIs, concurrency, or production ownership."
+    },
+    {
+      "competency": "ai_system_design",
+      "evidence_level": "PARTIAL_EVIDENCE",
+      "evidence": [
+        {
+          "evidence": "Worked on assistants that read company documents and request actions from internal services.",
+          "source": "Professional Summary"
+        },
+        {
+          "evidence": "Required receiving services to enforce action permissions rather than trusting model-produced text.",
+          "source": "Work Experience - Stoneleaf Assurance"
+        },
+        {
+          "evidence": "Reviewed outbound requests for confidential content being sent to unapproved destinations.",
+          "source": "Work Experience - Stoneleaf Assurance"
+        },
+        {
+          "evidence": "Reviewed service endpoints and investigated exposed credentials.",
+          "source": "Work Experience - Blue Acorn Services"
+        }
+      ],
+      "confidence": 0.91,
+      "probe_priority": "MEDIUM",
+      "reason": "The resume shows concrete contributions to security boundaries in AI application architecture, particularly service-side authorization and outbound-request controls. It does not establish broader ownership of end-to-end AI architecture, reliability, scaling, observability, or model-serving design."
+    },
+    {
+      "competency": "ai_security",
+      "evidence_level": "DEMONSTRATED",
+      "evidence": [
+        {
+          "evidence": "Tested indirect prompt-injection behavior using hostile instructions hidden in uploaded documents.",
+          "source": "Work Experience - Stoneleaf Assurance"
+        },
+        {
+          "evidence": "Verified that generated answers did not expose restricted records belonging to other departments.",
+          "source": "Work Experience - Stoneleaf Assurance"
+        },
+        {
+          "evidence": "Required permissions for model-requested actions to be enforced by receiving services.",
+          "source": "Work Experience - Stoneleaf Assurance"
+        },
+        {
+          "evidence": "Reviewed outbound requests for attempts to exfiltrate confidential content to unapproved destinations.",
+          "source": "Work Experience - Stoneleaf Assurance"
+        },
+        {
+          "evidence": "Created repeatable abuse cases, validated fixes, and produced remediation guidance.",
+          "source": "Work Experience - Stoneleaf Assurance and Project - Document assistant abuse lab"
+        }
+      ],
+      "confidence": 0.99,
+      "probe_priority": "LOW",
+      "reason": "The resume contains extensive, specific evidence across prompt injection, authorization, data isolation, exfiltration controls, abuse-case development, remediation, and fix verification. Interview probing can focus on depth and decision rationale rather than establishing initial exposure."
+    }
+  ]
+}
