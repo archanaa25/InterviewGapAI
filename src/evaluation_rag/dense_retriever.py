@@ -16,6 +16,7 @@ from typing import TypedDict
 from dotenv import load_dotenv
 from openai import OpenAI
 from pinecone import Pinecone
+from src.observability import trace_span, traced
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
@@ -113,17 +114,18 @@ class EvaluationDenseRetriever:
 
     def _embed_query(self, query):
 
-        response = (
-            self.openai_client
-            .embeddings
-            .create(
+        with trace_span(
+            "evaluation_rag.embed_query", model=self.embedding_model,
+        ) as span:
+            response = self.openai_client.embeddings.create(
                 model=self.embedding_model,
                 input=query,
             )
-        )
+            span.set_attributes(total_tokens=response.usage.total_tokens)
 
         return response.data[0].embedding
 
+    @traced("evaluation_rag.dense_search")
     def search(
         self,
         query,
@@ -144,13 +146,18 @@ class EvaluationDenseRetriever:
             else {}
         )
 
-        response = self.index.query(
-            namespace=self.namespace,
-            vector=query_vector,
-            top_k=k,
-            include_metadata=True,
-            **query_options,
-        )
+        with trace_span(
+            "evaluation_rag.pinecone_search", namespace=self.namespace,
+            top_k=k, filters=filters,
+        ) as span:
+            response = self.index.query(
+                namespace=self.namespace,
+                vector=query_vector,
+                top_k=k,
+                include_metadata=True,
+                **query_options,
+            )
+            span.set_attributes(result_count=len(response.matches))
 
         results = []
 

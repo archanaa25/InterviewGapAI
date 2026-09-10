@@ -9,6 +9,7 @@ if __package__ in {None, ""}:
 from src.evaluation_rag.service import (
     retrieve_evaluation_context,
 )
+from src.observability import configure_observability, flush_telemetry, request_context
 
 
 def main():
@@ -25,11 +26,12 @@ def main():
 
     competency = "rag"
 
-    results = retrieve_evaluation_context(
-        question=question,
-        candidate_answer=candidate_answer,
-        competency=competency,
-    )
+    with request_context(interview_id="smoke-interview", question_id="smoke-question"):
+        results = retrieve_evaluation_context(
+            question=question,
+            candidate_answer=candidate_answer,
+            competency=competency,
+        )
 
     print("=" * 70)
     print("EVALUATION RAG SERVICE TEST")
@@ -45,4 +47,8 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    configure_observability(stream=sys.stderr)
+    try:
+        main()
+    finally:
+        flush_telemetry()

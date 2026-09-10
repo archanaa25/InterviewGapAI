@@ -18,6 +18,7 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
 from src.corpus.document_builder import load_jsonl
+from src.observability import traced
 from src.schemas.interview_plan import CompetencyTarget, InterviewPlan
 from src.schemas.interview_questions import (
     ExpectedConcepts,
@@ -387,6 +388,7 @@ def get_question_selector() -> QuestionSelector:
     return _default_selector
 
 
+@traced("interview.select_questions")
 def select_interview_questions(
     plan: InterviewPlan,
 ) -> InterviewQuestionSet:

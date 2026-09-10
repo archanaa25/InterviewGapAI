@@ -6,6 +6,7 @@ from openai import OpenAI
 from src.schemas.resume_analysis import ResumeAnalysis
 from src.schemas.interview_plan import InterviewPlan
 from src.planning.prompts import INTERVIEW_PLANNING_SYSTEM_PROMPT
+from src.observability import traced
 
 
 load_dotenv()
@@ -13,6 +14,7 @@ load_dotenv()
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 
+@traced("interview.plan")
 def create_interview_plan(
     resume_analysis: ResumeAnalysis,
 ) -> InterviewPlan:

@@ -6,6 +6,7 @@ from openai import OpenAI
 from src.schemas.resume import CandidateResume
 from src.schemas.resume_analysis import ResumeAnalysis
 from src.resume.analyzer_prompts import RESUME_ANALYSIS_SYSTEM_PROMPT
+from src.observability import traced
 
 
 load_dotenv()
@@ -13,6 +14,7 @@ load_dotenv()
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 
+@traced("resume.analyze")
 def analyze_resume(
     resume: CandidateResume,
 ) -> ResumeAnalysis:

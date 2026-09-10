@@ -7,6 +7,7 @@ requires-python = ">=3.10"
 dependencies = [
     "pydantic>=2,<3",
     "langchain-core>=1.6.2",
+    "langsmith>=0.12.2,<0.13",
     "openai>=3.8.0",
     "pinecone>=10.0.0",
     "python-dotenv>=1.2.3",
@@ -19,5 +20,6 @@ package = false
 [dependency-groups]
 dev = [
     "ipykernel>=7.3.0",
+    "ipywidgets>=8.1,<9",
     "jupyterlab>=4.6.3",
 ]

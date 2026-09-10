@@ -8,6 +8,7 @@ with Pinecone or the dense retriever.
 """
 
 from typing import List, Dict, Any
+from src.observability import log_event, traced
 
 from src.evaluation_rag.dense_retriever import (
     EvaluationDenseRetriever,
@@ -59,6 +60,7 @@ class EvaluationRAGService:
         return question
 
 
+    @traced("evaluation_rag.retrieve")
     def retrieve(
         self,
         question: str,
@@ -85,9 +87,18 @@ class EvaluationRAGService:
             competency=competency,
         )
 
+        log_event(
+            "evaluation_rag.results", competency=competency, top_k=self.k,
+            result_count=len(results),
+            evidence=[{
+                "evaluation_id": result["evaluation_id"],
+                "rank": result["rank"], "score": result["score"],
+            } for result in results],
+        )
         return results
 
 
+    @traced("evaluation_rag.retrieve_context")
     def retrieve_context(
         self,
         question: str,
@@ -140,6 +151,7 @@ def get_evaluation_rag_service():
     return _default_service
 
 
+@traced("evaluation_rag.request")
 def retrieve_evaluation_context(
     question: str,
     candidate_answer: str,

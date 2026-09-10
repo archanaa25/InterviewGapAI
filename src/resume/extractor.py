@@ -6,6 +6,7 @@ from openai import OpenAI
 
 from src.schemas.resume import CandidateResume
 from src.resume.prompts import RESUME_EXTRACTION_SYSTEM_PROMPT
+from src.observability import traced
 
 
 load_dotenv()
@@ -13,6 +14,7 @@ load_dotenv()
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 
+@traced("resume.extract")
 def extract_resume(
     resume_text: str,
     candidate_id: str,
