@@ -10,3 +10,6 @@ __pycache__/
 data/eval/results/**
 !data/eval/results/**/
 !data/eval/results/**/*.json
+
+# Local tool configuration (Serena MCP).
+.serena/
