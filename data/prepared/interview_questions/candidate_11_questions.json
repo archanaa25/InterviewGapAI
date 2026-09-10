@@ -1,0 +1,319 @@
+{
+  "candidate_id": "candidate_11",
+  "questions": [
+    {
+      "position": 1,
+      "question_id": "LLM-TOKEN-BAS-001",
+      "competency": "ai_ml_llm_fundamentals",
+      "sub_competency": "token",
+      "difficulty": "basic",
+      "question_type": "conceptual",
+      "question": "What is the role of tokenization in an NLP/LLM pipeline, and how are tokens represented for model processing?",
+      "expected_concepts": {
+        "must_have": [
+          "tokenization splits text into model-processable units",
+          "tokens are mapped to numerical identifiers or representations"
+        ],
+        "bonus": [
+          "word, subword, or character tokens"
+        ]
+      },
+      "evaluation_refs": [
+        "EVAL-LLM-TOKEN"
+      ],
+      "plan_reason": "Allocate two questions because the candidate has relevant applied assistant experience but only partial evidence of broader ML and LLM foundations. A basic question establishes conceptual breadth, while an intermediate question probes applied understanding of model behavior, embeddings, prompting, or inference tradeoffs.",
+      "retrieval": {
+        "query": "Allocate two questions because the candidate has relevant applied assistant experience but only partial evidence of broader ML and LLM foundations. A basic question establishes conceptual breadth, while an intermediate question probes applied understanding of model behavior, embeddings, prompting, or inference tradeoffs.",
+        "score": 0.469646871,
+        "rank": 1,
+        "requested_difficulty": "basic",
+        "filter_relaxed": false
+      }
+    },
+    {
+      "position": 2,
+      "question_id": "EVAL-RAG-BAS-001",
+      "competency": "ai_evaluation",
+      "sub_competency": "rag_evaluation",
+      "difficulty": "basic",
+      "question_type": "scenario",
+      "question": "What is the practical difference between context recall and context precision? If irrelevant chunks are frequently retrieved, which one is suffering and what would you improve?",
+      "expected_concepts": {
+        "must_have": [
+          "context recall measures whether needed evidence is retrieved",
+          "context precision measures whether retrieved context is relevant/useful",
+          "irrelevant chunks indicate low context precision"
+        ],
+        "bonus": [
+          "ranking",
+          "filtering",
+          "reranking"
+        ]
+      },
+      "evaluation_refs": [
+        "EVAL-KNOW-RAG"
+      ],
+      "plan_reason": "Allocate two questions due to high probing priority and limited evidence of systematic AI evaluation. A basic question checks core evaluation concepts, and an intermediate question explores practical construction of datasets, metrics, regression tests, experiments, or monitoring without treating the resume omission as weakness.",
+      "retrieval": {
+        "query": "Allocate two questions due to high probing priority and limited evidence of systematic AI evaluation. A basic question checks core evaluation concepts, and an intermediate question explores practical construction of datasets, metrics, regression tests, experiments, or monitoring without treating the resume omission as weakness.",
+        "score": 0.55302614,
+        "rank": 1,
+        "requested_difficulty": "basic",
+        "filter_relaxed": false
+      }
+    },
+    {
+      "position": 3,
+      "question_id": "SEC-PRIV-BAS-001",
+      "competency": "ai_security",
+      "sub_competency": "data_privacy",
+      "difficulty": "basic",
+      "question_type": "scenario",
+      "question": "What controls would you use to reduce the risk of an AI application exposing sensitive or private information?",
+      "expected_concepts": {
+        "must_have": [
+          "enforce authorization outside the model",
+          "limit data made available to the model",
+          "avoid unnecessary sensitive data exposure"
+        ],
+        "bonus": [
+          "redaction",
+          "least privilege"
+        ]
+      },
+      "evaluation_refs": [
+        "EVAL-SEC-PRIV"
+      ],
+      "plan_reason": "Allocate two questions because AI security has high probing priority and is not established by the resume. A basic question covers core threat and trust-boundary concepts, while an intermediate question probes practical safeguards for retrieval, sensitive data, authorization, prompt injection, and tool permissions; no advanced question is assigned solely because evidence is absent.",
+      "retrieval": {
+        "query": "Allocate two questions because AI security has high probing priority and is not established by the resume. A basic question covers core threat and trust-boundary concepts, while an intermediate question probes practical safeguards for retrieval, sensitive data, authorization, prompt injection, and tool permissions; no advanced question is assigned solely because evidence is absent.",
+        "score": 0.524992585,
+        "rank": 1,
+        "requested_difficulty": "basic",
+        "filter_relaxed": false
+      }
+    },
+    {
+      "position": 4,
+      "question_id": "AGENT-FUND-INT-001",
+      "competency": "agentic_ai",
+      "sub_competency": "agent_fundamentals",
+      "difficulty": "intermediate",
+      "question_type": "scenario",
+      "question": "Under what conditions or operational constraints are deterministic workflows preferred over agentic workflows? Give three concrete scenarios.",
+      "expected_concepts": {
+        "must_have": [
+          "deterministic workflows suit predictable fixed processes",
+          "fixed paths improve auditability/compliance",
+          "simpler workflows reduce cost/latency for high-volume low-variance tasks"
+        ],
+        "bonus": [
+          "caching",
+          "batching"
+        ]
+      },
+      "evaluation_refs": [
+        "EVAL-AGENT-FUND"
+      ],
+      "plan_reason": "Allocate one intermediate question to validate experience with multi-step workflow execution, human confirmation, and recovery of interrupted requests. This level tests practical reasoning about state and control flow without assuming broad production ownership beyond the stated contributions.",
+      "retrieval": {
+        "query": "Allocate one intermediate question to validate experience with multi-step workflow execution, human confirmation, and recovery of interrupted requests. This level tests practical reasoning about state and control flow without assuming broad production ownership beyond the stated contributions.",
+        "score": 0.508639753,
+        "rank": 1,
+        "requested_difficulty": "intermediate",
+        "filter_relaxed": false
+      }
+    },
+    {
+      "position": 5,
+      "question_id": "LLM-TOKEN-INT-002",
+      "competency": "ai_ml_llm_fundamentals",
+      "sub_competency": "token",
+      "difficulty": "intermediate",
+      "question_type": "design",
+      "question": "What trade-offs arise when choosing a very small versus very large tokenizer vocabulary?",
+      "expected_concepts": {
+        "must_have": [
+          "small vocabularies can increase sequence length",
+          "large vocabularies increase model or output-layer parameter cost"
+        ],
+        "bonus": [
+          "subword fragmentation",
+          "memory usage"
+        ]
+      },
+      "evaluation_refs": [
+        "EVAL-LLM-TOKEN"
+      ],
+      "plan_reason": "Allocate two questions because the candidate has relevant applied assistant experience but only partial evidence of broader ML and LLM foundations. A basic question establishes conceptual breadth, while an intermediate question probes applied understanding of model behavior, embeddings, prompting, or inference tradeoffs.",
+      "retrieval": {
+        "query": "Allocate two questions because the candidate has relevant applied assistant experience but only partial evidence of broader ML and LLM foundations. A basic question establishes conceptual breadth, while an intermediate question probes applied understanding of model behavior, embeddings, prompting, or inference tradeoffs.",
+        "score": 0.438620269,
+        "rank": 1,
+        "requested_difficulty": "intermediate",
+        "filter_relaxed": false
+      }
+    },
+    {
+      "position": 6,
+      "question_id": "EVAL-RAG-INT-001",
+      "competency": "ai_evaluation",
+      "sub_competency": "rag_evaluation",
+      "difficulty": "intermediate",
+      "question_type": "design",
+      "question": "How would you build an evaluation dataset to test whether a RAG assistant correctly abstains when supporting evidence is missing?",
+      "expected_concepts": {
+        "must_have": [
+          "include both answerable and unanswerable questions",
+          "unanswerable cases should lack supporting evidence",
+          "success requires answering supported questions and abstaining on unsupported ones"
+        ],
+        "bonus": [
+          "balanced dataset",
+          "false premises"
+        ]
+      },
+      "evaluation_refs": [
+        "EVAL-KNOW-RAG"
+      ],
+      "plan_reason": "Allocate two questions due to high probing priority and limited evidence of systematic AI evaluation. A basic question checks core evaluation concepts, and an intermediate question explores practical construction of datasets, metrics, regression tests, experiments, or monitoring without treating the resume omission as weakness.",
+      "retrieval": {
+        "query": "Allocate two questions due to high probing priority and limited evidence of systematic AI evaluation. A basic question checks core evaluation concepts, and an intermediate question explores practical construction of datasets, metrics, regression tests, experiments, or monitoring without treating the resume omission as weakness.",
+        "score": 0.621128678,
+        "rank": 1,
+        "requested_difficulty": "intermediate",
+        "filter_relaxed": false
+      }
+    },
+    {
+      "position": 7,
+      "question_id": "SEC-TOOL-INT-001",
+      "competency": "ai_security",
+      "sub_competency": "tool_security",
+      "difficulty": "intermediate",
+      "question_type": "design",
+      "question": "An AI agent can read customer records and also delete them. How would you reduce the risk of unintended or manipulated destructive actions?",
+      "expected_concepts": {
+        "must_have": [
+          "apply least-privilege tool permissions",
+          "separate read and write capabilities",
+          "require approval for high-risk irreversible actions"
+        ],
+        "bonus": [
+          "allowlists",
+          "schema validation",
+          "sandboxing"
+        ]
+      },
+      "evaluation_refs": [
+        "EVAL-SEC-TOOL"
+      ],
+      "plan_reason": "Allocate two questions because AI security has high probing priority and is not established by the resume. A basic question covers core threat and trust-boundary concepts, while an intermediate question probes practical safeguards for retrieval, sensitive data, authorization, prompt injection, and tool permissions; no advanced question is assigned solely because evidence is absent.",
+      "retrieval": {
+        "query": "Allocate two questions because AI security has high probing priority and is not established by the resume. A basic question covers core threat and trust-boundary concepts, while an intermediate question probes practical safeguards for retrieval, sensitive data, authorization, prompt injection, and tool permissions; no advanced question is assigned solely because evidence is absent.",
+        "score": 0.507471859,
+        "rank": 1,
+        "requested_difficulty": "intermediate",
+        "filter_relaxed": false
+      }
+    },
+    {
+      "position": 8,
+      "question_id": "RAG-RET-ADV-001",
+      "competency": "rag",
+      "sub_competency": "retrieval_search",
+      "difficulty": "advanced",
+      "question_type": "troubleshooting",
+      "question": "Your hybrid retriever improves Recall@10 but downstream answer quality decreases. How would you diagnose the pipeline?",
+      "expected_concepts": {
+        "must_have": [
+          "evaluate precision as well as recall",
+          "inspect noisy context",
+          "evaluate retrieval and generation separately",
+          "inspect context construction"
+        ],
+        "bonus": [
+          "reranking",
+          "MRR/NDCG",
+          "ablation testing"
+        ]
+      },
+      "evaluation_refs": [
+        "EVAL-RAG-RET"
+      ],
+      "plan_reason": "Allocate one advanced question to validate the resume's specific RAG evidence across context-preserving document preparation, source attribution, ambiguity handling, and incremental indexing. The advanced level should probe design tradeoffs and depth rather than merely confirm exposure.",
+      "retrieval": {
+        "query": "Allocate one advanced question to validate the resume's specific RAG evidence across context-preserving document preparation, source attribution, ambiguity handling, and incremental indexing. The advanced level should probe design tradeoffs and depth rather than merely confirm exposure.",
+        "score": 0.573479295,
+        "rank": 1,
+        "requested_difficulty": "advanced",
+        "filter_relaxed": false
+      }
+    },
+    {
+      "position": 9,
+      "question_id": "PY-APP-ADV-001",
+      "competency": "python_software_engineering",
+      "sub_competency": "application_design",
+      "difficulty": "advanced",
+      "question_type": "design",
+      "question": "How would you structure a Python service containing ingestion, retrieval, LLM calls, evaluation, and API endpoints so that individual components can evolve independently?",
+      "expected_concepts": {
+        "must_have": [
+          "define clear component boundaries",
+          "keep orchestration separate from infrastructure integrations",
+          "make dependencies testable and replaceable"
+        ],
+        "bonus": [
+          "configuration management",
+          "logging"
+        ]
+      },
+      "evaluation_refs": [
+        "EVAL-PY-DESIGN"
+      ],
+      "plan_reason": "Allocate one advanced question to validate the claimed five years of Python service development, including testing, background jobs, packaging, dependency maintenance, and supporting infrastructure. The level is justified by substantial professional evidence and should assess engineering tradeoffs rather than syntax recall.",
+      "retrieval": {
+        "query": "Allocate one advanced question to validate the claimed five years of Python service development, including testing, background jobs, packaging, dependency maintenance, and supporting infrastructure. The level is justified by substantial professional evidence and should assess engineering tradeoffs rather than syntax recall.",
+        "score": 0.490333587,
+        "rank": 1,
+        "requested_difficulty": "advanced",
+        "filter_relaxed": false
+      }
+    },
+    {
+      "position": 10,
+      "question_id": "SYS-ARCH-ADV-001",
+      "competency": "ai_system_design",
+      "sub_competency": "ai_architecture",
+      "difficulty": "advanced",
+      "question_type": "design",
+      "question": "Design a production AI assistant that uses enterprise knowledge and external tools. What boundaries would you create between retrieval, reasoning, tool execution, guardrails, and observability?",
+      "expected_concepts": {
+        "must_have": [
+          "separate retrieval/context from reasoning",
+          "tool execution should pass through controlled interfaces",
+          "guardrails and authorization protect risky actions",
+          "observability spans the workflow"
+        ],
+        "bonus": [
+          "human approval",
+          "evaluation"
+        ]
+      },
+      "evaluation_refs": [
+        "EVAL-SYS-ARCH"
+      ],
+      "plan_reason": "Allocate one advanced question to validate system-level reasoning suggested by incremental processing, durable workflow state, confirmation gates, background work, and service operations. The probe should test scalability, reliability, and architectural tradeoffs while preserving the distinction between documented contributions and unclaimed end-to-end ownership.",
+      "retrieval": {
+        "query": "Allocate one advanced question to validate system-level reasoning suggested by incremental processing, durable workflow state, confirmation gates, background work, and service operations. The probe should test scalability, reliability, and architectural tradeoffs while preserving the distinction between documented contributions and unclaimed end-to-end ownership.",
+        "score": 0.541361,
+        "rank": 1,
+        "requested_difficulty": "advanced",
+        "filter_relaxed": false
+      }
+    }
+  ],
+  "unfilled_slots": [],
+  "warnings": []
+}

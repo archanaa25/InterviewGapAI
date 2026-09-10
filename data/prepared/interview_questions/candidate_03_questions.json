@@ -1,0 +1,317 @@
+{
+  "candidate_id": "candidate_03",
+  "questions": [
+    {
+      "position": 1,
+      "question_id": "RAG-CTX-BAS-002",
+      "competency": "rag",
+      "sub_competency": "context_engineering",
+      "difficulty": "basic",
+      "question_type": "conceptual",
+      "question": "What is the 'lost in the middle' problem in long contexts, and why does it matter for RAG?",
+      "expected_concepts": {
+        "must_have": [
+          "buried information may be used less effectively",
+          "context selection/order affects quality"
+        ],
+        "bonus": [
+          "reranking",
+          "context reduction"
+        ]
+      },
+      "evaluation_refs": [
+        "EVAL-RAG-CTX"
+      ],
+      "plan_reason": "Allocate two questions because RAG has high probing priority and the resume does not establish retrieval, indexing, grounding, or reranking experience. A basic question checks core concepts, while an intermediate question probes practical design judgment without treating absent evidence as weakness.",
+      "retrieval": {
+        "query": "Allocate two questions because RAG has high probing priority and the resume does not establish retrieval, indexing, grounding, or reranking experience. A basic question checks core concepts, while an intermediate question probes practical design judgment without treating absent evidence as weakness.",
+        "score": 0.56220758,
+        "rank": 1,
+        "requested_difficulty": "basic",
+        "filter_relaxed": false
+      }
+    },
+    {
+      "position": 2,
+      "question_id": "LLM-TRANS-BAS-001",
+      "competency": "ai_ml_llm_fundamentals",
+      "sub_competency": "transformer_architecture",
+      "difficulty": "basic",
+      "question_type": "conceptual",
+      "question": "Using a simple analogy, what roles do Query, Key, and Value play in self-attention?",
+      "expected_concepts": {
+        "must_have": [
+          "Query represents what a token is looking for",
+          "Key represents what other tokens can match against",
+          "Value carries information that can be aggregated"
+        ],
+        "bonus": [
+          "attention weights"
+        ]
+      },
+      "evaluation_refs": [
+        "EVAL-LLM-TRANS"
+      ],
+      "plan_reason": "Allocate two questions because this is a high-priority unknown area despite relevant assistant-building context. A basic question establishes conceptual foundations, and an intermediate question tests applied understanding of model behavior and limitations without assuming the implementation used particular models.",
+      "retrieval": {
+        "query": "Allocate two questions because this is a high-priority unknown area despite relevant assistant-building context. A basic question establishes conceptual foundations, and an intermediate question tests applied understanding of model behavior and limitations without assuming the implementation used particular models.",
+        "score": 0.412743628,
+        "rank": 1,
+        "requested_difficulty": "basic",
+        "filter_relaxed": false
+      }
+    },
+    {
+      "position": 3,
+      "question_id": "RAG-EVAL-INT-002",
+      "competency": "rag",
+      "sub_competency": "rag_evaluation",
+      "difficulty": "intermediate",
+      "question_type": "conceptual",
+      "question": "When generating synthetic RAG evaluation questions, what do groundedness, relevance, and stand-alone quality checks verify?",
+      "expected_concepts": {
+        "must_have": [
+          "groundedness verifies source support",
+          "relevance verifies usefulness",
+          "stand-alone verifies independent understandability"
+        ],
+        "bonus": [
+          "critique filtering",
+          "dataset quality"
+        ]
+      },
+      "evaluation_refs": [
+        "EVAL-RAG-EVAL"
+      ],
+      "plan_reason": "Allocate two questions because RAG has high probing priority and the resume does not establish retrieval, indexing, grounding, or reranking experience. A basic question checks core concepts, while an intermediate question probes practical design judgment without treating absent evidence as weakness.",
+      "retrieval": {
+        "query": "Allocate two questions because RAG has high probing priority and the resume does not establish retrieval, indexing, grounding, or reranking experience. A basic question checks core concepts, while an intermediate question probes practical design judgment without treating absent evidence as weakness.",
+        "score": 0.588227689,
+        "rank": 1,
+        "requested_difficulty": "intermediate",
+        "filter_relaxed": false
+      }
+    },
+    {
+      "position": 4,
+      "question_id": "LLM-TRANS-INT-002",
+      "competency": "ai_ml_llm_fundamentals",
+      "sub_competency": "transformer_architecture",
+      "difficulty": "intermediate",
+      "question_type": "conceptual",
+      "question": "Why does a Transformer use multiple attention heads instead of only one attention calculation?",
+      "expected_concepts": {
+        "must_have": [
+          "multiple heads can capture different relationships in parallel",
+          "head outputs are combined into a richer representation"
+        ],
+        "bonus": [
+          "syntactic and semantic relationships"
+        ]
+      },
+      "evaluation_refs": [
+        "EVAL-LLM-TRANS"
+      ],
+      "plan_reason": "Allocate two questions because this is a high-priority unknown area despite relevant assistant-building context. A basic question establishes conceptual foundations, and an intermediate question tests applied understanding of model behavior and limitations without assuming the implementation used particular models.",
+      "retrieval": {
+        "query": "Allocate two questions because this is a high-priority unknown area despite relevant assistant-building context. A basic question establishes conceptual foundations, and an intermediate question tests applied understanding of model behavior and limitations without assuming the implementation used particular models.",
+        "score": 0.404768616,
+        "rank": 1,
+        "requested_difficulty": "intermediate",
+        "filter_relaxed": false
+      }
+    },
+    {
+      "position": 5,
+      "question_id": "EVAL-RAG-INT-001",
+      "competency": "ai_evaluation",
+      "sub_competency": "rag_evaluation",
+      "difficulty": "intermediate",
+      "question_type": "design",
+      "question": "How would you build an evaluation dataset to test whether a RAG assistant correctly abstains when supporting evidence is missing?",
+      "expected_concepts": {
+        "must_have": [
+          "include both answerable and unanswerable questions",
+          "unanswerable cases should lack supporting evidence",
+          "success requires answering supported questions and abstaining on unsupported ones"
+        ],
+        "bonus": [
+          "balanced dataset",
+          "false premises"
+        ]
+      },
+      "evaluation_refs": [
+        "EVAL-KNOW-RAG"
+      ],
+      "plan_reason": "Allocate two questions to validate documented scenario-based and interruption testing and to clarify broader evaluation rigor. The intermediate question probes metrics, coverage, and automation; the advanced question examines evaluation of complex failures and action-oriented system behavior.",
+      "retrieval": {
+        "query": "Allocate two questions to validate documented scenario-based and interruption testing and to clarify broader evaluation rigor. The intermediate question probes metrics, coverage, and automation; the advanced question examines evaluation of complex failures and action-oriented system behavior.",
+        "score": 0.515374601,
+        "rank": 1,
+        "requested_difficulty": "intermediate",
+        "filter_relaxed": false
+      }
+    },
+    {
+      "position": 6,
+      "question_id": "PY-ERR-INT-001",
+      "competency": "python_software_engineering",
+      "sub_competency": "error_handling",
+      "difficulty": "intermediate",
+      "question_type": "scenario",
+      "question": "An external AI service intermittently times out or returns errors. How would you make your application resilient without retrying forever?",
+      "expected_concepts": {
+        "must_have": [
+          "use bounded retries",
+          "apply timeouts",
+          "handle persistent failure safely"
+        ],
+        "bonus": [
+          "backoff",
+          "fallbacks",
+          "observability"
+        ]
+      },
+      "evaluation_refs": [
+        "EVAL-PY-API"
+      ],
+      "plan_reason": "Allocate one intermediate question to validate four years of Python service-engineering evidence, including APIs, persistence, queues, idempotency, and failure diagnosis. Intermediate difficulty provides meaningful validation while preserving room for broader AI coverage.",
+      "retrieval": {
+        "query": "Allocate one intermediate question to validate four years of Python service-engineering evidence, including APIs, persistence, queues, idempotency, and failure diagnosis. Intermediate difficulty provides meaningful validation while preserving room for broader AI coverage.",
+        "score": 0.540480077,
+        "rank": 1,
+        "requested_difficulty": "intermediate",
+        "filter_relaxed": false
+      }
+    },
+    {
+      "position": 7,
+      "question_id": "SEC-OUT-INT-001",
+      "competency": "ai_security",
+      "sub_competency": "guardrails",
+      "difficulty": "intermediate",
+      "question_type": "conceptual",
+      "question": "Why should an application validate or safely handle LLM output before using it as input to another system or executable tool?",
+      "expected_concepts": {
+        "must_have": [
+          "LLM output should be treated as untrusted",
+          "downstream execution needs validation and sanitization"
+        ],
+        "bonus": [
+          "structured schemas",
+          "allowlists"
+        ]
+      },
+      "evaluation_refs": [
+        "EVAL-SEC-GUARD"
+      ],
+      "plan_reason": "Allocate one intermediate question to validate documented controls such as action allowlists, argument validation, approval gates, and execution limits, while probing how they relate to authorization, untrusted input, and threat modeling.",
+      "retrieval": {
+        "query": "Allocate one intermediate question to validate documented controls such as action allowlists, argument validation, approval gates, and execution limits, while probing how they relate to authorization, untrusted input, and threat modeling.",
+        "score": 0.562907159,
+        "rank": 1,
+        "requested_difficulty": "intermediate",
+        "filter_relaxed": false
+      }
+    },
+    {
+      "position": 8,
+      "question_id": "AGENT-REL-ADV-001",
+      "competency": "agentic_ai",
+      "sub_competency": "agent_reliability",
+      "difficulty": "advanced",
+      "question_type": "design",
+      "question": "How would you design guardrails for an agent that can call tools with real-world side effects?",
+      "expected_concepts": {
+        "must_have": [
+          "tool allowlisting",
+          "schema/input validation",
+          "scoped permissions",
+          "human confirmation for risky writes",
+          "sandboxing"
+        ],
+        "bonus": [
+          "read/write separation"
+        ]
+      },
+      "evaluation_refs": [
+        "EVAL-AGENT-REL"
+      ],
+      "plan_reason": "Allocate one advanced question to validate the strong, specific claims involving bounded actions, durable execution state, interruption recovery, non-progress limits, and human handoff. The depth of the documented professional work supports a focused advanced probe.",
+      "retrieval": {
+        "query": "Allocate one advanced question to validate the strong, specific claims involving bounded actions, durable execution state, interruption recovery, non-progress limits, and human handoff. The depth of the documented professional work supports a focused advanced probe.",
+        "score": 0.489695251,
+        "rank": 1,
+        "requested_difficulty": "advanced",
+        "filter_relaxed": false
+      }
+    },
+    {
+      "position": 9,
+      "question_id": "EVAL-AGENT-ADV-001",
+      "competency": "ai_evaluation",
+      "sub_competency": "agent_evaluation",
+      "difficulty": "advanced",
+      "question_type": "troubleshooting",
+      "question": "How would you debug a multi-turn agent that succeeds on simple requests but repeatedly fails at a later conversation turn?",
+      "expected_concepts": {
+        "must_have": [
+          "start with end-to-end task success",
+          "use step-level diagnostics after locating failure",
+          "test the failing request independently",
+          "reintroduce prior conversation context to isolate context-related failure"
+        ],
+        "bonus": [
+          "N-1 testing",
+          "tool choice",
+          "context retention"
+        ]
+      },
+      "evaluation_refs": [
+        "EVAL-KNOW-AGENT"
+      ],
+      "plan_reason": "Allocate two questions to validate documented scenario-based and interruption testing and to clarify broader evaluation rigor. The intermediate question probes metrics, coverage, and automation; the advanced question examines evaluation of complex failures and action-oriented system behavior.",
+      "retrieval": {
+        "query": "Allocate two questions to validate documented scenario-based and interruption testing and to clarify broader evaluation rigor. The intermediate question probes metrics, coverage, and automation; the advanced question examines evaluation of complex failures and action-oriented system behavior.",
+        "score": 0.529977739,
+        "rank": 1,
+        "requested_difficulty": "advanced",
+        "filter_relaxed": false
+      }
+    },
+    {
+      "position": 10,
+      "question_id": "SYS-ARCH-ADV-001",
+      "competency": "ai_system_design",
+      "sub_competency": "ai_architecture",
+      "difficulty": "advanced",
+      "question_type": "design",
+      "question": "Design a production AI assistant that uses enterprise knowledge and external tools. What boundaries would you create between retrieval, reasoning, tool execution, guardrails, and observability?",
+      "expected_concepts": {
+        "must_have": [
+          "separate retrieval/context from reasoning",
+          "tool execution should pass through controlled interfaces",
+          "guardrails and authorization protect risky actions",
+          "observability spans the workflow"
+        ],
+        "bonus": [
+          "human approval",
+          "evaluation"
+        ]
+      },
+      "evaluation_refs": [
+        "EVAL-SYS-ARCH"
+      ],
+      "plan_reason": "Allocate one advanced question to validate the demonstrated design of reliable assistant workflows spanning external services, durable state, bounded execution, idempotency, and operational handoff. The evidence supports probing system-level trade-offs and failure handling.",
+      "retrieval": {
+        "query": "Allocate one advanced question to validate the demonstrated design of reliable assistant workflows spanning external services, durable state, bounded execution, idempotency, and operational handoff. The evidence supports probing system-level trade-offs and failure handling.",
+        "score": 0.570371211,
+        "rank": 1,
+        "requested_difficulty": "advanced",
+        "filter_relaxed": false
+      }
+    }
+  ],
+  "unfilled_slots": [],
+  "warnings": []
+}
