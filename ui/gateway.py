@@ -2,11 +2,15 @@
 
 from __future__ import annotations
 
+import logging
 from collections.abc import Callable
 from dataclasses import dataclass
 from typing import Any
 
 from ui.resume_upload import ExtractedResume
+
+
+_logger = logging.getLogger("interviewgap.ui.gateway")
 
 
 class IntakeIntegrationError(RuntimeError):
@@ -15,6 +19,23 @@ class IntakeIntegrationError(RuntimeError):
     def __init__(self, stage: str, message: str) -> None:
         super().__init__(message)
         self.stage = stage
+
+
+@dataclass(frozen=True, slots=True)
+class CandidatePlan:
+    """
+    Everything the plan screen needs, without the questions.
+
+    Stages 1-3 answer "what will this interview cover and why", which is all
+    the candidate is shown before starting. Question selection is a separate
+    phase so that its latency lands while the plan is on screen rather than
+    in front of it.
+    """
+
+    upload: ExtractedResume
+    resume: Any
+    analysis: Any
+    plan: Any
 
 
 @dataclass(frozen=True, slots=True)
@@ -28,15 +49,15 @@ class CandidateIntake:
     question_set: Any
 
 
-def build_candidate_intake(
+def build_candidate_plan(
     upload: ExtractedResume,
     *,
     resume_extractor: Callable[[str, str], Any] | None = None,
     resume_analyzer: Callable[[Any], Any] | None = None,
     interview_planner: Callable[[Any], Any] | None = None,
-    question_selector: Callable[[Any], Any] | None = None,
-) -> CandidateIntake:
-    """Run the existing four-stage intake pipeline without changing its code."""
+    on_stage: Callable[[str], None] | None = None,
+) -> CandidatePlan:
+    """Run intake stages 1-3: resume text to a validated interview plan."""
 
     if resume_extractor is None:
         from src.resume.extractor import extract_resume as resume_extractor
@@ -46,18 +67,49 @@ def build_candidate_intake(
         from src.planning.interview_planner import (
             create_interview_plan as interview_planner,
         )
+
+    resume = _run_stage(
+        "resume extraction",
+        lambda: resume_extractor(upload.text, upload.candidate_id),
+        on_stage,
+    )
+    analysis = _run_stage(
+        "resume analysis",
+        lambda: resume_analyzer(resume),
+        on_stage,
+    )
+    plan = _run_stage(
+        "interview planning",
+        lambda: interview_planner(analysis),
+        on_stage,
+    )
+
+    return CandidatePlan(
+        upload=upload,
+        resume=resume,
+        analysis=analysis,
+        plan=plan,
+    )
+
+
+def resolve_interview_questions(
+    prepared: CandidatePlan,
+    *,
+    question_selector: Callable[[Any], Any] | None = None,
+    on_stage: Callable[[str], None] | None = None,
+) -> CandidateIntake:
+    """Run intake stage 4: resolve the plan's slots to corpus questions."""
+
     if question_selector is None:
         from src.interview.question_selector import (
             select_interview_questions as question_selector,
         )
 
-    resume = _run_stage(
-        "resume extraction",
-        lambda: resume_extractor(upload.text, upload.candidate_id),
+    question_set = _run_stage(
+        "question selection",
+        lambda: question_selector(prepared.plan),
+        on_stage,
     )
-    analysis = _run_stage("resume analysis", lambda: resume_analyzer(resume))
-    plan = _run_stage("interview planning", lambda: interview_planner(analysis))
-    question_set = _run_stage("question selection", lambda: question_selector(plan))
 
     if not question_set.is_complete:
         raise IntakeIntegrationError(
@@ -67,22 +119,59 @@ def build_candidate_intake(
         )
 
     return CandidateIntake(
-        upload=upload,
-        resume=resume,
-        analysis=analysis,
-        plan=plan,
+        upload=prepared.upload,
+        resume=prepared.resume,
+        analysis=prepared.analysis,
+        plan=prepared.plan,
         question_set=question_set,
     )
 
 
-def _run_stage(stage: str, operation: Callable[[], Any]) -> Any:
+def build_candidate_intake(
+    upload: ExtractedResume,
+    *,
+    resume_extractor: Callable[[str, str], Any] | None = None,
+    resume_analyzer: Callable[[Any], Any] | None = None,
+    interview_planner: Callable[[Any], Any] | None = None,
+    question_selector: Callable[[Any], Any] | None = None,
+    on_stage: Callable[[str], None] | None = None,
+) -> CandidateIntake:
+    """Run the existing four-stage intake pipeline without changing its code."""
+
+    prepared = build_candidate_plan(
+        upload,
+        resume_extractor=resume_extractor,
+        resume_analyzer=resume_analyzer,
+        interview_planner=interview_planner,
+        on_stage=on_stage,
+    )
+
+    return resolve_interview_questions(
+        prepared,
+        question_selector=question_selector,
+        on_stage=on_stage,
+    )
+
+
+def _run_stage(
+    stage: str,
+    operation: Callable[[], Any],
+    on_stage: Callable[[str], None] | None = None,
+) -> Any:
     """Convert backend exceptions into a stable UI-facing integration error."""
+
+    if on_stage is not None:
+        on_stage(stage)
 
     try:
         return operation()
     except IntakeIntegrationError:
         raise
     except Exception as error:
+        # The candidate-facing message stays deliberately vague, but an
+        # operator reading the server log needs the real cause: without it a
+        # transient rate limit and a misconfigured key look identical.
+        _logger.exception("intake stage %r failed", stage)
         raise IntakeIntegrationError(
             stage,
             f"The {stage} stage could not complete. Check runtime configuration "
@@ -90,4 +179,11 @@ def _run_stage(stage: str, operation: Callable[[], Any]) -> Any:
         ) from error
 
 
-__all__ = ["CandidateIntake", "IntakeIntegrationError", "build_candidate_intake"]
+__all__ = [
+    "CandidateIntake",
+    "CandidatePlan",
+    "IntakeIntegrationError",
+    "build_candidate_intake",
+    "build_candidate_plan",
+    "resolve_interview_questions",
+]

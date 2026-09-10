@@ -212,5 +212,64 @@ class QuestionSelectorFallbackTests(unittest.TestCase):
         self.assertIn("RAG-BAS-001", result.warnings[0])
 
 
+class QuestionSelectorPrefetchTests(unittest.TestCase):
+    """Concurrent prefetch must not change what the sequential pass produces."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.records = load_jsonl(DEFAULT_CORPUS_PATH)
+        cls.plan = InterviewPlan.model_validate(
+            json.loads(PLAN_PATH.read_text(encoding="utf-8"))
+        )
+
+    def _select(self, prefetch):
+        selector = QuestionSelector(retriever=FakeRetriever(self.records))
+
+        if not prefetch:
+            selector._prefetch_buckets = lambda plan: {}
+
+        return selector.select(self.plan)
+
+    def test_prefetched_selection_matches_sequential_selection(self):
+        serial = self._select(prefetch=False)
+        parallel = self._select(prefetch=True)
+
+        self.assertEqual(
+            [question.question_id for question in serial.questions],
+            [question.question_id for question in parallel.questions],
+        )
+        self.assertEqual(
+            serial.model_dump_json(),
+            parallel.model_dump_json(),
+        )
+
+    def test_bucket_is_retrieved_once_when_prefetched(self):
+        retriever = FakeRetriever(self.records)
+        selector = QuestionSelector(retriever=retriever)
+
+        selector.select(self.plan)
+
+        # A cached bucket must be consumed, not re-fetched by the pass that
+        # follows it. Duplicate (competency, difficulty) calls would mean the
+        # cache key and the call site have drifted apart.
+        keys = [
+            (metadata["expected_competency"], metadata["difficulty_target"])
+            for _, _, metadata in retriever.calls
+        ]
+        self.assertEqual(len(keys), len(set(keys)))
+
+    def test_failed_prefetch_falls_back_to_an_inline_call(self):
+        selector = QuestionSelector(retriever=FakeRetriever(self.records))
+
+        # A prefetch that returns nothing stands in for one that raised: the
+        # sequential pass must still fill every slot on its own.
+        selector._prefetch_buckets = lambda plan: {}
+
+        result = selector.select(self.plan)
+
+        self.assertTrue(result.is_complete, result.unfilled_slots)
+        self.assertEqual(len(result.questions), 10)
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -14,6 +14,7 @@ Selected retrieval configuration:
     - competency + difficulty metadata filtering
 """
 
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
@@ -76,6 +77,7 @@ class QuestionSelector:
         corpus_path: Optional[Path] = None,
         retriever: Any = None,
         overfetch: int = 5,
+        prefetch_workers: int = 8,
     ):
 
         self.corpus_path = Path(
@@ -87,6 +89,10 @@ class QuestionSelector:
         self._retriever = retriever
 
         self.overfetch = overfetch
+
+        # Bounded so a large plan cannot open an unbounded number of
+        # sockets against OpenAI and Pinecone at once.
+        self.prefetch_workers = prefetch_workers
 
         self._corpus: Optional[Dict[str, dict]] = None
 
@@ -134,6 +140,13 @@ class QuestionSelector:
         incomplete set is usable; this method does not silently pad it.
         """
 
+        # Retrieval is the slowest part of this stage and every primary
+        # bucket's query is known from the plan alone, so the round trips run
+        # concurrently up front. Slot filling below stays sequential because
+        # used_ids deduplicates across slots, which makes the order in which
+        # buckets consume questions part of the result.
+        cache = self._prefetch_buckets(plan)
+
         used_ids: set[str] = set()
         selected: List[Tuple[str, SelectedQuestion]] = []
         unfilled: List[UnfilledSlot] = []
@@ -154,6 +167,7 @@ class QuestionSelector:
                     count=count,
                     used_ids=used_ids,
                     warnings=warnings,
+                    cache=cache,
                 )
 
                 selected.extend(
@@ -185,6 +199,84 @@ class QuestionSelector:
             warnings=warnings,
         )
 
+    def _search(
+        self,
+        query: str,
+        competency: str,
+        difficulty: str,
+        k: int,
+    ) -> List[dict]:
+        """One filtered retrieval call. The only network work in this stage."""
+
+        return self.retriever.search(
+            query,
+            k=k,
+            metadata={
+                "expected_competency": competency,
+                "difficulty_target": difficulty,
+            },
+        )
+
+    def _prefetch_buckets(
+        self,
+        plan: InterviewPlan,
+    ) -> Dict[Tuple[str, str, str, int], List[dict]]:
+        """
+        Retrieve every primary bucket concurrently, keyed for the pass below.
+
+        A failed prefetch is not raised here. The sequential pass misses the
+        cache for that bucket and calls it again inline, so a transient error
+        surfaces at the point that actually needs the result rather than
+        aborting the whole plan.
+        """
+
+        requests = []
+
+        for target in plan.competency_targets:
+
+            for difficulty in DIFFICULTIES:
+
+                count = getattr(target, difficulty)
+
+                if count == 0:
+                    continue
+
+                requests.append(
+                    (
+                        target.reason,
+                        target.competency.value,
+                        difficulty,
+                        count + self.overfetch,
+                    )
+                )
+
+        if not requests:
+            return {}
+
+        # Build the retriever before the pool starts so the lazy property is
+        # not raced into existence by several workers at once.
+        self.retriever
+
+        cache: Dict[Tuple[str, str, str, int], List[dict]] = {}
+
+        with ThreadPoolExecutor(
+            max_workers=min(len(requests), self.prefetch_workers),
+        ) as pool:
+
+            futures = {
+                pool.submit(self._search, *request): request
+                for request in requests
+            }
+
+            for future, request in futures.items():
+
+                try:
+                    cache[request] = future.result()
+                except Exception:
+                    continue
+
+        return cache
+
     def _fill_slot(
         self,
         target: CompetencyTarget,
@@ -192,6 +284,7 @@ class QuestionSelector:
         count: int,
         used_ids: set[str],
         warnings: List[str],
+        cache: Optional[Dict[Tuple[str, str, str, int], List[dict]]] = None,
     ) -> Tuple[List[SelectedQuestion], int]:
         """Take up to count unused questions for one plan slot."""
 
@@ -210,6 +303,7 @@ class QuestionSelector:
             requested_difficulty=difficulty,
             filter_relaxed=False,
             target=target,
+            cache=cache,
         )
 
         for fallback in DIFFICULTY_FALLBACKS[difficulty]:
@@ -228,6 +322,7 @@ class QuestionSelector:
                     requested_difficulty=difficulty,
                     filter_relaxed=True,
                     target=target,
+                    cache=cache,
                 )
             )
 
@@ -244,6 +339,7 @@ class QuestionSelector:
         requested_difficulty: str,
         filter_relaxed: bool,
         target: CompetencyTarget,
+        cache: Optional[Dict[Tuple[str, str, str, int], List[dict]]] = None,
     ) -> List[SelectedQuestion]:
         """Retrieve one bucket and convert its unused hits into questions."""
 
@@ -252,14 +348,17 @@ class QuestionSelector:
 
         # Over-fetch so questions already used by an earlier slot can be
         # skipped without a second retrieval call.
-        results = self.retriever.search(
-            query,
-            k=wanted + self.overfetch,
-            metadata={
-                "expected_competency": competency,
-                "difficulty_target": difficulty,
-            },
-        )
+        k = wanted + self.overfetch
+
+        # A prefetched bucket is consumed once. Fallback buckets miss the
+        # cache by design: their k depends on how many questions earlier
+        # slots took, so they cannot be predicted before the pass runs.
+        results = None
+        if cache is not None:
+            results = cache.pop((query, competency, difficulty, k), None)
+
+        if results is None:
+            results = self._search(query, competency, difficulty, k)
 
         collected: List[SelectedQuestion] = []
 

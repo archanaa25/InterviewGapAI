@@ -261,6 +261,91 @@ APP_STYLES = """
     border-color: #26364d !important;
   }
 
+
+  /* ---- Stage 1: what we read from the resume ---------------------- */
+  .ig-facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem 1.9rem;
+    align-items: baseline;
+    padding: 1rem 1.15rem;
+    border: 1px solid var(--ig-line);
+    border-radius: 14px;
+    background: linear-gradient(145deg, #ffffff, #f5fafb);
+    margin-bottom: .35rem;
+  }
+  .ig-fact-label {
+    display: block;
+    font-size: .6rem;
+    letter-spacing: .11em;
+    text-transform: uppercase;
+    color: #8793a2;
+    margin-bottom: .12rem;
+  }
+  .ig-fact-value { font-size: .95rem; font-weight: 650; color: var(--ig-ink); }
+  .ig-chips { display: flex; flex-wrap: wrap; gap: .3rem; margin: .1rem 0 .2rem; }
+  .ig-chip {
+    font-size: .72rem;
+    padding: .18rem .55rem;
+    border-radius: 999px;
+    background: #e9f6fa;
+    color: #166985;
+    border: 1px solid #cfe7ef;
+  }
+
+  /* ---- Stage 2: evidence, framed as coverage not deficit ----------- */
+  .ig-ev {
+    display: flex;
+    align-items: flex-start;
+    gap: .7rem;
+    padding: .7rem .9rem;
+    border: 1px solid var(--ig-line);
+    border-left: 3px solid var(--ig-line);
+    border-radius: 11px;
+    background: #ffffff;
+    margin-bottom: .4rem;
+  }
+  .ig-ev-shown   { border-left-color: #4fae6b; background: linear-gradient(100deg,#f6fdf8,#ffffff 45%); }
+  .ig-ev-partial { border-left-color: var(--ig-teal); background: linear-gradient(100deg,#f3fbfc,#ffffff 45%); }
+  .ig-ev-explore { border-left-color: var(--ig-blue); background: linear-gradient(100deg,#f2f9fd,#ffffff 45%); }
+  .ig-ev-mark { font-size: 1rem; line-height: 1.35; }
+  .ig-ev-body { flex: 1; min-width: 0; }
+  .ig-ev-name { font-weight: 680; font-size: .88rem; color: var(--ig-ink); }
+  .ig-ev-state { font-size: .73rem; color: #56657c; margin-top: .1rem; }
+  .ig-ev-count {
+    font-size: .68rem;
+    color: #56657c;
+    white-space: nowrap;
+    padding-top: .12rem;
+  }
+
+  /* ---- Stage 2: headline counts instead of a wall of prose --------- */
+  .ig-tally { display: flex; flex-wrap: wrap; gap: .55rem; margin: .1rem 0 .8rem; }
+  .ig-tally-item {
+    flex: 1 1 130px;
+    padding: .65rem .8rem;
+    border-radius: 12px;
+    border: 1px solid var(--ig-line);
+    background: #ffffff;
+  }
+  .ig-tally-n { font-size: 1.5rem; font-weight: 720; line-height: 1.1; color: var(--ig-ink); }
+  .ig-tally-l { font-size: .68rem; letter-spacing: .05em; color: #607087; margin-top: .1rem; }
+  .ig-summary {
+    border-left: 3px solid var(--ig-teal);
+    padding: .6rem .95rem;
+    margin: .1rem 0 .2rem;
+    background: var(--ig-soft);
+    border-radius: 0 11px 11px 0;
+    color: #3d4b61;
+    font-size: .87rem;
+    line-height: 1.55;
+  }
+  .ig-reassure {
+    font-size: .78rem;
+    color: #56657c;
+    margin: .15rem 0 .1rem;
+  }
+
   @media (max-width: 700px) {
     [data-testid="stMainBlockContainer"] {
       margin-top: .5rem;
@@ -269,6 +354,7 @@ APP_STYLES = """
     }
     .ig-header { align-items: flex-start; }
     .ig-steps { gap: .35rem; font-size: .62rem; }
+    .ig-facts { gap: .45rem 1.1rem; }
   }
 </style>
 """
