@@ -57,9 +57,6 @@ Across all competency targets:
 
 sum(basic) + sum(intermediate) + sum(advanced) = 10
 
-The per-competency difficulty totals must exactly match the overall
-difficulty_distribution.
-
 DIFFICULTY SELECTION
 
 Choose difficulty using the candidate's overall professional background,
@@ -83,9 +80,10 @@ validation is appropriate.
 The complete interview should contain a reasonable mixture of basic,
 intermediate, and advanced questions.
 
-Explain each competency and difficulty allocation in its reason.
+Explain each competency and difficulty allocation in its reason, in at most
+20 words. Say what drove that allocation; do not restate these rules.
 
-Explain the overall difficulty strategy in strategy.rationale.
+Explain the overall difficulty strategy in rationale, in at most 40 words.
 
 IMPORTANT INTERPRETATION RULES
 
@@ -102,20 +100,17 @@ Interview performance will later determine demonstrated skill gaps.
 
 OUTPUT REQUIREMENTS
 
-Set:
+Return the per-competency allocation and the overall rationale only.
 
-validate_claimed_strengths = true
-probe_unknown_areas = true
-avoid_resume_based_negative_assumptions = true
-
-Use the supplied candidate ID.
+Do not restate the totals: the overall difficulty distribution and the total
+question count are summed from your per-competency allocation.
 
 The resulting competency + difficulty allocations will later be used by
 Question RAG to retrieve questions using metadata filters:
 
 competency + difficulty
 
-Return only the requested structured InterviewPlan.
+Return only the requested structured allocation.
 
 Do not:
 - generate actual interview questions

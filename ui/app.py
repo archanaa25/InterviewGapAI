@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import html
 import sys
 from pathlib import Path
@@ -22,11 +23,21 @@ if str(PROJECT_ROOT) not in sys.path:
 # that names the wrong cause.
 load_dotenv(PROJECT_ROOT / ".env", override=True)
 
+from src.observability import configure_observability
+
+# Application startup owns configuration (see docs/OBSERVABILITY.md). Without
+# this, src.observability's logger has no handler and every stage failure
+# vanishes silently instead of reaching stdout as a structured event.
+# Streamlit re-executes this module on every rerun; repeated calls replace
+# the handler rather than duplicate it, so that is safe here.
+configure_observability()
+
 from ui.gateway import (
     CandidateIntake,
     CandidatePlan,
     IntakeIntegrationError,
     build_candidate_plan,
+    prefetch_resume,
     resolve_interview_questions,
 )
 from ui.resume_upload import (
@@ -42,6 +53,7 @@ SCREEN_KEY = "ig_screen"
 PLAN_KEY = "ig_plan"
 INTAKE_KEY = "ig_intake"
 PROGRESS_KEY = "ig_progress"
+PREFETCH_KEY = "ig_prefetch"
 
 # What each backend stage is called while the candidate waits on it. The
 # gateway names stages for error messages; these are the candidate-facing
@@ -115,6 +127,7 @@ def _initialize_state() -> None:
     st.session_state.setdefault(PLAN_KEY, None)
     st.session_state.setdefault(INTAKE_KEY, None)
     st.session_state.setdefault(PROGRESS_KEY, None)
+    st.session_state.setdefault(PREFETCH_KEY, None)
 
 
 def _reset() -> None:
@@ -124,6 +137,7 @@ def _reset() -> None:
     st.session_state[PLAN_KEY] = None
     st.session_state[INTAKE_KEY] = None
     st.session_state[PROGRESS_KEY] = None
+    st.session_state[PREFETCH_KEY] = None
 
 
 def _header(active: str) -> None:
@@ -284,18 +298,20 @@ def _render_upload() -> None:
             unsafe_allow_html=True,
         )
 
+    document = None
+    if uploaded is not None:
+        try:
+            document = _prepare_upload(uploaded)
+        except ResumeUploadError as error:
+            st.error(str(error))
+
     if st.button(
         "Prepare interview plan  →",
         type="primary",
         use_container_width=True,
-        disabled=uploaded is None,
+        disabled=document is None,
     ):
         try:
-            document = extract_resume(
-                filename=uploaded.name,
-                data=uploaded.getvalue(),
-                content_type=uploaded.type,
-            )
             # Three model calls run back to back. All three sections are on
             # screen from the start and each fills as its stage returns, so
             # the wait shows real progress instead of a blank spinner.
@@ -327,17 +343,58 @@ def _render_upload() -> None:
                     painter(value)
 
             prepared = build_candidate_plan(
-                document, on_stage=on_stage, on_result=on_result,
+                document,
+                prefetched_resume=_pending_resume(document),
+                on_stage=on_stage,
+                on_result=on_result,
             )
             meter.progress(1.0, text="Your interview plan is ready")
-        except ResumeUploadError as error:
-            st.error(str(error))
         except IntakeIntegrationError as error:
             st.error(f"Could not complete {error.stage}. {error}")
         else:
             st.session_state[PLAN_KEY] = prepared
             st.session_state[SCREEN_KEY] = "plan"
             st.rerun()
+
+
+def _prepare_upload(uploaded: object) -> object:
+    """
+    Parse the upload and start stage 1 before the candidate presses the button.
+
+    Streamlit reruns the script the moment a file lands, which is several
+    seconds before the click. Resume extraction depends only on the uploaded
+    bytes, so it can start here and be waiting by the time the run begins.
+    The parse and the prefetch are keyed by content, so the reruns that
+    ordinary widget interaction causes do not repeat either.
+    """
+
+    data = uploaded.getvalue()
+    fingerprint = hashlib.sha256(data).hexdigest()
+
+    cached = st.session_state[PREFETCH_KEY]
+    if cached is not None and cached[0] == fingerprint:
+        return cached[1]
+
+    document = extract_resume(
+        filename=uploaded.name,
+        data=data,
+        content_type=uploaded.type,
+    )
+    st.session_state[PREFETCH_KEY] = (
+        fingerprint,
+        document,
+        prefetch_resume(document),
+    )
+    return document
+
+
+def _pending_resume(document: object) -> object:
+    """The in-flight stage 1 run for this upload, if one was started."""
+
+    cached = st.session_state[PREFETCH_KEY]
+    if cached is not None and cached[0] == document.sha256:
+        return cached[2]
+    return None
 
 
 def _initials(name: str) -> str:

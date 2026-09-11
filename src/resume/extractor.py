@@ -2,16 +2,23 @@ import os
 from pathlib import Path
 
 from dotenv import load_dotenv
-from openai import OpenAI
 
 from src.schemas.resume import CandidateResume
 from src.resume.prompts import RESUME_EXTRACTION_SYSTEM_PROMPT
 from src.observability import traced
+from src.llm_client import build_client
+from src.llm_retry import call_with_retry
 
 
 load_dotenv()
 
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+# Extraction is transcription into a schema, not judgement: it spends no
+# reasoning tokens even on the largest model, so a smaller one returns the
+# same fields sooner. Overridable so a model change is a config rollback.
+# LLM_PROVIDER=deepseek switches the client and this default together; an
+# explicit RESUME_EXTRACTION_MODEL still wins over either provider's default.
+client, _default_model = build_client("gpt-5.4-mini")
+EXTRACTION_MODEL = os.getenv("RESUME_EXTRACTION_MODEL", _default_model)
 
 
 @traced("resume.extract")
@@ -28,16 +35,17 @@ def extract_resume(
 
     # The schema captures stated facts only; competency judgments belong to
     # the analyzer stage. Structured parsing validates the returned field types.
-    response = client.responses.parse(
-        model="gpt-5.6",
-        input=[
-            {
-                "role": "system",
-                "content": RESUME_EXTRACTION_SYSTEM_PROMPT,
-            },
-            {
-                "role": "user",
-                "content": f"""
+    response = call_with_retry(
+        lambda: client.responses.parse(
+            model=EXTRACTION_MODEL,
+            input=[
+                {
+                    "role": "system",
+                    "content": RESUME_EXTRACTION_SYSTEM_PROMPT,
+                },
+                {
+                    "role": "user",
+                    "content": f"""
 Candidate ID: {candidate_id}
 
 Extract the following resume into the CandidateResume schema.
@@ -47,9 +55,10 @@ RESUME:
 {resume_text}
 ----------------
 """,
-            },
-        ],
-        text_format=CandidateResume,
+                },
+            ],
+            text_format=CandidateResume,
+        )
     )
 
     resume = response.output_parsed

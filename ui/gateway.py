@@ -2,15 +2,21 @@
 
 from __future__ import annotations
 
-import logging
 from collections.abc import Callable
+from concurrent.futures import Future, ThreadPoolExecutor
+from contextvars import copy_context
 from dataclasses import dataclass
 from typing import Any
 
+from src.observability import log_event
 from ui.resume_upload import ExtractedResume
 
 
-_logger = logging.getLogger("interviewgap.ui.gateway")
+# Stage 1 depends only on the uploaded bytes, so it can start the moment the
+# file lands instead of waiting for the candidate to press the button. One
+# small pool, shared across sessions, keeps a stalled extraction from
+# accumulating threads.
+_prefetch_pool = ThreadPoolExecutor(max_workers=4, thread_name_prefix="ig-prefetch")
 
 
 class IntakeIntegrationError(RuntimeError):
@@ -49,12 +55,38 @@ class CandidateIntake:
     question_set: Any
 
 
+def prefetch_resume(
+    upload: ExtractedResume,
+    *,
+    resume_extractor: Callable[[str, str], Any] | None = None,
+) -> Future:
+    """
+    Start stage 1 in the background and return its pending result.
+
+    Pass the future to build_candidate_plan to collect it. A future that is
+    never collected is harmless: it completes and is discarded.
+    """
+
+    if resume_extractor is None:
+        from src.resume.extractor import extract_resume as resume_extractor
+
+    # Copy the caller's context so the extraction span nests under whatever
+    # request context the caller established, rather than starting its own.
+    return _prefetch_pool.submit(
+        copy_context().run,
+        resume_extractor,
+        upload.text,
+        upload.candidate_id,
+    )
+
+
 def build_candidate_plan(
     upload: ExtractedResume,
     *,
     resume_extractor: Callable[[str, str], Any] | None = None,
     resume_analyzer: Callable[[Any], Any] | None = None,
     interview_planner: Callable[[Any], Any] | None = None,
+    prefetched_resume: Future | None = None,
     on_stage: Callable[[str], None] | None = None,
     on_result: Callable[[str, Any], None] | None = None,
 ) -> CandidatePlan:
@@ -64,6 +96,9 @@ def build_candidate_plan(
     on_stage fires as a stage begins, on_result as it finishes. The second
     exists so a caller can show a stage's output while the next one is still
     running, rather than holding all three back until the last returns.
+
+    prefetched_resume collects a stage 1 run already started by
+    prefetch_resume, including its failure. Stage 1 is otherwise run here.
     """
 
     if resume_extractor is None:
@@ -75,9 +110,14 @@ def build_candidate_plan(
             create_interview_plan as interview_planner,
         )
 
+    def extract() -> Any:
+        if prefetched_resume is not None:
+            return prefetched_resume.result()
+        return resume_extractor(upload.text, upload.candidate_id)
+
     resume = _run_stage(
         "resume extraction",
-        lambda: resume_extractor(upload.text, upload.candidate_id),
+        extract,
         on_stage,
         on_result,
     )
@@ -144,6 +184,7 @@ def build_candidate_intake(
     resume_analyzer: Callable[[Any], Any] | None = None,
     interview_planner: Callable[[Any], Any] | None = None,
     question_selector: Callable[[Any], Any] | None = None,
+    prefetched_resume: Future | None = None,
     on_stage: Callable[[str], None] | None = None,
 ) -> CandidateIntake:
     """Run the existing four-stage intake pipeline without changing its code."""
@@ -153,6 +194,7 @@ def build_candidate_intake(
         resume_extractor=resume_extractor,
         resume_analyzer=resume_analyzer,
         interview_planner=interview_planner,
+        prefetched_resume=prefetched_resume,
         on_stage=on_stage,
     )
 
@@ -182,7 +224,16 @@ def _run_stage(
         # The candidate-facing message stays deliberately vague, but an
         # operator reading the server log needs the real cause: without it a
         # transient rate limit and a misconfigured key look identical.
-        _logger.exception("intake stage %r failed", stage)
+        # log_event records the exception type only, per this project's
+        # telemetry contract - never the exception message or traceback,
+        # which can carry a provider response (a billing URL, an account
+        # detail) that has no business in a log line.
+        log_event(
+            "intake.stage_failed",
+            level="ERROR",
+            stage=stage,
+            error_type=type(error).__name__,
+        )
         raise IntakeIntegrationError(
             stage,
             f"The {stage} stage could not complete. Check runtime configuration "
@@ -201,5 +252,6 @@ __all__ = [
     "IntakeIntegrationError",
     "build_candidate_intake",
     "build_candidate_plan",
+    "prefetch_resume",
     "resolve_interview_questions",
 ]

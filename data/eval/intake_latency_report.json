@@ -1,0 +1,195 @@
+{
+  "generated_at": "2026-09-11T09:24:58.166721+00:00",
+  "git_ref": "6dade8a",
+  "config": {
+    "resumes": [
+      "candidate_01",
+      "candidate_02",
+      "candidate_03",
+      "candidate_04",
+      "candidate_05"
+    ],
+    "repeats": 2,
+    "baseline_model": "gpt-5.4",
+    "optimized_models": {
+      "resume extraction": "gpt-5.4",
+      "resume analysis": "gpt-5.4",
+      "interview planning": "gpt-5.4"
+    }
+  },
+  "stages": [
+    {
+      "stage": "resume extraction",
+      "change": "Run extraction on a smaller model.",
+      "reason": "Extraction transcribes a resume into a schema. It spent zero reasoning tokens on the largest model, so the capability was not being used - only its per-request latency was being paid.",
+      "after": {
+        "seconds": 2.8040532269951655,
+        "calls": 1.0,
+        "input_tokens": 1055.0,
+        "output_tokens": 363.0,
+        "reasoning_tokens": 0.0,
+        "runs": 10
+      },
+      "before": {
+        "seconds": 3.032625410996843,
+        "calls": 1,
+        "input_tokens": 1055,
+        "output_tokens": 363,
+        "reasoning_tokens": 0,
+        "runs": 7
+      },
+      "improvement_seconds": 0.22857218400167767,
+      "improvement_pct": 7.53710574253035
+    },
+    {
+      "stage": "resume analysis",
+      "change": "Fan out to one model call per competency, run concurrently.",
+      "reason": "The seven competency assessments are independent readings of the same resume. Emitted from one call they were serial output tokens; requested separately they overlap, so the stage costs the longest single assessment instead of the sum of all seven.",
+      "after": {
+        "seconds": 3.2466088734945515,
+        "calls": 8.0,
+        "input_tokens": 12436.0,
+        "output_tokens": 1303.0,
+        "reasoning_tokens": 0.0,
+        "runs": 10
+      },
+      "before": {
+        "seconds": 8.292801723990124,
+        "calls": 1,
+        "input_tokens": 1790,
+        "output_tokens": 1000,
+        "reasoning_tokens": 0,
+        "runs": 7
+      },
+      "improvement_seconds": 5.046192850495572,
+      "improvement_pct": 60.85027736642389
+    },
+    {
+      "stage": "interview planning",
+      "change": "Send the allocation-relevant evidence fields only, sum the difficulty distribution in code, and re-ask on an arithmetic slip.",
+      "reason": "The planner read every evidence item and its source, which the allocation decision never uses, then restated totals that are sums of its own per-competency numbers. Trimming that output only pays off on a model slow enough for output tokens to dominate; the durable win is reliability. Deriving the totals removes the failure mode where a plan was rejected for disagreeing with itself, and an allocation that sums to 9 is an arithmetic slip the model corrects when shown it - previously it cost the candidate the whole intake.",
+      "after": {
+        "seconds": 5.468254799496208,
+        "calls": 1.0,
+        "input_tokens": 1502.0,
+        "output_tokens": 345.0,
+        "reasoning_tokens": 0.0,
+        "runs": 10
+      },
+      "before": {
+        "seconds": 4.861795549004455,
+        "calls": 1,
+        "input_tokens": 2604,
+        "output_tokens": 384,
+        "reasoning_tokens": 0,
+        "runs": 7
+      },
+      "improvement_seconds": -0.6064592504917528,
+      "improvement_pct": -12.47397683384561
+    }
+  ],
+  "model_floor": [
+    {
+      "model": "gpt-5.6",
+      "min_seconds": 5.041983788003563,
+      "median_seconds": 7.337458358000731,
+      "max_seconds": 8.797786452996661,
+      "samples": 3
+    },
+    {
+      "model": "gpt-5.5",
+      "min_seconds": 2.8302422919950914,
+      "median_seconds": 4.972748301996035,
+      "max_seconds": 5.382252649986185,
+      "samples": 3
+    },
+    {
+      "model": "gpt-5.4",
+      "min_seconds": 1.3726595799962524,
+      "median_seconds": 2.5656345620081993,
+      "max_seconds": 2.633930544994655,
+      "samples": 3
+    },
+    {
+      "model": "gpt-5.4-mini",
+      "min_seconds": 1.0036220689944457,
+      "median_seconds": 1.0329426360112848,
+      "max_seconds": 1.0970358579943422,
+      "samples": 3
+    },
+    {
+      "model": "gpt-5.4-nano",
+      "min_seconds": 1.4324541560054058,
+      "median_seconds": 1.6922437619941775,
+      "max_seconds": 2.2544781350006815,
+      "samples": 3
+    }
+  ],
+  "observations": [
+    {
+      "title": "The planner digest's real payoff is reliability, not latency.",
+      "detail": "Trimming the planner's input to the allocation-relevant evidence fields only helps wall time on a model slow enough for output tokens to dominate (gpt-5.6). On a fast model (gpt-5.4) the per-request floor dominates instead, and the digest measured roughly no latency change. Its durable win showed up in completion rate: on gpt-5.4, the baseline shape (full analysis JSON, model restates the totals) failed InterviewPlan's validators in 3 of 10 runs; the digest shape, which derives totals in code instead of asking the model to restate them, failed in 0 of 10. Read the per-stage seconds together with the reliability block, not alone - a stage that got faster but less reliable would be a worse trade for the candidate."
+    },
+    {
+      "title": "gpt-5.6 was measurably degraded during this evaluation.",
+      "detail": "A trivial structured call (see model_floor) cost 5.0-8.8s on gpt-5.6 against ~1.0s on gpt-5.4/gpt-5.4-mini, and repeated runs hit InternalServerError (503, 'servers are currently overloaded'). This is provider-side variability, not something this change fixes or should be tuned around. It also means a clean baseline-vs-optimized comparison with both arms left on gpt-5.6 could not be produced in this session: set BASELINE_MODEL and the stage model env vars to gpt-5.4 to reproduce the numbers in this report, or re-run with them left at their gpt-5.6 defaults once the provider has recovered to get the number that matches what candidates actually experience today."
+    },
+    {
+      "title": "A pre-existing planner failure mode surfaced during testing and was fixed alongside the latency work.",
+      "detail": "The planner intermittently allocates competency question counts that sum to 9 instead of 10 - an arithmetic slip, not a judgement call, and not something this change introduced. It crashed scripts/run_intake.py on candidate_08 three attempts running before this observation was made. interview_planner.py now re-asks up to PLANNING_ATTEMPTS times, showing the model its own rejected per-competency breakdown and a directional correction ('add 1 question, to the competency with the highest probe priority') rather than just restating the rule. All 10 fixture candidates now build a valid plan. This is the arithmetic case that motivated point 4 (replacing the allocation call with code) - worth revisiting now that the latency numbers are in."
+    }
+  ],
+  "notes": [
+    "Latency is dominated by per-request overhead, not generation: a trivial structured call is the floor every stage pays. See model_floor.",
+    "Stage times are medians across runs. The API varies enough between runs that a single sample is not evidence.",
+    "A concurrent stage's slowest_call_seconds is its lower bound; the gap above it is contention between overlapping calls.",
+    "Both arms ran resume extraction on the same model, so that row compares an identical call with itself: read it as the run-to-run variance floor, not as a result. The extraction change IS the model change."
+  ],
+  "reliability": {
+    "baseline": {
+      "completed": 7,
+      "attempted": 10,
+      "completion_rate": 0.7
+    },
+    "optimized": {
+      "completed": 10,
+      "attempted": 10,
+      "completion_rate": 1.0
+    }
+  },
+  "totals": {
+    "after": {
+      "seconds": 11.639639269989857,
+      "calls": 10.0,
+      "input_tokens": 15036.0,
+      "output_tokens": 2202.5,
+      "runs": 10
+    },
+    "before": {
+      "seconds": 16.27445171798172,
+      "calls": 3,
+      "input_tokens": 5416,
+      "output_tokens": 1740,
+      "runs": 7
+    },
+    "improvement_seconds": 4.634812447991862,
+    "improvement_pct": 28.479069699600608
+  },
+  "failures": [
+    {
+      "arm": "baseline",
+      "resume": "candidate_01",
+      "error": "ValidationError"
+    },
+    {
+      "arm": "baseline",
+      "resume": "candidate_03",
+      "error": "ValidationError"
+    },
+    {
+      "arm": "baseline",
+      "resume": "candidate_04",
+      "error": "ValidationError"
+    }
+  ]
+}

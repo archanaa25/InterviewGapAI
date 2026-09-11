@@ -4,7 +4,12 @@ from types import SimpleNamespace
 
 import pytest
 
-from ui.gateway import IntakeIntegrationError, build_candidate_intake
+from ui.gateway import (
+    IntakeIntegrationError,
+    build_candidate_intake,
+    build_candidate_plan,
+    prefetch_resume,
+)
 from ui.resume_upload import ExtractedResume, ResumeFormat
 
 
@@ -63,6 +68,52 @@ def test_gateway_calls_existing_pipeline_contracts_in_order() -> None:
         ("plan", analysis),
         ("questions", plan),
     ]
+
+
+def test_gateway_collects_a_prefetched_resume_instead_of_extracting_again() -> None:
+    """Stage 1 started at upload time is collected, not repeated, on the click."""
+
+    extractions: list[str] = []
+    resume = SimpleNamespace(name="Candidate")
+
+    def extract(text: str, candidate_id: str):
+        extractions.append(candidate_id)
+        return resume
+
+    upload = _upload()
+    pending = prefetch_resume(upload, resume_extractor=extract)
+
+    prepared = build_candidate_plan(
+        upload,
+        resume_extractor=extract,
+        resume_analyzer=lambda value: value,
+        interview_planner=lambda value: value,
+        prefetched_resume=pending,
+    )
+
+    assert prepared.resume is resume
+    assert extractions == ["upload-aaaaaaaaaaaaaaaa"]
+
+
+def test_gateway_hides_a_failed_prefetch_behind_the_stage_contract() -> None:
+    """A prefetch that failed reports as its stage, not as a raw provider error."""
+
+    def fail(_text: str, _candidate_id: str):
+        raise RuntimeError("secret provider payload")
+
+    upload = _upload()
+    pending = prefetch_resume(upload, resume_extractor=fail)
+
+    with pytest.raises(IntakeIntegrationError) as captured:
+        build_candidate_plan(
+            upload,
+            resume_analyzer=lambda value: value,
+            interview_planner=lambda value: value,
+            prefetched_resume=pending,
+        )
+
+    assert captured.value.stage == "resume extraction"
+    assert "secret provider payload" not in str(captured.value)
 
 
 def test_gateway_refuses_a_partial_question_set() -> None:
