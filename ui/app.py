@@ -5,6 +5,7 @@ from __future__ import annotations
 import html
 import sys
 from pathlib import Path
+from types import SimpleNamespace
 
 import streamlit as st
 from dotenv import load_dotenv
@@ -83,6 +84,30 @@ COMPETENCY_LABELS = {
 }
 
 
+# One fixed hue per competency, assigned in order and never cycled. Validated
+# as a categorical set against the white card surface: worst adjacent CVD
+# ΔE 9.1, worst normal-vision ΔE 19.6. Three of these sit under 3:1 contrast,
+# so colour is carried by borders and swatches only - every label stays in ink.
+COMPETENCY_COLORS = {
+    "rag": "#2a78d6",
+    "agentic_ai": "#eb6834",
+    "ai_ml_llm_fundamentals": "#1baf7a",
+    "ai_evaluation": "#eda100",
+    "python_software_engineering": "#e87ba4",
+    "ai_system_design": "#008300",
+    "ai_security": "#4a3aa7",
+}
+DEFAULT_COMPETENCY_COLOR = "#607087"
+
+# Coverage hues, validated all-pairs (worst normal-vision ΔE 29.0) because the
+# three meter segments sit side by side.
+COVERAGE_COLORS = {
+    "DEMONSTRATED": "#008300",
+    "PARTIAL_EVIDENCE": "#eda100",
+    "UNKNOWN_NEEDS_PROBING": "#2a78d6",
+}
+
+
 def _initialize_state() -> None:
     """Create only UI-owned state keys."""
 
@@ -138,6 +163,90 @@ def _competency(value: object) -> tuple[str, str]:
     return COMPETENCY_LABELS.get(str(key), ("•", str(key).replace("_", " ").title()))
 
 
+SECTION_TITLES = (
+    "Your profile",
+    "Resume evidence",
+    "Interview plan",
+)
+
+SECTION_PENDING = (
+    "Reading your resume…",
+    "Reviewing your experience…",
+    "Preparing your questions…",
+)
+
+# What the progress bar says while each stage runs. Deliberately describes
+# the candidate's experience, not the pipeline: how areas are prioritised is
+# interview strategy and stays out of the candidate's view.
+STAGE_PROGRESS = {
+    "resume extraction": (0.08, "Reading your resume…"),
+    "resume analysis": (0.38, "Reviewing your experience…"),
+    "interview planning": (0.72, "Preparing your questions…"),
+}
+
+
+def _paint_profile(container: object, resume: object) -> None:
+    """Section 1: stage 1 output, the moment extraction returns."""
+
+    container.caption("Facts read from your file. No judgement here.")
+    container.markdown(_facts_block(resume), unsafe_allow_html=True)
+
+
+def _paint_evidence(container: object, analysis: object) -> None:
+    """
+    Section 2: what the resume evidenced, while planning is still running.
+
+    The analyzer's overall summary is not rendered. It names which areas it
+    considers unproven and says they require probing, which tells the
+    candidate where the interview intends to push. Per-area state is shown
+    instead: it is what the candidate needs, without the strategy.
+    """
+
+    container.markdown(_evidence_tally(analysis), unsafe_allow_html=True)
+    container.markdown(
+        '<p class="ig-reassure">This is a reading of your <strong>resume</strong>, not a '
+        "score. An area your resume does not mention is not a gap in your ability — it "
+        "simply gets more of the interview, so you can speak to it directly.</p>",
+        unsafe_allow_html=True,
+    )
+    container.markdown(_evidence_rows(analysis), unsafe_allow_html=True)
+
+
+def _paint_plan(container: object, plan: object) -> None:
+    """
+    Section 3: what the interview covers and how long it is.
+
+    Only the shape of the interview belongs here. The planner's per-area
+    reasoning explains which areas are being probed and why, which is the
+    interviewer's strategy, so it is not rendered for the candidate.
+    """
+
+    container.markdown(
+        _plan_cards(SimpleNamespace(plan=plan)), unsafe_allow_html=True,
+    )
+
+
+def _intake_sections() -> tuple:
+    """Three stacked sections, all visible, each filling as its stage lands."""
+
+    holders = []
+
+    for title, pending in zip(SECTION_TITLES, SECTION_PENDING):
+        st.markdown(f'<div class="ig-section-title">{title}</div>', unsafe_allow_html=True)
+        holder = st.empty()
+        holder.markdown(f'<p class="ig-pending">{pending}</p>', unsafe_allow_html=True)
+        holders.append(holder)
+
+    return tuple(holders)
+
+
+def _competency_color(value: object) -> str:
+    """The fixed identity hue for one competency."""
+
+    key = str(getattr(value, "value", value))
+    return COMPETENCY_COLORS.get(key, DEFAULT_COMPETENCY_COLOR)
+
+
 def _render_upload() -> None:
     """Accept one resume and invoke the existing intake pipeline."""
 
@@ -163,10 +272,13 @@ def _render_upload() -> None:
         st.markdown(
             """
             <div class="ig-upload-note">
-              <h4>✦ Why upload?</h4>
-              <p>🎯 Tailored competency coverage</p>
-              <p>🧭 Evidence-led interview planning</p>
-              <p>🔒 Rubrics stay hidden during the interview</p>
+              <div class="ig-note-title">Why upload?</div>
+              <div class="ig-note-row"><span class="ig-note-ico" style="background:#e8f1fc;color:#2a78d6">◎</span>
+                <span><b>Tailored coverage</b><i>Questions matched to your background</i></span></div>
+              <div class="ig-note-row"><span class="ig-note-ico" style="background:#fdf0e8;color:#eb6834">◈</span>
+                <span><b>Evidence-led planning</b><i>Built from what your resume shows</i></span></div>
+              <div class="ig-note-row"><span class="ig-note-ico" style="background:#e8f5ee;color:#008300">◔</span>
+                <span><b>No surprises</b><i>Marking rubrics stay hidden throughout</i></span></div>
             </div>
             """,
             unsafe_allow_html=True,
@@ -184,23 +296,40 @@ def _render_upload() -> None:
                 data=uploaded.getvalue(),
                 content_type=uploaded.type,
             )
-            # Three model calls run back to back here. An opaque spinner makes
-            # that read as a hang, so each stage announces itself as it starts.
-            with st.status(
-                "Preparing your interview…", expanded=True,
-            ) as status:
+            # Three model calls run back to back. All three sections are on
+            # screen from the start and each fills as its stage returns, so
+            # the wait shows real progress instead of a blank spinner.
+            st.markdown(
+                '<div class="ig-kicker">PREPARING YOUR INTERVIEW</div>',
+                unsafe_allow_html=True,
+            )
+            meter = st.progress(0.0, text="Reading your resume…")
+            profile_slot, evidence_slot, plan_slot = _intake_sections()
+            painters = {
+                "resume extraction": lambda value: _paint_profile(
+                    profile_slot.container(), value,
+                ),
+                "resume analysis": lambda value: _paint_evidence(
+                    evidence_slot.container(), value,
+                ),
+                "interview planning": lambda value: _paint_plan(
+                    plan_slot.container(), value,
+                ),
+            }
 
-                def on_stage(stage: str) -> None:
-                    label = STAGE_LABELS.get(stage, stage)
-                    status.update(label=label)
-                    st.write(f"› {label}")
+            def on_stage(stage: str) -> None:
+                fraction, message = STAGE_PROGRESS.get(stage, (0.0, "Working…"))
+                meter.progress(fraction, text=message)
 
-                prepared = build_candidate_plan(document, on_stage=on_stage)
-                status.update(
-                    label="Your interview plan is ready",
-                    state="complete",
-                    expanded=False,
-                )
+            def on_result(stage: str, value: object) -> None:
+                painter = painters.get(stage)
+                if painter is not None:
+                    painter(value)
+
+            prepared = build_candidate_plan(
+                document, on_stage=on_stage, on_result=on_result,
+            )
+            meter.progress(1.0, text="Your interview plan is ready")
         except ResumeUploadError as error:
             st.error(str(error))
         except IntakeIntegrationError as error:
@@ -211,117 +340,154 @@ def _render_upload() -> None:
             st.rerun()
 
 
+def _initials(name: str) -> str:
+    """Up to two initials for the avatar, falling back to a neutral mark."""
+
+    parts = [part for part in str(name).split() if part[:1].isalnum()]
+    if not parts:
+        return "\u2022"
+    return (parts[0][:1] + (parts[-1][:1] if len(parts) > 1 else "")).upper()
+
+
 def _facts_block(resume: object) -> str:
     """Stage 1 output as read-back, not judgement: what the parser saw."""
+
+    name = getattr(resume, "name", None) or "Not stated"
+    role = getattr(resume, "target_role", None) or "Not stated"
+    roles = len(getattr(resume, "work_experience", []) or [])
+    projects = len(getattr(resume, "projects", []) or [])
 
     skills = list(getattr(resume, "skills", []) or [])
     chips = "".join(
         f'<span class="ig-chip">{_safe(skill)}</span>' for skill in skills[:9]
     )
     if len(skills) > 9:
-        chips += f'<span class="ig-chip">+{len(skills) - 9} more</span>'
+        chips += f'<span class="ig-chip ig-chip-more">+{len(skills) - 9} more</span>'
 
-    facts = [
-        ("NAME", _safe(getattr(resume, "name", None) or "Not stated")),
-        ("TARGET ROLE", _safe(getattr(resume, "target_role", None) or "Not stated")),
-        ("ROLES", f'{len(getattr(resume, "work_experience", []) or [])}'),
-        ("PROJECTS", f'{len(getattr(resume, "projects", []) or [])}'),
-    ]
-    cells = "".join(
-        f'<div><span class="ig-fact-label">{label}</span>'
-        f'<span class="ig-fact-value">{value}</span></div>'
-        for label, value in facts
-    )
-    return '<div class="ig-facts">' + cells + "</div>" + (
-        f'<div class="ig-chips">{chips}</div>' if chips else ""
+    # Counts sit in their own tiles so the name and role can carry the card.
+    stats = "".join(
+        f'<div class="ig-stat"><div class="ig-stat-n">{number}</div>'
+        f'<div class="ig-stat-l">{label}</div></div>'
+        for number, label in ((roles, "ROLES"), (projects, "PROJECTS"))
     )
 
+    return (
+        '<div class="ig-profile">'
+        '<div class="ig-profile-head">'
+        f'<span class="ig-avatar">{_safe(_initials(name))}</span>'
+        '<span class="ig-profile-id">'
+        f'<span class="ig-profile-name">{_safe(name)}</span>'
+        f'<span class="ig-profile-role">{_safe(role)}</span>'
+        "</span>"
+        f'<span class="ig-stats">{stats}</span>'
+        "</div>"
+        + (f'<div class="ig-chips">{chips}</div>' if chips else "")
+        + "</div>"
+    )
 
-def _evidence_rows(prepared: CandidatePlan) -> str:
+
+def _evidence_rows(analysis: object) -> str:
     """
     Stage 2 output as interview coverage rather than a verdict.
 
     The analyzer's own docstring says an evidence level is not a skill
     rating. Showing raw enum names and a confidence float invites the
-    opposite reading, so each row states what the resume showed and how
-    much interview time the area gets.
+    opposite reading, so each row states plainly what the resume showed.
+    Colour marks which area the row is about; the state is always spelled
+    out in words beside it, never carried by colour alone.
     """
 
-    allocated = {
-        target.competency.value: target.question_count
-        for target in prepared.plan.competency_targets
-    }
-
     rows: list[str] = []
-    for item in prepared.analysis.competency_evidence:
+    for item in analysis.competency_evidence:
         icon, label = _competency(item.competency)
-        style, mark, phrasing = EVIDENCE_PRESENTATION.get(
+        colour = _competency_color(item.competency)
+        _, mark, phrasing = EVIDENCE_PRESENTATION.get(
             item.evidence_level.value,
-            ("ig-ev-explore", "\u25cb", item.evidence_level.value),
+            ("", "\u25cb", item.evidence_level.value),
         )
-        count = allocated.get(item.competency.value, 0)
-        share = f"{count} question(s)" if count else "not scheduled"
+        state_colour = COVERAGE_COLORS.get(
+            item.evidence_level.value, DEFAULT_COMPETENCY_COLOR,
+        )
         rows.append(
-            f'<div class="ig-ev {style}">'
-            f'<span class="ig-ev-mark">{mark}</span>'
+            f'<div class="ig-ev" style="border-left-color:{colour};'
+            f'background:linear-gradient(100deg,{colour}14,#ffffff 58%)">'
+            f'<span class="ig-ev-mark" style="color:{colour}">{mark}</span>'
             '<span class="ig-ev-body">'
             f'<span class="ig-ev-name">{_safe(icon)} &nbsp;{_safe(label)}</span>'
-            f'<div class="ig-ev-state">{_safe(phrasing)}</div>'
+            f'<div class="ig-ev-state">'
+            f'<span class="ig-dot" style="background:{state_colour}"></span>'
+            f"{_safe(phrasing)}</div>"
             "</span>"
-            f'<span class="ig-ev-count">{_safe(share)}</span>'
             "</div>"
         )
     return "".join(rows)
 
 
-def _evidence_tally(prepared: CandidatePlan) -> str:
-    """Headline counts, so the summary is scannable before it is readable."""
+def _evidence_tally(analysis: object) -> str:
+    """
+    A proportion bar over three colour-keyed tiles.
 
-    counts = {"DEMONSTRATED": 0, "PARTIAL_EVIDENCE": 0, "UNKNOWN_NEEDS_PROBING": 0}
-    for item in prepared.analysis.competency_evidence:
-        key = item.evidence_level.value
-        if key in counts:
-            counts[key] += 1
+    The bar shows how the areas divide; the tiles name and count them, so
+    each segment has a labelled swatch and the colour never has to be read
+    on its own. Counts stay in ink - only the marks are coloured.
+    """
 
-    tiles = (
-        (counts["DEMONSTRATED"], "EVIDENCED"),
-        (counts["PARTIAL_EVIDENCE"], "PARTLY EVIDENCED"),
-        (counts["UNKNOWN_NEEDS_PROBING"], "TO EXPLORE WITH YOU"),
+    order = ("DEMONSTRATED", "PARTIAL_EVIDENCE", "UNKNOWN_NEEDS_PROBING")
+    titles = ("EVIDENCED", "PARTLY EVIDENCED", "TO EXPLORE WITH YOU")
+
+    counts = {key: 0 for key in order}
+    for item in analysis.competency_evidence:
+        if item.evidence_level.value in counts:
+            counts[item.evidence_level.value] += 1
+
+    total = sum(counts.values()) or 1
+
+    segments = "".join(
+        f'<span class="ig-meter-seg" style="width:{counts[key] / total * 100:.2f}%;'
+        f'background:{COVERAGE_COLORS[key]}"></span>'
+        for key in order
+        if counts[key]
     )
-    cells = "".join(
-        f'<div class="ig-tally-item"><div class="ig-tally-n">{number}</div>'
-        f'<div class="ig-tally-l">{label}</div></div>'
-        for number, label in tiles
+
+    tiles = "".join(
+        f'<div class="ig-tally-item" style="border-top-color:{COVERAGE_COLORS[key]}">'
+        f'<div class="ig-tally-n">{counts[key]}</div>'
+        f'<div class="ig-tally-l">'
+        f'<span class="ig-dot" style="background:{COVERAGE_COLORS[key]}"></span>'
+        f"{title}</div></div>"
+        for key, title in zip(order, titles)
     )
-    return f'<div class="ig-tally">{cells}</div>'
+
+    return (
+        f'<div class="ig-meter">{segments}</div>'
+        f'<div class="ig-tally">{tiles}</div>'
+    )
 
 
-def _plan_cards(intake: CandidateIntake) -> str:
-    """Build escaped competency summary cards from the existing plan."""
+def _plan_cards(intake: object) -> str:
+    """
+    One compact card per area: what it is and how many questions it gets.
+
+    The plan also carries the planner's reasoning for each allocation. That
+    text says which areas are considered unproven and why they are being
+    probed, so it is interview strategy rather than candidate information
+    and is deliberately not rendered.
+    """
 
     cards: list[str] = []
     for target in intake.plan.competency_targets:
         icon, label = _competency(target.competency)
-        difficulty_parts = [
-            f"{count} {difficulty}"
-            for difficulty, count in (
-                ("basic", target.basic),
-                ("intermediate", target.intermediate),
-                ("advanced", target.advanced),
-            )
-            if count
-        ]
-        # Keep each card flush-left and contiguous. Indented HTML after a blank
-        # line is a Markdown code block even when unsafe_allow_html is enabled.
+        colour = _competency_color(target.competency)
         cards.append(
-            '<div class="ig-card">'
-            f'<div class="ig-card-title">{_safe(icon)} &nbsp;{_safe(label)}</div>'
-            f'<div class="ig-card-meta">{target.question_count} question(s) · '
-            f"{_safe(', '.join(difficulty_parts))}</div>"
-            f'<div class="ig-card-copy">{_safe(target.reason)}</div>'
+            f'<div class="ig-card" style="border-top:3px solid {colour}">'
+            f'<div class="ig-card-title">'
+            f'<span class="ig-dot" style="background:{colour}"></span>'
+            f'{_safe(icon)} &nbsp;{_safe(label)}</div>'
+            f'<div class="ig-card-count">{target.question_count}</div>'
+            f'<div class="ig-card-meta">question(s)</div>'
             "</div>"
         )
-    return '<div class="ig-grid">' + "".join(cards) + "</div>"
+    return '<div class="ig-grid ig-grid-compact">' + "".join(cards) + "</div>"
 
 
 def _render_plan(prepared: CandidatePlan) -> None:
@@ -330,36 +496,17 @@ def _render_plan(prepared: CandidatePlan) -> None:
     _header("plan")
     st.markdown('<div class="ig-kicker">READY TO BEGIN</div>', unsafe_allow_html=True)
     st.title("Your interview plan")
-    st.markdown(
-        '<p class="ig-subtitle">Built from your resume. Review it before you start.</p>',
-        unsafe_allow_html=True,
-    )
-
     for warning in prepared.upload.warnings:
         st.warning(warning)
 
-    st.subheader("What we read from your resume")
-    st.caption(f"Parsed from {prepared.upload.filename}. Facts only — no judgement here.")
-    st.markdown(_facts_block(prepared.resume), unsafe_allow_html=True)
-
-    st.subheader("How the interview will cover you")
-    st.markdown(_evidence_tally(prepared), unsafe_allow_html=True)
-    st.markdown(
-        '<p class="ig-reassure">This is a reading of your <strong>resume</strong>, not a '
-        "score. An area your resume does not mention is not a gap in your ability — it "
-        "simply gets more of the interview, so you can speak to it directly.</p>",
-        unsafe_allow_html=True,
+    sections = (
+        (SECTION_TITLES[0], _paint_profile, prepared.resume),
+        (SECTION_TITLES[1], _paint_evidence, prepared.analysis),
+        (SECTION_TITLES[2], _paint_plan, prepared.plan),
     )
-    st.markdown(_evidence_rows(prepared), unsafe_allow_html=True)
-
-    with st.expander("Read the full summary"):
-        st.markdown(
-            f'<div class="ig-summary">{_safe(prepared.analysis.overall_summary)}</div>',
-            unsafe_allow_html=True,
-        )
-
-    with st.expander("Why each area gets the time it does"):
-        st.markdown(_plan_cards(prepared), unsafe_allow_html=True)
+    for title, painter, value in sections:
+        st.markdown(f'<div class="ig-section-title">{title}</div>', unsafe_allow_html=True)
+        painter(st.container(), value)
 
     question_count = prepared.plan.total_questions
     candidate_name = prepared.resume.name or "Candidate"

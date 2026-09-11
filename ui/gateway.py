@@ -56,8 +56,15 @@ def build_candidate_plan(
     resume_analyzer: Callable[[Any], Any] | None = None,
     interview_planner: Callable[[Any], Any] | None = None,
     on_stage: Callable[[str], None] | None = None,
+    on_result: Callable[[str, Any], None] | None = None,
 ) -> CandidatePlan:
-    """Run intake stages 1-3: resume text to a validated interview plan."""
+    """
+    Run intake stages 1-3: resume text to a validated interview plan.
+
+    on_stage fires as a stage begins, on_result as it finishes. The second
+    exists so a caller can show a stage's output while the next one is still
+    running, rather than holding all three back until the last returns.
+    """
 
     if resume_extractor is None:
         from src.resume.extractor import extract_resume as resume_extractor
@@ -72,16 +79,19 @@ def build_candidate_plan(
         "resume extraction",
         lambda: resume_extractor(upload.text, upload.candidate_id),
         on_stage,
+        on_result,
     )
     analysis = _run_stage(
         "resume analysis",
         lambda: resume_analyzer(resume),
         on_stage,
+        on_result,
     )
     plan = _run_stage(
         "interview planning",
         lambda: interview_planner(analysis),
         on_stage,
+        on_result,
     )
 
     return CandidatePlan(
@@ -157,6 +167,7 @@ def _run_stage(
     stage: str,
     operation: Callable[[], Any],
     on_stage: Callable[[str], None] | None = None,
+    on_result: Callable[[str, Any], None] | None = None,
 ) -> Any:
     """Convert backend exceptions into a stable UI-facing integration error."""
 
@@ -164,7 +175,7 @@ def _run_stage(
         on_stage(stage)
 
     try:
-        return operation()
+        value = operation()
     except IntakeIntegrationError:
         raise
     except Exception as error:
@@ -177,6 +188,11 @@ def _run_stage(
             f"The {stage} stage could not complete. Check runtime configuration "
             "and try again.",
         ) from error
+
+    if on_result is not None:
+        on_result(stage, value)
+
+    return value
 
 
 __all__ = [
