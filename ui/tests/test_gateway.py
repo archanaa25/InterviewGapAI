@@ -5,11 +5,14 @@ from types import SimpleNamespace
 import pytest
 
 from ui.gateway import (
+    EvaluationIntegrationError,
     IntakeIntegrationError,
     build_candidate_intake,
     build_candidate_plan,
+    evaluate_candidate_interview,
     prefetch_resume,
 )
+from ui.session import InterviewProgress
 from ui.resume_upload import ExtractedResume, ResumeFormat
 
 
@@ -147,4 +150,63 @@ def test_gateway_hides_backend_exception_details() -> None:
         )
 
     assert captured.value.stage == "resume extraction"
+    assert "secret provider payload" not in str(captured.value)
+
+
+def test_evaluation_gateway_passes_only_the_frozen_question_set_and_answers() -> None:
+    """Final submission crosses one stable backend boundary."""
+
+    question_set = SimpleNamespace()
+    intake = SimpleNamespace(question_set=question_set)
+    progress = InterviewProgress.start(("Q-1", "Q-2"))
+    progress = progress.record_current("First answer")
+    progress = progress.record_current("")
+    received: list[tuple[object, dict[str, str]]] = []
+
+    def evaluate(questions, answers):
+        received.append((questions, answers))
+        return "evaluation"
+
+    result = evaluate_candidate_interview(
+        intake,
+        progress,
+        evaluator=evaluate,
+    )
+
+    assert result == "evaluation"
+    assert received == [
+        (question_set, {"Q-1": "First answer", "Q-2": ""})
+    ]
+
+
+def test_evaluation_gateway_rejects_an_unsubmitted_interview() -> None:
+    """Question-level evaluation cannot leak into the interview flow."""
+
+    progress = InterviewProgress.start(("Q-1", "Q-2"))
+    progress = progress.record_current("First answer")
+
+    with pytest.raises(EvaluationIntegrationError, match="submitted"):
+        evaluate_candidate_interview(
+            SimpleNamespace(question_set=object()),
+            progress,
+            evaluator=lambda *_args: object(),
+        )
+
+
+def test_evaluation_gateway_hides_backend_exception_details() -> None:
+    """Provider failures retain a candidate-safe results-screen contract."""
+
+    progress = InterviewProgress.start(("Q-1",)).record_current("Answer")
+
+    def fail(*_args):
+        raise RuntimeError("secret provider payload")
+
+    with pytest.raises(EvaluationIntegrationError) as captured:
+        evaluate_candidate_interview(
+            SimpleNamespace(question_set=object()),
+            progress,
+            evaluator=fail,
+        )
+
+    assert captured.value.stage == "answer evaluation"
     assert "secret provider payload" not in str(captured.value)

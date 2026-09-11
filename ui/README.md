@@ -13,7 +13,8 @@ flowchart LR
     P --> Q[Existing question selector]
     Q --> I[UI interview session]
     I --> S[Final submission]
-    S -. pending backend capability .-> R[Evaluation and report]
+    S --> V[Evaluation Agent + Evaluation RAG]
+    V -. contributor-owned handoff .-> R[Scoring and gap report]
 ```
 
 The UI accepts PDF, DOCX, DOC, CSV, and Markdown resumes. Legacy DOC conversion
@@ -24,9 +25,11 @@ Expected concepts, evaluation references, and retrieval traces remain in the
 backend question contract and are never rendered during the interview. Answers
 are collected one at a time and no score is shown before final submission.
 
-The current contributor backend stops after question selection. The completion
-screen therefore reports that final evaluation integration is pending instead of
-displaying synthetic or fabricated scores.
+After final submission, the UI sends the frozen question set and complete answer
+map to the Evaluation Agent. It retrieves competency-filtered knowledge, produces
+validated concept-level judgements, and retains evidence provenance. Numerical
+scoring, aggregation, and gap reporting remain a separate contributor-owned
+handoff; the UI does not fabricate those outputs.
 
 ## Run locally
 

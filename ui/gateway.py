@@ -27,6 +27,14 @@ class IntakeIntegrationError(RuntimeError):
         self.stage = stage
 
 
+class EvaluationIntegrationError(RuntimeError):
+    """Candidate-safe failure raised at the answer-evaluation boundary."""
+
+    def __init__(self, stage: str, message: str) -> None:
+        super().__init__(message)
+        self.stage = stage
+
+
 @dataclass(frozen=True, slots=True)
 class CandidatePlan:
     """
@@ -205,11 +213,43 @@ def build_candidate_intake(
     )
 
 
+def evaluate_candidate_interview(
+    intake: CandidateIntake,
+    progress: Any,
+    *,
+    evaluator: Callable[[Any, dict[str, str]], Any] | None = None,
+    on_stage: Callable[[str], None] | None = None,
+) -> Any:
+    """Hand one complete answer set to the backend Evaluation Agent."""
+
+    if evaluator is None:
+        from src.evaluation.agent import evaluate_interview_answers as evaluator
+
+    if not getattr(progress, "submitted", False):
+        raise EvaluationIntegrationError(
+            "answer evaluation",
+            "The interview must be submitted before evaluation begins.",
+        )
+
+    answers = {
+        answer.question_id: answer.text
+        for answer in progress.answers
+    }
+
+    return _run_stage(
+        "answer evaluation",
+        lambda: evaluator(intake.question_set, answers),
+        on_stage,
+        error_class=EvaluationIntegrationError,
+    )
+
+
 def _run_stage(
     stage: str,
     operation: Callable[[], Any],
     on_stage: Callable[[str], None] | None = None,
     on_result: Callable[[str, Any], None] | None = None,
+    error_class: type[RuntimeError] = IntakeIntegrationError,
 ) -> Any:
     """Convert backend exceptions into a stable UI-facing integration error."""
 
@@ -218,7 +258,7 @@ def _run_stage(
 
     try:
         value = operation()
-    except IntakeIntegrationError:
+    except (IntakeIntegrationError, EvaluationIntegrationError):
         raise
     except Exception as error:
         # The candidate-facing message stays deliberately vague, but an
@@ -234,7 +274,7 @@ def _run_stage(
             stage=stage,
             error_type=type(error).__name__,
         )
-        raise IntakeIntegrationError(
+        raise error_class(
             stage,
             f"The {stage} stage could not complete. Check runtime configuration "
             "and try again.",
@@ -249,9 +289,11 @@ def _run_stage(
 __all__ = [
     "CandidateIntake",
     "CandidatePlan",
+    "EvaluationIntegrationError",
     "IntakeIntegrationError",
     "build_candidate_intake",
     "build_candidate_plan",
+    "evaluate_candidate_interview",
     "prefetch_resume",
     "resolve_interview_questions",
 ]

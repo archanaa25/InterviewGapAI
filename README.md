@@ -41,7 +41,9 @@ All seven corpora have exports in `data/prepared/<competency>/`. Legacy RAG expo
 
 ## Python environment and execution
 
-For Evaluation Agent integration, see the [Evaluation RAG interface](docs/EVALUATION_RAG_INTERFACE.md).
+For Evaluation Agent integration, see the
+[Evaluation Agent interface](docs/EVALUATION_AGENT_INTERFACE.md) and its
+[Evaluation RAG dependency](docs/EVALUATION_RAG_INTERFACE.md).
 For request IDs, sanitized JSON logs, and optional LangSmith traces, see the
 [shared observability guide](docs/OBSERVABILITY.md).
 
