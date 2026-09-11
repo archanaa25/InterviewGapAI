@@ -181,11 +181,46 @@ APP_STYLES = """
   [data-testid="stCaptionContainer"],
   [data-testid="stCaptionContainer"] p { color: #596579 !important; }
 
+  /* Was 176px, which made the upload column tall enough to leave the hero
+     illustration stranded at the top of its own column with dead space under
+     it. The dropzone only ever holds a button and one line of hint text. */
   [data-testid="stFileUploaderDropzone"] {
-    min-height: 176px;
-    background: #f1fafc;
-    border: 1.5px dashed #5fb6c6;
+    min-height: 104px;
+    padding-top: .55rem;
+    padding-bottom: .55rem;
+    background: #f4fbfd;
+    border: 1.5px dashed #7cc6d6;
     border-radius: 14px;
+  }
+
+  /* The reference centres the dropzone's contents under a heading rather than
+     left-aligning a button against a wide empty box. */
+  [data-testid="stFileUploaderDropzone"] {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  [data-testid="stFileUploaderDropzone"] > div,
+  [data-testid="stFileUploaderDropzoneInstructions"] {
+    justify-content: center !important;
+    text-align: center;
+  }
+
+  .ig-upload-head {
+    margin: 0 0 .35rem;
+    font-size: .95rem;
+    font-weight: 820;
+    text-align: center;
+    color: var(--ig-ink);
+  }
+
+  .ig-upload-formats {
+    margin: 0 0 .5rem;
+    font-size: .76rem;
+    text-align: center;
+    color: var(--ig-muted);
   }
 
   /* Streamlit builds the uploaded-file chip from theme colors after upload.
@@ -231,15 +266,24 @@ APP_STYLES = """
     font-weight: 780;
   }
 
+  /* The reference CTA is a green-to-teal sweep in white type, not flat lime. */
   button[kind="primary"] {
-    color: #172033 !important;
-    background: var(--ig-lime) !important;
-    border-color: #b7df16 !important;
+    color: #ffffff !important;
+    background: linear-gradient(95deg, #12c06a, #10b6a8) !important;
+    border-color: transparent !important;
+    min-height: 3.1rem !important;
+    font-size: .98rem !important;
+    box-shadow: 0 10px 24px rgba(16, 182, 168, .28);
   }
 
   button[kind="primary"] *,
   button[kind="primary"] p {
-    color: #172033 !important;
+    color: #ffffff !important;
+  }
+
+  button[kind="primary"]:hover {
+    background: linear-gradient(95deg, #0fae5f, #0ea497) !important;
+    border-color: transparent !important;
   }
 
   button[kind="secondary"] {
@@ -257,6 +301,27 @@ APP_STYLES = """
     color: #ffffff !important;
     background: #26364d !important;
     border-color: #26364d !important;
+  }
+
+  /* The top-right sign-in is a quiet secondary door, not a call to action:
+     the solid dark default competed with the primary CTA on the same screen.
+     Keyed on the widget's own key so no other secondary button changes. */
+  .st-key-ig-top-signin button {
+    min-height: 2.35rem !important;
+    color: var(--ig-ink) !important;
+    background: #ffffff !important;
+    border: 1px solid var(--ig-line) !important;
+    font-size: .82rem !important;
+  }
+
+  .st-key-ig-top-signin button * ,
+  .st-key-ig-top-signin button p {
+    color: var(--ig-ink) !important;
+  }
+
+  .st-key-ig-top-signin button:hover {
+    background: var(--ig-soft) !important;
+    border-color: var(--ig-blue) !important;
   }
 
 
@@ -493,6 +558,208 @@ APP_STYLES = """
     color: #8793a2;
   }
 
+  /* ---------- landing hero ---------- */
+
+  .ig-tagline {
+    margin: -.35rem 0 0 2.55rem;
+    font-size: .62rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--ig-muted);
+  }
+
+  .ig-hero-title {
+    margin: .1rem 0 .55rem;
+    font-size: 2.45rem;
+    font-weight: 860;
+    line-height: 1.08;
+    letter-spacing: -.02em;
+    color: var(--ig-ink);
+  }
+
+  /* The accent half of the headline. A gradient needs a painted background
+     clipped to the glyphs, so the fallback colour matters when that is
+     unsupported: set it first, then let the clip override it. */
+  .ig-hero-accent {
+    color: var(--ig-blue);
+    background: linear-gradient(95deg, #12a8c4, #5b4bd6 78%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .ig-hero-lede {
+    max-width: 34rem;
+    margin: 0 0 1.15rem;
+    font-size: .95rem;
+    line-height: 1.62;
+    color: #43536b;
+  }
+
+  .ig-secure {
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+    margin: .5rem 0 0;
+    font-size: .72rem;
+    color: var(--ig-muted);
+  }
+
+  .ig-cta-note {
+    margin: .45rem 0 0;
+    font-size: .72rem;
+    text-align: center;
+    color: var(--ig-muted);
+  }
+
+  /* ---------- hero illustration ---------- */
+
+  /* The art is a full-bleed panel, not a framed thumbnail: it runs past the
+     container's right padding and up under the header row, which is what
+     removes the dead space a centred, shadowed box left beneath it. No
+     border or shadow - the source already sits on its own near-white ground,
+     so a frame would read as a second edge. */
+  /* No negative top margin: it slid the panel up under the header row and
+     over the sign-in button. Bleed right only. */
+  .st-key-ig-hero-art {
+    margin: 0 -3.1rem 0 0;
+  }
+
+  /* object-fit:cover lets the panel match the upload column's height instead
+     of ending well above it. The focal point is biased left of centre and
+     high, which keeps the person and the numbered cards in frame when the
+     sides are trimmed. */
+  .st-key-ig-hero-art img {
+    width: 100%;
+    /* 410px keeps the crop to about a tenth of the width. At 480px the
+       panel filled the column but cut the hand-lettered notes off both
+       edges, which are the parts that explain the four steps. */
+    height: 410px;
+    object-fit: cover;
+    object-position: 50% 34%;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+  }
+
+  /* The dropzone repeats the accepted formats and size limit that the heading
+     above it already states. One statement is enough. */
+  [data-testid="stFileUploaderDropzoneInstructions"] span:not([data-testid]) {
+    display: none !important;
+  }
+
+  @media (max-width: 700px) {
+    /* Stacked on a phone: a negative right margin would push it off screen. */
+    .st-key-ig-hero-art { margin: .4rem 0 0; }
+    .ig-hero-art [data-testid="stImage"] img,
+    .ig-hero-art [data-testid="stImageContainer"] img { border-radius: 16px; }
+  }
+
+  /* ---------- journey rail (fallback when no illustration is saved) ---------- */
+
+  .ig-rail {
+    display: grid;
+    gap: .6rem;
+  }
+
+  .ig-rail-item {
+    display: flex;
+    align-items: flex-start;
+    gap: .7rem;
+    padding: .72rem .85rem;
+    background: #fff;
+    border: 1px solid var(--ig-line);
+    border-radius: 14px;
+    box-shadow: 0 6px 16px rgba(44, 62, 80, .06);
+  }
+
+  .ig-rail-n {
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--ig-blue), var(--ig-teal));
+    color: #fff;
+    font-size: .72rem;
+    font-weight: 800;
+  }
+
+  .ig-rail-item b {
+    display: block;
+    font-size: .82rem;
+    font-weight: 800;
+    color: var(--ig-ink);
+  }
+
+  .ig-rail-item i {
+    display: block;
+    margin-top: .1rem;
+    font-size: .73rem;
+    font-style: normal;
+    line-height: 1.45;
+    color: var(--ig-muted);
+  }
+
+  /* ---------- feature strip ---------- */
+
+  .ig-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 0;
+    margin-top: 1.9rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--ig-line);
+  }
+
+  /* Vertical rules between the four items, as in the reference. The first
+     child has none, so a wrapped row never starts with a stray line. */
+  .ig-feature {
+    padding: 0 1.1rem;
+    border-left: 1px solid var(--ig-line);
+  }
+
+  .ig-feature:first-child {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .ig-feature b {
+    display: block;
+    margin-top: .45rem;
+    font-size: .8rem;
+    font-weight: 800;
+    color: var(--ig-ink);
+  }
+
+  .ig-feature i {
+    display: block;
+    margin-top: .15rem;
+    font-size: .73rem;
+    font-style: normal;
+    line-height: 1.5;
+    color: var(--ig-muted);
+  }
+
+  .ig-feature-ico {
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 9px;
+    font-size: .92rem;
+  }
+
+  /* ---------- sign-in card ---------- */
+
+  .ig-signin-note {
+    margin: 0 0 1rem;
+    font-size: .85rem;
+    line-height: 1.6;
+    color: #43536b;
+  }
+
   @media (max-width: 700px) {
     [data-testid="stMainBlockContainer"] {
       margin-top: .5rem;
@@ -503,6 +770,8 @@ APP_STYLES = """
     .ig-steps { gap: .35rem; font-size: .62rem; }
     .ig-profile-head { gap: .6rem; }
     .ig-stats { width: 100%; }
+    .ig-hero-title { font-size: 1.85rem; }
+    .ig-tagline { margin-left: 0; }
   }
 </style>
 """

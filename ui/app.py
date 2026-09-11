@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import html
+import json
 import sys
 from pathlib import Path
 from types import SimpleNamespace
@@ -45,6 +46,14 @@ from ui.resume_upload import (
     SUPPORTED_RESUME_TYPES,
     extract_resume,
 )
+from ui.auth import (
+    INTERVIEWER_PASSWORD_VAR,
+    InterviewerAuthUnavailable,
+    Role,
+    interviewer_auth_configured,
+    interviewer_username,
+    verify_interviewer,
+)
 from ui.session import InterviewProgress
 from ui.styles import APP_STYLES
 
@@ -54,6 +63,7 @@ PLAN_KEY = "ig_plan"
 INTAKE_KEY = "ig_intake"
 PROGRESS_KEY = "ig_progress"
 PREFETCH_KEY = "ig_prefetch"
+ROLE_KEY = "ig_role"
 
 # What each backend stage is called while the candidate waits on it. The
 # gateway names stages for error messages; these are the candidate-facing
@@ -128,6 +138,9 @@ def _initialize_state() -> None:
     st.session_state.setdefault(INTAKE_KEY, None)
     st.session_state.setdefault(PROGRESS_KEY, None)
     st.session_state.setdefault(PREFETCH_KEY, None)
+    # Candidate is the default audience: an interview link should not need an
+    # account. Only a verified sign-in ever writes the interviewer role.
+    st.session_state.setdefault(ROLE_KEY, Role.CANDIDATE.value)
 
 
 def _reset() -> None:
@@ -140,10 +153,22 @@ def _reset() -> None:
     st.session_state[PREFETCH_KEY] = None
 
 
-def _header(active: str) -> None:
-    """Render the compact product mark and candidate journey."""
+def _sign_out() -> None:
+    """Drop interviewer access and return to the candidate landing."""
 
-    steps = (
+    _reset()
+    st.session_state[ROLE_KEY] = Role.CANDIDATE.value
+
+
+def _header(active: str, *, steps: bool = True, sign_in: bool = False) -> None:
+    """
+    Render the product mark, and optionally the journey and a sign-in button.
+
+    The sign-in button is a real widget rather than a link inside the header
+    markup, because only a widget can change screen on click.
+    """
+
+    journey = (
         ("upload", "1. UPLOAD"),
         ("plan", "2. PLAN"),
         ("interview", "3. INTERVIEW"),
@@ -151,17 +176,28 @@ def _header(active: str) -> None:
     )
     markup = "<span>›</span>".join(
         f'<span class="ig-step {"active" if key == active else ""}">{label}</span>'
-        for key, label in steps
-    )
-    st.markdown(
-        f"""
-        <div class="ig-header">
-          <div class="ig-brand"><span class="ig-mark">AI</span><span>INTERVIEW<br>GAP AI</span></div>
-          <div class="ig-steps">{markup}</div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
+        for key, label in journey
+    ) if steps else ""
+
+    brand, action = st.columns([5, 1.35], gap="small")
+
+    with brand:
+        st.markdown(
+            f"""
+            <div class="ig-header">
+              <div class="ig-brand"><span class="ig-mark">AI</span><span>INTERVIEW<br>GAP AI</span></div>
+              <div class="ig-steps">{markup}</div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+    with action:
+        if sign_in and st.button(
+            "Sign in", key="ig-top-signin", use_container_width=True,
+        ):
+            st.session_state[SCREEN_KEY] = "signin"
+            st.rerun()
 
 
 def _safe(value: object) -> str:
@@ -264,53 +300,75 @@ def _competency_color(value: object) -> str:
 def _render_upload() -> None:
     """Accept one resume and invoke the existing intake pipeline."""
 
-    _header("upload")
-    st.markdown('<div class="ig-kicker">BUILD YOUR INTERVIEW</div>', unsafe_allow_html=True)
-    st.title("Upload your resume")
-    st.markdown(
-        '<p class="ig-subtitle">Submit your CV to prepare a focused AI-engineering interview.</p>',
-        unsafe_allow_html=True,
-    )
+    # sign_in=True puts the interviewer door in the top-right of every
+    # candidate screen; it is the only route to the credential form.
+    _header("upload", sign_in=True)
 
-    upload_column, note_column = st.columns([1.55, 1], gap="large")
-    with upload_column:
+    hero_column, rail_column = st.columns([1.25, 1], gap="large")
+
+    with hero_column:
+        _render_hero()
+
+        st.markdown(
+            '<p class="ig-upload-head">Upload your resume</p>'
+            '<p class="ig-upload-formats">PDF, DOCX, DOC, CSV, MD or '
+            "MARKDOWN · Max 10 MB</p>",
+            unsafe_allow_html=True,
+        )
         uploaded = st.file_uploader(
-            "Drag and drop or browse",
+            "Upload your resume",
             type=list(SUPPORTED_RESUME_TYPES),
             help="PDF, DOCX, DOC, CSV, MD, or MARKDOWN; maximum 10 MB.",
             max_upload_size=10,
+            # The heading above already says this; a second copy from the
+            # widget's own label would repeat it.
+            label_visibility="collapsed",
         )
-        st.caption("Supported: PDF, DOCX, DOC, CSV and Markdown · Maximum 10 MB")
-
-    with note_column:
         st.markdown(
-            """
-            <div class="ig-upload-note">
-              <div class="ig-note-title">Why upload?</div>
-              <div class="ig-note-row"><span class="ig-note-ico" style="background:#e8f1fc;color:#2a78d6">◎</span>
-                <span><b>Tailored coverage</b><i>Questions matched to your background</i></span></div>
-              <div class="ig-note-row"><span class="ig-note-ico" style="background:#fdf0e8;color:#eb6834">◈</span>
-                <span><b>Evidence-led planning</b><i>Built from what your resume shows</i></span></div>
-              <div class="ig-note-row"><span class="ig-note-ico" style="background:#e8f5ee;color:#008300">◔</span>
-                <span><b>No surprises</b><i>Marking rubrics stay hidden throughout</i></span></div>
-            </div>
-            """,
+            '<p class="ig-secure">🔒 Your data is used only to create your '
+            "interview and insights.</p>",
             unsafe_allow_html=True,
         )
 
-    document = None
-    if uploaded is not None:
-        try:
-            document = _prepare_upload(uploaded)
-        except ResumeUploadError as error:
-            st.error(str(error))
+        document = None
+        if uploaded is not None:
+            try:
+                document = _prepare_upload(uploaded)
+            except ResumeUploadError as error:
+                st.error(str(error))
 
-    if st.button(
-        "Prepare interview plan  →",
-        type="primary",
-        use_container_width=True,
-        disabled=document is None,
-    ):
+        # The call to action belongs beside the illustration, not stretched
+        # underneath it.
+        started = st.button(
+            "Start Your Interview  →",
+            type="primary",
+            use_container_width=True,
+            disabled=document is None,
+        )
+        st.markdown(
+            '<p class="ig-cta-note">Takes a few minutes to set up · '
+            "Personalized to your goals</p>",
+            unsafe_allow_html=True,
+        )
+
+    with rail_column:
+        illustration = _hero_image()
+        if illustration is not None:
+            # A keyed container, not a markdown <div>: each st.markdown block
+            # is its own element, so an unclosed div there never wraps the
+            # elements that follow it. The key becomes a class to style.
+            with st.container(key="ig-hero-art"):
+                st.image(str(illustration), use_container_width=True)
+        else:
+            st.markdown(_journey_rail(), unsafe_allow_html=True)
+
+    if not started:
+        # The value strip sits under the fold on the idle landing page, and is
+        # dropped once a run starts so it cannot push the live progress
+        # sections off screen.
+        st.markdown(_feature_strip(), unsafe_allow_html=True)
+
+    if started:
         try:
             # Three model calls run back to back. All three sections are on
             # screen from the start and each fills as its stage returns, so
@@ -355,6 +413,163 @@ def _render_upload() -> None:
             st.session_state[PLAN_KEY] = prepared
             st.session_state[SCREEN_KEY] = "plan"
             st.rerun()
+
+
+def _render_signin() -> None:
+    """Interviewer credentials. Reached from the sign-in button, not the flow."""
+
+    _header("upload", steps=False)
+    st.markdown('<div class="ig-kicker">INTERVIEWER SIGN-IN</div>', unsafe_allow_html=True)
+    st.title("Sign in")
+    st.markdown(
+        '<p class="ig-signin-note">The interviewer view shows marking rubrics, '
+        "evidence assessments and interview strategy, so it needs a password. "
+        "Candidates do not sign in.</p>",
+        unsafe_allow_html=True,
+    )
+
+    form_column, _ = st.columns([1.2, 1], gap="large")
+
+    with form_column:
+        if not interviewer_auth_configured():
+            # Closed, not open, when unconfigured - say why rather than fail
+            # at the login attempt.
+            st.warning(
+                f"Interviewer sign-in is unavailable: {INTERVIEWER_PASSWORD_VAR} "
+                "is not set in the environment."
+            )
+        else:
+            with st.form("interviewer-login"):
+                username = st.text_input("Username", autocomplete="username")
+                password = st.text_input(
+                    "Password", type="password", autocomplete="current-password",
+                )
+                submitted = st.form_submit_button(
+                    "Sign in", type="primary", use_container_width=True,
+                )
+
+            if submitted:
+                try:
+                    allowed = verify_interviewer(username, password)
+                except InterviewerAuthUnavailable as error:
+                    st.error(str(error))
+                else:
+                    if allowed:
+                        st.session_state[ROLE_KEY] = Role.INTERVIEWER.value
+                        st.rerun()
+                    else:
+                        # One message for either wrong field: which one was
+                        # wrong is not the signer-in's business to learn by
+                        # trial.
+                        st.error("Those credentials were not accepted.")
+
+        if st.button("← Back to upload", use_container_width=True):
+            st.session_state[SCREEN_KEY] = "upload"
+            st.rerun()
+
+
+# The four stages of a run, shown beside the upload control.
+JOURNEY = (
+    ("Resume Analysis", "We read your experience and skills"),
+    ("Personalized Interview", "Questions tailored to your profile"),
+    ("Evidence-Based Evaluation", "Answers assessed against expected concepts"),
+    ("Interview Insights", "Strengths, skill gaps and next steps"),
+)
+
+# Deliberately NOT the four stages again. The strip used to restate three of
+# JOURNEY's items a few hundred pixels below it, which read as a bug rather
+# than emphasis. These are the commitments a candidate cannot infer from the
+# stage names.
+FEATURES = (
+    ("#e8f5ee", "#008300", "◔", "No surprises",
+     "Marking rubrics stay hidden throughout"),
+    ("#eef1fe", "#4a3aa7", "▤", "Curated question bank",
+     "Reviewed AI-engineering questions, not invented on the spot"),
+    ("#fdf0e8", "#eb6834", "◑", "Answer at your pace",
+     "One question at a time, and skip anything you want to"),
+    ("#e8f1fc", "#2a78d6", "◎", "Learning recommendations",
+     "Curated topics and resources to grow further"),
+)
+
+# Drop a file at ui/assets/hero.<ext> and it replaces the journey rail in the
+# right-hand column. The rail is the fallback, not the default, because an
+# illustration that already carries the stage labels would repeat it.
+ASSET_DIR = PROJECT_ROOT / "ui" / "assets"
+HERO_IMAGE_SUFFIXES = (".png", ".jpg", ".jpeg", ".webp", ".svg")
+
+# Checked in order, then any image in the directory. Matching on a fixed
+# filename alone meant a perfectly good illustration saved under its own name
+# was silently ignored and the fallback rail rendered instead.
+HERO_IMAGE_PREFERRED = ("hero", "image", "landing")
+
+
+def _hero_image() -> Path | None:
+    """The landing illustration, if one has been saved."""
+
+    if not ASSET_DIR.is_dir():
+        return None
+
+    images = sorted(
+        path
+        for path in ASSET_DIR.iterdir()
+        if path.is_file() and path.suffix.lower() in HERO_IMAGE_SUFFIXES
+    )
+
+    if not images:
+        return None
+
+    by_stem = {path.stem.lower(): path for path in images}
+
+    for stem in HERO_IMAGE_PREFERRED:
+        if stem in by_stem:
+            return by_stem[stem]
+
+    # Something image-shaped is here under another name; prefer it over the
+    # fallback rail, since putting it in this folder is the whole signal.
+    return images[0]
+
+
+def _render_hero() -> None:
+    """The headline, lede and journey rail above the upload control."""
+
+    st.markdown(
+        '<div class="ig-kicker">TECHNICAL INTERVIEWS, POWERED BY AI</div>',
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        '<h1 class="ig-hero-title">Turn Your Experience<br>'
+        'Into <span class="ig-hero-accent">What\'s Next.</span></h1>',
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        '<p class="ig-hero-lede">Take a personalized AI-engineering interview '
+        "built around your resume. Get evidence-based evaluation, clear "
+        "insights, and focused learning recommendations.</p>",
+        unsafe_allow_html=True,
+    )
+
+
+def _journey_rail() -> str:
+    """The four numbered steps, standing in for the mockup's illustration."""
+
+    items = "".join(
+        f'<div class="ig-rail-item"><span class="ig-rail-n">{number}</span>'
+        f"<span><b>{_safe(title)}</b><i>{_safe(detail)}</i></span></div>"
+        for number, (title, detail) in enumerate(JOURNEY, start=1)
+    )
+    return f'<div class="ig-rail">{items}</div>'
+
+
+def _feature_strip() -> str:
+    """Four value statements under the fold."""
+
+    cards = "".join(
+        f'<div class="ig-feature">'
+        f'<span class="ig-feature-ico" style="background:{background};color:{ink}">{icon}</span>'
+        f"<b>{_safe(title)}</b><i>{_safe(detail)}</i></div>"
+        for background, ink, icon, title, detail in FEATURES
+    )
+    return f'<div class="ig-features">{cards}</div>'
 
 
 def _prepare_upload(uploaded: object) -> object:
@@ -691,6 +906,183 @@ def _render_results(intake: CandidateIntake, progress: InterviewProgress) -> Non
         st.rerun()
 
 
+ARTIFACT_DIR = PROJECT_ROOT / "data" / "prepared"
+
+
+def _saved_candidates() -> list[str]:
+    """Candidate IDs with a saved plan on disk."""
+
+    plan_dir = ARTIFACT_DIR / "interview_plans"
+
+    if not plan_dir.is_dir():
+        return []
+
+    return sorted(
+        path.name.removesuffix("_plan.json")
+        for path in plan_dir.glob("*_plan.json")
+    )
+
+
+def _load_artifacts(candidate_id: str) -> dict:
+    """
+    Read one candidate's saved stage outputs.
+
+    Each stage is reported separately so a missing analysis does not hide an
+    extraction that ran fine.
+    """
+
+    paths = {
+        "resume extraction": ARTIFACT_DIR / "resumes" / f"{candidate_id}.json",
+        "resume evidence": (
+            ARTIFACT_DIR / "resume_analysis" / f"{candidate_id}_analysis.json"
+        ),
+        "interview plan": (
+            ARTIFACT_DIR / "interview_plans" / f"{candidate_id}_plan.json"
+        ),
+    }
+
+    stages = {}
+
+    for stage, path in paths.items():
+        if not path.is_file():
+            stages[stage] = None
+            continue
+        try:
+            stages[stage] = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError) as error:
+            stages[stage] = {"error": f"{type(error).__name__}"}
+
+    return stages
+
+
+TRACE_PROSE_LIMIT = 200
+
+
+def _clip(text: str, limit: int = TRACE_PROSE_LIMIT) -> str:
+    """
+    Shorten model prose to a glance.
+
+    The analyzer's summary and the planner's rationale run to full paragraphs.
+    The trace view is for scanning several stages at once, so it shows the
+    opening and leaves the rest to the raw JSON below it.
+    """
+
+    collapsed = " ".join(str(text).split())
+
+    if len(collapsed) <= limit:
+        return collapsed
+
+    # Cut on a word boundary rather than mid-word.
+    return collapsed[:limit].rsplit(" ", 1)[0] + "…"
+
+
+def _trace_summary(stage: str, payload: dict) -> list[str]:
+    """A few lines saying what the stage produced, not the whole document."""
+
+    if stage == "resume extraction":
+        return [
+            f"**{payload.get('name') or 'Name not stated'}** — "
+            f"{payload.get('target_role') or 'role not stated'}",
+            f"{len(payload.get('skills') or [])} skills · "
+            f"{len(payload.get('work_experience') or [])} roles · "
+            f"{len(payload.get('projects') or [])} projects · "
+            f"{len(payload.get('education') or [])} education entries",
+        ]
+
+    if stage == "resume evidence":
+        evidence = payload.get("competency_evidence") or []
+        tally: dict[str, int] = {}
+        for item in evidence:
+            level = item.get("evidence_level", "UNKNOWN")
+            tally[level] = tally.get(level, 0) + 1
+        lines = [
+            " · ".join(f"{count} {level}" for level, count in sorted(tally.items()))
+            or "No competency evidence recorded."
+        ]
+        # The analyzer's own summary names which areas it considers unproven,
+        # which is exactly what the candidate screens withhold - so it belongs
+        # here and nowhere else.
+        if payload.get("overall_summary"):
+            lines.append(f"_{_clip(payload['overall_summary'])}_")
+        return lines
+
+    targets = payload.get("competency_targets") or []
+    distribution = payload.get("difficulty_distribution") or {}
+    lines = [
+        f"**{payload.get('total_questions', '?')} questions** across "
+        f"{len(targets)} competencies — "
+        f"{distribution.get('basic', 0)} basic · "
+        f"{distribution.get('intermediate', 0)} intermediate · "
+        f"{distribution.get('advanced', 0)} advanced",
+    ]
+    rationale = (payload.get("strategy") or {}).get("rationale")
+    if rationale:
+        lines.append(f"_{_clip(rationale)}_")
+    return lines
+
+
+def _render_interviewer() -> None:
+    """Stage traces for a saved candidate run, with the strategy shown."""
+
+    _header("plan", steps=False)
+    st.markdown('<div class="ig-kicker">INTERVIEWER VIEW</div>', unsafe_allow_html=True)
+    st.title("Intake traces")
+
+    signed_in, sign_out = st.columns([3, 1])
+    signed_in.caption(f"Signed in as {interviewer_username()}")
+    if sign_out.button("Sign out", use_container_width=True):
+        _sign_out()
+        st.rerun()
+
+    st.info(
+        "These screens show marking rubrics, evidence assessments and "
+        "interview strategy. They are withheld from the candidate view."
+    )
+
+    live = st.session_state[PLAN_KEY]
+    candidates = _saved_candidates()
+
+    if live is None and not candidates:
+        st.warning(
+            "No intake to show. Run a candidate through the candidate view, or "
+            f"save artifacts under {ARTIFACT_DIR.name}/."
+        )
+        return
+
+    sources = (["This session's run"] if live is not None else []) + candidates
+    choice = st.selectbox("Intake", sources)
+
+    if live is not None and choice == "This session's run":
+        stages = {
+            "resume extraction": live.resume.model_dump(mode="json"),
+            "resume evidence": live.analysis.model_dump(mode="json"),
+            "interview plan": live.plan.model_dump(mode="json"),
+        }
+    else:
+        stages = _load_artifacts(choice)
+
+    for stage, payload in stages.items():
+        st.markdown(
+            f'<div class="ig-section-title">{stage.title()}</div>',
+            unsafe_allow_html=True,
+        )
+
+        if payload is None:
+            st.caption("No saved output for this stage.")
+            continue
+        if "error" in payload and len(payload) == 1:
+            st.error(f"Could not read this stage ({payload['error']}).")
+            continue
+
+        for line in _trace_summary(stage, payload):
+            st.markdown(line)
+
+        # Summary first, full document behind a click: the analysis alone runs
+        # to seven competencies with evidence items and sources.
+        with st.expander("Raw JSON"):
+            st.json(payload, expanded=False)
+
+
 def main() -> None:
     """Render the current UI-owned candidate state."""
 
@@ -703,7 +1095,20 @@ def main() -> None:
     st.markdown(APP_STYLES, unsafe_allow_html=True)
     _initialize_state()
 
+    role = st.session_state[ROLE_KEY]
     screen = st.session_state[SCREEN_KEY]
+
+    # The interviewer role is only ever written to session state by a verified
+    # sign-in, so reaching these screens means the password was supplied in
+    # this session.
+    if role == Role.INTERVIEWER.value:
+        _render_interviewer()
+        return
+
+    if screen == "signin":
+        _render_signin()
+        return
+
     prepared = st.session_state[PLAN_KEY]
     intake = st.session_state[INTAKE_KEY]
     progress = st.session_state[PROGRESS_KEY]
