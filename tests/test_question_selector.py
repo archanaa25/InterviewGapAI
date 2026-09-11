@@ -53,16 +53,22 @@ class FakeRetriever:
         ]
 
 
-def build_record(question_id, competency, difficulty):
+def build_record(
+    question_id,
+    competency,
+    difficulty,
+    sub_competency=None,
+    must_have=("concept a",),
+):
     return {
         "question_id": question_id,
         "role": "ai_engineer",
         "competency": competency,
-        "sub_competency": f"{competency}_fundamentals",
+        "sub_competency": sub_competency or f"{competency}_fundamentals",
         "difficulty": difficulty,
         "question_type": "conceptual",
         "question": f"Question {question_id}?",
-        "expected_concepts": {"must_have": ["concept a"], "bonus": []},
+        "expected_concepts": {"must_have": list(must_have), "bonus": []},
         "evaluation_refs": [f"EVAL-{competency.upper()}"],
         "tags": [competency],
     }
@@ -269,6 +275,149 @@ class QuestionSelectorPrefetchTests(unittest.TestCase):
 
         self.assertTrue(result.is_complete, result.unfilled_slots)
         self.assertEqual(len(result.questions), 10)
+
+
+def build_filler(competency, count, difficulty="advanced"):
+    """Distinct-topic records so a padded slot does not consume the pool under test."""
+
+    return [
+        build_record(
+            f"{competency.upper()}-FILL-{index}",
+            competency,
+            difficulty,
+            sub_competency=f"filler_topic_{index}",
+            must_have=[f"filler concept {index}"],
+        )
+        for index in range(count)
+    ]
+
+
+class QuestionSelectorRedundancyTests(unittest.TestCase):
+    """Two slots in one competency should not test one topic twice."""
+
+    @staticmethod
+    def _selector(records):
+        selector = QuestionSelector(retriever=FakeRetriever(records))
+        selector._corpus = {record["question_id"]: record for record in records}
+        return selector
+
+    @staticmethod
+    def _by_requested(result, difficulty):
+        return {
+            question.question_id
+            for question in result.questions
+            if question.retrieval.requested_difficulty == difficulty
+        }
+
+    def test_second_slot_prefers_an_unused_sub_competency(self):
+        # The shape that motivated this check: two questions in one
+        # sub_competency, sharing no must-have concept wording, that are
+        # nonetheless two probes of the same narrow topic.
+        records = [
+            build_record(
+                "AGENT-FUND-BAS-001", "agentic_ai", "basic",
+                sub_competency="agent_fundamentals",
+                must_have=["dynamic execution path"],
+            ),
+            build_record(
+                "AGENT-FUND-INT-001", "agentic_ai", "intermediate",
+                sub_competency="agent_fundamentals",
+                must_have=["fixed paths improve auditability"],
+            ),
+            build_record(
+                "AGENT-MEM-INT-001", "agentic_ai", "intermediate",
+                sub_competency="agent_memory",
+                must_have=["state persists across turns"],
+            ),
+        ] + build_filler("agentic_ai", 8)
+
+        result = self._selector(records).select(
+            build_plan("agentic_ai", 1, 1, 8)
+        )
+
+        self.assertTrue(result.is_complete, result.unfilled_slots)
+        self.assertEqual(
+            self._by_requested(result, "basic"), {"AGENT-FUND-BAS-001"}
+        )
+        # agent_fundamentals is already spent, so the intermediate slot takes
+        # the other topic rather than the second half of the same trade-off.
+        self.assertEqual(
+            self._by_requested(result, "intermediate"), {"AGENT-MEM-INT-001"}
+        )
+        self.assertEqual(result.warnings, [])
+
+    def test_repeated_concepts_are_caught_across_sub_competencies(self):
+        records = [
+            build_record(
+                "RAG-A", "rag", "intermediate",
+                sub_competency="rag_retrieval",
+                must_have=["hybrid retrieval", "reranking"],
+            ),
+            build_record(
+                "RAG-B", "rag", "intermediate",
+                sub_competency="rag_serving",
+                must_have=["hybrid retrieval", "reranking"],
+            ),
+            build_record(
+                "RAG-C", "rag", "intermediate",
+                sub_competency="rag_chunking",
+                must_have=["chunk size affects recall"],
+            ),
+        ] + build_filler("rag", 8)
+
+        result = self._selector(records).select(build_plan("rag", 0, 2, 8))
+
+        self.assertEqual(
+            self._by_requested(result, "intermediate"), {"RAG-A", "RAG-C"}
+        )
+        self.assertEqual(result.warnings, [])
+
+    def test_a_redundant_question_beats_an_unfilled_slot(self):
+        # An unfilled slot aborts the whole intake at the gateway, so when the
+        # corpus offers nothing else the held-back question is admitted - and
+        # the reason is recorded rather than hidden.
+        # No filler here on purpose: with another topic available at any
+        # difficulty the selector prefers that (variety over difficulty match),
+        # so isolating the admit path means offering it nothing else.
+        records = [
+            build_record("RAG-INT-001", "rag", "intermediate"),
+            build_record("RAG-INT-002", "rag", "intermediate"),
+        ]
+
+        result = self._selector(records).select(build_plan("rag", 0, 2, 8))
+
+        self.assertEqual(
+            self._by_requested(result, "intermediate"),
+            {"RAG-INT-001", "RAG-INT-002"},
+        )
+        self.assertEqual(len(result.warnings), 1)
+        self.assertIn("repeats", result.warnings[0])
+
+    def test_a_held_back_question_stays_available_to_a_later_slot(self):
+        # Deferring must not consume the candidate. RAG-INT-002 is redundant
+        # for the intermediate slot, but the advanced slot exhausts its own
+        # pool and must still be able to fall back onto it.
+        records = [
+            build_record(
+                "RAG-INT-001", "rag", "intermediate",
+                sub_competency="rag_retrieval", must_have=["a"],
+            ),
+            build_record(
+                "RAG-INT-002", "rag", "intermediate",
+                sub_competency="rag_retrieval", must_have=["a"],
+            ),
+            build_record(
+                "RAG-ADV-001", "rag", "advanced",
+                sub_competency="rag_serving", must_have=["b"],
+            ),
+        ]
+
+        result = self._selector(records).select(build_plan("rag", 0, 1, 9))
+
+        self.assertEqual(
+            {question.question_id for question in result.questions},
+            {"RAG-INT-001", "RAG-ADV-001", "RAG-INT-002"},
+        )
 
 
 if __name__ == "__main__":

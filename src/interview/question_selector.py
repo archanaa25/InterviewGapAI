@@ -62,6 +62,22 @@ DIFFICULTY_ORDER = {
     for position, difficulty in enumerate(DIFFICULTIES)
 }
 
+# Two questions in the same sub_competency whose must-have concepts mostly
+# coincide test one piece of knowledge twice and spend two of the ten slots
+# doing it. Dedup here used to be question_id only, which cannot see that:
+# AGENT-FUND-BAS-002 ("what justifies an agent") and AGENT-FUND-INT-001
+# ("when is deterministic preferred") are different ids, both agent_fundamentals,
+# and are inverse framings of one trade-off. Above this share of a candidate's
+# must-have concepts already covered by an accepted question, prefer something
+# else. The signal is read from corpus records already loaded - no extra
+# retrieval, no model call.
+REDUNDANCY_CONCEPT_OVERLAP = 0.5
+
+# A candidate held back as redundant, kept whole so it can be admitted later
+# without a second retrieval call:
+#   (corpus record, retrieval hit, requested difficulty, filter relaxed, reason)
+_Deferred = Tuple[dict, dict, str, bool, str]
+
 
 class QuestionSelector:
     """
@@ -168,6 +184,10 @@ class QuestionSelector:
                     used_ids=used_ids,
                     warnings=warnings,
                     cache=cache,
+                    # Redundancy is judged against the whole interview built so
+                    # far, not just this slot: the pair that motivated this check
+                    # sat in two different difficulty slots of one competency.
+                    already_selected=[question for _, question in selected],
                 )
 
                 selected.extend(
@@ -285,6 +305,7 @@ class QuestionSelector:
         used_ids: set[str],
         warnings: List[str],
         cache: Optional[Dict[Tuple[str, str, str, int], List[dict]]] = None,
+        already_selected: Tuple[SelectedQuestion, ...] = (),
     ) -> Tuple[List[SelectedQuestion], int]:
         """Take up to count unused questions for one plan slot."""
 
@@ -293,40 +314,144 @@ class QuestionSelector:
         # cannot rank a bucket.
         query = target.reason
 
-        collected = self._take_from_pool(
-            query=query,
-            competency=target.competency.value,
-            difficulty=difficulty,
-            wanted=count,
-            used_ids=used_ids,
-            warnings=warnings,
-            requested_difficulty=difficulty,
-            filter_relaxed=False,
-            target=target,
-            cache=cache,
-        )
+        collected: List[SelectedQuestion] = []
+        deferred: List[_Deferred] = []
+
+        def take(pool_difficulty: str, filter_relaxed: bool) -> None:
+            if len(collected) >= count:
+                return
+
+            taken, held = self._take_from_pool(
+                query=query,
+                competency=target.competency.value,
+                difficulty=pool_difficulty,
+                wanted=count - len(collected),
+                used_ids=used_ids,
+                warnings=warnings,
+                requested_difficulty=difficulty,
+                filter_relaxed=filter_relaxed,
+                target=target,
+                cache=cache,
+                already_selected=list(already_selected) + collected,
+            )
+            collected.extend(taken)
+            deferred.extend(held)
+
+        take(difficulty, False)
 
         for fallback in DIFFICULTY_FALLBACKS[difficulty]:
 
             if len(collected) >= count:
                 break
 
+            take(fallback, True)
+
+        # Variety is a preference, not a constraint. An unfilled slot aborts the
+        # whole intake at the gateway, so a question that repeats ground already
+        # covered still beats no question at all. Anything held back for
+        # redundancy is admitted here rather than re-retrieved, and says so.
+        if len(collected) < count and deferred:
             collected.extend(
-                self._take_from_pool(
-                    query=query,
-                    competency=target.competency.value,
-                    difficulty=fallback,
+                self._admit_deferred(
+                    deferred=deferred,
                     wanted=count - len(collected),
                     used_ids=used_ids,
                     warnings=warnings,
-                    requested_difficulty=difficulty,
-                    filter_relaxed=True,
                     target=target,
-                    cache=cache,
+                    query=query,
                 )
             )
 
         return collected, count - len(collected)
+
+    def _admit_deferred(
+        self,
+        deferred: List["_Deferred"],
+        wanted: int,
+        used_ids: set[str],
+        warnings: List[str],
+        target: CompetencyTarget,
+        query: str,
+    ) -> List[SelectedQuestion]:
+        """Accept questions held back for redundancy, rather than under-fill."""
+
+        admitted: List[SelectedQuestion] = []
+
+        for record, result, requested_difficulty, filter_relaxed, reason in deferred:
+
+            if len(admitted) >= wanted:
+                break
+
+            question_id = record["question_id"]
+
+            # The same candidate can be held back by both the primary pool and
+            # a fallback pool; admit it once.
+            if question_id in used_ids:
+                continue
+
+            used_ids.add(question_id)
+
+            warnings.append(
+                f"{question_id} {reason}; accepted because "
+                f"{target.competency.value} had no other "
+                f"{requested_difficulty} question available."
+            )
+
+            admitted.append(
+                self._build_question(
+                    record=record,
+                    result=result,
+                    target=target,
+                    query=query,
+                    requested_difficulty=requested_difficulty,
+                    filter_relaxed=filter_relaxed,
+                )
+            )
+
+        return admitted
+
+    @staticmethod
+    def _redundancy_reason(
+        record: dict,
+        already_selected: List[SelectedQuestion],
+    ) -> Optional[str]:
+        """
+        Say how this candidate repeats an accepted question, or None.
+
+        Compares the graded content - sub_competency plus must-have concepts -
+        rather than the question text, because two questions can be worded very
+        differently and still be marked against the same knowledge.
+        """
+
+        sub_competency = record.get("sub_competency")
+        concepts = set(
+            (record.get("expected_concepts") or {}).get("must_have") or []
+        )
+
+        for chosen in already_selected:
+
+            # Two questions in one sub_competency probe the same narrow topic
+            # even when their must-have concepts share no wording. The pair
+            # that motivated this check overlaps on zero concept strings:
+            # "what justifies an agent" and "when is deterministic preferred"
+            # are inverse framings of one trade-off, and a candidate who knows
+            # either answers both. Sub_competency is the signal that sees it.
+            if sub_competency and chosen.sub_competency == sub_competency:
+                return f"repeats {chosen.question_id} in {sub_competency}"
+
+            # Duplication can also cross sub_competencies - two questions
+            # graded against mostly the same concepts are one question asked
+            # twice, whatever they are filed under.
+            if concepts:
+                shared = concepts & set(chosen.expected_concepts.must_have)
+
+                if len(shared) / len(concepts) > REDUNDANCY_CONCEPT_OVERLAP:
+                    return (
+                        f"repeats {chosen.question_id} on "
+                        f"{len(shared)} of {len(concepts)} must-have concepts"
+                    )
+
+        return None
 
     def _take_from_pool(
         self,
@@ -340,11 +465,17 @@ class QuestionSelector:
         filter_relaxed: bool,
         target: CompetencyTarget,
         cache: Optional[Dict[Tuple[str, str, str, int], List[dict]]] = None,
-    ) -> List[SelectedQuestion]:
-        """Retrieve one bucket and convert its unused hits into questions."""
+        already_selected: List[SelectedQuestion] = (),
+    ) -> Tuple[List[SelectedQuestion], List["_Deferred"]]:
+        """
+        Retrieve one bucket and convert its unused hits into questions.
+
+        Returns the questions taken plus any held back as redundant, so the
+        caller can admit those instead of leaving a slot unfilled.
+        """
 
         if wanted <= 0:
-            return []
+            return [], []
 
         # Over-fetch so questions already used by an earlier slot can be
         # skipped without a second retrieval call.
@@ -361,6 +492,7 @@ class QuestionSelector:
             results = self._search(query, competency, difficulty, k)
 
         collected: List[SelectedQuestion] = []
+        deferred: List[_Deferred] = []
 
         for result in results:
 
@@ -388,6 +520,26 @@ class QuestionSelector:
                     warnings.append(warning)
                 continue
 
+            redundancy = self._redundancy_reason(
+                record,
+                list(already_selected) + collected,
+            )
+
+            if redundancy is not None:
+                # Hold it rather than drop it. used_ids stays untouched so a
+                # later slot can still take it on its own merits, and the
+                # caller can admit it if this slot has no other option.
+                deferred.append(
+                    (
+                        record,
+                        result,
+                        requested_difficulty,
+                        filter_relaxed,
+                        redundancy,
+                    )
+                )
+                continue
+
             used_ids.add(question_id)
 
             collected.append(
@@ -401,7 +553,7 @@ class QuestionSelector:
                 )
             )
 
-        return collected
+        return collected, deferred
 
     def _build_question(
         self,
