@@ -1022,15 +1022,22 @@ def _trace_summary(stage: str, payload: dict) -> list[str]:
 
 
 def _render_interviewer() -> None:
-    """Stage traces for a saved candidate run, with the strategy shown."""
+    """Intake traces and the evaluation dashboard, behind the sign-in."""
 
-    _header("plan", steps=False)
-    st.markdown('<div class="ig-kicker">INTERVIEWER VIEW</div>', unsafe_allow_html=True)
-    st.title("Intake traces")
+    section = _interviewer_sidebar()
 
-    signed_in, sign_out = st.columns([3, 1])
-    signed_in.caption(f"Signed in as {interviewer_username()}")
-    if sign_out.button("Sign out", use_container_width=True):
+    title, sign_out = st.columns([3.2, 1])
+    with title:
+        st.markdown(
+            '<div class="ig-kicker">INTERVIEWER VIEW</div>', unsafe_allow_html=True,
+        )
+        st.title(section)
+        st.markdown(
+            '<p class="ig-subtitle">Evaluation reports and analysis · '
+            "candidate view hidden</p>",
+            unsafe_allow_html=True,
+        )
+    if sign_out.button("↪ Sign out", key="ig-signout", use_container_width=True):
         _sign_out()
         st.rerun()
 
@@ -1038,6 +1045,107 @@ def _render_interviewer() -> None:
         "These screens show marking rubrics, evidence assessments and "
         "interview strategy. They are withheld from the candidate view."
     )
+
+    if section == "Intake traces":
+        _render_intake_traces()
+        return
+
+    if section == "Settings":
+        _render_interviewer_settings()
+        return
+
+    # Imported here so the candidate path never pays for altair/pandas.
+    from ui.dashboard import render_dashboard, render_overview
+
+    if section == "Dashboard":
+        render_overview()
+        return
+
+    render_dashboard()
+
+
+def _render_interviewer_settings() -> None:
+    """Read-only runtime configuration, so a wrong model is visible not guessed."""
+
+    import os
+
+    st.markdown(
+        '<div class="ig-panel-card-title">Runtime configuration</div>',
+        unsafe_allow_html=True,
+    )
+    st.caption(
+        "Read from the environment at startup. Shown to make a misconfigured "
+        "run diagnosable without reading the server log."
+    )
+
+    rows = [
+        ("LLM provider", os.getenv("LLM_PROVIDER", "openai")),
+        ("Resume extraction model", os.getenv("RESUME_EXTRACTION_MODEL", "(stage default)")),
+        ("Resume analysis model", os.getenv("RESUME_ANALYSIS_MODEL", "(stage default)")),
+        ("Interview planning model", os.getenv("INTERVIEW_PLANNING_MODEL", "(stage default)")),
+        ("Pinecone index", os.getenv("PINECONE_INDEX_NAME", "(unset)")),
+        ("Question namespace", os.getenv("PINECONE_QUESTION_NAMESPACE", "(unset)")),
+        ("Evaluation namespace", os.getenv("PINECONE_EVALUATION_NAMESPACE", "(unset)")),
+        ("LangSmith tracing", os.getenv("LANGSMITH_TRACING", "false")),
+        ("Interviewer sign-in", "configured" if interviewer_auth_configured() else "NOT configured"),
+    ]
+    st.dataframe(
+        [{"Setting": key, "Value": value} for key, value in rows],
+        use_container_width=True,
+        hide_index=True,
+    )
+    # Never render the credential itself - only whether one is present.
+    st.caption(
+        "Secrets are deliberately not shown: only whether a value is present."
+    )
+
+
+INTERVIEWER_SECTIONS = (
+    "⌂  Dashboard",
+    "▤  Evaluation reports",
+    "▦  Intake traces",
+    "⚙  Settings",
+)
+
+
+def _section_name(label: str) -> str:
+    """The section without its leading glyph."""
+
+    return label.split("  ", 1)[-1]
+
+
+def _interviewer_sidebar() -> str:
+    """Sidebar navigation, with the signed-in identity pinned to the bottom."""
+
+    with st.sidebar:
+        st.markdown(
+            '<div class="ig-brand"><span class="ig-mark">AI</span>'
+            "<span>INTERVIEW<br>GAP AI</span></div>",
+            unsafe_allow_html=True,
+        )
+
+        chosen = st.radio(
+            "Section",
+            INTERVIEWER_SECTIONS,
+            index=1,
+            label_visibility="collapsed",
+        )
+
+        st.divider()
+
+        name = interviewer_username()
+        st.markdown(
+            '<div class="ig-side-user">'
+            f'<span class="ig-side-avatar">{_safe(name[:1].upper())}</span>'
+            f"<span><b>{_safe(name.title())}</b><i>Administrator</i></span></div>",
+            unsafe_allow_html=True,
+        )
+
+    return _section_name(chosen)
+
+
+def _render_intake_traces() -> None:
+    """Stage outputs for a saved candidate run, with the strategy shown."""
 
     live = st.session_state[PLAN_KEY]
     candidates = _saved_candidates()
@@ -1090,13 +1198,26 @@ def main() -> None:
         page_title="InterviewGapAI",
         page_icon="✦",
         layout="centered",
-        initial_sidebar_state="collapsed",
+        # Expanded for the interviewer console; the candidate screens hide
+        # the sidebar entirely below, since it is theirs alone.
+        initial_sidebar_state="expanded",
     )
     st.markdown(APP_STYLES, unsafe_allow_html=True)
     _initialize_state()
 
     role = st.session_state[ROLE_KEY]
     screen = st.session_state[SCREEN_KEY]
+
+    if role != Role.INTERVIEWER.value:
+        # Only the interviewer console has sidebar navigation. Leaving an
+        # empty rail (and its expander arrow) on the candidate screens would
+        # advertise a door they cannot open.
+        st.markdown(
+            "<style>[data-testid='stSidebar'],"
+            "[data-testid='stSidebarCollapsedControl'],"
+            "[data-testid='collapsedControl']{display:none !important}</style>",
+            unsafe_allow_html=True,
+        )
 
     # The interviewer role is only ever written to session state by a verified
     # sign-in, so reaching these screens means the password was supplied in

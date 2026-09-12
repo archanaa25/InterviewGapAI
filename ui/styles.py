@@ -751,6 +751,303 @@ APP_STYLES = """
     font-size: .92rem;
   }
 
+  /* ---------- interviewer console ---------- */
+
+  [data-testid="stSidebar"] {
+    background: #ffffff;
+    border-right: 1px solid var(--ig-line);
+  }
+
+  [data-testid="stSidebar"] .ig-brand { margin-bottom: 1.35rem; }
+
+  /* Turn the sidebar radio into nav rows: full-width, icon + label, and a
+     tinted pill on the selected one. The radio dot is hidden because the
+     highlight already says which row is current, and a dot plus a highlight
+     reads as two controls. */
+  [data-testid="stSidebar"] [role="radiogroup"] {
+    gap: .2rem !important;
+  }
+
+  [data-testid="stSidebar"] [role="radiogroup"] > label {
+    width: 100%;
+    padding: .55rem .7rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background .12s ease;
+  }
+
+  [data-testid="stSidebar"] [role="radiogroup"] > label:hover {
+    background: var(--ig-soft);
+  }
+
+  /* The radio glyph is kept. Hiding it needs a selector that reaches past
+     the screen-reader input wrapper into the flex row, and every candidate
+     for that also matched the label text - which silently emptied the whole
+     nav. A visible control that looks like a control is the better trade.
+     It is shrunk and tinted to the active colour instead. */
+  [data-testid="stSidebar"] [role="radiogroup"] > label svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  [data-testid="stSidebar"] [role="radiogroup"] > label p {
+    font-size: .86rem !important;
+    font-weight: 640 !important;
+    color: #3d4b61 !important;
+  }
+
+  /* :has() gives us "the label whose input is checked" without a wrapper. */
+  [data-testid="stSidebar"] [role="radiogroup"] > label:has(input:checked) {
+    background: #eef1fe;
+  }
+
+  [data-testid="stSidebar"] [role="radiogroup"] > label:has(input:checked) p {
+    color: #3f32a0 !important;
+    font-weight: 800 !important;
+  }
+
+  [data-testid="stSidebar"] hr {
+    margin: .9rem 0 !important;
+    border-color: var(--ig-line) !important;
+  }
+
+  .ig-side-user {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    margin-top: .5rem;
+    padding-top: .9rem;
+    border-top: 1px solid var(--ig-line);
+  }
+
+  .ig-side-avatar {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--ig-blue), var(--ig-teal));
+    color: #fff;
+    font-size: .8rem;
+    font-weight: 800;
+  }
+
+  .ig-side-user b {
+    display: block;
+    font-size: .82rem;
+    color: var(--ig-ink);
+  }
+
+  .ig-side-user i {
+    display: block;
+    font-size: .7rem;
+    font-style: normal;
+    color: var(--ig-muted);
+  }
+
+  /* Panel header: an icon, the title pair, and the run stamp on the right. */
+  .ig-panel-head {
+    display: flex;
+    align-items: center;
+    gap: .85rem;
+    margin: .2rem 0 1.1rem;
+  }
+
+  .ig-panel-ico {
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    font-size: 1.15rem;
+  }
+
+  .ig-panel-title {
+    flex: 1 1 auto;
+  }
+
+  .ig-panel-title b {
+    display: block;
+    font-size: 1.05rem;
+    font-weight: 840;
+    color: var(--ig-ink);
+  }
+
+  .ig-panel-title i {
+    display: block;
+    margin-top: .1rem;
+    font-size: .8rem;
+    font-style: normal;
+    color: var(--ig-muted);
+  }
+
+  .ig-stamp {
+    flex: 0 0 auto;
+    padding: .45rem .8rem;
+    border: 1px solid var(--ig-line);
+    border-radius: 11px;
+    background: var(--ig-soft);
+    font-size: .72rem;
+    line-height: 1.35;
+    color: var(--ig-muted);
+    text-align: right;
+  }
+
+  .ig-stamp b {
+    display: block;
+    color: var(--ig-ink);
+    font-weight: 760;
+  }
+
+  /* KPI cards. The meter is a magnitude bar, so it is a single hue and is
+     only drawn for values that are genuinely a 0-100% fraction - a count
+     like "26 judgements" has no meaningful full-width, so it gets a badge
+     instead of a bar that would imply one. */
+  .ig-kpis {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(168px, 1fr));
+    gap: .75rem;
+    margin-bottom: 1.15rem;
+  }
+
+  .ig-kpi {
+    padding: .9rem .95rem 1rem;
+    border: 1px solid var(--ig-line);
+    border-radius: 15px;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(44, 62, 80, .05);
+  }
+
+  .ig-kpi-top {
+    display: flex;
+    align-items: center;
+    gap: .55rem;
+    margin-bottom: .45rem;
+  }
+
+  .ig-kpi-ico {
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 9px;
+    font-size: .9rem;
+  }
+
+  .ig-kpi-label {
+    font-size: .76rem;
+    font-weight: 700;
+    color: var(--ig-muted);
+  }
+
+  .ig-kpi-value {
+    font-size: 1.65rem;
+    font-weight: 850;
+    line-height: 1.1;
+    color: var(--ig-ink);
+  }
+
+  .ig-meter-track {
+    height: 6px;
+    margin-top: .6rem;
+    border-radius: 999px;
+    background: #eef3f8;
+    overflow: hidden;
+  }
+
+  .ig-meter-fill {
+    height: 100%;
+    border-radius: 999px;
+  }
+
+  .ig-kpi-badge {
+    display: inline-block;
+    margin-top: .55rem;
+    padding: .2rem .5rem;
+    border-radius: 999px;
+    background: #e8f5ee;
+    color: #0a6b34;
+    font-size: .69rem;
+    font-weight: 750;
+  }
+
+  /* Donut legend: the exact count and share sit beside every swatch, so two
+     close arcs are compared as numbers rather than by eye. */
+  .ig-legend {
+    display: grid;
+    gap: .45rem;
+    padding-top: .35rem;
+  }
+
+  .ig-legend-row {
+    display: grid;
+    grid-template-columns: 12px 1fr auto auto;
+    align-items: center;
+    gap: .55rem;
+    font-size: .8rem;
+    color: var(--ig-ink);
+  }
+
+  .ig-legend-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+  }
+
+  .ig-legend-row span:nth-child(3) { font-weight: 800; }
+  .ig-legend-row span:nth-child(4) { color: var(--ig-muted); min-width: 3.1rem; text-align: right; }
+
+  .ig-insight {
+    display: flex;
+    gap: .8rem;
+    margin-top: 1.1rem;
+    padding: .95rem 1.1rem;
+    border: 1px solid #cfe6d8;
+    border-radius: 14px;
+    background: linear-gradient(150deg, #f2fbf5, #f6fbf9);
+  }
+
+  .ig-insight-ico {
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    width: 30px;
+    height: 30px;
+    border-radius: 9px;
+    background: #dff2e6;
+    color: #0a6b34;
+  }
+
+  .ig-insight b {
+    display: block;
+    font-size: .85rem;
+    font-weight: 820;
+    color: var(--ig-ink);
+  }
+
+  .ig-insight span {
+    display: block;
+    margin-top: .2rem;
+    font-size: .8rem;
+    line-height: 1.55;
+    color: #3d4b61;
+  }
+
+  .ig-panel-card {
+    padding: 1rem 1.1rem 1.15rem;
+    border: 1px solid var(--ig-line);
+    border-radius: 15px;
+    background: #fff;
+  }
+
+  .ig-panel-card-title {
+    margin-bottom: .5rem;
+    font-size: .88rem;
+    font-weight: 820;
+    color: var(--ig-ink);
+  }
+
   /* ---------- sign-in card ---------- */
 
   .ig-signin-note {
