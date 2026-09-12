@@ -806,6 +806,82 @@ APP_STYLES = """
     font-weight: 800 !important;
   }
 
+  /* Report sub-navigation: indented, smaller, and visually subordinate to
+     the section rows above it. */
+  .ig-subnav-title {
+    margin: 1rem 0 .2rem .2rem;
+    font-size: .66rem;
+    font-weight: 850;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    color: var(--ig-muted);
+  }
+
+  .ig-subnav-group {
+    margin: .6rem 0 .1rem .75rem;
+    font-size: .67rem;
+    font-weight: 800;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    color: #9aa6b6;
+  }
+
+  /* Sub-nav buttons are nav rows: flush left, no chrome, no min-height. */
+  [data-testid="stSidebar"] [class*="st-key-ig_rep_"] button {
+    justify-content: flex-start !important;
+    min-height: 2.1rem !important;
+    padding: .3rem .7rem .3rem 1.15rem !important;
+    background: transparent !important;
+    border: 1px solid transparent !important;
+    border-radius: 8px !important;
+    box-shadow: none !important;
+  }
+
+  /* Streamlit centres a button's label in a nested flex div, so aligning the
+     button alone left the text centred. */
+  [data-testid="stSidebar"] [class*="st-key-ig_rep_"] button > div {
+    justify-content: flex-start !important;
+    width: 100% !important;
+  }
+
+  [data-testid="stSidebar"] [class*="st-key-ig_rep_"] button p {
+    font-size: .8rem !important;
+    font-weight: 600 !important;
+    color: #3d4b61 !important;
+    text-align: left !important;
+  }
+
+  [data-testid="stSidebar"] [class*="st-key-ig_rep_"] button:hover {
+    background: var(--ig-soft) !important;
+    border-color: var(--ig-line) !important;
+  }
+
+  .st-key-ig-subnav [role="radiogroup"] > label {
+    padding: .38rem .7rem .38rem 1.15rem;
+    border-radius: 8px;
+  }
+
+  .st-key-ig-subnav [role="radiogroup"] > label p {
+    font-size: .8rem !important;
+    font-weight: 600 !important;
+  }
+
+  .st-key-ig-subnav [role="radiogroup"] > label:has(input:checked) {
+    background: #e8f1fc;
+  }
+
+  .st-key-ig-subnav [role="radiogroup"] > label:has(input:checked) p {
+    color: #14639e !important;
+    font-weight: 800 !important;
+  }
+
+  /* The sub-nav rows are already indented under a heading, so their radio
+     glyphs are shrunk further to keep the hierarchy readable. */
+  .st-key-ig-subnav [role="radiogroup"] > label svg {
+    width: 11px;
+    height: 11px;
+  }
+
   [data-testid="stSidebar"] hr {
     margin: .9rem 0 !important;
     border-color: var(--ig-line) !important;

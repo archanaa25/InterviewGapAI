@@ -1103,17 +1103,22 @@ def _trace_summary(stage: str, payload: dict) -> list[str]:
 def _render_interviewer() -> None:
     """Intake traces and the evaluation dashboard, behind the sign-in."""
 
-    section = _interviewer_sidebar()
+    section, report = _interviewer_sidebar()
 
     title, sign_out = st.columns([3.2, 1])
     with title:
         st.markdown(
             '<div class="ig-kicker">INTERVIEWER VIEW</div>', unsafe_allow_html=True,
         )
-        st.title(section)
+        st.title(report if section == "Evaluation reports" and report else section)
         st.markdown(
-            '<p class="ig-subtitle">Evaluation reports and analysis · '
-            "candidate view hidden</p>",
+            '<p class="ig-subtitle">'
+            + (
+                "Evaluation report · candidate view hidden"
+                if section == "Evaluation reports"
+                else f"{_safe(section)} · candidate view hidden"
+            )
+            + "</p>",
             unsafe_allow_html=True,
         )
     if sign_out.button("↪ Sign out", key="ig-signout", use_container_width=True):
@@ -1134,13 +1139,13 @@ def _render_interviewer() -> None:
         return
 
     # Imported here so the candidate path never pays for altair/pandas.
-    from ui.dashboard import render_dashboard, render_overview
+    from ui.dashboard import render_overview, render_panel
 
     if section == "Dashboard":
         render_overview()
         return
 
-    render_dashboard()
+    render_panel(report)
 
 
 def _render_interviewer_settings() -> None:
@@ -1193,8 +1198,17 @@ def _section_name(label: str) -> str:
     return label.split("  ", 1)[-1]
 
 
-def _interviewer_sidebar() -> str:
-    """Sidebar navigation, with the signed-in identity pinned to the bottom."""
+def _interviewer_sidebar() -> tuple[str, str | None]:
+    """
+    Sidebar navigation, with the signed-in identity pinned to the bottom.
+
+    Returns the section and, under Reports, the chosen report. The eight
+    reports live here rather than in a horizontal tab strip: eight tabs
+    overflowed behind a scroll arrow, which hid the reports added most
+    recently - exactly the ones worth looking at.
+    """
+
+    from ui.dashboard import PANEL_GROUPS
 
     with st.sidebar:
         st.markdown(
@@ -1209,6 +1223,18 @@ def _interviewer_sidebar() -> str:
             index=1,
             label_visibility="collapsed",
         )
+        section = _section_name(chosen)
+
+        report = None
+        if section == "Evaluation reports":
+            st.markdown(
+                '<div class="ig-subnav-title">Reports</div>', unsafe_allow_html=True,
+            )
+            # Grouped, and rendered as one radio per group so the group
+            # headings survive: a single flat list of eight is what made the
+            # tab strip unreadable in the first place.
+            with st.container(key="ig-subnav"):
+                report = _report_choice(PANEL_GROUPS)
 
         st.divider()
 
@@ -1220,7 +1246,69 @@ def _interviewer_sidebar() -> str:
             unsafe_allow_html=True,
         )
 
-    return _section_name(chosen)
+    return section, report
+
+
+REPORT_KEY = "ig_report"
+
+
+def _report_slug(name: str) -> str:
+    """A widget key from a report name."""
+
+    return "ig_rep_" + "".join(
+        character if character.isalnum() else "_" for character in name.lower()
+    )
+
+
+def _report_choice(groups: tuple) -> str:
+    """
+    One button per report, grouped, with the current one highlighted.
+
+    Buttons rather than a radio per group: independent radios each keep their
+    own selection, so clicking in a second group left the first still showing
+    one and the sidebar claimed two current reports at once. Buttons hold no
+    selection state, so the only source of truth is session state.
+    """
+
+    flat = [name for _, names in groups for name in names]
+    current = st.session_state.get(REPORT_KEY)
+    if current not in flat:
+        # Write the default back, so the highlight below and the panel the
+        # main area renders are driven by the same value on the first run as
+        # on every later one.
+        current = flat[0]
+        st.session_state[REPORT_KEY] = current
+
+    for group, names in groups:
+        st.markdown(
+            f'<div class="ig-subnav-group">{_safe(group)}</div>',
+            unsafe_allow_html=True,
+        )
+        for name in names:
+            if st.button(name, key=_report_slug(name), use_container_width=True):
+                st.session_state[REPORT_KEY] = name
+                st.rerun()
+
+    # Highlight the current one. A button cannot carry a checked state, so the
+    # active row is styled by its own generated key.
+    #
+    # The selector deliberately repeats the sidebar and keyed-container
+    # attributes. The base rule in styles.py sets these buttons transparent
+    # through [data-testid=stSidebar] [class*=st-key-ig_rep_] button, which
+    # outranks a bare .st-key-<slug> button even with !important on both, so
+    # a shorter selector here silently lost and nothing ever highlighted.
+    active = _report_slug(current)
+    st.markdown(
+        "<style>"
+        f'[data-testid="stSidebar"] [class*="st-key-ig_rep_"].st-key-{active} button'
+        "{background:#e8f1fc !important;border-color:#bcd9f2 !important}"
+        f'[data-testid="stSidebar"] [class*="st-key-ig_rep_"].st-key-{active} button p'
+        "{color:#14639e !important;font-weight:800 !important}"
+        "</style>",
+        unsafe_allow_html=True,
+    )
+
+    return current
 
 
 # The candidate's journey end to end. Stages absent from a source are shown

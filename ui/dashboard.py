@@ -875,12 +875,43 @@ PANELS = (
 )
 
 
-def render_dashboard() -> None:
-    """Render every evaluation panel as a tab."""
+PANEL_NAMES = tuple(name for name, _ in PANELS)
 
-    for tab, (_, panel) in zip(st.tabs([name for name, _ in PANELS]), PANELS):
-        with tab:
+# Reading order, so the sub-navigation groups the eight reports rather than
+# listing them flat: what the corpus contains, how retrieval performs against
+# it, then how the model-facing stages score.
+PANEL_GROUPS = (
+    ("Corpus", ("Interview corpus", "Golden query set")),
+    ("Retrieval", ("Question-RAG retrieval", "Evaluation-RAG retrieval")),
+    ("Stage quality", ("Concept coverage", "Resume analyzer", "Model quality",
+                       "Intake latency")),
+)
+
+
+def render_panel(name: str) -> None:
+    """
+    Render one evaluation report.
+
+    One panel at a time, selected from the sidebar. Eight of these in a
+    horizontal tab strip overflowed behind a scroll arrow, which hid the last
+    reports added - the newest and most interesting ones.
+    """
+
+    for panel_name, panel in PANELS:
+        if panel_name == name:
             panel()
+            return
+
+    st.info(f"Unknown report: {name}")
+
+
+def render_dashboard() -> None:
+    """Every panel in sequence. Kept for callers that want the whole set."""
+
+    for name, panel in PANELS:
+        _panel_head("▤", name, "", tint="#eef1fe", ink="#4a3aa7")
+        panel()
+        st.divider()
 
 
 def render_overview() -> None:
@@ -959,4 +990,10 @@ def render_overview() -> None:
         )
 
 
-__all__ = ["render_dashboard", "render_overview"]
+__all__ = [
+    "PANEL_GROUPS",
+    "PANEL_NAMES",
+    "render_dashboard",
+    "render_overview",
+    "render_panel",
+]
