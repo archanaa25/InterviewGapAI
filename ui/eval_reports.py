@@ -374,6 +374,64 @@ def resume_scorecard() -> dict | None:
     }
 
 
+def model_quality() -> dict | None:
+    """
+    Resume-analyzer accuracy per model, as scored by the shipped scorecard.
+
+    Ranked by accuracy, but over-credit is carried alongside because the two
+    can disagree: an arm that credits evidence a resume never gave costs the
+    interview a probe, which accuracy alone understates.
+    """
+
+    payload = _read_json(EVAL_DIR / "model_quality_comparison.json")
+    if not isinstance(payload, dict) or not payload.get("arms"):
+        return None
+
+    arms = [
+        {
+            "arm": row["arm"],
+            "provider": row.get("provider"),
+            "model": row.get("model"),
+            "accuracy": row.get("accuracy"),
+            "precision": row.get("precision"),
+            "recall": row.get("recall"),
+            "over_credit": (row.get("counts") or {}).get("over_credit"),
+            "under_credit": (row.get("counts") or {}).get("under_credit"),
+            "judgements": row.get("judgements"),
+            "median_seconds": row.get("median_seconds"),
+            "scored": row.get("candidates_scored"),
+            "attempted": row.get("candidates_attempted"),
+            "failures": len(row.get("failures") or []),
+            "error": row.get("error"),
+        }
+        for row in payload["arms"]
+    ]
+
+    scored = [row for row in arms if row["accuracy"] is not None]
+    scored.sort(key=lambda row: row["accuracy"], reverse=True)
+
+    return {
+        "arms": scored,
+        "unscored": [row for row in arms if row["accuracy"] is None],
+        "best_accuracy": payload.get("best_accuracy"),
+        "fewest_over_credit": (
+            min(scored, key=lambda row: row["over_credit"])["arm"] if scored else None
+        ),
+        "fastest": (
+            min(
+                (row for row in scored if row["median_seconds"]),
+                key=lambda row: row["median_seconds"],
+                default={},
+            ).get("arm")
+        ),
+        "stage": payload.get("stage", "resume analysis"),
+        "scored_against": payload.get("scored_against"),
+        "candidates": payload.get("candidates", []),
+        "generated_at": payload.get("generated_at"),
+        "notes": payload.get("notes", []),
+    }
+
+
 def latency_report() -> dict | None:
     """The intake latency before/after report, as written by its harness."""
 
@@ -389,6 +447,7 @@ __all__ = [
     "golden_query_set",
     "label_competency",
     "latency_report",
+    "model_quality",
     "question_rag_strategies",
     "resume_scorecard",
 ]

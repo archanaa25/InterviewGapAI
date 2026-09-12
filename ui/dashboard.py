@@ -668,6 +668,144 @@ def _analyzer_panel() -> None:
     )
 
 
+def _model_quality_panel() -> None:
+    data = reports.model_quality()
+    if data is None:
+        return _no_data(
+            "per-model quality results (run scripts/evaluate_model_quality.py)"
+        )
+
+    _panel_head(
+        "◈",
+        "Resume analysis quality by model",
+        f"{len(data['candidates'])} labelled resumes · scored by the shipped "
+        "scorecard · analysis stage only",
+        tint="#fdf0e8",
+        ink="#eb6834",
+        stamp=reports.last_run("model_quality_comparison.json"),
+    )
+
+    best = data["arms"][0]
+    cards = [
+        {"icon": "◉", "label": "Most accurate", "value": best["arm"].split(":")[-1],
+         "fraction": best["accuracy"], "tint": "#e8f5ee", "ink": "#008300",
+         "badge": f"{best['accuracy']:.1%} accuracy"},
+        {"icon": "★", "label": "Fewest over-credits",
+         "value": data["fewest_over_credit"].split(":")[-1], "fraction": None,
+         "tint": "#eef1fe", "ink": "#4a3aa7",
+         "badge": f"{min(r['over_credit'] for r in data['arms'])} of "
+                  f"{best['judgements']} judgements"},
+        {"icon": "◎", "label": "Fastest", "value": str(data["fastest"]).split(":")[-1],
+         "fraction": None, "tint": "#e8f1fc", "ink": "#2a78d6",
+         "badge": f"{min(r['median_seconds'] for r in data['arms'] if r['median_seconds']):.1f}s median"},
+    ]
+    _kpis(cards)
+
+    # Accuracy and precision only. Recall is 100% on every arm, so plotting it
+    # would add three identical full-height bars and say nothing; it stays in
+    # the table where a future regression would still show up.
+    frame = pd.DataFrame(
+        [
+            {"arm": row["arm"], "metric": metric, "value": row[key] or 0.0}
+            for row in data["arms"]
+            for metric, key in (("Accuracy", "accuracy"), ("Precision", "precision"))
+        ]
+    )
+    order = [row["arm"] for row in data["arms"]]
+
+    st.markdown(
+        '<div class="ig-panel-card-title">Accuracy and precision by arm</div>',
+        unsafe_allow_html=True,
+    )
+    bars = (
+        alt.Chart(frame)
+        .mark_bar(cornerRadiusTopLeft=3, cornerRadiusTopRight=3)
+        .encode(
+            x=alt.X("arm:N", sort=order, title=None,
+                    axis=alt.Axis(labelAngle=0, labelLimit=150, grid=False,
+                                  domainColor="#d9e3ec")),
+            y=alt.Y("value:Q", title=None, scale=alt.Scale(domain=[0, 1]),
+                    axis=alt.Axis(format="%", grid=True, gridColor="#eef3f8",
+                                  domain=False)),
+            xOffset=alt.XOffset("metric:N", sort=["Accuracy", "Precision"]),
+            color=alt.Color(
+                "metric:N",
+                sort=["Accuracy", "Precision"],
+                scale=alt.Scale(domain=["Accuracy", "Precision"],
+                                range=METRIC_COLORS[:2]),
+                legend=alt.Legend(orient="top", title=None, direction="horizontal"),
+            ),
+            tooltip=[alt.Tooltip("arm:N", title="Arm"),
+                     alt.Tooltip("metric:N", title="Metric"),
+                     alt.Tooltip("value:Q", title="Score", format=".1%")],
+        )
+        .properties(height=300)
+        .configure_view(strokeWidth=0, fill=CHART_SURFACE)
+    )
+    st.altair_chart(bars, use_container_width=True)
+
+    st.caption(
+        "Median seconds per candidate is a separate scale and stays in the "
+        "table rather than sharing this axis."
+    )
+
+    table = pd.DataFrame(
+        [
+            {
+                "Arm": row["arm"],
+                "Accuracy": row["accuracy"],
+                "Precision": row["precision"],
+                "Recall": row["recall"],
+                "Over-credit": row["over_credit"],
+                "Under-credit": row["under_credit"],
+                "Median s": row["median_seconds"],
+                "Scored": f"{row['scored']}/{row['attempted']}",
+            }
+            for row in data["arms"]
+        ]
+    )
+    st.dataframe(
+        table.style.format(
+            {"Accuracy": "{:.1%}", "Precision": "{:.1%}", "Recall": "{:.1%}",
+             "Median s": "{:.1f}"}
+        ),
+        use_container_width=True,
+        hide_index=True,
+    )
+
+    if data["unscored"]:
+        st.warning(
+            "Arms that produced no scoreable analysis: "
+            + ", ".join(f"{row['arm']} ({row['error']})" for row in data["unscored"])
+        )
+
+    # The three superlatives can disagree; when they do not, say so plainly,
+    # because "fastest is also most accurate" is the rare case that actually
+    # settles a decision.
+    agrees = data["best_accuracy"] == data["fewest_over_credit"] == data["fastest"]
+    if agrees:
+        _insight(
+            f"{best['arm']} is simultaneously the most accurate, the least "
+            "likely to credit evidence a resume never gave, and the fastest. "
+            "These three normally trade against each other, so there is no "
+            "trade-off to weigh here — the remaining question is cost and "
+            "whether a second provider is acceptable operationally.",
+            title="The arms agree",
+        )
+    else:
+        _insight(
+            f"Most accurate: {data['best_accuracy']}. Fewest over-credits: "
+            f"{data['fewest_over_credit']}. Fastest: {data['fastest']}. Where "
+            "these disagree, over-credit is the one to weigh hardest: it costs "
+            "the interview a probe it should have made, which accuracy alone "
+            "understates.",
+            title="The arms disagree — read over-credit first",
+        )
+
+    for note in data["notes"]:
+        st.caption(f"· {' '.join(note.split())}")
+
+
 def _latency_panel() -> None:
     data = reports.latency_report()
     if data is None:
@@ -732,6 +870,7 @@ PANELS = (
     ("Evaluation-RAG retrieval", _evaluation_rag_panel),
     ("Concept coverage", _coverage_panel),
     ("Resume analyzer", _analyzer_panel),
+    ("Model quality", _model_quality_panel),
     ("Intake latency", _latency_panel),
 )
 

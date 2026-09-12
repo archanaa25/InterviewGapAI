@@ -136,3 +136,29 @@ def test_a_malformed_line_does_not_discard_the_experiment(monkeypatch, tmp_path)
 )
 def test_competency_labels_fall_back_to_a_readable_name(raw, expected) -> None:
     assert reports.label_competency(raw) == expected
+
+
+def test_model_quality_ranks_arms_and_keeps_over_credit_visible() -> None:
+    data = reports.model_quality()
+
+    assert data is not None
+    accuracies = [row["accuracy"] for row in data["arms"]]
+    assert accuracies == sorted(accuracies, reverse=True)
+
+    for row in data["arms"]:
+        assert 0.0 <= row["accuracy"] <= 1.0
+        # Accuracy alone cannot decide this comparison, so the error split
+        # has to survive into the dashboard.
+        assert row["over_credit"] is not None
+        assert row["under_credit"] is not None
+        assert row["scored"] <= row["attempted"]
+
+    assert data["best_accuracy"] == data["arms"][0]["arm"]
+    assert data["fewest_over_credit"] == min(
+        data["arms"], key=lambda row: row["over_credit"]
+    )["arm"]
+
+
+def test_model_quality_returns_none_when_unrun(monkeypatch, tmp_path) -> None:
+    monkeypatch.setattr(reports, "EVAL_DIR", tmp_path / "absent")
+    assert reports.model_quality() is None

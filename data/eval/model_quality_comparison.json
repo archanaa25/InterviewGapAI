@@ -1,0 +1,1982 @@
+{
+  "generated_at": "2026-09-12T04:22:01.283932+00:00",
+  "git_ref": "23c566f",
+  "scored_against": "data/synthetic/resume_manifest.json",
+  "stage": "resume analysis",
+  "candidates": [
+    "candidate_01",
+    "candidate_02",
+    "candidate_03",
+    "candidate_04",
+    "candidate_05",
+    "candidate_06",
+    "candidate_07",
+    "candidate_08",
+    "candidate_09",
+    "candidate_10"
+  ],
+  "arms": [
+    {
+      "arm": "deepseek:deepseek-chat",
+      "provider": "deepseek",
+      "model": "deepseek-chat",
+      "candidates_scored": 10,
+      "candidates_attempted": 10,
+      "failures": [],
+      "judgements": 70,
+      "accuracy": 0.7285714285714285,
+      "precision": 0.6041666666666666,
+      "recall": 1.0,
+      "counts": {
+        "correct_evidence": 29,
+        "correct_unknown": 22,
+        "over_credit": 19,
+        "under_credit": 0
+      },
+      "median_seconds": 2.3752742575015873,
+      "total_seconds": 24.89865396899404,
+      "judgement_rows": [
+        {
+          "candidate_id": "candidate_01",
+          "competency": "rag",
+          "expected": "evidence",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.95,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_01",
+          "competency": "agentic_ai",
+          "expected": "evidence",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.85,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_01",
+          "competency": "ai_ml_llm_fundamentals",
+          "expected": "evidence",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.7,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_01",
+          "competency": "ai_evaluation",
+          "expected": "evidence",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.85,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_01",
+          "competency": "python_software_engineering",
+          "expected": "evidence",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.9,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_01",
+          "competency": "ai_system_design",
+          "expected": "evidence",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.85,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_01",
+          "competency": "ai_security",
+          "expected": "evidence",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.8,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_02",
+          "competency": "rag",
+          "expected": "evidence",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "HIGH",
+          "confidence": 0.9,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_02",
+          "competency": "agentic_ai",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "HIGH",
+          "confidence": 0.8,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_02",
+          "competency": "ai_ml_llm_fundamentals",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.8,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_02",
+          "competency": "ai_evaluation",
+          "expected": "unknown",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.95,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_02",
+          "competency": "python_software_engineering",
+          "expected": "evidence",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.8,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_02",
+          "competency": "ai_system_design",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.7,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_02",
+          "competency": "ai_security",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.85,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_03",
+          "competency": "rag",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "LOW",
+          "confidence": 0.82,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_03",
+          "competency": "agentic_ai",
+          "expected": "evidence",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "HIGH",
+          "confidence": 0.94,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_03",
+          "competency": "ai_ml_llm_fundamentals",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "HIGH",
+          "confidence": 0.8,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_03",
+          "competency": "ai_evaluation",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.75,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_03",
+          "competency": "python_software_engineering",
+          "expected": "evidence",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.9,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_03",
+          "competency": "ai_system_design",
+          "expected": "unknown",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "HIGH",
+          "confidence": 0.9,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_03",
+          "competency": "ai_security",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.7,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_04",
+          "competency": "rag",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.9,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_04",
+          "competency": "agentic_ai",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "LOW",
+          "confidence": 0.82,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_04",
+          "competency": "ai_ml_llm_fundamentals",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.85,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_04",
+          "competency": "ai_evaluation",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "HIGH",
+          "confidence": 0.78,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_04",
+          "competency": "python_software_engineering",
+          "expected": "evidence",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.9,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_04",
+          "competency": "ai_system_design",
+          "expected": "evidence",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.75,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_04",
+          "competency": "ai_security",
+          "expected": "evidence",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.7,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_05",
+          "competency": "rag",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.8,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_05",
+          "competency": "agentic_ai",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "HIGH",
+          "confidence": 0.88,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_05",
+          "competency": "ai_ml_llm_fundamentals",
+          "expected": "evidence",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "LOW",
+          "confidence": 0.9,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_05",
+          "competency": "ai_evaluation",
+          "expected": "evidence",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.9,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_05",
+          "competency": "python_software_engineering",
+          "expected": "evidence",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.8,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_05",
+          "competency": "ai_system_design",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.7,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_05",
+          "competency": "ai_security",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "LOW",
+          "confidence": 0.85,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_06",
+          "competency": "rag",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "HIGH",
+          "confidence": 0.75,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_06",
+          "competency": "agentic_ai",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "LOW",
+          "confidence": 0.85,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_06",
+          "competency": "ai_ml_llm_fundamentals",
+          "expected": "evidence",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.6,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_06",
+          "competency": "ai_evaluation",
+          "expected": "evidence",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.9,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_06",
+          "competency": "python_software_engineering",
+          "expected": "evidence",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.9,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_06",
+          "competency": "ai_system_design",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.6,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_06",
+          "competency": "ai_security",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.85,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_07",
+          "competency": "rag",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.9,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_07",
+          "competency": "agentic_ai",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.75,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_07",
+          "competency": "ai_ml_llm_fundamentals",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.6,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_07",
+          "competency": "ai_evaluation",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.72,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_07",
+          "competency": "python_software_engineering",
+          "expected": "evidence",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.8,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_07",
+          "competency": "ai_system_design",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.6,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_07",
+          "competency": "ai_security",
+          "expected": "evidence",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.95,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_08",
+          "competency": "rag",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "HIGH",
+          "confidence": 0.85,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_08",
+          "competency": "agentic_ai",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.75,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_08",
+          "competency": "ai_ml_llm_fundamentals",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.75,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_08",
+          "competency": "ai_evaluation",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.88,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_08",
+          "competency": "python_software_engineering",
+          "expected": "evidence",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.78,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_08",
+          "competency": "ai_system_design",
+          "expected": "evidence",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "HIGH",
+          "confidence": 0.92,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_08",
+          "competency": "ai_security",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.8,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_09",
+          "competency": "rag",
+          "expected": "evidence",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.85,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_09",
+          "competency": "agentic_ai",
+          "expected": "evidence",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.82,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_09",
+          "competency": "ai_ml_llm_fundamentals",
+          "expected": "evidence",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.85,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_09",
+          "competency": "ai_evaluation",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.8,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_09",
+          "competency": "python_software_engineering",
+          "expected": "evidence",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.9,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_09",
+          "competency": "ai_system_design",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.8,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_09",
+          "competency": "ai_security",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "HIGH",
+          "confidence": 0.7,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_10",
+          "competency": "rag",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "HIGH",
+          "confidence": 0.85,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_10",
+          "competency": "agentic_ai",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.82,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_10",
+          "competency": "ai_ml_llm_fundamentals",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "HIGH",
+          "confidence": 0.85,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_10",
+          "competency": "ai_evaluation",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.6,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_10",
+          "competency": "python_software_engineering",
+          "expected": "evidence",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.8,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_10",
+          "competency": "ai_system_design",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "HIGH",
+          "confidence": 0.8,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_10",
+          "competency": "ai_security",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.8,
+          "outcome": "correct_unknown"
+        }
+      ]
+    },
+    {
+      "arm": "openai:gpt-5.4",
+      "provider": "openai",
+      "model": "gpt-5.4",
+      "candidates_scored": 10,
+      "candidates_attempted": 10,
+      "failures": [],
+      "judgements": 70,
+      "accuracy": 0.6714285714285714,
+      "precision": 0.5576923076923077,
+      "recall": 1.0,
+      "counts": {
+        "correct_evidence": 29,
+        "correct_unknown": 18,
+        "over_credit": 23,
+        "under_credit": 0
+      },
+      "median_seconds": 2.785957975007477,
+      "total_seconds": 31.100273118994664,
+      "judgement_rows": [
+        {
+          "candidate_id": "candidate_01",
+          "competency": "rag",
+          "expected": "evidence",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.95,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_01",
+          "competency": "agentic_ai",
+          "expected": "evidence",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "HIGH",
+          "confidence": 0.95,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_01",
+          "competency": "ai_ml_llm_fundamentals",
+          "expected": "evidence",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.89,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_01",
+          "competency": "ai_evaluation",
+          "expected": "evidence",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.95,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_01",
+          "competency": "python_software_engineering",
+          "expected": "evidence",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.94,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_01",
+          "competency": "ai_system_design",
+          "expected": "evidence",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.88,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_01",
+          "competency": "ai_security",
+          "expected": "evidence",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "HIGH",
+          "confidence": 0.92,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_02",
+          "competency": "rag",
+          "expected": "evidence",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "HIGH",
+          "confidence": 0.95,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_02",
+          "competency": "agentic_ai",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.9,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_02",
+          "competency": "ai_ml_llm_fundamentals",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.82,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_02",
+          "competency": "ai_evaluation",
+          "expected": "unknown",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.96,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_02",
+          "competency": "python_software_engineering",
+          "expected": "evidence",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.88,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_02",
+          "competency": "ai_system_design",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.82,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_02",
+          "competency": "ai_security",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.9,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_03",
+          "competency": "rag",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "HIGH",
+          "confidence": 0.95,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_03",
+          "competency": "agentic_ai",
+          "expected": "evidence",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "HIGH",
+          "confidence": 0.95,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_03",
+          "competency": "ai_ml_llm_fundamentals",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "HIGH",
+          "confidence": 0.88,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_03",
+          "competency": "ai_evaluation",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.9,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_03",
+          "competency": "python_software_engineering",
+          "expected": "evidence",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.86,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_03",
+          "competency": "ai_system_design",
+          "expected": "unknown",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.93,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_03",
+          "competency": "ai_security",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.83,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_04",
+          "competency": "rag",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "HIGH",
+          "confidence": 0.96,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_04",
+          "competency": "agentic_ai",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "HIGH",
+          "confidence": 0.94,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_04",
+          "competency": "ai_ml_llm_fundamentals",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.88,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_04",
+          "competency": "ai_evaluation",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "HIGH",
+          "confidence": 0.9,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_04",
+          "competency": "python_software_engineering",
+          "expected": "evidence",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.94,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_04",
+          "competency": "ai_system_design",
+          "expected": "evidence",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.88,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_04",
+          "competency": "ai_security",
+          "expected": "evidence",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.86,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_05",
+          "competency": "rag",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.84,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_05",
+          "competency": "agentic_ai",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.96,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_05",
+          "competency": "ai_ml_llm_fundamentals",
+          "expected": "evidence",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.95,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_05",
+          "competency": "ai_evaluation",
+          "expected": "evidence",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.95,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_05",
+          "competency": "python_software_engineering",
+          "expected": "evidence",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.87,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_05",
+          "competency": "ai_system_design",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.81,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_05",
+          "competency": "ai_security",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.91,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_06",
+          "competency": "rag",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.82,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_06",
+          "competency": "agentic_ai",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.94,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_06",
+          "competency": "ai_ml_llm_fundamentals",
+          "expected": "evidence",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.84,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_06",
+          "competency": "ai_evaluation",
+          "expected": "evidence",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "HIGH",
+          "confidence": 0.98,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_06",
+          "competency": "python_software_engineering",
+          "expected": "evidence",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.87,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_06",
+          "competency": "ai_system_design",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.88,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_06",
+          "competency": "ai_security",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.89,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_07",
+          "competency": "rag",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.88,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_07",
+          "competency": "agentic_ai",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.86,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_07",
+          "competency": "ai_ml_llm_fundamentals",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.86,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_07",
+          "competency": "ai_evaluation",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.88,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_07",
+          "competency": "python_software_engineering",
+          "expected": "evidence",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.89,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_07",
+          "competency": "ai_system_design",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.83,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_07",
+          "competency": "ai_security",
+          "expected": "evidence",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "HIGH",
+          "confidence": 0.98,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_08",
+          "competency": "rag",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "HIGH",
+          "confidence": 0.92,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_08",
+          "competency": "agentic_ai",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.94,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_08",
+          "competency": "ai_ml_llm_fundamentals",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.87,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_08",
+          "competency": "ai_evaluation",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "HIGH",
+          "confidence": 0.94,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_08",
+          "competency": "python_software_engineering",
+          "expected": "evidence",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.87,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_08",
+          "competency": "ai_system_design",
+          "expected": "evidence",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.94,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_08",
+          "competency": "ai_security",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.87,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_09",
+          "competency": "rag",
+          "expected": "evidence",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "HIGH",
+          "confidence": 0.94,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_09",
+          "competency": "agentic_ai",
+          "expected": "evidence",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.91,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_09",
+          "competency": "ai_ml_llm_fundamentals",
+          "expected": "evidence",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.9,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_09",
+          "competency": "ai_evaluation",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.91,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_09",
+          "competency": "python_software_engineering",
+          "expected": "evidence",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.88,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_09",
+          "competency": "ai_system_design",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.83,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_09",
+          "competency": "ai_security",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.9,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_10",
+          "competency": "rag",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.8,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_10",
+          "competency": "agentic_ai",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "HIGH",
+          "confidence": 0.91,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_10",
+          "competency": "ai_ml_llm_fundamentals",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.81,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_10",
+          "competency": "ai_evaluation",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.8,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_10",
+          "competency": "python_software_engineering",
+          "expected": "evidence",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.84,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_10",
+          "competency": "ai_system_design",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.81,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_10",
+          "competency": "ai_security",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "HIGH",
+          "confidence": 0.95,
+          "outcome": "correct_unknown"
+        }
+      ]
+    },
+    {
+      "arm": "openai:gpt-5.6",
+      "provider": "openai",
+      "model": "gpt-5.6",
+      "candidates_scored": 10,
+      "candidates_attempted": 10,
+      "failures": [],
+      "judgements": 70,
+      "accuracy": 0.6571428571428571,
+      "precision": 0.5471698113207547,
+      "recall": 1.0,
+      "counts": {
+        "correct_evidence": 29,
+        "correct_unknown": 17,
+        "over_credit": 24,
+        "under_credit": 0
+      },
+      "median_seconds": 6.257602715995745,
+      "total_seconds": 63.484267538937274,
+      "judgement_rows": [
+        {
+          "candidate_id": "candidate_01",
+          "competency": "rag",
+          "expected": "evidence",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "LOW",
+          "confidence": 0.98,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_01",
+          "competency": "agentic_ai",
+          "expected": "evidence",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "LOW",
+          "confidence": 0.94,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_01",
+          "competency": "ai_ml_llm_fundamentals",
+          "expected": "evidence",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "LOW",
+          "confidence": 0.9,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_01",
+          "competency": "ai_evaluation",
+          "expected": "evidence",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "LOW",
+          "confidence": 0.98,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_01",
+          "competency": "python_software_engineering",
+          "expected": "evidence",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "LOW",
+          "confidence": 0.96,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_01",
+          "competency": "ai_system_design",
+          "expected": "evidence",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.96,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_01",
+          "competency": "ai_security",
+          "expected": "evidence",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "LOW",
+          "confidence": 0.96,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_02",
+          "competency": "rag",
+          "expected": "evidence",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "LOW",
+          "confidence": 0.99,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_02",
+          "competency": "agentic_ai",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "HIGH",
+          "confidence": 0.97,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_02",
+          "competency": "ai_ml_llm_fundamentals",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.94,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_02",
+          "competency": "ai_evaluation",
+          "expected": "unknown",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "LOW",
+          "confidence": 0.98,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_02",
+          "competency": "python_software_engineering",
+          "expected": "evidence",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "LOW",
+          "confidence": 0.94,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_02",
+          "competency": "ai_system_design",
+          "expected": "unknown",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.88,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_02",
+          "competency": "ai_security",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "HIGH",
+          "confidence": 0.98,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_03",
+          "competency": "rag",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "HIGH",
+          "confidence": 0.99,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_03",
+          "competency": "agentic_ai",
+          "expected": "evidence",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "LOW",
+          "confidence": 0.98,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_03",
+          "competency": "ai_ml_llm_fundamentals",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "HIGH",
+          "confidence": 0.95,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_03",
+          "competency": "ai_evaluation",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.95,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_03",
+          "competency": "python_software_engineering",
+          "expected": "evidence",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "LOW",
+          "confidence": 0.97,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_03",
+          "competency": "ai_system_design",
+          "expected": "unknown",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "LOW",
+          "confidence": 0.96,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_03",
+          "competency": "ai_security",
+          "expected": "unknown",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "LOW",
+          "confidence": 0.93,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_04",
+          "competency": "rag",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "HIGH",
+          "confidence": 0.99,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_04",
+          "competency": "agentic_ai",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "HIGH",
+          "confidence": 0.98,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_04",
+          "competency": "ai_ml_llm_fundamentals",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.93,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_04",
+          "competency": "ai_evaluation",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.96,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_04",
+          "competency": "python_software_engineering",
+          "expected": "evidence",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "LOW",
+          "confidence": 0.96,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_04",
+          "competency": "ai_system_design",
+          "expected": "evidence",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.96,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_04",
+          "competency": "ai_security",
+          "expected": "evidence",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.94,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_05",
+          "competency": "rag",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "HIGH",
+          "confidence": 0.98,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_05",
+          "competency": "agentic_ai",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "HIGH",
+          "confidence": 0.99,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_05",
+          "competency": "ai_ml_llm_fundamentals",
+          "expected": "evidence",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "LOW",
+          "confidence": 0.96,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_05",
+          "competency": "ai_evaluation",
+          "expected": "evidence",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "LOW",
+          "confidence": 0.97,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_05",
+          "competency": "python_software_engineering",
+          "expected": "evidence",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.96,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_05",
+          "competency": "ai_system_design",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.93,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_05",
+          "competency": "ai_security",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "HIGH",
+          "confidence": 0.98,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_06",
+          "competency": "rag",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.96,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_06",
+          "competency": "agentic_ai",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "HIGH",
+          "confidence": 0.99,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_06",
+          "competency": "ai_ml_llm_fundamentals",
+          "expected": "evidence",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.94,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_06",
+          "competency": "ai_evaluation",
+          "expected": "evidence",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "LOW",
+          "confidence": 0.99,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_06",
+          "competency": "python_software_engineering",
+          "expected": "evidence",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.94,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_06",
+          "competency": "ai_system_design",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.87,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_06",
+          "competency": "ai_security",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "HIGH",
+          "confidence": 0.97,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_07",
+          "competency": "rag",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.97,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_07",
+          "competency": "agentic_ai",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.96,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_07",
+          "competency": "ai_ml_llm_fundamentals",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.94,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_07",
+          "competency": "ai_evaluation",
+          "expected": "unknown",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "LOW",
+          "confidence": 0.95,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_07",
+          "competency": "python_software_engineering",
+          "expected": "evidence",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.98,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_07",
+          "competency": "ai_system_design",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.91,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_07",
+          "competency": "ai_security",
+          "expected": "evidence",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "LOW",
+          "confidence": 0.99,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_08",
+          "competency": "rag",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "HIGH",
+          "confidence": 0.98,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_08",
+          "competency": "agentic_ai",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "HIGH",
+          "confidence": 0.98,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_08",
+          "competency": "ai_ml_llm_fundamentals",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.96,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_08",
+          "competency": "ai_evaluation",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "HIGH",
+          "confidence": 0.97,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_08",
+          "competency": "python_software_engineering",
+          "expected": "evidence",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.92,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_08",
+          "competency": "ai_system_design",
+          "expected": "evidence",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "LOW",
+          "confidence": 0.97,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_08",
+          "competency": "ai_security",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.94,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_09",
+          "competency": "rag",
+          "expected": "evidence",
+          "actual_level": "DEMONSTRATED",
+          "probe_priority": "MEDIUM",
+          "confidence": 0.96,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_09",
+          "competency": "agentic_ai",
+          "expected": "evidence",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.98,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_09",
+          "competency": "ai_ml_llm_fundamentals",
+          "expected": "evidence",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.96,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_09",
+          "competency": "ai_evaluation",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.98,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_09",
+          "competency": "python_software_engineering",
+          "expected": "evidence",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.96,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_09",
+          "competency": "ai_system_design",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.94,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_09",
+          "competency": "ai_security",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.96,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_10",
+          "competency": "rag",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "HIGH",
+          "confidence": 0.97,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_10",
+          "competency": "agentic_ai",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "HIGH",
+          "confidence": 0.98,
+          "outcome": "correct_unknown"
+        },
+        {
+          "candidate_id": "candidate_10",
+          "competency": "ai_ml_llm_fundamentals",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.91,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_10",
+          "competency": "ai_evaluation",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.94,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_10",
+          "competency": "python_software_engineering",
+          "expected": "evidence",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.92,
+          "outcome": "correct_evidence"
+        },
+        {
+          "candidate_id": "candidate_10",
+          "competency": "ai_system_design",
+          "expected": "unknown",
+          "actual_level": "PARTIAL_EVIDENCE",
+          "probe_priority": "HIGH",
+          "confidence": 0.88,
+          "outcome": "over_credit"
+        },
+        {
+          "candidate_id": "candidate_10",
+          "competency": "ai_security",
+          "expected": "unknown",
+          "actual_level": "UNKNOWN_NEEDS_PROBING",
+          "probe_priority": "HIGH",
+          "confidence": 0.98,
+          "outcome": "correct_unknown"
+        }
+      ]
+    }
+  ],
+  "best_accuracy": "deepseek:deepseek-chat",
+  "notes": [
+    "Accuracy alone does not decide this. Over-credit means the analyzer claimed evidence a resume did not give, so the interview skips a probe it should have made; under-credit only wastes a question on known ground. An arm with equal accuracy and fewer over-credits is the better arm.",
+    "Only the analysis stage varies here. Extraction and planning are left at their configured models, so this isolates one stage.",
+    "Retrieval quality cannot appear in this table: it depends on the embedding model, not the chat model, and DeepSeek exposes no embeddings endpoint."
+  ]
+}
