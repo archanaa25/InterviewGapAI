@@ -16,6 +16,17 @@ def isolated_store(monkeypatch, tmp_path):
     monkeypatch.setattr(answer_store, "RUN_DIR", tmp_path / "runs")
 
 
+class _Dumpable(SimpleNamespace):
+    """Stands in for a Pydantic stage output, which the store serialises."""
+
+    def __init__(self, payload: dict, **attributes) -> None:
+        super().__init__(**attributes)
+        self._payload = payload
+
+    def model_dump(self, mode: str = "python") -> dict:
+        return dict(self._payload)
+
+
 def _intake(candidate_id: str = "upload-abc123"):
     question = SimpleNamespace(
         question_id="RAG-PROD-ADV-001",
@@ -25,10 +36,23 @@ def _intake(candidate_id: str = "upload-abc123"):
     )
     return SimpleNamespace(
         upload=SimpleNamespace(
-            filename="cv.pdf", sha256="a" * 64, extraction_method="pypdf",
+            filename="cv.pdf",
+            format=SimpleNamespace(value="pdf"),
+            media_type="application/pdf",
+            size_bytes=2048,
+            sha256="a" * 64,
+            candidate_id=candidate_id,
+            extraction_method="pypdf",
+            text="Resume text",
+            warnings=(),
         ),
-        plan=SimpleNamespace(candidate_id=candidate_id),
-        question_set=SimpleNamespace(questions=[question]),
+        resume=_Dumpable({"candidate_id": candidate_id, "name": "Test Candidate"}),
+        analysis=_Dumpable({"candidate_id": candidate_id, "competency_evidence": []}),
+        plan=_Dumpable({"candidate_id": candidate_id}, candidate_id=candidate_id),
+        question_set=_Dumpable(
+            {"questions": [{"question_id": question.question_id}]},
+            questions=[question],
+        ),
     )
 
 
@@ -114,3 +138,32 @@ def test_the_run_directory_is_created_on_first_write() -> None:
     save_run(_intake(), _progress())
 
     assert answer_store.RUN_DIR.is_dir()
+
+
+def test_every_earlier_stage_is_stored_too() -> None:
+    """
+    A real upload has no files under data/prepared/, so the run must carry
+    its own resume, evidence, plan and question set - otherwise an
+    interviewer in another session sees answers with nothing behind them.
+    """
+
+    save_run(_intake(), _progress())
+    run = load_run("upload-abc123")
+
+    assert set(run["stages"]) == {
+        "resume extraction",
+        "resume evidence",
+        "interview plan",
+        "interview questions",
+    }
+    for payload in run["stages"].values():
+        assert payload
+
+
+def test_upload_provenance_survives_the_session() -> None:
+    save_run(_intake(), _progress())
+    upload = load_run("upload-abc123")["upload"]
+
+    assert upload["filename"] == "cv.pdf"
+    assert upload["sha256"] == "a" * 64
+    assert upload["characters_extracted"] == len("Resume text")

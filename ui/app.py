@@ -1334,9 +1334,9 @@ TRACE_GAPS = {
         "Saved question sets exist for only some fixture candidates."
     ),
     "answers": (
-        "Answers are never persisted. They live in the Streamlit session that "
-        "collected them, so they are visible here only for a run completed in "
-        "this browser session — the contributor backend has no answer store yet."
+        "No completed interview recorded for this source. A run appears here "
+        "once a candidate submits; fixture candidates have no answers because "
+        "nobody sat their interview."
     ),
 }
 
@@ -1420,11 +1420,16 @@ def _render_intake_traces() -> None:
         saved = _load_artifacts(choice)
         stages = {stage: saved.get(stage) for stage in TRACE_STAGES}
 
-        # A recorded interview supplies the two stages no fixture has.
+        # A recorded run carries every stage of the interview it belongs to,
+        # so it wins over the fixture files: those exist only for synthetic
+        # candidates and would be a different person's intake anyway.
         run = load_run(choice)
         if run:
             stages["answers"] = run
-            stages["upload"] = stages["upload"] or run.get("upload")
+            stages["upload"] = run.get("upload") or stages["upload"]
+            for stage, payload in (run.get("stages") or {}).items():
+                if stage in stages and payload:
+                    stages[stage] = payload
 
     reached = sum(1 for value in stages.values() if value)
     st.caption(f"{reached} of {len(TRACE_STAGES)} stages have output for this run.")

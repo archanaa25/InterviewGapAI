@@ -79,8 +79,24 @@ def save_run(intake: Any, progress: Any) -> Path:
         "total": len(progress.question_ids),
         "upload": {
             "filename": intake.upload.filename,
+            "format": getattr(intake.upload.format, "value", str(intake.upload.format)),
+            "media_type": intake.upload.media_type,
+            "size_bytes": intake.upload.size_bytes,
             "sha256": intake.upload.sha256,
+            "candidate_id": intake.upload.candidate_id,
             "extraction_method": intake.upload.extraction_method,
+            "characters_extracted": len(intake.upload.text),
+            "warnings": list(intake.upload.warnings),
+        },
+        # Every earlier stage is stored too. Only fixture candidates have
+        # files under data/prepared/; a real upload has none, so without
+        # these an interviewer in a different browser session would see an
+        # interview's answers with no resume, evidence or plan behind them.
+        "stages": {
+            "resume extraction": intake.resume.model_dump(mode="json"),
+            "resume evidence": intake.analysis.model_dump(mode="json"),
+            "interview plan": intake.plan.model_dump(mode="json"),
+            "interview questions": intake.question_set.model_dump(mode="json"),
         },
         "answers": [
             {
