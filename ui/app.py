@@ -37,8 +37,10 @@ configure_observability()
 from ui.gateway import (
     CandidateIntake,
     CandidatePlan,
+    EvaluationIntegrationError,
     IntakeIntegrationError,
     build_candidate_plan,
+    evaluate_candidate_interview,
     prefetch_resume,
     resolve_interview_questions,
 )
@@ -73,6 +75,7 @@ PROGRESS_KEY = "ig_progress"
 PREFETCH_KEY = "ig_prefetch"
 ROLE_KEY = "ig_role"
 RUN_PATH_KEY = "ig_run_path"
+EVALUATION_KEY = "ig_evaluation"
 
 # What each backend stage is called while the candidate waits on it. The
 # gateway names stages for error messages; these are the candidate-facing
@@ -151,6 +154,7 @@ def _initialize_state() -> None:
     # account. Only a verified sign-in ever writes the interviewer role.
     st.session_state.setdefault(ROLE_KEY, Role.CANDIDATE.value)
     st.session_state.setdefault(RUN_PATH_KEY, None)
+    st.session_state.setdefault(EVALUATION_KEY, None)
 
 
 def _reset() -> None:
@@ -162,6 +166,7 @@ def _reset() -> None:
     st.session_state[PROGRESS_KEY] = None
     st.session_state[PREFETCH_KEY] = None
     st.session_state[RUN_PATH_KEY] = None
+    st.session_state[EVALUATION_KEY] = None
 
 
 def _sign_out() -> None:
@@ -932,7 +937,7 @@ def _record_run(intake: CandidateIntake, progress: InterviewProgress) -> None:
 
 
 def _render_results(intake: CandidateIntake, progress: InterviewProgress) -> None:
-    """Confirm final submission without fabricating unavailable evaluation."""
+    """Run grounded evaluation once, then expose its scoring-layer handoff."""
 
     _header("results")
     st.markdown(
@@ -952,11 +957,54 @@ def _render_results(intake: CandidateIntake, progress: InterviewProgress) -> Non
     summary[1].metric("↷ Skipped", progress.skipped_count)
     summary[2].metric("▤ Total", len(progress.question_ids))
 
-    st.warning(
-        "Evaluation and report generation are not yet implemented in the contributor "
-        "backend. This UI does not invent scores: answers remain in the current "
-        "Streamlit session until that backend handoff is available."
-    )
+    evaluation = st.session_state[EVALUATION_KEY]
+    if evaluation is None:
+        try:
+            with st.spinner("Evaluating your complete interview…"):
+                evaluation = evaluate_candidate_interview(intake, progress)
+        except EvaluationIntegrationError as error:
+            st.error(
+                f"Could not complete {error.stage}. Your submitted answers remain "
+                "in this session so you can retry safely."
+            )
+            if st.button("Retry evaluation", type="primary", use_container_width=True):
+                st.rerun()
+        else:
+            st.session_state[EVALUATION_KEY] = evaluation
+            st.rerun()
+        return
+
+    evaluation_summary = st.columns(3)
+    evaluation_summary[0].metric("✓ Evaluated", evaluation.evaluated_count)
+    evaluation_summary[1].metric("↷ Skipped", evaluation.skipped_count)
+    evaluation_summary[2].metric("! Review", evaluation.review_count)
+
+    if evaluation.evaluated_count == 0 and progress.answered_count:
+        st.error(
+            "None of your answered responses could be evaluated. Your answers "
+            "remain in this session and have not been scored as zero."
+        )
+        if st.button(
+            "Retry answer evaluation",
+            type="primary",
+            use_container_width=True,
+        ):
+            st.session_state[EVALUATION_KEY] = None
+            st.rerun()
+    else:
+        st.success(
+            "Your answers were evaluated against the interview's curated technical "
+            "criteria."
+        )
+        if evaluation.review_count:
+            st.warning(
+                f"{evaluation.review_count} answered response(s) need review and "
+                "will remain unscored until evaluation succeeds."
+            )
+        st.info(
+            "Your validated evaluations are ready for scorecard and gap-summary "
+            "generation."
+        )
 
     with st.expander("Review submitted answers"):
         question_by_id = {
