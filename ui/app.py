@@ -60,6 +60,7 @@ from ui.auth import (
 from ui.answer_store import (
     AnswerStoreError,
     load_run,
+    save_evaluation,
     save_intake,
     save_run,
     saved_runs,
@@ -917,6 +918,24 @@ def _record_intake(prepared: CandidatePlan) -> None:
         )
 
 
+def _record_evaluation(intake: CandidateIntake, evaluation: object) -> None:
+    """
+    Attach the evaluation to the stored interview, tolerating a failure.
+
+    The candidate has already been evaluated on screen either way, so a
+    storage problem is logged rather than shown to them.
+    """
+
+    try:
+        save_evaluation(intake.plan.candidate_id, evaluation)
+    except AnswerStoreError as error:
+        log_event(
+            "evaluation.not_recorded",
+            level="ERROR",
+            error_type=type(error).__name__,
+        )
+
+
 def _record_run(intake: CandidateIntake, progress: InterviewProgress) -> None:
     """
     Write the interview so far, tolerating a failure.
@@ -971,6 +990,11 @@ def _render_results(intake: CandidateIntake, progress: InterviewProgress) -> Non
                 st.rerun()
         else:
             st.session_state[EVALUATION_KEY] = evaluation
+            # Attach the judgement to the stored interview. Without this the
+            # answers survived the session and the evaluation of them did
+            # not, so an interviewer opening the record later saw the work
+            # with no assessment beside it.
+            _record_evaluation(intake, evaluation)
             st.rerun()
         return
 
@@ -1158,6 +1182,27 @@ def _trace_summary(stage: str, payload: dict) -> list[str]:
             state = "skipped" if answer.get("skipped") else f"{answer['characters']} chars"
             lines.append(
                 f"{answer['position']}. `{answer['question_id']}` — {state}"
+            )
+        return lines
+
+    if stage == "evaluation":
+        result = payload.get("result") or {}
+        questions = result.get("questions") or []
+        lines = [
+            f"**{payload.get('evaluated_count')} evaluated · "
+            f"{payload.get('skipped_count')} skipped · "
+            f"{payload.get('review_count')} need review** of {len(questions)}"
+        ]
+        if payload.get("evaluated_at"):
+            lines.append(f"Judged {payload['evaluated_at'][:19].replace('T', ' ')} UTC")
+        for question in questions:
+            judgements = question.get("concept_judgements") or []
+            met = sum(1 for j in judgements if j.get("status") == "MET")
+            reason = question.get("review_reason")
+            lines.append(
+                f"`{question.get('question_id')}` — {question.get('status')}"
+                + (f", {met}/{len(judgements)} concepts met" if judgements else "")
+                + (f" ({reason})" if reason else "")
             )
         return lines
 
@@ -1429,6 +1474,7 @@ TRACE_STAGES = (
     "interview plan",
     "interview questions",
     "answers",
+    "evaluation",
 )
 
 # Why a stage can be empty. Saying this beats an unexplained blank section.
@@ -1445,6 +1491,10 @@ TRACE_GAPS = {
         "No completed interview recorded for this source. A run appears here "
         "once a candidate submits; fixture candidates have no answers because "
         "nobody sat their interview."
+    ),
+    "evaluation": (
+        "The Evaluation Agent runs on the results screen after an interview is "
+        "submitted. Nothing has been judged for this source yet."
     ),
 }
 
@@ -1479,6 +1529,15 @@ def _live_stages() -> dict:
     # separate click from preparing the plan.
     if intake is not None:
         stages["interview questions"] = intake.question_set.model_dump(mode="json")
+
+    evaluation = st.session_state.get(EVALUATION_KEY)
+    if evaluation is not None:
+        stages["evaluation"] = {
+            "evaluated_count": evaluation.evaluated_count,
+            "skipped_count": evaluation.skipped_count,
+            "review_count": evaluation.review_count,
+            "result": evaluation.model_dump(mode="json"),
+        }
 
     if progress is not None:
         asked = {}
@@ -1646,6 +1705,8 @@ def _resolve_stages(choice: str, live: dict) -> dict:
         # gap message is the honest rendering until questions exist.
         if run.get("total") is not None:
             stages["answers"] = run
+        if run.get("evaluation"):
+            stages["evaluation"] = run["evaluation"]
 
     return stages
 

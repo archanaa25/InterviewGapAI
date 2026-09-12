@@ -17,6 +17,14 @@ dependencies = [
     "streamlit>=1.63.0,<2",
 ]
 
+[tool.pytest.ini_options]
+# Both suites, so a bare `pytest` cannot miss one. This matters because
+# `python -m unittest discover -s tests` silently skips any file that does
+# not subclass unittest.TestCase - tests/test_evaluation_agent.py is written
+# in pytest style and was running nowhere. pytest executes unittest.TestCase
+# classes natively, so one runner covers every test either style.
+testpaths = ["tests", "ui/tests"]
+
 [tool.uv]
 package = false
 

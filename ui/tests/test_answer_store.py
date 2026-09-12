@@ -214,3 +214,80 @@ def test_the_completed_run_replaces_the_intake_record() -> None:
     assert len(run["answers"]) == 1
     assert "interview questions" in run["stages"]
     assert run["total"] == 1
+
+
+class _Evaluation:
+    """Stands in for InterviewEvaluation, whose counts are properties."""
+
+    def __init__(self, evaluated=2, skipped=1, review=1):
+        self.evaluated_count = evaluated
+        self.skipped_count = skipped
+        self.review_count = review
+
+    def model_dump(self, mode: str = "python") -> dict:
+        return {
+            "candidate_id": "upload-abc123",
+            "questions": [
+                {
+                    "question_id": "RAG-PROD-ADV-001",
+                    "status": "EVALUATED",
+                    "concept_judgements": [{"concept": "c", "status": "MET"}],
+                }
+            ],
+        }
+
+
+def test_an_evaluation_is_attached_to_the_interview_it_judged() -> None:
+    from ui.answer_store import save_evaluation
+
+    save_run(_intake(), _progress())
+    save_evaluation("upload-abc123", _Evaluation())
+
+    run = load_run("upload-abc123")
+
+    # The answers must survive: an evaluation without the work it judged is
+    # not reviewable, which is why this merges rather than writing beside.
+    assert len(run["answers"]) == 1
+    assert run["answers"][0]["text"] == "Separate ingestion from query."
+
+    evaluation = run["evaluation"]
+    assert evaluation["evaluated_count"] == 2
+    assert evaluation["skipped_count"] == 1
+    assert evaluation["review_count"] == 1
+    assert evaluation["result"]["questions"][0]["question_id"] == "RAG-PROD-ADV-001"
+    assert evaluation["evaluated_at"]
+
+
+def test_an_evaluation_without_a_recorded_interview_is_refused() -> None:
+    """
+    An evaluation alone is not worth keeping, and silently creating a record
+    for one would produce a judgement with no answers behind it.
+    """
+
+    from ui.answer_store import save_evaluation
+
+    with pytest.raises(AnswerStoreError):
+        save_evaluation("upload-never-recorded", _Evaluation())
+
+
+def test_re_evaluating_replaces_the_previous_judgement() -> None:
+    from ui.answer_store import save_evaluation
+
+    save_run(_intake(), _progress())
+    save_evaluation("upload-abc123", _Evaluation(evaluated=1))
+    save_evaluation("upload-abc123", _Evaluation(evaluated=3))
+
+    assert load_run("upload-abc123")["evaluation"]["evaluated_count"] == 3
+
+
+def test_no_rubric_reaches_the_stored_evaluation() -> None:
+    """The marking scheme stays in the corpus, not beside a candidate's work."""
+
+    from ui.answer_store import save_evaluation
+
+    save_run(_intake(), _progress())
+    save_evaluation("upload-abc123", _Evaluation())
+
+    stored = repr(load_run("upload-abc123")["evaluation"])
+    for forbidden in ("expected_concepts", "must_have", "bonus"):
+        assert forbidden not in stored

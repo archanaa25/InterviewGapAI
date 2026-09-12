@@ -156,7 +156,18 @@ exports, nested IDs, concurrent tasks, error propagation, broken log sinks,
 export failures, and service integration:
 
 ```bash
-uv run --locked python -m unittest discover -s tests
+uv run --locked pytest
+```
+
+Use pytest rather than `python -m unittest discover -s tests`. Discovery
+only collects `unittest.TestCase` subclasses, so it silently skips any
+pytest-style file — `tests/test_evaluation_agent.py` ran nowhere under that
+command. pytest executes `unittest.TestCase` classes natively and
+`pyproject.toml` points it at both `tests/` and `ui/tests/`, so one command
+covers every test in either style. To run one file:
+
+```bash
+uv run --locked pytest tests/test_observability.py
 ```
 
 The existing live smoke script enables JSON telemetry on stderr while keeping

@@ -14,15 +14,22 @@ and nothing here ever touches data/prepared/.
 
 What is stored
 --------------
-The question ids asked, what the candidate wrote, and whether each was
-skipped - enough for an interviewer to read the interview and for a future
-evaluation stage to score it. The candidate id is already an opaque content
-hash of the uploaded file (upload-<sha16>), not a name.
+The intake stages, the question ids asked, what the candidate wrote, whether
+each answer was skipped, and - once the Evaluation Agent has run - its
+concept judgements. The candidate id is already an opaque content hash of the
+uploaded file (upload-<sha16>), not a name.
+
+A record is built up across the interview rather than written once:
+save_intake as soon as the plan exists, save_run as answers arrive, and
+save_evaluation when the results screen has judged them. Each later call
+supersedes or extends the earlier record for the same candidate.
 
 What is NOT stored
 ------------------
-No expected concepts, no rubric, no evaluation. This module records what
-happened; it does not judge it, and the backend has no scorer yet.
+No expected concepts and no rubric: those live in the corpus, and copying
+them beside a candidate's answers would put the marking scheme in the same
+file as the work. This module records what happened and what the agent
+concluded; it does not compute a score, and there is no scorer yet.
 """
 
 from __future__ import annotations
@@ -180,6 +187,39 @@ def save_run(intake: Any, progress: Any) -> Path:
     return _write(candidate_id, payload)
 
 
+def save_evaluation(candidate_id: str, evaluation: Any) -> Path:
+    """
+    Attach an interview's evaluation to its existing record.
+
+    The evaluation is produced on the results screen and previously lived in
+    session state alone, so a stored interview kept its answers and lost the
+    judgement of them. It is merged into the run rather than written beside
+    it: an evaluation without the answers it judged is not reviewable.
+
+    Read-modify-write, because the run was written earlier in the interview.
+    A missing record is not an error - it means the answers were never
+    recorded either, and an evaluation alone is not worth keeping.
+    """
+
+    existing = load_run(candidate_id)
+    if existing is None:
+        raise AnswerStoreError(
+            f"No recorded interview for {candidate_id}; evaluation not stored."
+        )
+
+    existing["evaluation"] = {
+        "evaluated_at": datetime.now(timezone.utc).isoformat(),
+        "evaluated_count": evaluation.evaluated_count,
+        "skipped_count": evaluation.skipped_count,
+        "review_count": evaluation.review_count,
+        # The whole result, so a future scorecard stage has the concept
+        # judgements and the evidence each one cited, not just the totals.
+        "result": evaluation.model_dump(mode="json"),
+    }
+
+    return _write(candidate_id, existing)
+
+
 def load_run(candidate_id: str) -> dict | None:
     """One saved interview, or None when nothing was recorded for it."""
 
@@ -209,6 +249,7 @@ def saved_runs() -> list[str]:
 
 __all__ = [
     "AnswerStoreError",
+    "save_evaluation",
     "save_intake",
     "RUN_DIR",
     "SCHEMA_VERSION",
