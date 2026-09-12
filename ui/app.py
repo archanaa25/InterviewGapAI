@@ -6,6 +6,7 @@ import hashlib
 import html
 import json
 import sys
+from datetime import datetime
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -1330,6 +1331,11 @@ def _report_choice(groups: tuple) -> str:
     return current
 
 
+# How often the traces view re-reads a run when following is switched on.
+# Short enough to feel live against a candidate typing an answer, long enough
+# that it is not redrawing while someone reads.
+AUTO_REFRESH_SECONDS = 3
+
 # The candidate's journey end to end. Stages absent from a source are shown
 # as gaps with the reason, because "nothing here" and "never persisted" are
 # different problems and only one of them is fixable by re-running.
@@ -1430,57 +1436,106 @@ def _render_intake_traces() -> None:
         )
         return
 
-    picker, refresh = st.columns([4, 1], gap="small")
+    # The picker gives up width so the two controls beside it can show
+    # their labels: at a narrower split they truncated to "A…" and "↻ …".
+    picker, follow, refresh = st.columns([2.4, 1.5, 1.35], gap="small")
     sources = (["This session's run"] if has_live else []) + candidates
     with picker:
         choice = st.selectbox("Intake", sources)
+    with follow:
+        st.markdown('<div class="ig-refresh-pad"></div>', unsafe_allow_html=True)
+        auto = st.toggle(
+            "Auto",
+            key="ig-traces-auto",
+            help=(
+                f"Re-read this run every {AUTO_REFRESH_SECONDS} seconds, to "
+                "follow an interview happening in another tab. Leave it off "
+                "when reading raw JSON: each refresh closes the expanders."
+            ),
+        )
     with refresh:
         st.markdown('<div class="ig-refresh-pad"></div>', unsafe_allow_html=True)
         # Streamlit reruns on interaction, not on a file changing, so an
-        # interview in progress in another tab needs an explicit re-read.
-        if st.button("↻ Refresh", key="ig-traces-refresh", use_container_width=True):
+        # interview in progress in another tab needs a re-read either way.
+        if st.button(
+            "↻ Now",
+            key="ig-traces-refresh",
+            use_container_width=True,
+            help="Re-read this run immediately.",
+        ):
             st.rerun()
 
-    if has_live and choice == "This session's run":
-        stages = live
-    else:
-        saved = _load_artifacts(choice)
-        stages = {stage: saved.get(stage) for stage in TRACE_STAGES}
+    # Only the stage list polls. A fragment reruns on its own without
+    # re-running the page around it, so the source picker keeps its value and
+    # the sidebar does not flicker every few seconds.
+    @st.fragment(run_every=AUTO_REFRESH_SECONDS if auto else None)
+    def _stages() -> None:
+        stages = _resolve_stages(choice, live if has_live else {})
 
-        # A recorded run carries every stage of the interview it belongs to,
-        # so it wins over the fixture files: those exist only for synthetic
-        # candidates and would be a different person's intake anyway.
-        run = load_run(choice)
-        if run:
-            stages["answers"] = run
-            stages["upload"] = run.get("upload") or stages["upload"]
-            for stage, payload in (run.get("stages") or {}).items():
-                if stage in stages and payload:
-                    stages[stage] = payload
-
-    reached = sum(1 for value in stages.values() if value)
-    st.caption(f"{reached} of {len(TRACE_STAGES)} stages have output for this run.")
-
-    for stage, payload in stages.items():
-        st.markdown(
-            f'<div class="ig-section-title">{stage.title()}</div>',
-            unsafe_allow_html=True,
+        reached = sum(1 for value in stages.values() if value)
+        status, note = st.columns([3, 1.4])
+        status.caption(
+            f"{reached} of {len(TRACE_STAGES)} stages have output for this run."
         )
+        if auto:
+            # Say when it last looked, so a stalled poll is visible rather
+            # than indistinguishable from an interview that stopped.
+            note.caption(
+                f"↻ {datetime.now().strftime('%H:%M:%S')}",
+            )
 
-        if not payload:
-            st.caption(TRACE_GAPS.get(stage, "No saved output for this stage."))
-            continue
-        if "error" in payload and len(payload) == 1:
-            st.error(f"Could not read this stage ({payload['error']}).")
-            continue
+        for stage, payload in stages.items():
+            st.markdown(
+                f'<div class="ig-section-title">{stage.title()}</div>',
+                unsafe_allow_html=True,
+            )
 
-        for line in _trace_summary(stage, payload):
-            st.markdown(line)
+            if not payload:
+                st.caption(TRACE_GAPS.get(stage, "No saved output for this stage."))
+                continue
+            if "error" in payload and len(payload) == 1:
+                st.error(f"Could not read this stage ({payload['error']}).")
+                continue
 
-        # Summary first, full document behind a click: the analysis alone runs
-        # to seven competencies with evidence items and sources.
-        with st.expander("Raw JSON"):
-            st.json(payload, expanded=False)
+            for line in _trace_summary(stage, payload):
+                st.markdown(line)
+
+            # Summary first, full document behind a click: the analysis alone
+            # runs to seven competencies with evidence items and sources.
+            with st.expander("Raw JSON"):
+                st.json(payload, expanded=False)
+
+    _stages()
+
+
+def _resolve_stages(choice: str, live: dict) -> dict:
+    """
+    The stages for one source, re-read from disk on every call.
+
+    Separated out so the polling fragment can call it again: reusing a dict
+    captured once would poll and redraw the same data for ever.
+    """
+
+    if live and choice == "This session's run":
+        # The live session is authoritative for its own run, and its answers
+        # are in memory before they reach the file.
+        return _live_stages()
+
+    saved = _load_artifacts(choice)
+    stages = {stage: saved.get(stage) for stage in TRACE_STAGES}
+
+    # A recorded run carries every stage of the interview it belongs to, so it
+    # wins over the fixture files: those exist only for synthetic candidates
+    # and would be a different person's intake anyway.
+    run = load_run(choice)
+    if run:
+        stages["answers"] = run
+        stages["upload"] = run.get("upload") or stages["upload"]
+        for stage, payload in (run.get("stages") or {}).items():
+            if stage in stages and payload:
+                stages[stage] = payload
+
+    return stages
 
 
 def main() -> None:
