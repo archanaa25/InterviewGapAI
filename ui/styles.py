@@ -266,8 +266,11 @@ APP_STYLES = """
     font-weight: 780;
   }
 
-  /* The reference CTA is a green-to-teal sweep in white type, not flat lime. */
-  button[kind="primary"] {
+  /* The reference CTA is a green-to-teal sweep in white type, not flat lime.
+     Matched by prefix: Streamlit labels a form's submit button
+     "primaryFormSubmit", not "primary", so an exact match left every
+     in-form CTA - the whole interview screen - painted Streamlit red. */
+  button[kind^="primary"] {
     color: #ffffff !important;
     background: linear-gradient(95deg, #12c06a, #10b6a8) !important;
     border-color: transparent !important;
@@ -276,28 +279,28 @@ APP_STYLES = """
     box-shadow: 0 10px 24px rgba(16, 182, 168, .28);
   }
 
-  button[kind="primary"] *,
-  button[kind="primary"] p {
+  button[kind^="primary"] *,
+  button[kind^="primary"] p {
     color: #ffffff !important;
   }
 
-  button[kind="primary"]:hover {
+  button[kind^="primary"]:hover {
     background: linear-gradient(95deg, #0fae5f, #0ea497) !important;
     border-color: transparent !important;
   }
 
-  button[kind="secondary"] {
+  button[kind^="secondary"] {
     color: #ffffff !important;
     background: #172033 !important;
     border-color: #172033 !important;
   }
 
-  button[kind="secondary"] *,
-  button[kind="secondary"] p {
+  button[kind^="secondary"] *,
+  button[kind^="secondary"] p {
     color: #ffffff !important;
   }
 
-  button[kind="secondary"]:hover {
+  button[kind^="secondary"]:hover {
     color: #ffffff !important;
     background: #26364d !important;
     border-color: #26364d !important;
@@ -1127,6 +1130,264 @@ APP_STYLES = """
   /* Nudges the refresh button down to sit level with the select beside it,
      which carries a label the button does not. */
   .ig-refresh-pad { height: 1.65rem; }
+
+  /* ---------- results scorecard ---------- */
+
+  .ig-score {
+    display: flex;
+    gap: 1.6rem;
+    align-items: center;
+    padding: 1.35rem 1.5rem;
+    border: 1px solid var(--ig-line);
+    border-radius: 18px;
+    background: linear-gradient(135deg, #f7fbfd, #ffffff 60%);
+  }
+
+  /* The ring is drawn with a conic gradient rather than a chart library: it
+     is one number, and a dependency for one number is not worth the weight. */
+  .ig-donut {
+    position: relative;
+    flex: 0 0 auto;
+    width: 132px;
+    height: 132px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+  }
+
+  .ig-donut::after {
+    content: "";
+    position: absolute;
+    inset: 13px;
+    border-radius: 50%;
+    background: #ffffff;
+  }
+
+  .ig-donut-face {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    line-height: 1.05;
+  }
+
+  .ig-donut-score {
+    font-size: 2.15rem;
+    font-weight: 800;
+    color: var(--ig-ink);
+  }
+
+  .ig-donut-total {
+    font-size: .78rem;
+    font-weight: 700;
+    color: var(--ig-muted);
+  }
+
+  .ig-score-meta h3 {
+    margin: 0 0 .2rem;
+    font-size: 1.05rem;
+    font-weight: 800;
+  }
+
+  .ig-score-meta p {
+    margin: 0 0 .45rem;
+    font-size: .85rem;
+    line-height: 1.55;
+    color: #43536b;
+  }
+
+  .ig-bars { margin-top: 1.1rem; }
+
+  .ig-bar-row {
+    display: grid;
+    grid-template-columns: 180px 1fr 52px;
+    align-items: center;
+    gap: .75rem;
+    padding: .3rem 0;
+  }
+
+  .ig-bar-name {
+    font-size: .82rem;
+    font-weight: 700;
+    color: var(--ig-ink);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .ig-bar-track {
+    height: 9px;
+    border-radius: 999px;
+    background: #e8eef4;
+    overflow: hidden;
+  }
+
+  .ig-bar-fill {
+    height: 100%;
+    border-radius: 999px;
+  }
+
+  .ig-bar-value {
+    font-size: .8rem;
+    font-weight: 800;
+    text-align: right;
+    color: var(--ig-ink);
+  }
+
+  /* Band colour is a redundant cue: every row also carries its number, and
+     gap rows carry a word, so the screen still reads without hue. */
+  .ig-band {
+    display: inline-block;
+    padding: .16rem .5rem;
+    border-radius: 999px;
+    font-size: .66rem;
+    font-weight: 800;
+    letter-spacing: .03em;
+    text-transform: uppercase;
+  }
+
+  .ig-band-strong { background: #e4f3e4; color: #14631a; }
+  .ig-band-developing { background: #e7f0fb; color: #1b4f8f; }
+  .ig-band-gap { background: #fdeade; color: #9a3c11; }
+  .ig-band-none { background: #eceff3; color: #4a5666; }
+
+  .ig-concept-list {
+    margin: .35rem 0 0;
+    padding-left: 1.1rem;
+    font-size: .84rem;
+    line-height: 1.65;
+    color: #43536b;
+  }
+
+  .ig-res {
+    margin-bottom: .7rem;
+    padding: .85rem 1rem;
+    border: 1px solid var(--ig-line);
+    border-left: 4px solid var(--ig-blue);
+    border-radius: 12px;
+    background: #ffffff;
+  }
+
+  .ig-res-title {
+    margin: 0 0 .2rem;
+    font-size: .9rem;
+    font-weight: 760;
+  }
+
+  .ig-res-title a { color: #0b5c86; text-decoration: none; }
+  .ig-res-title a:hover { text-decoration: underline; }
+
+  .ig-res-meta {
+    margin: 0;
+    font-size: .76rem;
+    color: var(--ig-muted);
+  }
+
+  .ig-res-head {
+    display: flex;
+    align-items: baseline;
+    gap: .6rem;
+    margin: 0 0 .15rem;
+  }
+
+  .ig-res-head h4 {
+    margin: 0;
+    font-size: .98rem;
+    font-weight: 800;
+  }
+
+  @media (max-width: 700px) {
+    .ig-score { flex-direction: column; text-align: center; }
+    .ig-bar-row { grid-template-columns: 120px 1fr 44px; gap: .5rem; }
+  }
+
+  /* ---------- featured / from the academy ---------- */
+
+  .ig-featured-head {
+    margin: .2rem 0 .7rem;
+    padding-top: .9rem;
+    border-top: 1px solid var(--ig-line);
+  }
+
+  .ig-featured-head h4 {
+    margin: 0 0 .15rem;
+    font-size: .95rem;
+    font-weight: 800;
+    letter-spacing: .01em;
+  }
+
+  .ig-featured-head p {
+    margin: 0;
+    font-size: .8rem;
+    line-height: 1.55;
+    color: var(--ig-muted);
+  }
+
+  /* The standing recommendation is the only card on the screen with a filled
+     ground, so it reads as a different kind of thing from the scored gaps
+     above it rather than as the most urgent one. */
+  .ig-highlight {
+    margin-bottom: .7rem;
+    padding: .95rem 1.05rem;
+    border: 1px solid #cfe4d6;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #f3fbf6, #f7fdfb 70%);
+  }
+
+  .ig-highlight-title {
+    margin: .4rem 0 .2rem;
+    font-size: .96rem;
+    font-weight: 800;
+  }
+
+  .ig-highlight-title a { color: #0b5c86; text-decoration: none; }
+  .ig-highlight-title a:hover { text-decoration: underline; }
+
+  .ig-highlight-note {
+    margin: .4rem 0 0;
+    font-size: .78rem;
+    font-weight: 700;
+    color: #14631a;
+  }
+
+  .ig-person {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    padding: .5rem .2rem;
+    border-bottom: 1px solid var(--ig-line);
+  }
+
+  .ig-person:last-child { border-bottom: 0; }
+
+  .ig-person-mark {
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    width: 26px;
+    height: 26px;
+    border-radius: 7px;
+    background: #e9f2fb;
+    color: #14639e;
+    font-size: .7rem;
+    font-weight: 800;
+  }
+
+  .ig-person-body { display: flex; flex-direction: column; line-height: 1.35; }
+
+  .ig-person-body a {
+    color: #0b5c86;
+    font-size: .87rem;
+    font-weight: 760;
+    text-decoration: none;
+  }
+
+  .ig-person-body a:hover { text-decoration: underline; }
+
+  .ig-person-body i {
+    font-style: normal;
+    font-size: .74rem;
+    color: var(--ig-muted);
+  }
 
   /* ---------- sign-in card ---------- */
 

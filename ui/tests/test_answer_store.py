@@ -6,7 +6,7 @@ import pytest
 
 from ui import answer_store
 from ui.answer_store import AnswerStoreError, load_run, save_run, saved_runs
-from ui.session import Answer, InterviewProgress
+from ui.session import InterviewProgress
 
 
 @pytest.fixture(autouse=True)
@@ -57,11 +57,7 @@ def _intake(candidate_id: str = "upload-abc123"):
 
 
 def _progress(text: str = "Separate ingestion from query.") -> InterviewProgress:
-    return InterviewProgress(
-        question_ids=("RAG-PROD-ADV-001",),
-        answers=(Answer(question_id="RAG-PROD-ADV-001", text=text),),
-        submitted=True,
-    )
+    return InterviewProgress.start(("RAG-PROD-ADV-001",)).submit(text)
 
 
 def test_a_completed_interview_can_be_read_back() -> None:

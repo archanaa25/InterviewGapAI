@@ -160,7 +160,7 @@ def test_evaluation_gateway_passes_only_the_frozen_question_set_and_answers() ->
     intake = SimpleNamespace(question_set=question_set)
     progress = InterviewProgress.start(("Q-1", "Q-2"))
     progress = progress.record_current("First answer")
-    progress = progress.record_current("")
+    progress = progress.submit("")
     received: list[tuple[object, dict[str, str]]] = []
 
     def evaluate(questions, answers):
@@ -196,7 +196,7 @@ def test_evaluation_gateway_rejects_an_unsubmitted_interview() -> None:
 def test_evaluation_gateway_hides_backend_exception_details() -> None:
     """Provider failures retain a candidate-safe results-screen contract."""
 
-    progress = InterviewProgress.start(("Q-1",)).record_current("Answer")
+    progress = InterviewProgress.start(("Q-1",)).submit("Answer")
 
     def fail(*_args):
         raise RuntimeError("secret provider payload")

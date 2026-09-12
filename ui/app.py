@@ -34,6 +34,9 @@ from src.observability import configure_observability, log_event
 # the handler rather than duplicate it, so that is safe here.
 configure_observability()
 
+from src.learning import build_learning_plan
+from src.scoring import build_scorecard
+
 from ui.gateway import (
     CandidateIntake,
     CandidatePlan,
@@ -158,16 +161,52 @@ def _initialize_state() -> None:
     st.session_state.setdefault(EVALUATION_KEY, None)
 
 
+DRAFT_PREFIX = "ig_draft_"
+
+
+def _draft_key(question_id: str) -> str:
+    """Session key holding one question's in-progress answer text."""
+
+    return f"{DRAFT_PREFIX}{question_id}"
+
+
+def _clear_drafts() -> None:
+    """Drop every saved answer draft.
+
+    Question IDs come from a shared corpus, so a later candidate can be asked
+    the same question. Without this they would open it pre-filled with the
+    previous candidate's words.
+    """
+
+    for key in [
+        key for key in st.session_state if key.startswith(DRAFT_PREFIX)
+    ]:
+        del st.session_state[key]
+
+
+def _discard_interview() -> None:
+    """Drop everything derived from a plan, keeping the plan itself.
+
+    Question selection, answers and the evaluation all belong to one plan. A
+    new plan invalidates all three, and leaving them behind let the traces
+    view show a freshly uploaded resume beside the previous interview's
+    answers - which read as the new candidate having already been assessed.
+    """
+
+    _clear_drafts()
+    st.session_state[INTAKE_KEY] = None
+    st.session_state[PROGRESS_KEY] = None
+    st.session_state[EVALUATION_KEY] = None
+    st.session_state[RUN_PATH_KEY] = None
+
+
 def _reset() -> None:
     """Discard UI state without mutating backend artifacts."""
 
+    _discard_interview()
     st.session_state[SCREEN_KEY] = "upload"
     st.session_state[PLAN_KEY] = None
-    st.session_state[INTAKE_KEY] = None
-    st.session_state[PROGRESS_KEY] = None
     st.session_state[PREFETCH_KEY] = None
-    st.session_state[RUN_PATH_KEY] = None
-    st.session_state[EVALUATION_KEY] = None
 
 
 def _sign_out() -> None:
@@ -427,6 +466,10 @@ def _render_upload() -> None:
         except IntakeIntegrationError as error:
             st.error(f"Could not complete {error.stage}. {error}")
         else:
+            # Before the new plan lands, not after: a plan and the interview
+            # of a previous one must never coexist in the session, whether
+            # the upload is a different resume or the same one again.
+            _discard_interview()
             st.session_state[PLAN_KEY] = prepared
 
             # Recorded here, not at the interview. Uploading a resume and
@@ -835,6 +878,9 @@ def _render_plan(prepared: CandidatePlan) -> None:
                 question.question_id for question in intake.question_set.questions
             )
             progress = InterviewProgress.start(question_ids)
+            # A fresh interview starts with no drafts, even if this session
+            # already ran one that was asked some of the same questions.
+            _clear_drafts()
             st.session_state[INTAKE_KEY] = intake
             st.session_state[PROGRESS_KEY] = progress
             st.session_state[SCREEN_KEY] = "interview"
@@ -870,38 +916,65 @@ def _render_interview(intake: CandidateIntake, progress: InterviewProgress) -> N
         unsafe_allow_html=True,
     )
 
-    with st.form(f"answer-{question.question_id}", clear_on_submit=True):
+    if progress.is_revisiting:
+        st.caption("You answered this earlier. Edit it and carry on.")
+
+    # The draft is keyed by question so stepping back restores what the
+    # candidate wrote, and clear_on_submit stays off: clearing the box is
+    # exactly wrong on a screen whose purpose is to let them revise it.
+    draft_key = _draft_key(question.question_id)
+    if draft_key not in st.session_state:
+        st.session_state[draft_key] = progress.response_at(position) or ""
+
+    with st.form(f"answer-{question.question_id}", clear_on_submit=False):
         answer = st.text_area(
             "Your answer",
+            key=draft_key,
             height=220,
             placeholder="Explain your reasoning, trade-offs, and a concrete example…",
         )
-        st.caption("A blank submission is recorded as a skipped question.")
-        label_text = (
-            "Submit complete interview"
-            if progress.is_final_question
-            else "Save answer and continue  →"
+        st.caption(
+            "A blank submission is recorded as a skipped question. You can come "
+            "back and change any answer until you submit."
         )
-        submitted = st.form_submit_button(
-            label_text,
+
+        back_column, forward_column = st.columns([1, 2])
+        # Rendered disabled rather than hidden on the first question, so the
+        # buttons do not shift position underneath the candidate's cursor.
+        go_back = back_column.form_submit_button(
+            "←  Previous",
+            use_container_width=True,
+            disabled=progress.is_first_question,
+        )
+        final = progress.is_final_question
+        go_forward = forward_column.form_submit_button(
+            "Submit complete interview" if final else "Save answer and continue  →",
             type="primary",
             use_container_width=True,
         )
 
-    if submitted:
+    if not (go_back or go_forward):
+        return
+
+    if go_back:
+        updated = progress.go_previous(answer)
+    elif progress.is_final_question:
+        updated = progress.submit(answer)
+    else:
         updated = progress.record_current(answer)
-        st.session_state[PROGRESS_KEY] = updated
 
-        # Recorded after every answer, not only at submission. Streamlit gives
-        # each browser tab its own session, so an interviewer watching in a
-        # second tab can never see this one's in-memory state - the file is
-        # the only thing both tabs share. Writing once at the end meant the
-        # interview was invisible until it was over.
-        _record_run(intake, updated)
+    st.session_state[PROGRESS_KEY] = updated
 
-        if updated.submitted:
-            st.session_state[SCREEN_KEY] = "results"
-        st.rerun()
+    # Recorded after every answer, not only at submission. Streamlit gives
+    # each browser tab its own session, so an interviewer watching in a
+    # second tab can never see this one's in-memory state - the file is
+    # the only thing both tabs share. Writing once at the end meant the
+    # interview was invisible until it was over.
+    _record_run(intake, updated)
+
+    if updated.submitted:
+        st.session_state[SCREEN_KEY] = "results"
+    st.rerun()
 
 
 def _record_intake(prepared: CandidatePlan) -> None:
@@ -955,6 +1028,470 @@ def _record_run(intake: CandidateIntake, progress: InterviewProgress) -> None:
         )
 
 
+# Band colour, label and chip class in one place. The hues are the validated
+# competency palette above, reused so the results screen introduces no new
+# colour vocabulary.
+BAND_STYLES = {
+    "STRONG": ("ig-band-strong", "#008300", "Strong"),
+    "DEVELOPING": ("ig-band-developing", "#2a78d6", "Developing"),
+    "GAP": ("ig-band-gap", "#eb6834", "Priority gap"),
+    "NOT_SCORED": ("ig-band-none", "#607087", "Not scored"),
+}
+
+OVERALL_COPY = {
+    "STRONG": "Strong interview. You evidenced most of the concepts we probed.",
+    "DEVELOPING": "A solid interview with specific concepts left to close.",
+    "GAP": "This interview surfaced real gaps. The plan below is where to start.",
+    "NOT_SCORED": "Nothing could be scored, so this is not a result about you.",
+}
+
+
+def _tight(markup: str) -> str:
+    """Collapse generated HTML onto one line.
+
+    Streamlit runs markdown before HTML, so any line indented four spaces is
+    read as a fenced code block and the markup reaches the page as visible
+    source. Every builder below is written readably and collapsed here.
+    """
+
+    return "".join(line.strip() for line in markup.splitlines())
+
+
+def _band(value: object) -> tuple[str, str, str]:
+    """Return the chip class, hue and label for one score band."""
+
+    key = str(getattr(value, "value", value))
+    return BAND_STYLES.get(key, BAND_STYLES["NOT_SCORED"])
+
+
+def _score_text(score: float | None) -> str:
+    """Render a score without a trailing .0 on whole numbers."""
+
+    if score is None:
+        return "--"
+    return f"{score:.0f}" if float(score).is_integer() else f"{score:.1f}"
+
+
+def _donut(scorecard: object) -> str:
+    """Draw the overall score as a single conic-gradient ring."""
+
+    _, hue, _ = _band(scorecard.band)
+    score = scorecard.overall_score
+    filled = 0.0 if score is None else float(score)
+    return _tight(
+        f"""
+        <div class="ig-donut" style="background: conic-gradient({hue} 0 {filled:.1f}%, #e8eef4 {filled:.1f}% 100%)">
+          <div class="ig-donut-face">
+            <div class="ig-donut-score">{_safe(_score_text(score))}</div>
+            <div class="ig-donut-total">/ 100</div>
+          </div>
+        </div>
+        """
+    )
+
+
+def _competency_bars(scorecard: object) -> str:
+    """One bar per competency, strongest first, with its own band hue."""
+
+    rows = []
+    ordered = sorted(
+        scorecard.competencies,
+        key=lambda item: (item.score is None, -(item.score or 0.0)),
+    )
+    for competency in ordered:
+        _, hue, _ = _band(competency.band)
+        icon, label = _competency(competency.competency)
+        width = 0.0 if competency.score is None else float(competency.score)
+        rows.append(
+            _tight(
+                f"""
+                <div class="ig-bar-row">
+                  <div class="ig-bar-name">{_safe(icon)} {_safe(label)}</div>
+                  <div class="ig-bar-track">
+                    <div class="ig-bar-fill" style="width:{width:.1f}%; background:{hue}"></div>
+                  </div>
+                  <div class="ig-bar-value">{_safe(_score_text(competency.score))}%</div>
+                </div>
+                """
+            )
+        )
+    return f'<div class="ig-bars">{"".join(rows)}</div>'
+
+
+def _render_scorecard(scorecard: object) -> None:
+    """Headline ring, one-line verdict and the per-competency breakdown."""
+
+    _, _, band_label = _band(scorecard.band)
+    copy = OVERALL_COPY.get(str(getattr(scorecard.band, "value", scorecard.band)), "")
+    chip_class, _, _ = _band(scorecard.band)
+    st.markdown(
+        _tight(
+            f"""
+            <div class="ig-score">
+              {_donut(scorecard)}
+              <div class="ig-score-meta">
+                <h3>Your interview results</h3>
+                <p>{_safe(copy)}</p>
+                <span class="ig-band {chip_class}">{_safe(band_label)}</span>
+              </div>
+            </div>
+            """
+        )
+        + _competency_bars(scorecard),
+        unsafe_allow_html=True,
+    )
+
+    note = (
+        f"Scored on {scorecard.scored_count} of {len(scorecard.questions)} questions. "
+        "A skipped answer counts as zero."
+    )
+    if scorecard.review_count:
+        note += (
+            f" {scorecard.review_count} answer(s) could not be evaluated and were "
+            "left out of the score entirely, never counted as zero."
+        )
+    st.caption(note)
+
+
+def _concept_list(items: list[str], limit: int = 6) -> str:
+    """Render concepts as a compact bulleted list."""
+
+    shown = "".join(f"<li>{_safe(item)}</li>" for item in items[:limit])
+    extra = len(items) - limit
+    if extra > 0:
+        shown += f"<li>+{extra} more</li>"
+    return f'<ul class="ig-concept-list">{shown}</ul>'
+
+
+def _competency_heading(competency: object) -> str:
+    """Shared heading line: icon, label, band chip and score."""
+
+    chip_class, _, band_label = _band(competency.band)
+    icon, label = _competency(competency.competency)
+    return _tight(
+        f"""
+        <div class="ig-res-head">
+          <h4>{_safe(icon)} {_safe(label)}</h4>
+          <span class="ig-band {chip_class}">{_safe(band_label)}</span>
+          <span class="ig-bar-value">{_safe(_score_text(competency.score))}%</span>
+        </div>
+        """
+    )
+
+
+def _render_strengths(scorecard: object) -> None:
+    """Competencies at or above the threshold and the concepts behind them."""
+
+    strengths = scorecard.strengths
+    if not strengths:
+        st.info(
+            "No competency reached the strength threshold this time. The areas "
+            "to improve and your learning plan are the place to start."
+        )
+        return
+
+    for competency in strengths:
+        blocks = [_competency_heading(competency)]
+        if competency.strong_concepts:
+            blocks.append("<p class='ig-res-meta'>You evidenced:</p>")
+            blocks.append(_concept_list(competency.strong_concepts))
+        if competency.bonus_concepts:
+            blocks.append("<p class='ig-res-meta'>Beyond what we asked:</p>")
+            blocks.append(_concept_list(competency.bonus_concepts, limit=4))
+        st.markdown(
+            f'<div class="ig-res">{"".join(blocks)}</div>',
+            unsafe_allow_html=True,
+        )
+
+
+def _render_gaps(scorecard: object) -> None:
+    """Competencies below the threshold, named down to the concept."""
+
+    gaps = scorecard.gaps
+    if not gaps:
+        st.success(
+            "Every scored competency cleared the threshold. Your learning plan "
+            "still shows where each one thinned out."
+        )
+        return
+
+    for competency in gaps:
+        blocks = [_competency_heading(competency)]
+        if competency.missing_concepts:
+            blocks.append("<p class='ig-res-meta'>Concepts your answers missed:</p>")
+            blocks.append(_concept_list(competency.missing_concepts))
+        if competency.misconceptions:
+            blocks.append("<p class='ig-res-meta'>Worth correcting:</p>")
+            blocks.append(_concept_list(competency.misconceptions, limit=4))
+        if competency.skipped_count:
+            blocks.append(
+                f"<p class='ig-res-meta'>{competency.skipped_count} question(s) "
+                "skipped, counted as zero.</p>"
+            )
+        st.markdown(
+            f'<div class="ig-res">{"".join(blocks)}</div>',
+            unsafe_allow_html=True,
+        )
+
+
+def _render_learning(plan: object) -> None:
+    """Curated resources for every competency, weakest first."""
+
+    if not plan.recommendations:
+        st.info("No curated resources are available for these competencies yet.")
+        return
+
+    if plan.priority_count:
+        st.caption(
+            f"{plan.priority_count} competency(ies) scored below {plan.threshold:.0f}%. "
+            "Those come first; the rest are here to keep building on."
+        )
+    else:
+        st.caption(
+            f"Every competency cleared {plan.threshold:.0f}%. These are ordered "
+            "weakest first so you know where the next gain is."
+        )
+
+    for item in plan.recommendations:
+        chip_class, _, band_label = _band(item.band)
+        flag = " ⚠ priority" if item.is_priority else ""
+        header = (
+            f"{_score_text(item.score)}%  ·  {item.display_name}{flag}"
+        )
+        with st.expander(header, expanded=item.is_priority):
+            st.markdown(
+                f"<p class='ig-res-meta'>{_safe(item.reason)}</p>",
+                unsafe_allow_html=True,
+            )
+            if item.focus_concepts:
+                st.markdown(
+                    "<p class='ig-res-meta'>Study these first:</p>"
+                    + _concept_list(item.focus_concepts),
+                    unsafe_allow_html=True,
+                )
+            for resource in item.resources:
+                authors = ", ".join(resource.authors)
+                meta = " · ".join(
+                    part
+                    for part in (
+                        resource.provider,
+                        resource.type.title(),
+                        authors,
+                        "Free" if resource.free else None,
+                    )
+                    if part
+                )
+                st.markdown(
+                    _tight(
+                        f"""
+                        <div class="ig-res">
+                          <p class="ig-res-title"><a href="{_safe(resource.url)}" target="_blank" rel="noopener">{_safe(resource.title)}</a></p>
+                          <p class="ig-res-meta">{_safe(meta)}</p>
+                        </div>
+                        """
+                    ),
+                    unsafe_allow_html=True,
+                )
+
+    if plan.featured is not None:
+        st.write("")
+        _render_featured(plan.featured)
+
+
+def _person_row(person: object, *, icon: str = "in") -> str:
+    """One followable person or organisation as a single link row."""
+
+    return _tight(
+        f"""
+        <div class="ig-person">
+          <span class="ig-person-mark">{_safe(icon)}</span>
+          <span class="ig-person-body">
+            <a href="{_safe(person.url)}" target="_blank" rel="noopener">{_safe(person.name)}</a>
+            <i>{_safe(person.role)}</i>
+          </span>
+        </div>
+        """
+    )
+
+
+def _render_featured(featured: object) -> None:
+    """Standing recommendations, shown after the score-driven plan.
+
+    Deliberately last and visually separate: these are not matched to what the
+    candidate got wrong, and putting them above the gap-driven resources would
+    read as advertising rather than advice.
+    """
+
+    st.markdown(
+        _tight(
+            f"""
+            <div class="ig-featured-head">
+              <h4>{_safe(featured.title)}</h4>
+              {f"<p>{_safe(featured.subtitle)}</p>" if featured.subtitle else ""}
+            </div>
+            """
+        ),
+        unsafe_allow_html=True,
+    )
+
+    highlight = featured.highlight
+    if highlight is not None:
+        authors = ", ".join(highlight.authors)
+        meta = " · ".join(
+            part
+            for part in (highlight.provider, highlight.type.title(), authors)
+            if part
+        )
+        st.markdown(
+            _tight(
+                f"""
+                <div class="ig-highlight">
+                  <span class="ig-band ig-band-strong">Best next step</span>
+                  <p class="ig-highlight-title"><a href="{_safe(highlight.url)}" target="_blank" rel="noopener">{_safe(highlight.title)}</a></p>
+                  <p class="ig-res-meta">{_safe(meta)}</p>
+                  {f'<p class="ig-highlight-note">{_safe(highlight.note)}</p>' if highlight.note else ""}
+                </div>
+                """
+            ),
+            unsafe_allow_html=True,
+        )
+
+    for resource in featured.reading:
+        authors = ", ".join(resource.authors)
+        meta = " · ".join(
+            part
+            for part in (resource.provider, resource.type.title(), authors)
+            if part
+        )
+        st.markdown(
+            _tight(
+                f"""
+                <div class="ig-res">
+                  <p class="ig-res-title"><a href="{_safe(resource.url)}" target="_blank" rel="noopener">{_safe(resource.title)}</a></p>
+                  <p class="ig-res-meta">{_safe(meta)}</p>
+                </div>
+                """
+            ),
+            unsafe_allow_html=True,
+        )
+
+    if featured.people:
+        st.markdown(
+            "".join(_person_row(person) for person in featured.people),
+            unsafe_allow_html=True,
+        )
+
+    # The organisation closes the section, after the people who teach for it.
+    if featured.community is not None:
+        st.markdown(
+            _person_row(featured.community, icon="◆"),
+            unsafe_allow_html=True,
+        )
+
+
+def _results_markdown(
+    intake: CandidateIntake,
+    scorecard: object,
+    plan: object | None,
+) -> str:
+    """The candidate's results as a document they can keep.
+
+    A results screen the candidate cannot take with them is a result they lose
+    the moment they close the tab, which is the one thing the whole interview
+    was for.
+    """
+
+    lines = [
+        "# Your InterviewGapAI results",
+        "",
+        f"**Overall score:** {_score_text(scorecard.overall_score)} / 100",
+        f"**Scored on:** {scorecard.scored_count} of {len(scorecard.questions)} "
+        "questions (a skipped answer counts as zero)",
+        "",
+        "## Competency scores",
+        "",
+        "| Competency | Score |",
+        "| --- | --- |",
+    ]
+    for competency in sorted(
+        scorecard.competencies,
+        key=lambda item: (item.score is None, -(item.score or 0.0)),
+    ):
+        _, label = _competency(competency.competency)
+        lines.append(f"| {label} | {_score_text(competency.score)}% |")
+
+    if scorecard.strengths:
+        lines += ["", "## Strengths", ""]
+        for competency in scorecard.strengths:
+            _, label = _competency(competency.competency)
+            lines.append(f"- **{label}** ({_score_text(competency.score)}%)")
+            for concept in competency.strong_concepts[:6]:
+                lines.append(f"  - {concept}")
+
+    if scorecard.gaps:
+        lines += ["", "## Areas to improve", ""]
+        for competency in scorecard.gaps:
+            _, label = _competency(competency.competency)
+            lines.append(f"- **{label}** ({_score_text(competency.score)}%)")
+            for concept in competency.missing_concepts[:6]:
+                lines.append(f"  - {concept}")
+
+    if plan is not None and plan.recommendations:
+        lines += ["", "## Learning plan", ""]
+        for item in plan.recommendations:
+            flag = " — priority" if item.is_priority else ""
+            lines.append(
+                f"### {item.display_name} ({_score_text(item.score)}%){flag}"
+            )
+            lines.append("")
+            lines.append(item.reason)
+            lines.append("")
+            for resource in item.resources:
+                lines.append(f"- [{resource.title}]({resource.url}) — {resource.provider}")
+            lines.append("")
+
+        featured = getattr(plan, "featured", None)
+        if featured is not None:
+            lines += [f"## {featured.title}", ""]
+            if featured.highlight is not None:
+                note = f" — {featured.highlight.note}" if featured.highlight.note else ""
+                lines.append(
+                    f"- [{featured.highlight.title}]({featured.highlight.url}){note}"
+                )
+            for resource in featured.reading:
+                lines.append(f"- [{resource.title}]({resource.url})")
+            for person in featured.people:
+                lines.append(f"- [{person.name}]({person.url}) — {person.role}")
+            if featured.community is not None:
+                lines.append(
+                    f"- [{featured.community.name}]({featured.community.url}) "
+                    f"— {featured.community.role}"
+                )
+            lines.append("")
+
+    return "\n".join(lines) + "\n"
+
+
+def _results_payload(evaluation: object) -> tuple[object, object | None]:
+    """Score the evaluation and match resources, tolerating a missing catalog.
+
+    A missing or malformed catalog must not cost the candidate their scores,
+    so the scorecard renders either way and only the plan tab degrades.
+    """
+
+    scorecard = build_scorecard(evaluation)
+    try:
+        plan = build_learning_plan(scorecard)
+    except (FileNotFoundError, ValueError) as error:
+        log_event(
+            "learning_plan.unavailable",
+            level="ERROR",
+            error_type=type(error).__name__,
+        )
+        plan = None
+    return scorecard, plan
+
+
 def _render_results(intake: CandidateIntake, progress: InterviewProgress) -> None:
     """Run grounded evaluation once, then expose its scoring-layer handoff."""
 
@@ -998,12 +1535,12 @@ def _render_results(intake: CandidateIntake, progress: InterviewProgress) -> Non
             st.rerun()
         return
 
-    evaluation_summary = st.columns(3)
-    evaluation_summary[0].metric("✓ Evaluated", evaluation.evaluated_count)
-    evaluation_summary[1].metric("↷ Skipped", evaluation.skipped_count)
-    evaluation_summary[2].metric("! Review", evaluation.review_count)
-
+    takeaway: tuple | None = None
     if evaluation.evaluated_count == 0 and progress.answered_count:
+        evaluation_summary = st.columns(3)
+        evaluation_summary[0].metric("✓ Evaluated", evaluation.evaluated_count)
+        evaluation_summary[1].metric("↷ Skipped", evaluation.skipped_count)
+        evaluation_summary[2].metric("! Review", evaluation.review_count)
         st.error(
             "None of your answered responses could be evaluated. Your answers "
             "remain in this session and have not been scored as zero."
@@ -1016,19 +1553,32 @@ def _render_results(intake: CandidateIntake, progress: InterviewProgress) -> Non
             st.session_state[EVALUATION_KEY] = None
             st.rerun()
     else:
-        st.success(
-            "Your answers were evaluated against the interview's curated technical "
-            "criteria."
+        scorecard, plan = _results_payload(evaluation)
+        _render_scorecard(scorecard)
+        takeaway = (scorecard, plan)
+        st.write("")
+
+        strengths_tab, gaps_tab, learning_tab = st.tabs(
+            ["Strengths", "Areas to improve", "Learning plan"]
         )
+        with strengths_tab:
+            _render_strengths(scorecard)
+        with gaps_tab:
+            _render_gaps(scorecard)
+        with learning_tab:
+            if plan is None:
+                st.warning(
+                    "Your scores are ready, but the curated resource catalog "
+                    "could not be read. Your results above are unaffected."
+                )
+            else:
+                _render_learning(plan)
+
         if evaluation.review_count:
             st.warning(
                 f"{evaluation.review_count} answered response(s) need review and "
-                "will remain unscored until evaluation succeeds."
+                "remain outside your score until evaluation succeeds."
             )
-        st.info(
-            "Your validated evaluations are ready for scorecard and gap-summary "
-            "generation."
-        )
 
     with st.expander("Review submitted answers"):
         question_by_id = {
@@ -1040,7 +1590,26 @@ def _render_results(intake: CandidateIntake, progress: InterviewProgress) -> Non
             st.write(answer.text if answer.text else "_Skipped_")
             st.divider()
 
-    if st.button("Start over", use_container_width=True):
+    st.divider()
+
+    if takeaway is not None:
+        scorecard, plan = takeaway
+        st.download_button(
+            "⤓  Download your results and learning plan",
+            data=_results_markdown(intake, scorecard, plan),
+            file_name=f"interview-results-{intake.plan.candidate_id}.md",
+            mime="text/markdown",
+            type="primary",
+            use_container_width=True,
+        )
+        st.caption(
+            "Keep this. Your scores and resources live in this browser session "
+            "only, and closing the tab ends it."
+        )
+
+    # Named for what it does rather than "Start over", which read as an offer
+    # to retake this interview beside the results of the one just finished.
+    if st.button("Assess a different resume", use_container_width=True):
         _reset()
         st.rerun()
 
