@@ -815,9 +815,17 @@ def _render_plan(prepared: CandidatePlan) -> None:
             question_ids = tuple(
                 question.question_id for question in intake.question_set.questions
             )
+            progress = InterviewProgress.start(question_ids)
             st.session_state[INTAKE_KEY] = intake
-            st.session_state[PROGRESS_KEY] = InterviewProgress.start(question_ids)
+            st.session_state[PROGRESS_KEY] = progress
             st.session_state[SCREEN_KEY] = "interview"
+
+            # Record the run as the interview opens, before any answer exists.
+            # Waiting for the first answer meant an interviewer watching in
+            # another tab could not even find the run in their picker while
+            # the candidate sat on question one.
+            _record_run(intake, progress)
+
             st.rerun()
 
 
@@ -1482,6 +1490,16 @@ def _render_intake_traces() -> None:
             # than indistinguishable from an interview that stopped.
             note.caption(
                 f"↻ {datetime.now().strftime('%H:%M:%S')}",
+            )
+
+        # The picker's options are built outside this fragment, so a run that
+        # started after this page loaded cannot appear in it on a poll alone.
+        # Saying so beats an interviewer waiting on a list that will not change.
+        appeared = [name for name in saved_runs() if name not in set(sources)]
+        if appeared:
+            st.info(
+                f"A new interview started: {', '.join(appeared)}. "
+                "Press ↻ Now to add it to the list above."
             )
 
         for stage, payload in stages.items():
