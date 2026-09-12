@@ -24,6 +24,12 @@ dependencies = [
 # in pytest style and was running nowhere. pytest executes unittest.TestCase
 # classes natively, so one runner covers every test either style.
 testpaths = ["tests", "ui/tests"]
+# Both suites import `src.*` and `ui.*` from the project root. Neither test
+# directory is a package, so pytest puts only that directory on sys.path and
+# every import fails at collection - `uv run --locked pytest` did not run at
+# all without this. `python -m pytest` happened to work because it adds the
+# working directory; this makes the documented command work on its own.
+pythonpath = ["."]
 
 [tool.uv]
 package = false

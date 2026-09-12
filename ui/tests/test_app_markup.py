@@ -114,3 +114,57 @@ def test_evidence_rows_state_coverage_without_raw_enum_or_confidence() -> None:
     assert "UNKNOWN_NEEDS_PROBING" not in markup
     assert "0.98" not in markup
     assert "your chance to show us" in markup
+
+
+def test_concept_marks_cover_every_real_judgement_status() -> None:
+    """
+    The trace view's status labels must be the schema's own status values.
+
+    This existed as a live defect: the evaluation trace counted judgements
+    whose status equalled "MET", which is not a ConceptJudgementStatus
+    member, so a fully demonstrated answer still read "0/3 concepts". The
+    names are checked against the enum rather than retyped.
+    """
+
+    from src.schemas.answer_evaluation import ConceptJudgementStatus
+    from ui.app import CONCEPT_MARKS
+
+    assert set(CONCEPT_MARKS) == {
+        status.value for status in ConceptJudgementStatus
+    }
+
+
+def test_question_text_is_borrowed_for_the_stage_that_stores_only_ids() -> None:
+    """An evaluation names question ids; the wording comes from elsewhere."""
+
+    from ui.app import _asked_questions
+
+    asked = _asked_questions(
+        {
+            "interview questions": {
+                "questions": [
+                    {"question_id": "RAG-RET-ADV-001", "question": "Corpus wording."},
+                    {"question_id": "PY-APP-BAS-001", "question": "Only in the set."},
+                ]
+            },
+            # The answers were written at submission time, so they carry the
+            # wording this candidate actually saw and must win.
+            "answers": {
+                "answers": [
+                    {"question_id": "RAG-RET-ADV-001", "question": "As asked."},
+                ]
+            },
+        }
+    )
+
+    assert asked["RAG-RET-ADV-001"] == "As asked."
+    assert asked["PY-APP-BAS-001"] == "Only in the set."
+
+
+def test_asked_questions_tolerates_stages_that_have_not_run() -> None:
+    """Traces render mid-interview, so missing stages are normal, not an error."""
+
+    from ui.app import _asked_questions
+
+    assert _asked_questions({}) == {}
+    assert _asked_questions({"answers": None, "interview questions": None}) == {}

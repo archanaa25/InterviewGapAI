@@ -1166,10 +1166,13 @@ def _trace_summary(stage: str, payload: dict) -> list[str]:
             lines.append(f"⚠ {warning}")
         return lines
 
+    # Both of the stages below are per-question, and a character count is not
+    # reviewable: an interviewer needs the question and what the candidate
+    # actually wrote. The headline stays here; _trace_detail renders the items.
     if stage == "answers":
         done = (payload.get("answered") or 0) + (payload.get("skipped") or 0)
         total = payload.get("total") or 0
-        lines = [
+        return [
             f"**{payload.get('answered')} answered · "
             f"{payload.get('skipped')} skipped** of {total}"
             + (
@@ -1178,12 +1181,6 @@ def _trace_summary(stage: str, payload: dict) -> list[str]:
                 else f"  — in progress, {done} of {total} questions reached"
             ),
         ]
-        for answer in payload.get("answers") or []:
-            state = "skipped" if answer.get("skipped") else f"{answer['characters']} chars"
-            lines.append(
-                f"{answer['position']}. `{answer['question_id']}` — {state}"
-            )
-        return lines
 
     if stage == "evaluation":
         result = payload.get("result") or {}
@@ -1195,15 +1192,6 @@ def _trace_summary(stage: str, payload: dict) -> list[str]:
         ]
         if payload.get("evaluated_at"):
             lines.append(f"Judged {payload['evaluated_at'][:19].replace('T', ' ')} UTC")
-        for question in questions:
-            judgements = question.get("concept_judgements") or []
-            met = sum(1 for j in judgements if j.get("status") == "MET")
-            reason = question.get("review_reason")
-            lines.append(
-                f"`{question.get('question_id')}` — {question.get('status')}"
-                + (f", {met}/{len(judgements)} concepts met" if judgements else "")
-                + (f" ({reason})" if reason else "")
-            )
         return lines
 
     if stage == "resume extraction":
@@ -1246,6 +1234,172 @@ def _trace_summary(stage: str, payload: dict) -> list[str]:
     if rationale:
         lines.append(f"_{_clip(rationale)}_")
     return lines
+
+
+# How each concept judgement reads at a glance. Status is never conveyed by
+# the glyph alone - the level is spelled out beside it.
+CONCEPT_MARKS = {
+    "DEMONSTRATED": "✓",
+    "PARTIAL": "◐",
+    "MISSING": "✗",
+}
+
+
+def _trace_detail(stage: str, payload: dict, stages: dict) -> None:
+    """
+    The per-question body of a stage, one expander per question.
+
+    Only answers and evaluation have one: every other stage is a single
+    document that the summary plus Raw JSON already covers. These two are
+    lists of things an interviewer reads individually, and a count of
+    characters or concepts tells them nothing about the interview.
+    """
+
+    if stage == "answers":
+        for answer in payload.get("answers") or []:
+            skipped = answer.get("skipped")
+            facets = " · ".join(
+                str(value)
+                for value in (answer.get("competency"), answer.get("difficulty"))
+                if value
+            )
+            label = (
+                f"{answer['position']}. `{answer['question_id']}`"
+                + (f" · {facets}" if facets else "")
+                + (" — skipped" if skipped else f" — {answer['characters']} chars")
+            )
+            with st.expander(label):
+                st.markdown(f"**Q.** {answer.get('question') or '_question text not recorded_'}")
+                if skipped:
+                    st.caption("Skipped — the candidate submitted nothing here.")
+                else:
+                    # st.write, matching the candidate's own review screen:
+                    # their prose renders as prose, and never as raw HTML.
+                    st.write(answer.get("text") or "")
+        return
+
+    if stage == "evaluation":
+        questions = (payload.get("result") or {}).get("questions") or []
+        asked = _asked_questions(stages)
+
+        for question in questions:
+            judgements = question.get("concept_judgements") or []
+            demonstrated = sum(
+                1
+                for judgement in judgements
+                if judgement.get("status") == "DEMONSTRATED"
+            )
+            reason = question.get("review_reason")
+            question_id = question.get("question_id")
+            label = (
+                f"`{question_id}` — {question.get('status')}"
+                + (
+                    f", {demonstrated}/{len(judgements)} must-have concepts demonstrated"
+                    if judgements
+                    else ""
+                )
+                + (f" ({reason})" if reason else "")
+            )
+
+            with st.expander(label):
+                if asked.get(question_id):
+                    st.markdown(f"**Q.** {asked[question_id]}")
+
+                if not judgements:
+                    # A skipped or review-required record carries no judgements
+                    # by schema rule, so say which of the two it is.
+                    st.caption(
+                        f"No concept judgements: this answer was "
+                        f"{str(question.get('status') or 'not evaluated').lower()}"
+                        + (f" ({reason})" if reason else "")
+                        + "."
+                    )
+                else:
+                    st.caption(
+                        "Must-have concepts for this question, taken from the "
+                        "retrieved evaluation criteria."
+                    )
+                    for judgement in judgements:
+                        status = str(judgement.get("status") or "")
+                        st.markdown(
+                            f"{CONCEPT_MARKS.get(status, '·')} **{status.title()}** — "
+                            f"{judgement.get('concept')}"
+                        )
+                        st.caption(judgement.get("rationale") or "")
+                        excerpt = judgement.get("answer_excerpt")
+                        if excerpt:
+                            # The agent's own citation from the answer: the
+                            # reason it reached this verdict, in the
+                            # candidate's words.
+                            st.markdown(f"> {' '.join(str(excerpt).split())}")
+
+                for heading, items in (
+                    ("Beyond the rubric", question.get("bonus_concepts")),
+                    ("Misconceptions", question.get("misconceptions")),
+                ):
+                    if items:
+                        st.markdown(f"**{heading}**")
+                        for item in items:
+                            st.markdown(f"- {item}")
+
+                evidence = question.get("retrieved_evidence") or []
+                if evidence:
+                    # Plain lines, not st.dataframe: a two-row grid renders to
+                    # a canvas that sizes badly inside an expander, and the
+                    # rubric documents this cited are the point, not the table.
+                    st.markdown("**Retrieved criteria**")
+                    for item in evidence:
+                        score = item.get("similarity_score")
+                        st.markdown(
+                            f"- `{item.get('evaluation_id')}` · rank "
+                            f"{item.get('rank')}"
+                            + (
+                                f" · similarity {float(score):.3f}"
+                                if isinstance(score, (int, float))
+                                else ""
+                            )
+                        )
+
+                confidence = question.get("confidence")
+                st.caption(
+                    " · ".join(
+                        part
+                        for part in (
+                            f"confidence {confidence:.2f}"
+                            if isinstance(confidence, (int, float))
+                            else "",
+                            f"{question.get('attempt_count')} attempt(s)"
+                            if question.get("attempt_count")
+                            else "",
+                        )
+                        if part
+                    )
+                )
+        return
+
+
+def _asked_questions(stages: dict) -> dict:
+    """
+    question_id -> question text, for a stage that stores only the id.
+
+    The evaluation records an id per question; the text lives in the answers
+    or the selected question set. Reading an evaluation without the question
+    it judged is guesswork, so it is borrowed from whichever stage has it.
+    """
+
+    asked: dict[str, str] = {}
+
+    for question in ((stages.get("interview questions") or {}).get("questions") or []):
+        if question.get("question_id") and question.get("question"):
+            asked[question["question_id"]] = question["question"]
+
+    # Answers win: their text was copied in at submission time, so it is the
+    # wording this candidate actually saw even if the corpus changed since.
+    for answer in ((stages.get("answers") or {}).get("answers") or []):
+        if answer.get("question_id") and answer.get("question"):
+            asked[answer["question_id"]] = answer["question"]
+
+    return asked
 
 
 def _render_interviewer() -> None:
@@ -1553,6 +1707,16 @@ def _live_stages() -> dict:
                     "position": index,
                     "question_id": answer.question_id,
                     "question": getattr(asked.get(answer.question_id), "question", None),
+                    # Same facets the recorded run carries, so a live trace and
+                    # a saved one read identically.
+                    "competency": getattr(
+                        getattr(asked.get(answer.question_id), "competency", None),
+                        "value",
+                        None,
+                    ),
+                    "difficulty": getattr(
+                        asked.get(answer.question_id), "difficulty", None
+                    ),
                     "skipped": answer.skipped,
                     "characters": len(answer.text),
                     "text": answer.text,
@@ -1664,6 +1828,10 @@ def _render_intake_traces() -> None:
 
             for line in _trace_summary(stage, payload):
                 st.markdown(line)
+
+            # Answers and evaluation are per-question and get a body of their
+            # own; every other stage is summary plus Raw JSON.
+            _trace_detail(stage, payload, stages)
 
             # Summary first, full document behind a click: the analysis alone
             # runs to seven competencies with evidence items and sources.

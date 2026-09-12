@@ -231,7 +231,12 @@ class _Evaluation:
                 {
                     "question_id": "RAG-PROD-ADV-001",
                     "status": "EVALUATED",
-                    "concept_judgements": [{"concept": "c", "status": "MET"}],
+                    # A real ConceptJudgementStatus value. "MET" is not one,
+                    # and a fixture inventing a status lets a status-counting
+                    # bug pass here - the trace view had exactly that bug.
+                    "concept_judgements": [
+                        {"concept": "c", "status": "DEMONSTRATED"}
+                    ],
                 }
             ],
         }
