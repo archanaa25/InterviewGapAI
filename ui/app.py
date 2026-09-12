@@ -1473,6 +1473,19 @@ def _render_intake_traces() -> None:
 
     # The picker gives up width so the two controls beside it can show
     # their labels: at a narrower split they truncated to "A…" and "↻ …".
+    # Distinguish "no candidate has been through yet" from "here are some
+    # fixtures". Without this the picker silently shows candidate_01 and an
+    # interviewer waiting on a real candidate has no way to tell that nothing
+    # was recorded, or what to do about it.
+    recorded = saved_runs()
+    if not recorded and not has_live:
+        st.info(
+            "No candidate run recorded yet. In another tab, upload a resume "
+            "and wait for **Your interview plan** — the run then appears here "
+            "as `upload-…` and is selected first. Everything listed below is "
+            "a synthetic fixture from `data/prepared/`, not a real candidate."
+        )
+
     picker, follow, refresh = st.columns([2.4, 1.5, 1.35], gap="small")
     sources = (["This session's run"] if has_live else []) + candidates
     with picker:
