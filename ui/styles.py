@@ -1124,6 +1124,10 @@ APP_STYLES = """
     color: var(--ig-ink);
   }
 
+  /* Nudges the refresh button down to sit level with the select beside it,
+     which carries a label the button does not. */
+  .ig-refresh-pad { height: 1.65rem; }
+
   /* ---------- sign-in card ---------- */
 
   .ig-signin-note {

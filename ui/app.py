@@ -863,23 +863,36 @@ def _render_interview(intake: CandidateIntake, progress: InterviewProgress) -> N
     if submitted:
         updated = progress.record_current(answer)
         st.session_state[PROGRESS_KEY] = updated
+
+        # Recorded after every answer, not only at submission. Streamlit gives
+        # each browser tab its own session, so an interviewer watching in a
+        # second tab can never see this one's in-memory state - the file is
+        # the only thing both tabs share. Writing once at the end meant the
+        # interview was invisible until it was over.
+        _record_run(intake, updated)
+
         if updated.submitted:
-            # Record the finished interview before leaving the screen. Until
-            # this existed, answers died with the browser session and an
-            # interviewer signing in later saw nothing.
-            try:
-                st.session_state[RUN_PATH_KEY] = str(save_run(intake, updated))
-            except AnswerStoreError as error:
-                # The candidate has finished either way; say so rather than
-                # pretending the submission failed.
-                st.session_state[RUN_PATH_KEY] = None
-                log_event(
-                    "interview.run_not_saved",
-                    level="ERROR",
-                    error_type=type(error).__name__,
-                )
             st.session_state[SCREEN_KEY] = "results"
         st.rerun()
+
+
+def _record_run(intake: CandidateIntake, progress: InterviewProgress) -> None:
+    """
+    Write the interview so far, tolerating a failure.
+
+    A recording problem is not a submission failure: the candidate answered
+    the question either way, so this logs by type and lets them continue.
+    """
+
+    try:
+        st.session_state[RUN_PATH_KEY] = str(save_run(intake, progress))
+    except AnswerStoreError as error:
+        st.session_state[RUN_PATH_KEY] = None
+        log_event(
+            "interview.run_not_saved",
+            level="ERROR",
+            error_type=type(error).__name__,
+        )
 
 
 def _render_results(intake: CandidateIntake, progress: InterviewProgress) -> None:
@@ -1046,10 +1059,16 @@ def _trace_summary(stage: str, payload: dict) -> list[str]:
         return lines
 
     if stage == "answers":
+        done = (payload.get("answered") or 0) + (payload.get("skipped") or 0)
+        total = payload.get("total") or 0
         lines = [
             f"**{payload.get('answered')} answered · "
-            f"{payload.get('skipped')} skipped** of {payload.get('total')}"
-            + ("  — submitted" if payload.get("submitted") else "  — in progress"),
+            f"{payload.get('skipped')} skipped** of {total}"
+            + (
+                "  — submitted"
+                if payload.get("submitted")
+                else f"  — in progress, {done} of {total} questions reached"
+            ),
         ]
         for answer in payload.get("answers") or []:
             state = "skipped" if answer.get("skipped") else f"{answer['characters']} chars"
@@ -1411,8 +1430,16 @@ def _render_intake_traces() -> None:
         )
         return
 
+    picker, refresh = st.columns([4, 1], gap="small")
     sources = (["This session's run"] if has_live else []) + candidates
-    choice = st.selectbox("Intake", sources)
+    with picker:
+        choice = st.selectbox("Intake", sources)
+    with refresh:
+        st.markdown('<div class="ig-refresh-pad"></div>', unsafe_allow_html=True)
+        # Streamlit reruns on interaction, not on a file changing, so an
+        # interview in progress in another tab needs an explicit re-read.
+        if st.button("↻ Refresh", key="ig-traces-refresh", use_container_width=True):
+            st.rerun()
 
     if has_live and choice == "This session's run":
         stages = live
