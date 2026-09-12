@@ -167,3 +167,50 @@ def test_upload_provenance_survives_the_session() -> None:
     assert upload["filename"] == "cv.pdf"
     assert upload["sha256"] == "a" * 64
     assert upload["characters_extracted"] == len("Resume text")
+
+
+def _prepared(candidate_id: str = "upload-abc123"):
+    """A CandidatePlan: stages 1-3 only, before any interview exists."""
+
+    intake = _intake(candidate_id)
+    return SimpleNamespace(
+        upload=intake.upload,
+        resume=intake.resume,
+        analysis=intake.analysis,
+        plan=intake.plan,
+    )
+
+
+def test_an_intake_is_recorded_before_any_interview_starts() -> None:
+    """
+    Uploading a resume is the first moment someone looks for a candidate in
+    another tab, so the record cannot wait for question selection.
+    """
+
+    from ui.answer_store import save_intake
+
+    save_intake(_prepared())
+    run = load_run("upload-abc123")
+
+    assert run is not None
+    assert run["submitted"] is False
+    assert run["answers"] == []
+    assert set(run["stages"]) == {
+        "resume extraction", "resume evidence", "interview plan",
+    }
+    # No interview yet, so there is no question count to claim.
+    assert run["total"] is None
+
+
+def test_the_completed_run_replaces_the_intake_record() -> None:
+    from ui.answer_store import save_intake
+
+    save_intake(_prepared())
+    assert load_run("upload-abc123")["answers"] == []
+
+    save_run(_intake(), _progress())
+    run = load_run("upload-abc123")
+
+    assert len(run["answers"]) == 1
+    assert "interview questions" in run["stages"]
+    assert run["total"] == 1

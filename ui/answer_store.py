@@ -56,6 +56,72 @@ def _run_path(candidate_id: str) -> Path:
     return RUN_DIR / f"{safe}.json"
 
 
+def save_intake(prepared: Any) -> Path:
+    """
+    Write the intake as soon as the plan exists, before any interview starts.
+
+    Recording only from the interview onwards meant a candidate who had
+    uploaded a resume and was reading their plan did not exist as far as
+    another tab was concerned - which is the first moment someone would
+    reasonably look.
+
+    Question selection has not run yet, so this stores four stages and no
+    answers. save_run overwrites it with the fuller record later.
+    """
+
+    candidate_id = prepared.plan.candidate_id
+
+    payload = {
+        "schema_version": SCHEMA_VERSION,
+        "candidate_id": candidate_id,
+        "started_at": datetime.now(timezone.utc).isoformat(),
+        "submitted": False,
+        "answered": 0,
+        "skipped": 0,
+        "total": None,
+        "upload": _upload_record(prepared.upload),
+        "stages": {
+            "resume extraction": prepared.resume.model_dump(mode="json"),
+            "resume evidence": prepared.analysis.model_dump(mode="json"),
+            "interview plan": prepared.plan.model_dump(mode="json"),
+        },
+        "answers": [],
+    }
+
+    return _write(candidate_id, payload)
+
+
+def _upload_record(upload: Any) -> dict:
+    """Non-content provenance for the uploaded file."""
+
+    return {
+        "filename": upload.filename,
+        "format": getattr(upload.format, "value", str(upload.format)),
+        "media_type": upload.media_type,
+        "size_bytes": upload.size_bytes,
+        "sha256": upload.sha256,
+        "candidate_id": upload.candidate_id,
+        "extraction_method": upload.extraction_method,
+        "characters_extracted": len(upload.text),
+        "warnings": list(upload.warnings),
+    }
+
+
+def _write(candidate_id: str, payload: dict) -> Path:
+    """Write one run, creating the directory on first use."""
+
+    try:
+        RUN_DIR.mkdir(parents=True, exist_ok=True)
+        path = _run_path(candidate_id)
+        path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+    except OSError as error:
+        raise AnswerStoreError(
+            f"Could not write the interview record: {type(error).__name__}"
+        ) from error
+
+    return path
+
+
 def save_run(intake: Any, progress: Any) -> Path:
     """
     Write one completed interview and return its path.
@@ -77,17 +143,7 @@ def save_run(intake: Any, progress: Any) -> Path:
         "answered": progress.answered_count,
         "skipped": progress.skipped_count,
         "total": len(progress.question_ids),
-        "upload": {
-            "filename": intake.upload.filename,
-            "format": getattr(intake.upload.format, "value", str(intake.upload.format)),
-            "media_type": intake.upload.media_type,
-            "size_bytes": intake.upload.size_bytes,
-            "sha256": intake.upload.sha256,
-            "candidate_id": intake.upload.candidate_id,
-            "extraction_method": intake.upload.extraction_method,
-            "characters_extracted": len(intake.upload.text),
-            "warnings": list(intake.upload.warnings),
-        },
+        "upload": _upload_record(intake.upload),
         # Every earlier stage is stored too. Only fixture candidates have
         # files under data/prepared/; a real upload has none, so without
         # these an interviewer in a different browser session would see an
@@ -121,16 +177,7 @@ def save_run(intake: Any, progress: Any) -> Path:
         ],
     }
 
-    try:
-        RUN_DIR.mkdir(parents=True, exist_ok=True)
-        path = _run_path(candidate_id)
-        path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
-    except OSError as error:
-        raise AnswerStoreError(
-            f"Could not write the completed interview: {type(error).__name__}"
-        ) from error
-
-    return path
+    return _write(candidate_id, payload)
 
 
 def load_run(candidate_id: str) -> dict | None:
@@ -162,6 +209,7 @@ def saved_runs() -> list[str]:
 
 __all__ = [
     "AnswerStoreError",
+    "save_intake",
     "RUN_DIR",
     "SCHEMA_VERSION",
     "load_run",

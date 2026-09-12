@@ -55,7 +55,13 @@ from ui.auth import (
     interviewer_username,
     verify_interviewer,
 )
-from ui.answer_store import AnswerStoreError, load_run, save_run, saved_runs
+from ui.answer_store import (
+    AnswerStoreError,
+    load_run,
+    save_intake,
+    save_run,
+    saved_runs,
+)
 from ui.session import InterviewProgress
 from ui.styles import APP_STYLES
 
@@ -416,6 +422,13 @@ def _render_upload() -> None:
             st.error(f"Could not complete {error.stage}. {error}")
         else:
             st.session_state[PLAN_KEY] = prepared
+
+            # Recorded here, not at the interview. Uploading a resume and
+            # reading the plan is the first point at which someone would
+            # look for this candidate in another tab, and until now they
+            # were not there to find.
+            _record_intake(prepared)
+
             st.session_state[SCREEN_KEY] = "plan"
             st.rerun()
 
@@ -883,6 +896,20 @@ def _render_interview(intake: CandidateIntake, progress: InterviewProgress) -> N
         if updated.submitted:
             st.session_state[SCREEN_KEY] = "results"
         st.rerun()
+
+
+def _record_intake(prepared: CandidatePlan) -> None:
+    """Record stages 1-3, tolerating a failure the candidate need not see."""
+
+    try:
+        st.session_state[RUN_PATH_KEY] = str(save_intake(prepared))
+    except AnswerStoreError as error:
+        st.session_state[RUN_PATH_KEY] = None
+        log_event(
+            "intake.not_recorded",
+            level="ERROR",
+            error_type=type(error).__name__,
+        )
 
 
 def _record_run(intake: CandidateIntake, progress: InterviewProgress) -> None:
@@ -1547,11 +1574,17 @@ def _resolve_stages(choice: str, live: dict) -> dict:
     # and would be a different person's intake anyway.
     run = load_run(choice)
     if run:
-        stages["answers"] = run
         stages["upload"] = run.get("upload") or stages["upload"]
         for stage, payload in (run.get("stages") or {}).items():
             if stage in stages and payload:
                 stages[stage] = payload
+
+        # An intake recorded before the interview opened has an answers block
+        # with nothing in it. Showing that as a stage would report
+        # "0 answered of None" for a candidate still reading their plan; the
+        # gap message is the honest rendering until questions exist.
+        if run.get("total") is not None:
+            stages["answers"] = run
 
     return stages
 
