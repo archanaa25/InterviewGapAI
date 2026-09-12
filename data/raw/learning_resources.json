@@ -1,0 +1,318 @@
+{
+  "version": "1.0",
+  "last_updated": "2026-09-11",
+  "description": "Curated learning-resource catalog for InterviewGapAI. Recommend resources when an assessed competency score is below the configured threshold.",
+  "recommendation_config": {
+    "competency_threshold": 70,
+    "max_resources_per_competency": 3
+  },
+  "competencies": {
+    "rag": {
+      "display_name": "RAG",
+      "resources": [
+        {
+          "resource_id": "RAG-001",
+          "title": "RAG Explained: The Architecture Behind Agentic AI Systems",
+          "provider": "Maven",
+          "authors": [
+            "Aishwarya Srinivasan",
+            "Arvind Narayanamurthy"
+          ],
+          "type": "course",
+          "url": "https://maven.com/p/85ea43",
+          "free": true,
+          "priority": 1
+        },
+        {
+          "resource_id": "RAG-002",
+          "title": "Building and Evaluating Advanced RAG",
+          "provider": "DeepLearning.AI",
+          "authors": [
+            "Jerry Liu"
+          ],
+          "type": "course",
+          "url": "https://www.deeplearning.ai/courses/building-evaluating-advanced-rag/",
+          "free": true,
+          "priority": 2
+        },
+        {
+          "resource_id": "RAG-003",
+          "title": "All You Need to Know About RAG in 2026",
+          "provider": "Substack",
+          "authors": [
+            "Aishwarya Srinivasan"
+          ],
+          "type": "article",
+          "url": "https://aishwaryasrinivasan.substack.com/p/all-you-need-to-know-about-rag-in",
+          "free": true,
+          "priority": 3
+        }
+      ]
+    },
+    "agentic_ai": {
+      "display_name": "Agentic AI",
+      "resources": [
+        {
+          "resource_id": "AGENT-001",
+          "title": "AI Agents Course",
+          "provider": "Hugging Face",
+          "authors": [
+            "Hugging Face"
+          ],
+          "type": "course",
+          "url": "https://huggingface.co/learn/agents-course/unit0/introduction",
+          "free": true,
+          "priority": 1
+        },
+        {
+          "resource_id": "AGENT-002",
+          "title": "Agentic AI System Design Masterclass",
+          "provider": "Maven",
+          "authors": [
+            "Aishwarya Srinivasan",
+            "Arvind Narayanamurthy"
+          ],
+          "type": "course",
+          "url": "https://maven.com/p/4c948b/agentic-ai-system-design-masterclass",
+          "free": true,
+          "priority": 2
+        },
+        {
+          "resource_id": "AGENT-003",
+          "title": "AI Agents in LangGraph",
+          "provider": "DeepLearning.AI",
+          "authors": [
+            "Harrison Chase"
+          ],
+          "type": "course",
+          "url": "https://www.deeplearning.ai/courses/ai-agents-in-langgraph/",
+          "free": true,
+          "priority": 3
+        }
+      ]
+    },
+    "ai_evaluation": {
+      "display_name": "AI Evaluation",
+      "resources": [
+        {
+          "resource_id": "EVAL-001",
+          "title": "Evaluating AI Agents",
+          "provider": "DeepLearning.AI",
+          "authors": [
+            "Arize AI",
+            "DeepLearning.AI"
+          ],
+          "type": "course",
+          "url": "https://www.deeplearning.ai/courses/evaluating-ai-agents/",
+          "free": true,
+          "priority": 1
+        },
+        {
+          "resource_id": "EVAL-002",
+          "title": "AI Evals Explained for Builders",
+          "provider": "Substack",
+          "authors": [
+            "Aishwarya Srinivasan"
+          ],
+          "type": "article",
+          "url": "https://aishwaryasrinivasan.substack.com/p/ai-evals-explained-for-builders",
+          "free": false,
+          "priority": 2
+        },
+        {
+          "resource_id": "EVAL-003",
+          "title": "Building Reliable Agents",
+          "provider": "LangChain Academy",
+          "authors": [
+            "LangChain"
+          ],
+          "type": "course",
+          "url": "https://academy.langchain.com/collections/foundation",
+          "free": true,
+          "priority": 3
+        }
+      ]
+    },
+    "ai_ml_llm_fundamentals": {
+      "display_name": "AI Fundamentals",
+      "resources": [
+        {
+          "resource_id": "AIFUND-001",
+          "title": "Generative AI for Everyone",
+          "provider": "DeepLearning.AI",
+          "authors": [
+            "Andrew Ng"
+          ],
+          "type": "course",
+          "url": "https://www.deeplearning.ai/courses/generative-ai-for-everyone/",
+          "free": true,
+          "priority": 1
+        },
+        {
+          "resource_id": "AIFUND-002",
+          "title": "ChatGPT Prompt Engineering for Developers",
+          "provider": "DeepLearning.AI",
+          "authors": [
+            "Isa Fulford",
+            "Andrew Ng"
+          ],
+          "type": "course",
+          "url": "https://www.deeplearning.ai/short-courses/chatgpt-prompt-engineering-for-developers/",
+          "free": true,
+          "priority": 2
+        }
+      ]
+    },
+    "ai_security": {
+      "display_name": "AI Security",
+      "resources": [
+        {
+          "resource_id": "SEC-001",
+          "title": "OWASP Top 10 for Large Language Model Applications",
+          "provider": "OWASP",
+          "authors": [
+            "OWASP GenAI Security Project"
+          ],
+          "type": "guide",
+          "url": "https://genai.owasp.org/llm-top-10/",
+          "free": true,
+          "priority": 1
+        },
+        {
+          "resource_id": "SEC-002",
+          "title": "Red Teaming LLM Applications",
+          "provider": "DeepLearning.AI",
+          "authors": [
+            "DeepLearning.AI"
+          ],
+          "type": "course",
+          "url": "https://www.deeplearning.ai/short-courses/red-teaming-llm-applications/",
+          "free": true,
+          "priority": 2
+        }
+      ]
+    },
+    "ai_system_design": {
+      "display_name": "AI System Design",
+      "resources": [
+        {
+          "resource_id": "SYSDES-001",
+          "title": "Agentic AI System Design Masterclass",
+          "provider": "Maven",
+          "authors": [
+            "Aishwarya Srinivasan",
+            "Arvind Narayanamurthy"
+          ],
+          "type": "course",
+          "url": "https://maven.com/p/4c948b/agentic-ai-system-design-masterclass",
+          "free": true,
+          "priority": 1
+        },
+        {
+          "resource_id": "SYSDES-002",
+          "title": "Introduction to LangGraph",
+          "provider": "LangChain Academy",
+          "authors": [
+            "LangChain"
+          ],
+          "type": "course",
+          "url": "https://academy.langchain.com/courses/intro-to-langgraph",
+          "free": true,
+          "priority": 2
+        },
+        {
+          "resource_id": "SYSDES-003",
+          "title": "Building Agentic RAG with LlamaIndex",
+          "provider": "DeepLearning.AI",
+          "authors": [
+            "LlamaIndex",
+            "DeepLearning.AI"
+          ],
+          "type": "course",
+          "url": "https://www.deeplearning.ai/courses/building-agentic-rag-with-llamaindex/",
+          "free": true,
+          "priority": 3
+        }
+      ]
+    },
+    "python_software_engineering": {
+      "display_name": "Python / Software Engineering",
+      "resources": [
+        {
+          "resource_id": "PY-001",
+          "title": "CS50's Introduction to Programming with Python",
+          "provider": "Harvard / CS50",
+          "authors": [
+            "David J. Malan",
+            "CS50 Team"
+          ],
+          "type": "course",
+          "url": "https://cs50.harvard.edu/python/",
+          "free": true,
+          "priority": 1
+        },
+        {
+          "resource_id": "PY-002",
+          "title": "Python Tutorial",
+          "provider": "Python Software Foundation",
+          "authors": [
+            "Python Documentation Team"
+          ],
+          "type": "documentation",
+          "url": "https://docs.python.org/3/tutorial/",
+          "free": true,
+          "priority": 2
+        }
+      ]
+    }
+  },
+  "featured": {
+    "title": "From The Gen Academy",
+    "subtitle": "The team behind several of the resources above, and where to follow their work next.",
+    "highlight": {
+      "resource_id": "GEN-COHORT-001",
+      "title": "Mastering Agentic AI: Certification by The Gen Academy",
+      "provider": "Maven",
+      "authors": [
+        "Aishwarya Srinivasan",
+        "Arvind Narayanamurthy"
+      ],
+      "type": "cohort course",
+      "url": "https://maven.com/aishwarya-srinivasan/mastering-ai-agents",
+      "free": false,
+      "priority": 1,
+      "note": "Next cohort starts 3 October 2026 · $2,499"
+    },
+    "people": [
+      {
+        "name": "Aishwarya Srinivasan",
+        "role": "AI Entrepreneur · Ex-Google, Microsoft",
+        "url": "https://www.linkedin.com/in/aishwarya-srinivasan/"
+      },
+      {
+        "name": "Arvind Narayanamurthy",
+        "role": "AI Engineering Lead · Founder",
+        "url": "https://www.linkedin.com/in/arvindna/"
+      }
+    ],
+    "reading": [
+      {
+        "resource_id": "GEN-READ-001",
+        "title": "AI with Aish",
+        "provider": "Substack",
+        "authors": [
+          "Aishwarya Srinivasan"
+        ],
+        "type": "newsletter",
+        "url": "https://aishwaryasrinivasan.substack.com/p/f565c579-f961-45a6-aaa5-2a78123c6300",
+        "free": true,
+        "priority": 1
+      }
+    ],
+    "community": {
+      "name": "The Gen Academy",
+      "role": "Follow for new cohorts, workshops and writing",
+      "url": "https://www.linkedin.com/company/the-gen-academy/posts/?feedView=all"
+    }
+  }
+}
