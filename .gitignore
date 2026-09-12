@@ -13,3 +13,7 @@ data/eval/results/**
 
 # Local tool configuration (Serena MCP).
 .serena/
+
+# Completed interviews contain candidate answers in their own words.
+# Unlike the synthetic fixtures under data/prepared/, they stay local.
+data/runs/

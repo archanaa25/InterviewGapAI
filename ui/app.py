@@ -24,7 +24,7 @@ if str(PROJECT_ROOT) not in sys.path:
 # that names the wrong cause.
 load_dotenv(PROJECT_ROOT / ".env", override=True)
 
-from src.observability import configure_observability
+from src.observability import configure_observability, log_event
 
 # Application startup owns configuration (see docs/OBSERVABILITY.md). Without
 # this, src.observability's logger has no handler and every stage failure
@@ -54,6 +54,7 @@ from ui.auth import (
     interviewer_username,
     verify_interviewer,
 )
+from ui.answer_store import AnswerStoreError, load_run, save_run, saved_runs
 from ui.session import InterviewProgress
 from ui.styles import APP_STYLES
 
@@ -64,6 +65,7 @@ INTAKE_KEY = "ig_intake"
 PROGRESS_KEY = "ig_progress"
 PREFETCH_KEY = "ig_prefetch"
 ROLE_KEY = "ig_role"
+RUN_PATH_KEY = "ig_run_path"
 
 # What each backend stage is called while the candidate waits on it. The
 # gateway names stages for error messages; these are the candidate-facing
@@ -141,6 +143,7 @@ def _initialize_state() -> None:
     # Candidate is the default audience: an interview link should not need an
     # account. Only a verified sign-in ever writes the interviewer role.
     st.session_state.setdefault(ROLE_KEY, Role.CANDIDATE.value)
+    st.session_state.setdefault(RUN_PATH_KEY, None)
 
 
 def _reset() -> None:
@@ -151,6 +154,7 @@ def _reset() -> None:
     st.session_state[INTAKE_KEY] = None
     st.session_state[PROGRESS_KEY] = None
     st.session_state[PREFETCH_KEY] = None
+    st.session_state[RUN_PATH_KEY] = None
 
 
 def _sign_out() -> None:
@@ -860,6 +864,20 @@ def _render_interview(intake: CandidateIntake, progress: InterviewProgress) -> N
         updated = progress.record_current(answer)
         st.session_state[PROGRESS_KEY] = updated
         if updated.submitted:
+            # Record the finished interview before leaving the screen. Until
+            # this existed, answers died with the browser session and an
+            # interviewer signing in later saw nothing.
+            try:
+                st.session_state[RUN_PATH_KEY] = str(save_run(intake, updated))
+            except AnswerStoreError as error:
+                # The candidate has finished either way; say so rather than
+                # pretending the submission failed.
+                st.session_state[RUN_PATH_KEY] = None
+                log_event(
+                    "interview.run_not_saved",
+                    level="ERROR",
+                    error_type=type(error).__name__,
+                )
             st.session_state[SCREEN_KEY] = "results"
         st.rerun()
 
@@ -910,17 +928,25 @@ ARTIFACT_DIR = PROJECT_ROOT / "data" / "prepared"
 
 
 def _saved_candidates() -> list[str]:
-    """Candidate IDs with a saved plan on disk."""
+    """
+    Candidate IDs with something on disk: a fixture plan or a recorded run.
+
+    Recorded runs come first because they are real interviews someone is
+    waiting to read, and the fixtures are reference material.
+    """
 
     plan_dir = ARTIFACT_DIR / "interview_plans"
-
-    if not plan_dir.is_dir():
-        return []
-
-    return sorted(
-        path.name.removesuffix("_plan.json")
-        for path in plan_dir.glob("*_plan.json")
+    fixtures = (
+        sorted(
+            path.name.removesuffix("_plan.json")
+            for path in plan_dir.glob("*_plan.json")
+        )
+        if plan_dir.is_dir()
+        else []
     )
+
+    runs = saved_runs()
+    return runs + [name for name in fixtures if name not in set(runs)]
 
 
 def _load_artifacts(candidate_id: str) -> dict:
@@ -938,6 +964,9 @@ def _load_artifacts(candidate_id: str) -> dict:
         ),
         "interview plan": (
             ARTIFACT_DIR / "interview_plans" / f"{candidate_id}_plan.json"
+        ),
+        "interview questions": (
+            ARTIFACT_DIR / "interview_questions" / f"{candidate_id}_questions.json"
         ),
     }
 
@@ -978,6 +1007,56 @@ def _clip(text: str, limit: int = TRACE_PROSE_LIMIT) -> str:
 
 def _trace_summary(stage: str, payload: dict) -> list[str]:
     """A few lines saying what the stage produced, not the whole document."""
+
+    if stage == "upload":
+        lines = [
+            f"**{payload.get('filename')}** · "
+            f"{payload.get('format')} · "
+            f"{(payload.get('size_bytes') or 0) / 1024:.1f} KB",
+            f"{payload.get('characters_extracted')} characters extracted via "
+            f"`{payload.get('extraction_method')}` · "
+            f"candidate id `{payload.get('candidate_id')}`",
+        ]
+        for warning in payload.get("warnings") or []:
+            lines.append(f"⚠ {warning}")
+        return lines
+
+    if stage == "interview questions":
+        questions = payload.get("questions") or []
+        unfilled = payload.get("unfilled_slots") or []
+        lines = [
+            f"**{len(questions)} questions selected** across "
+            f"{len({q.get('competency') for q in questions})} competencies"
+        ]
+        if questions:
+            relaxed = sum(
+                1
+                for q in questions
+                if (q.get("retrieval") or {}).get("filter_relaxed")
+            )
+            if relaxed:
+                lines.append(
+                    f"{relaxed} filled from an adjacent difficulty because the "
+                    "requested pool was exhausted."
+                )
+        for slot in unfilled:
+            lines.append(f"⚠ unfilled: {slot.get('reason')}")
+        for warning in payload.get("warnings") or []:
+            lines.append(f"⚠ {warning}")
+        return lines
+
+    if stage == "answers":
+        lines = [
+            f"**{payload.get('answered')} answered · "
+            f"{payload.get('skipped')} skipped** of {payload.get('total')}"
+            + ("  — submitted" if payload.get("submitted") else "  — in progress"),
+        ]
+        for answer in payload.get("answers") or []:
+            state = "skipped" if answer.get("skipped") else f"{answer['characters']} chars"
+            lines.append(
+                f"{answer['position']}. `{answer['question_id']}` — {state}"
+            )
+        return lines
 
     if stage == "resume extraction":
         return [
@@ -1144,30 +1223,123 @@ def _interviewer_sidebar() -> str:
     return _section_name(chosen)
 
 
-def _render_intake_traces() -> None:
-    """Stage outputs for a saved candidate run, with the strategy shown."""
+# The candidate's journey end to end. Stages absent from a source are shown
+# as gaps with the reason, because "nothing here" and "never persisted" are
+# different problems and only one of them is fixable by re-running.
+TRACE_STAGES = (
+    "upload",
+    "resume extraction",
+    "resume evidence",
+    "interview plan",
+    "interview questions",
+    "answers",
+)
 
-    live = st.session_state[PLAN_KEY]
+# Why a stage can be empty. Saying this beats an unexplained blank section.
+TRACE_GAPS = {
+    "upload": (
+        "Upload provenance exists only for a run started in this browser "
+        "session; it is not written to disk."
+    ),
+    "interview questions": (
+        "Question selection runs when the candidate presses Start interview. "
+        "Saved question sets exist for only some fixture candidates."
+    ),
+    "answers": (
+        "Answers are never persisted. They live in the Streamlit session that "
+        "collected them, so they are visible here only for a run completed in "
+        "this browser session — the contributor backend has no answer store yet."
+    ),
+}
+
+
+def _live_stages() -> dict:
+    """Whatever the current browser session has produced, stage by stage."""
+
+    prepared = st.session_state[PLAN_KEY]
+    intake = st.session_state[INTAKE_KEY]
+    progress = st.session_state[PROGRESS_KEY]
+
+    stages = dict.fromkeys(TRACE_STAGES)
+
+    if prepared is not None:
+        upload = prepared.upload
+        stages["upload"] = {
+            "filename": upload.filename,
+            "format": getattr(upload.format, "value", str(upload.format)),
+            "media_type": upload.media_type,
+            "size_bytes": upload.size_bytes,
+            "sha256": upload.sha256,
+            "candidate_id": upload.candidate_id,
+            "extraction_method": upload.extraction_method,
+            "characters_extracted": len(upload.text),
+            "warnings": list(upload.warnings),
+        }
+        stages["resume extraction"] = prepared.resume.model_dump(mode="json")
+        stages["resume evidence"] = prepared.analysis.model_dump(mode="json")
+        stages["interview plan"] = prepared.plan.model_dump(mode="json")
+
+    # Stage 4 only exists once the candidate starts the interview, which is a
+    # separate click from preparing the plan.
+    if intake is not None:
+        stages["interview questions"] = intake.question_set.model_dump(mode="json")
+
+    if progress is not None:
+        asked = {}
+        if intake is not None:
+            asked = {q.question_id: q for q in intake.question_set.questions}
+        stages["answers"] = {
+            "submitted": progress.submitted,
+            "answered": progress.answered_count,
+            "skipped": progress.skipped_count,
+            "total": len(progress.question_ids),
+            "answers": [
+                {
+                    "position": index,
+                    "question_id": answer.question_id,
+                    "question": getattr(asked.get(answer.question_id), "question", None),
+                    "skipped": answer.skipped,
+                    "characters": len(answer.text),
+                    "text": answer.text,
+                }
+                for index, answer in enumerate(progress.answers, start=1)
+            ],
+        }
+
+    return stages
+
+
+def _render_intake_traces() -> None:
+    """The candidate's whole journey, stage by stage, with the strategy shown."""
+
+    live = _live_stages()
+    has_live = any(value is not None for value in live.values())
     candidates = _saved_candidates()
 
-    if live is None and not candidates:
+    if not has_live and not candidates:
         st.warning(
             "No intake to show. Run a candidate through the candidate view, or "
             f"save artifacts under {ARTIFACT_DIR.name}/."
         )
         return
 
-    sources = (["This session's run"] if live is not None else []) + candidates
+    sources = (["This session's run"] if has_live else []) + candidates
     choice = st.selectbox("Intake", sources)
 
-    if live is not None and choice == "This session's run":
-        stages = {
-            "resume extraction": live.resume.model_dump(mode="json"),
-            "resume evidence": live.analysis.model_dump(mode="json"),
-            "interview plan": live.plan.model_dump(mode="json"),
-        }
+    if has_live and choice == "This session's run":
+        stages = live
     else:
-        stages = _load_artifacts(choice)
+        saved = _load_artifacts(choice)
+        stages = {stage: saved.get(stage) for stage in TRACE_STAGES}
+
+        # A recorded interview supplies the two stages no fixture has.
+        run = load_run(choice)
+        if run:
+            stages["answers"] = run
+            stages["upload"] = stages["upload"] or run.get("upload")
+
+    reached = sum(1 for value in stages.values() if value)
+    st.caption(f"{reached} of {len(TRACE_STAGES)} stages have output for this run.")
 
     for stage, payload in stages.items():
         st.markdown(
@@ -1175,8 +1347,8 @@ def _render_intake_traces() -> None:
             unsafe_allow_html=True,
         )
 
-        if payload is None:
-            st.caption("No saved output for this stage.")
+        if not payload:
+            st.caption(TRACE_GAPS.get(stage, "No saved output for this stage."))
             continue
         if "error" in payload and len(payload) == 1:
             st.error(f"Could not read this stage ({payload['error']}).")
