@@ -1,97 +1,96 @@
 # InterviewGapAI
 
-AI Engineer interview preparation focused on identifying competency gaps through curated questions and evaluation knowledge.
+InterviewGapAI turns a candidate's resume into a tailored AI-engineering interview. It analyzes resume evidence, prepares and retrieves 10 curated questions, evaluates the submitted answers, and produces an explainable competency scorecard with learning recommendations.
 
-The repository contains the assessment corpus, document builder, BM25 retrieval and evaluation, Pinecone ingestion, and an [MVP implementation plan](docs/FIVE_DAY_MVP_IMPLEMENTATION_GUIDE.md). The interview application is not yet implemented.
+## Architecture
 
-## Directory structure
+![InterviewGapAI architecture](Architecture.png)
 
-```text
-InterviewGapAI/
-├── competency_blueprint/   # Competency definitions and assessment expectations
-├── config/                 # Reserved for runtime configuration (currently empty)
-├── data/
-│   ├── raw/notebooklm/     # Source exports and unprocessed question/evaluation material
-│   ├── curated/            # Reviewed JSON question banks and evaluation knowledge by competency
-│   ├── prepared/           # JSONL exports for downstream ingestion
-│   │   └── master/        # Combined corpus, manifest, and readable question JSON
-│   └── eval/               # Golden retrieval queries, evaluation roadmap, and results
-├── docs/                   # Architecture, MVP scope, and implementation guidance
-├── job_description/        # Canonical AI Engineer role and expectations
-├── prompts/                # NotebookLM question-authoring instructions
-├── questions/              # Original RAG question material
-├── scripts/                # Corpus validation/build, retrieval evaluation, and Pinecone ingestion
-├── src/
-│   ├── corpus/             # Converts question records into LangChain documents
-│   └── retrieval/          # BM25, Pinecone dense, and hybrid RRF question retrieval
-├── .env.example            # Environment variable template; actual keys go in .env
-├── .python-version         # Python version used by uv
-├── pyproject.toml          # Project metadata and Python dependencies
-├── uv.lock                 # Resolved dependency versions for reproducible installation
-└── README.md
+The system uses LLMs for resume interpretation, interview planning, and grounded answer assessment. Deterministic application rules validate every stage, retrieve approved questions, calculate scores, and select curated learning resources.
+
+## Run locally
+
+### Prerequisites
+
+- Python 3.10 or later
+- [uv](https://docs.astral.sh/uv/getting-started/installation/)
+- OpenAI and Pinecone API keys
+- A populated Pinecone index using the configured question and evaluation namespaces
+
+On macOS, install uv with:
+
+```bash
+brew install uv
 ```
 
-Empty directories are workspace placeholders and are not tracked by Git.
+### 1. Configure the environment
 
-`data/curated/` contains `rag`, `agentic_ai`, `llm_fundamentals`, `ai_evaluation`, `ai_system_design`, `ai_security`, and `python_software_engineering`. Each folder pairs `<competency>_questions.json` with `<competency>_evaluation_knowledge.json`; questions link to evaluation records through `evaluation_refs`.
+From the repository root:
 
-All seven corpora have exports in `data/prepared/<competency>/`. Legacy RAG exports remain directly under `data/prepared/`; the master builder uses only the seven named competency subdirectories. `data/prepared/master/` contains the combined questions, evaluation knowledge, and `corpus_manifest.json` statistics. Files ending in `_pretty.json` are readable copies of their corresponding JSONL datasets.
+```bash
+cp .env.example .env
+```
 
-`data/prepared/interview_questions.json` and `evaluation_knowledge.json` are readable JSON array copies of the adjacent legacy RAG JSONL files. Refresh these copies when their source files change.
+Add your secrets to `.env` and confirm the Pinecone settings:
 
-## Python environment and execution
+```dotenv
+OPENAI_API_KEY=your-openai-api-key
+PINECONE_API_KEY=your-pinecone-api-key
+PINECONE_INDEX_NAME=interviewgap-ai
+PINECONE_QUESTION_NAMESPACE=questions-v1
+PINECONE_EVALUATION_NAMESPACE=evaluation-v1
+```
 
-For Evaluation Agent integration, see the
-[Evaluation Agent interface](docs/EVALUATION_AGENT_INTERFACE.md) and its
-[Evaluation RAG dependency](docs/EVALUATION_RAG_INTERFACE.md).
-For request IDs, sanitized JSON logs, and optional LangSmith traces, see the
-[shared observability guide](docs/OBSERVABILITY.md).
+`.env` is Git-ignored and must not be committed.
 
-With uv installed, run from the repository root:
+### 2. Install dependencies
 
 ```bash
 uv sync --locked
 ```
 
-This creates `.venv` using Python 3.10 and installs the locked dependencies for all current Python modules. Select `.venv/bin/python` as the interpreter in your IDE. Use `uv run python -m <module>` from the repository root so imports from `src` resolve correctly; activation is optional (`source .venv/bin/activate`).
+### 3. Start the application
 
 ```bash
-uv run python -m src.corpus.document_builder
-uv run python -m src.retrieval.bm25_retriever
-uv run python -m scripts.evaluate_question_retrieval --retriever bm25
+uv run streamlit run ui/app.py
 ```
 
-Use `--retriever dense` or `--retriever hybrid` to evaluate Pinecone search or BM25 + dense retrieval with reciprocal rank fusion. Both require configured OpenAI/Pinecone credentials and an ingested question index. Reports are saved to `data/eval/results/<retriever>_results_v2.json`.
+Streamlit normally opens the application automatically. Otherwise, visit [http://localhost:8501](http://localhost:8501).
 
-For Pinecone ingestion, create `.env` from `.env.example` if needed, and set `OPENAI_API_KEY` and `PINECONE_API_KEY`. Configure the index name, namespace, cloud, region, and embedding model using the template defaults. The ingestion script currently expects 1536-dimensional embeddings (`text-embedding-3-small`).
+## Reviewer walkthrough
+
+### Candidate flow
+
+1. Upload a PDF, DOCX, DOC, CSV, MD, or MARKDOWN resume, up to 10 MB.
+2. Review the generated 10-question interview plan.
+3. Start the interview and answer or skip each question.
+4. Submit the full interview; evaluation runs only after final submission.
+5. Review the overall score, competency strengths, gaps, and recommended learning resources.
+
+Questions are shown one at a time. Rubrics and question-level scores remain hidden during the interview.
+
+### Interviewer flow
+
+To review intake traces, evaluation evidence, reports, and runtime configuration, set credentials in `.env`:
+
+```dotenv
+INTERVIEWER_USERNAME=admin
+INTERVIEWER_PASSWORD=choose-a-local-password
+```
+
+Restart the application, select **Interviewer sign in** from the upload screen, and use the configured credentials.
+
+## Run the automated tests
 
 ```bash
-uv run python -m scripts.ingest_pinecone
+uv run --locked pytest
 ```
 
-This command makes live OpenAI embedding requests and creates or updates the configured Pinecone index. `.env` and `.venv/` are excluded from Git. Add future dependencies with `uv add <package>` and keep `pyproject.toml` and `uv.lock` together.
+The tests run offline and cover both the backend and Streamlit UI boundaries. Live OpenAI and Pinecone calls are exercised through the application, not the default test suite.
 
-## Validate and prepare a corpus
+## Reviewer references
 
-From the repository root:
-
-```bash
-uv run python -m scripts.validate_corpus rag
-```
-
-Replace `rag` with a curated folder name above. The script checks required fields, allowed values, duplicate IDs and question text, and evaluation references. On success, it writes `interview_questions.jsonl` and `evaluation_knowledge.jsonl` to the competency's prepared directory. Structural validation does not establish factual accuracy.
-
-To rebuild all prepared corpora, combine them, and validate the golden retrieval dataset:
-
-```bash
-for corpus in rag agentic_ai llm_fundamentals ai_evaluation python_software_engineering ai_system_design ai_security; do
-    uv run python -m scripts.validate_corpus "$corpus" || exit 1
-done
-uv run python -m scripts.build_corpus && uv run python -m scripts.validate_golden_dataset
-```
-
-The master builder checks global IDs and evaluation references. The golden validator checks query fields and target questions against the master corpus; it does not measure retrieval performance. These scripts do not regenerate the `_pretty.json` copies; keep them synchronized when their JSONL sources change.
-
-## Keeping this README current
-
-When adding, moving, or removing directories or significant files, update the relevant directory description and usage instructions in the same commit. Document changes that affect setup or data preparation; avoid exhaustive file lists, repeated explanations, and a running change log.
+- [Evaluation Agent interface](docs/EVALUATION_AGENT_INTERFACE.md)
+- [Evaluation RAG interface](docs/EVALUATION_RAG_INTERFACE.md)
+- [Observability and trace guide](docs/OBSERVABILITY.md)
+- [MVP implementation guide](docs/FIVE_DAY_MVP_IMPLEMENTATION_GUIDE.md)
