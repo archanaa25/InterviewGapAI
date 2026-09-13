@@ -1,29 +1,28 @@
-# Yusuf Farooqi
+# Tomas Iversen
 
-**Machine Learning Engineer moving into AI Engineering**  
-yusuf.farooqi@example.com
+**Product Data Analyst**  
+tomas.iversen@example.com
 
 ## Professional Summary
-Engineer adapting open text models to specialist vocabulary in insurance and clinical coding. Five years of Python work, mostly training runs, model adaptation, and getting models to run within available hardware.
+Product analyst with three years measuring how people use a subscription mobile application. Focused on experiment design, retention analysis, and making sure a reported difference is real before a team acts on it.
 
 ## Technical Skills
-Python, PyTorch, Hugging Face libraries, NumPy, CUDA, Docker, Git, Jupyter, shell scripting.
+Python, pandas, NumPy, SciPy, statsmodels, SQL, BigQuery, Jupyter, matplotlib, Looker, A/B testing, survey design.
 
 ## Work Experience
-**Machine Learning Engineer — Larkspur Grid | Mar 2023–Present**
-- Adapted an open text model to insurance wording so that claim notes were continued in house phrasing rather than general prose.
-- Investigated why long claim histories were truncated and reorganised inputs to stay inside the model's context limit.
-- Found that specialist terms were being split into many small pieces, inflating input length and cost, and adjusted the vocabulary handling accordingly.
-- Reduced memory use with reduced-precision weights so a larger model fit on the available GPUs.
-- Compared response cost and speed across three model sizes to choose what the team could afford to run.
+**Product Data Analyst — Larkspur Mobile | Jun 2024–Present**
+- Designs and reads experiments for the onboarding and subscription teams, typically six to eight running concurrently.
+- Introduced a fixed pre-registration step recording the metric, the population, and the stopping rule before an experiment starts, after two results were reinterpreted post hoc.
+- Built a reusable notebook for power calculations so teams size a test before launching rather than discovering it was underpowered afterwards.
+- Flagged a winning result driven entirely by one device segment and recommended holding the rollout until the cause was understood.
 
-**Data Engineer — Ochre Lane Health | Aug 2021–Feb 2023**
-- Built Python pipelines preparing clinical coding datasets, including de-duplication and format normalisation.
-- Packaged training runs so a colleague could reproduce a result from a single command.
+**Junior Data Analyst — Larkspur Mobile | Aug 2023–May 2024**
+- Maintained the weekly retention and conversion reporting.
+- Built cohort analyses comparing subscriber behaviour by acquisition channel.
+- Cleaned and reconciled event data after a tracking change broke historical comparability.
 
 ## Selected Project
-**Clinical phrase tagger:** Trained a smaller model to label diagnosis phrases after the largest available model proved too slow for the intended use. Documented the trade-off between size, speed, and vocabulary coverage for the team.
+**Churn survey analysis:** Combined a cancellation survey with behavioural data to separate reasons people gave from what their usage showed. Reported the two as distinct signals rather than merging them, and documented where the sample was likely to be self-selecting.
 
 ## Education
-MSc, Computer Science — Fictional Ardenwood University, 2021.  
-BSc, Mathematics — Fictional Ardenwood University, 2019.
+BA, Psychology — Fictional Crownmoor University, 2023. Coursework in research methods and statistics.

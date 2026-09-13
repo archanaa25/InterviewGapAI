@@ -1,29 +1,29 @@
-# Priya Nambiar
+# Rhea Dsouza
 
-**AI Engineer**  
-priya.nambiar@example.com
+**Senior Data Platform Analyst**  
+rhea.dsouza@example.com
 
 ## Professional Summary
-Engineer working on assistants that take real actions inside finance and media systems, with attention to what those assistants are allowed to do. Five years in Python, the last two on assistant features that touch customer records.
+Seven years across data engineering and analysis for a logistics business. Builds and maintains the batch pipelines that other analysts query, and is the person called when a nightly job fails or a number looks wrong.
 
 ## Technical Skills
-Python, FastAPI, PostgreSQL, OAuth, Docker, Kubernetes, Git, pytest, audit logging, message queues.
+Python, pandas, PySpark, SQL, Airflow, Kafka, Postgres, Redshift, Docker, Git, Terraform, pytest, Grafana.
 
 ## Work Experience
-**AI Engineer — Ivory Sparrow Systems | Jan 2024–Present**
-- Built an assistant that raises refunds and updates subscriptions, holding anything irreversible until a supervisor approves it.
-- Gave the assistant a narrow set of operations rather than direct database access, and kept read and write operations on separate credentials.
-- Enforced which accounts a request may touch in the surrounding service, so the check does not depend on the assistant behaving correctly.
-- Treated anything the assistant produced as untrusted before it reached another system, after a pasted customer note caused an unintended lookup.
-- Removed names and account numbers from stored conversation records, and kept an audit entry for every action taken.
-- Added a marker on each request so a retried action could not be applied twice.
+**Senior Data Platform Analyst — Halverton Freight | Feb 2022–Present**
+- Maintains around 60 scheduled pipelines moving shipment, telematics, and billing data into the warehouse.
+- Reduced a daily aggregation job from 95 minutes to 22 by repartitioning on the join key and removing a shuffle caused by an unnecessary sort.
+- Added dead-letter handling and alerting for malformed vendor files, which had previously stalled the whole batch until someone noticed the next morning.
+- Set up a staging environment mirroring production schemas so pipeline changes are validated before release.
+- Built a keyword search index over historical support tickets so the operations team could find similar past incidents by matching terms.
 
-**Backend Engineer — Tallow Bay Media | Sep 2021–Dec 2023**
-- Owned Python services for subscription billing, including retries and reconciliation jobs.
-- Added contract tests between the billing service and two internal consumers.
+**Data Engineer — Halverton Freight | Sep 2019–Jan 2022**
+- Migrated reporting from nightly CSV exports to an incremental warehouse load.
+- Wrote the reconciliation checks comparing warehouse totals against source system counts.
+- Supported analysts with query tuning and schema questions.
 
 ## Selected Project
-**Access review helper:** Assistant that drafts quarterly access reviews for managers to sign off. Restricted it to reading group membership and refused any request that named a system outside the reviewed set.
+**Late-delivery investigation:** Assembled a dataset joining GPS traces, depot scan events, and customer complaints to test whether late deliveries clustered by route, driver, or depot. Found the pattern was a depot cut-off time, not driver behaviour, and presented the evidence against the prevailing assumption.
 
 ## Education
-BTech, Computer Science — Fictional Netherby Institute, 2021.
+BEng, Information Systems — Fictional Northbrook University, 2019.

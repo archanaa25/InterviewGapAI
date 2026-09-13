@@ -173,6 +173,54 @@
         "Clarify personal ownership, operational scale, and project maturity."
       ],
       "evidence_scope": "sparse claims"
+    },
+    {
+      "candidate_id": "candidate_11",
+      "resume_path": "resumes/candidate_11.md",
+      "name": "Priya Raghavan",
+      "profile": "analytics_engineer_no_llm",
+      "experience": "5 years",
+      "evidence_expected_for": [
+        "python_software_engineering"
+      ],
+      "expected_probing": [
+        "No language-model work of any kind is claimed; every AI competency is unknown, not weak.",
+        "Engineering evidence is real but batch-analytics shaped: probe testing and interface design rather than assuming service ownership."
+      ],
+      "evidence_scope": "Pipeline and reporting ownership only. Reliability and data-quality habits are evidenced; nothing in the resume speaks to model behaviour."
+    },
+    {
+      "candidate_id": "candidate_12",
+      "resume_path": "resumes/candidate_12.md",
+      "name": "Tomas Iversen",
+      "profile": "product_analyst_no_llm",
+      "experience": "3 years",
+      "evidence_expected_for": [],
+      "evidence_partial_for": [
+        "python_software_engineering"
+      ],
+      "expected_probing": [
+        "No language-model work is claimed; every AI competency is unknown.",
+        "Experiment design and pre-registration are measurement discipline, not AI evaluation. Do not read them as evidence for ai_evaluation, which concerns judging model output.",
+        "Python use is analysis in notebooks; probe before assuming software-engineering practice."
+      ],
+      "evidence_scope": "Statistical and experimental rigour is well evidenced. The nearest adjacency to an assessed competency is measurement discipline, which is deliberately not the same thing as evaluating a model."
+    },
+    {
+      "candidate_id": "candidate_13",
+      "resume_path": "resumes/candidate_13.md",
+      "name": "Rhea Dsouza",
+      "profile": "data_platform_analyst_no_llm",
+      "experience": "7 years",
+      "evidence_expected_for": [
+        "python_software_engineering"
+      ],
+      "expected_probing": [
+        "No language-model work is claimed; every AI competency is unknown.",
+        "The keyword search index over support tickets is lexical matching with no embeddings, no generation and no grounding step. Treating it as rag evidence is a false positive this fixture exists to catch.",
+        "Distributed batch tuning is systems experience, but ai_system_design concerns serving and cost behaviour of model-backed systems. Probe rather than transfer it."
+      ],
+      "evidence_scope": "Strongest engineering evidence of the three. Carries one deliberate near-miss for rag and one for ai_system_design."
     }
   ]
 }
