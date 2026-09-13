@@ -1,0 +1,13 @@
+digraph G { graph [rankdir=TB, bgcolor="white", pad="0.22", nodesep="0.25", ranksep="0.35", fontname="DejaVu Sans", fontsize=12]; node [shape=box, style="rounded,filled", fillcolor="#EAF2FA", color="#BACDDD", fontname="DejaVu Sans", fontsize=11, margin="0.16,0.12"]; edge [color="#5C748A", arrowsize=0.7, fontname="DejaVu Sans", fontsize=9];
+
+graph [rankdir=LR];
+before [label="BEFORE
+16.27 seconds
+7 / 10 completed", fillcolor="#FBE8E6", fontsize=20];
+after [label="AFTER
+11.64 seconds
+10 / 10 completed", fillcolor="#DDF2EE", fontsize=20];
+before -> after [label="28.5% lower recorded intake time
+Analysis: 8.29s → 3.25s", fontsize=13];
+
+}

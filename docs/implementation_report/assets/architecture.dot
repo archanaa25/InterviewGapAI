@@ -1,0 +1,27 @@
+digraph G { graph [rankdir=TB, bgcolor="white", pad="0.22", nodesep="0.25", ranksep="0.35", fontname="DejaVu Sans", fontsize=12]; node [shape=box, style="rounded,filled", fillcolor="#EAF2FA", color="#BACDDD", fontname="DejaVu Sans", fontsize=11, margin="0.16,0.12"]; edge [color="#5C748A", arrowsize=0.7, fontname="DejaVu Sans", fontsize=9];
+
+node [fontsize=13];
+graph [nodesep=0.35, ranksep=0.4];
+ui [label="STREAMLIT EXPERIENCE\nCandidate interview + protected interviewer console", fillcolor="#DDF2EE"];
+gateway [label="ORCHESTRATION\nUI gateway + session state\nStage progress • frozen questions • final submission"];
+intake [label="INTAKE MODULES\nExtraction → evidence analysis → planning\n8 analysis calls in parallel • validated 10-question plan"];
+select [label="QUESTION SELECTION\nParallel bucket queries → ordered slot fill\nID dedup • topic diversity • difficulty fallback"];
+agent [label="SUBMITTED-ANSWER EVALUATION\nUp to 4 workers: retrieve → assess → validate → repair\nEvaluated / skipped / needs_review"];
+score [label="SCORECARD + LEARNING\nDeterministic concept weights and aggregation\nCurated resources • candidate results download", fillcolor="#DDF2EE"];
+ui -> gateway -> intake -> select -> agent -> score;
+qrag [label="QUESTION RETRIEVAL\nOpenAI embeddings + Pinecone\nCompetency + difficulty filter", fillcolor="#FFF1D9"];
+erag [label="EVALUATION RAG\nOpenAI embeddings + Pinecone\nQuestion-only • competency filter • top 5", fillcolor="#FFF1D9"];
+corpus [label="OFFLINE CORPUS PIPELINE\nValidate JSON → master corpus → ingestion\n112 questions • 35 knowledge records", fillcolor="#FFF1D9"];
+runs [label="LOCAL RUN STORE\nIntake + answers + evaluations\ndata/runs/*.json → console", fillcolor="#F0EAF8"];
+shared [label="SHARED SERVICES\nLLM client + retry policy • Pydantic\nTimed JSON spans • optional LangSmith", fillcolor="#F0EAF8"];
+{rank=same; intake; corpus;}
+{rank=same; select; qrag;}
+{rank=same; agent; erag;}
+{rank=same; score; runs;}
+qrag -> select [constraint=false]; erag -> agent [constraint=false];
+corpus -> qrag [style=dashed, label="ingest"]; qrag -> erag [style=invis];
+corpus -> erag [style=dashed, constraint=false, label="separate namespace"];
+score -> runs [style=dashed, constraint=false, label="via UI"];
+runs -> shared [style=invis]; score -> shared [style=dashed, label="cross-cutting support"];
+
+}

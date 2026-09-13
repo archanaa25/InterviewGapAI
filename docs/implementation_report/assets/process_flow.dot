@@ -1,0 +1,46 @@
+digraph G { graph [rankdir=TB, bgcolor="white", pad="0.22", nodesep="0.25", ranksep="0.35", fontname="DejaVu Sans", fontsize=12]; node [shape=box, style="rounded,filled", fillcolor="#EAF2FA", color="#BACDDD", fontname="DejaVu Sans", fontsize=11, margin="0.16,0.12"]; edge [color="#5C748A", arrowsize=0.7, fontname="DejaVu Sans", fontsize=9];
+
+start [label="01  Upload resume
+Validate format • extract text • content hash"];
+extract [label="02  Extract structured facts
+Starts on upload; reuse matching prefetch"];
+analyze [label="03  Analyze resume evidence
+Parallel competency assessments + summary"];
+plan [label="04  Allocate exactly 10 questions
+Digest → LLM allocation → code-derived totals"];
+valid [label="Valid plan?", shape=diamond, fillcolor="#FFF1D9"];
+repair [label="Correct allocation
+Up to 3 planning attempts"];
+show [label="05  Show plan + persist intake
+Candidate reviews evidence and preparation"];
+select [label="06  Candidate clicks Start
+Retrieve buckets concurrently; fill slots in order"];
+full [label="All slots filled?", shape=diamond, fillcolor="#FFF1D9"];
+stop [label="Stage error
+No partial interview starts", fillcolor="#FBE8E6"];
+answer [label="07  Answer / skip / revise
+Save progress; keep question set frozen"];
+submit [label="08  Explicit final submission
+Complete answer map must match question IDs"];
+eval [label="09  Evaluate each answer
+Blank → skipped
+Otherwise retrieve linked evidence + assess"];
+check [label="Evidence + assessment valid?", shape=diamond, fillcolor="#FFF1D9"];
+retry [label="Repair invalid assessment
+Up to 3 attempts; exhausted → needs_review"];
+score [label="10  Score + recommend learning
+Skipped = 0; needs_review excluded
+Display and download results", fillcolor="#DDF2EE"];
+start -> extract -> analyze -> plan -> valid;
+valid -> repair [label="no"]; repair -> plan [label="remaining attempts"];
+repair -> stop [label="exhausted"];
+valid -> show [label="yes"]; show -> select -> full;
+full -> stop [label="no"]; full -> answer [label="yes"];
+answer -> answer [label="next / revise"]; answer -> submit -> eval -> check;
+check -> score [label="yes / skipped"];
+check -> retry [label="invalid output"]; retry -> check [label="reassess"];
+retry -> score [label="needs_review"];
+eval -> score [label="technical failure / missing evidence:
+needs_review", style=dashed];
+
+}
