@@ -17,3 +17,7 @@ data/eval/results/**
 # Completed interviews contain candidate answers in their own words.
 # Unlike the synthetic fixtures under data/prepared/, they stay local.
 data/runs/
+
+# Results a candidate downloaded from the app. Like data/runs/, these are
+# the output of one person's interview, not an input to the pipeline.
+data/raw/interview-results-*.md
