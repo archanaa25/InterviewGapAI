@@ -863,6 +863,146 @@ def _latency_panel() -> None:
             st.write(" ".join(observation["detail"].split()))
 
 
+def _online_feedback_panel() -> None:
+    data = reports.online_feedback_summary()
+    if data is None:
+        return _no_data("interviewer feedback")
+
+    _panel_head(
+        "☺",
+        "Online feedback",
+        "Interviewer thumbs up/down, captured live from Intake traces",
+        tint="#e8f5ee",
+        ink="#008300",
+    )
+
+    cards = [
+        {
+            "icon": "◑", "label": "Feedback recorded", "value": data["total"],
+            "fraction": None, "tint": "#eef1fe", "ink": "#4a3aa7",
+        },
+    ]
+    if data["approval_rate"] is not None:
+        cards.append(
+            {
+                "icon": "✓", "label": "Approval rate",
+                "value": f"{data['approval_rate']:.0%}",
+                "fraction": data["approval_rate"], "tint": "#e8f5ee", "ink": "#008300",
+                "badge": f"{data['down']} flagged",
+            }
+        )
+    _kpis(cards)
+
+    if data["flagged"]:
+        st.markdown(
+            '<div class="ig-panel-card-title">Flagged judgements</div>',
+            unsafe_allow_html=True,
+        )
+        st.dataframe(
+            pd.DataFrame(
+                [
+                    {
+                        "Candidate": row.get("candidate_id"),
+                        "Question": row.get("question_id"),
+                        "Concept": row.get("concept"),
+                        "Note": row.get("note") or "",
+                        "Recorded": (row.get("recorded_at") or "")[:19],
+                    }
+                    for row in data["flagged"]
+                ]
+            ),
+            use_container_width=True,
+            hide_index=True,
+        )
+    else:
+        st.caption("No flagged judgements yet.")
+
+    st.caption(
+        "Recorded from the 👍/👎 next to each concept judgement in "
+        "Intake traces → Evaluation."
+    )
+
+
+def _online_judge_panel() -> None:
+    data = reports.online_judge_summary()
+    if data is None:
+        return _no_data("online judge results")
+
+    _panel_head(
+        "◈",
+        "Online judge — production sample",
+        "LLM-as-judge review of live Evaluation Agent output",
+        tint="#fdf0e8",
+        ink="#eb6834",
+        stamp=data.get("generated_at"),
+    )
+
+    if data.get("judge_model"):
+        st.caption(
+            f"Judged by {data['judge_provider']} / {data['judge_model']} — "
+            "deliberately a different vendor from the Evaluation Agent being "
+            "judged, so it is not grading its own reasoning."
+        )
+
+    cards = [
+        {
+            "icon": "▤", "label": "Judgements reviewed", "value": data["total"],
+            "fraction": None, "tint": "#eef1fe", "ink": "#4a3aa7",
+        },
+    ]
+    if data["mean_faithfulness"] is not None:
+        cards.append(
+            {
+                "icon": "◐", "label": "Mean faithfulness",
+                "value": f"{data['mean_faithfulness']:.1f}/5",
+                "fraction": data["mean_faithfulness"] / 5,
+                "tint": "#e8f5ee", "ink": "#008300",
+            }
+        )
+    if data["disagreement_rate"] is not None:
+        cards.append(
+            {
+                "icon": "✗", "label": "Judge disagrees",
+                "value": f"{data['disagreement_rate']:.0%}",
+                "fraction": data["disagreement_rate"],
+                "tint": "#fdf0e8", "ink": "#eb6834",
+                "badge": f"{data['disagreement_count']} of {data['total']}",
+            }
+        )
+    _kpis(cards)
+
+    if data["flagged"]:
+        st.markdown(
+            '<div class="ig-panel-card-title">Lowest-scoring / disagreed judgements</div>',
+            unsafe_allow_html=True,
+        )
+        st.dataframe(
+            pd.DataFrame(
+                [
+                    {
+                        "Candidate": row.get("candidate_id"),
+                        "Question": row.get("question_id"),
+                        "Concept": row.get("concept"),
+                        "Original": row.get("original_status"),
+                        "Judge": row.get("agreement"),
+                        "Score": row.get("faithfulness_score"),
+                        "Reason": row.get("reason"),
+                    }
+                    for row in data["flagged"]
+                ]
+            ),
+            use_container_width=True,
+            hide_index=True,
+        )
+    else:
+        st.caption("No disagreements or low scores in this sample.")
+
+    st.caption(
+        "Run `python scripts/evaluate_online_judge.py` to sample more "
+        "recorded interviews into this report."
+    )
+
+
 PANELS = (
     ("Interview corpus", _corpus_panel),
     ("Golden query set", _golden_panel),
@@ -872,19 +1012,23 @@ PANELS = (
     ("Resume analyzer", _analyzer_panel),
     ("Model quality", _model_quality_panel),
     ("Intake latency", _latency_panel),
+    ("Online feedback", _online_feedback_panel),
+    ("Online judge", _online_judge_panel),
 )
 
 
 PANEL_NAMES = tuple(name for name, _ in PANELS)
 
-# Reading order, so the sub-navigation groups the eight reports rather than
-# listing them flat: what the corpus contains, how retrieval performs against
-# it, then how the model-facing stages score.
+# Reading order, so the sub-navigation groups the reports rather than
+# listing them flat: what the corpus contains, how retrieval performs
+# against it, how the model-facing stages score offline, then how the
+# pipeline is doing on real, live interviews.
 PANEL_GROUPS = (
     ("Corpus", ("Interview corpus", "Golden query set")),
     ("Retrieval", ("Question-RAG retrieval", "Evaluation-RAG retrieval")),
     ("Stage quality", ("Concept coverage", "Resume analyzer", "Model quality",
                        "Intake latency")),
+    ("Online eval", ("Online feedback", "Online judge")),
 )
 
 

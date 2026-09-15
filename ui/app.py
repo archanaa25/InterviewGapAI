@@ -68,6 +68,7 @@ from ui.answer_store import (
     save_run,
     saved_runs,
 )
+from ui.feedback_store import save_feedback
 from ui.session import InterviewProgress
 from ui.styles import APP_STYLES
 
@@ -1814,7 +1815,9 @@ CONCEPT_MARKS = {
 }
 
 
-def _trace_detail(stage: str, payload: dict, stages: dict) -> None:
+def _trace_detail(
+    stage: str, payload: dict, stages: dict, candidate_id: str | None = None
+) -> None:
     """
     The per-question body of a stage, one expander per question.
 
@@ -1888,7 +1891,7 @@ def _trace_detail(stage: str, payload: dict, stages: dict) -> None:
                         "Must-have concepts for this question, taken from the "
                         "retrieved evaluation criteria."
                     )
-                    for judgement in judgements:
+                    for concept_index, judgement in enumerate(judgements):
                         status = str(judgement.get("status") or "")
                         st.markdown(
                             f"{CONCEPT_MARKS.get(status, '·')} **{status.title()}** — "
@@ -1901,6 +1904,33 @@ def _trace_detail(stage: str, payload: dict, stages: dict) -> None:
                             # reason it reached this verdict, in the
                             # candidate's words.
                             st.markdown(f"> {' '.join(str(excerpt).split())}")
+
+                        # Online eval, human half: an interviewer's live
+                        # reaction to this specific judgement, not to the
+                        # interview overall. Only offered against a real,
+                        # identifiable run - there is nowhere to record
+                        # feedback about a candidate we cannot name.
+                        if candidate_id:
+                            up_col, down_col, _ = st.columns([1, 1, 6])
+                            widget_key = (
+                                f"{candidate_id}-{question_id}-{concept_index}"
+                            )
+                            if up_col.button("👍", key=f"fb-up-{widget_key}"):
+                                save_feedback(
+                                    candidate_id=candidate_id,
+                                    question_id=question_id,
+                                    concept=judgement.get("concept") or "",
+                                    rating="up",
+                                )
+                                st.toast("Feedback recorded.")
+                            if down_col.button("👎", key=f"fb-down-{widget_key}"):
+                                save_feedback(
+                                    candidate_id=candidate_id,
+                                    question_id=question_id,
+                                    concept=judgement.get("concept") or "",
+                                    rating="down",
+                                )
+                                st.toast("Flagged for review.")
 
                 for heading, items in (
                     ("Beyond the rubric", question.get("bonus_concepts")),
@@ -2359,6 +2389,11 @@ def _render_intake_traces() -> None:
     @st.fragment(run_every=AUTO_REFRESH_SECONDS if auto else None)
     def _stages() -> None:
         stages = _resolve_stages(choice, live if has_live else {})
+        # The picker's "This session's run" is not itself a usable id; the
+        # opaque candidate id lives inside the upload stage once one exists.
+        run_candidate_id = (stages.get("upload") or {}).get("candidate_id") or (
+            choice if choice != "This session's run" else None
+        )
 
         reached = sum(1 for value in stages.values() if value)
         status, note = st.columns([3, 1.4])
@@ -2400,7 +2435,7 @@ def _render_intake_traces() -> None:
 
             # Answers and evaluation are per-question and get a body of their
             # own; every other stage is summary plus Raw JSON.
-            _trace_detail(stage, payload, stages)
+            _trace_detail(stage, payload, stages, run_candidate_id)
 
             # Summary first, full document behind a click: the analysis alone
             # runs to seven competencies with evidence items and sources.

@@ -21,3 +21,9 @@ data/runs/
 # Results a candidate downloaded from the app. Like data/runs/, these are
 # the output of one person's interview, not an input to the pipeline.
 data/raw/interview-results-*.md
+
+# The online judge's reasoning quotes fragments of the real answer excerpts
+# it is auditing from data/runs/. Unlike every other file under data/eval/,
+# this one is derived from real candidates rather than the golden set or
+# synthetic fixtures, so it stays local for the same reason data/runs/ does.
+data/eval/online_judge_results.jsonl

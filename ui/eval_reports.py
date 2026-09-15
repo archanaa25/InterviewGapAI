@@ -439,6 +439,83 @@ def latency_report() -> dict | None:
     return payload if isinstance(payload, dict) else None
 
 
+def online_feedback_summary() -> dict | None:
+    """
+    Interviewer thumbs up/down on live judgements, from the Intake traces panel.
+
+    The only report here that scores production rather than a golden set or a
+    fixture: each row is a real interviewer's reaction to a real judgement.
+    """
+
+    from ui.feedback_store import load_feedback
+
+    rows = load_feedback()
+    if not rows:
+        return None
+
+    up = sum(1 for row in rows if row.get("rating") == "up")
+    down = sum(1 for row in rows if row.get("rating") == "down")
+    total = up + down
+
+    flagged = sorted(
+        (row for row in rows if row.get("rating") == "down"),
+        key=lambda row: row.get("recorded_at") or "",
+        reverse=True,
+    )
+
+    return {
+        "total": total,
+        "up": up,
+        "down": down,
+        "approval_rate": (up / total) if total else None,
+        "flagged": flagged[:20],
+    }
+
+
+def online_judge_summary() -> dict | None:
+    """
+    LLM-judge review of live Evaluation Agent judgements.
+
+    Written by scripts/evaluate_online_judge.py, which samples real
+    data/runs/ interviews rather than the golden set - the automated half of
+    online eval, alongside the interviewer feedback captured above.
+    """
+
+    rows = _read_jsonl(EVAL_DIR / "online_judge_results.jsonl")
+    if not rows:
+        return None
+
+    scores = [
+        row["faithfulness_score"]
+        for row in rows
+        if isinstance(row.get("faithfulness_score"), (int, float))
+    ]
+    disagreements = [row for row in rows if row.get("agreement") == "DISAGREE"]
+
+    flagged = sorted(
+        (
+            row
+            for row in rows
+            if row.get("agreement") == "DISAGREE"
+            or (row.get("faithfulness_score") or 5) <= 2
+        ),
+        key=lambda row: row.get("faithfulness_score") or 0,
+    )
+
+    last_row = rows[-1]
+
+    return {
+        "total": len(rows),
+        "mean_faithfulness": mean(scores) if scores else None,
+        "disagreement_count": len(disagreements),
+        "disagreement_rate": (len(disagreements) / len(rows)) if rows else None,
+        "flagged": flagged[:20],
+        "generated_at": last_run("online_judge_results.jsonl"),
+        "judge_provider": last_row.get("judge_provider"),
+        "judge_model": last_row.get("judge_model"),
+    }
+
+
 __all__ = [
     "concept_coverage",
     "last_run",
@@ -448,6 +525,8 @@ __all__ = [
     "label_competency",
     "latency_report",
     "model_quality",
+    "online_feedback_summary",
+    "online_judge_summary",
     "question_rag_strategies",
     "resume_scorecard",
 ]
